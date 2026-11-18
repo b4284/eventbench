@@ -24,11 +24,23 @@ public sealed class MongoStoreOptions
     public int ChunkSizeBytes { get; set; } = 1 << 20;
     /// <summary>Upper bound for retrying one commit (write conflicts, unknown commit results).</summary>
     public int CommitTimeoutSeconds { get; set; } = 60;
+    /// <summary>
+    /// Journaled (default): w:majority, j:true, readConcern majority — acknowledged writes survive a crash.
+    /// BestEffort: w:majority, j:false, readConcern majority — no wait for the journal fsync; a crash can lose
+    /// the last acknowledged writes. REQUIRES the replica set config writeConcernMajorityJournalDefault=false
+    /// (infra/mongo/journal-default.sh false); otherwise majority writes still wait for the journal.
+    /// (w:1 is not used: an acknowledged w:1 commit is not immediately visible to other sessions' local
+    /// reads on the primary — they read at the no-overlap timestamp — which shows up as ordering gaps.)
+    /// </summary>
+    public MongoDurability Durability { get; set; } = MongoDurability.Journaled;
 }
 
+public enum MongoDurability { Journaled, BestEffort }
+
 /// <summary>
-/// MongoDB state store. Durability: every write uses w:majority, j:true (forced, whatever the connection
-/// string says); reads use readConcern majority; transactions use readConcern snapshot.
+/// MongoDB state store. Durability (Store:Durability): Journaled = every write w:majority, j:true (forced,
+/// whatever the connection string says), reads readConcern majority; BestEffort = w:majority, j:false (with rs writeConcernMajorityJournalDefault=false).
+/// Transactions always use readConcern snapshot.
 ///
 /// Transaction mode commit (one transaction, retried on TransientTransactionError):
 ///   1. updateOne cursors {_id: src, lastSeq: seq-1} → {lastSeq: seq}; matched 0 → read cursor in the same
@@ -70,15 +82,17 @@ public sealed class MongoStore : IStateStore
         _chunkSize = Math.Clamp(options.ChunkSizeBytes, 64 * 1024, 8 << 20);
         _commitTimeout = TimeSpan.FromSeconds(Math.Max(1, options.CommitTimeoutSeconds));
 
-        var wc = WriteConcern.WMajority.With(journal: true);
+        bool journaled = options.Durability == MongoDurability.Journaled;
+        var wc = journaled ? WriteConcern.WMajority.With(journal: true) : WriteConcern.WMajority.With(journal: false);
+        var rc = ReadConcern.Majority;
         var settings = MongoClientSettings.FromConnectionString(options.ConnectionString);
         settings.WriteConcern = wc;
-        settings.ReadConcern = ReadConcern.Majority;
+        settings.ReadConcern = rc;
         settings.ReadPreference = ReadPreference.Primary;
         _client = new MongoClient(settings);
         _db = _client.GetDatabase(options.Database, new MongoDatabaseSettings
         {
-            WriteConcern = wc, ReadConcern = ReadConcern.Majority, ReadPreference = ReadPreference.Primary,
+            WriteConcern = wc, ReadConcern = rc, ReadPreference = ReadPreference.Primary,
         });
         _txnOptions = new TransactionOptions(readConcern: ReadConcern.Snapshot, readPreference: ReadPreference.Primary, writeConcern: wc);
 
@@ -507,7 +521,7 @@ public sealed class MongoStore : IStateStore
         string hosts = string.Join(",", url.Servers.Select(s => $"{s.Host}:{s.Port}"));
         string mode = _o.UseTransactions ? "transactions (readConcern snapshot)" : "embedded (single-document commit)";
         return $"mongo @ {hosts}/{_o.Database} prefix={_o.CollectionPrefix}, mode={mode}, " +
-               $"w=majority j=true, load readConcern majority, chunk={_chunkSize / 1024}KiB, pool max {url.MaxConnectionPoolSize}";
+               (_o.Durability == MongoDurability.Journaled ? "w=majority j=true, load readConcern majority" : "BEST-EFFORT w=majority j=false (needs writeConcernMajorityJournalDefault=false), load readConcern majority") + $", chunk={_chunkSize / 1024}KiB, pool max {url.MaxConnectionPoolSize}";
     }
 
     public ValueTask DisposeAsync()
