@@ -49,6 +49,12 @@ public sealed class WorkloadOptions
     /// <summary>Producer tasks per group. Each owns a disjoint subset of the group's sources (keeps per-source order).</summary>
     public int ProducersPerGroup { get; set; } = 1;
 
+    /// <summary>
+    /// When &gt; 0: a fixed pool of producers shared by all groups (sources are spread round-robin), each
+    /// publishing to many queues per round trip. Overrides ProducersPerGroup. Use with many small groups.
+    /// </summary>
+    public int Producers { get; set; } = 0;
+
     /// <summary>Upper bound of events per publish call.</summary>
     public int MaxPublishBatch { get; set; } = 500;
 
@@ -56,6 +62,9 @@ public sealed class WorkloadOptions
     public double ProducerTickMs { get; set; } = 5;
 
     public List<GroupOptions> Groups { get; set; } = new();
+
+    /// <summary>Randomly generated groups (appended after the explicit Groups). Disabled when Groups = 0.</summary>
+    public GeneratedGroupsOptions GeneratedGroups { get; set; } = new();
 
     public OpMixOptions OpMix { get; set; } = new();
 
@@ -85,8 +94,61 @@ public sealed class GroupOptions
     /// <summary>Aggregate events/sec for the whole group (spread evenly across its sources).</summary>
     public double? RatePerGroup { get; set; }
 
-    /// <summary>Worker count for this group (overrides Worker:WorkersPerGroup).</summary>
+    /// <summary>Worker count for this group (overrides Worker:WorkersPerGroup / load-based sizing).</summary>
     public int? Workers { get; set; }
+
+    /// <summary>Each source's rate = group rate x U[1-j, 1+j].</summary>
+    public double SourceRateJitter { get; set; } = 0;
+
+    /// <summary>Regular payload size for this group (default Workload:PayloadBytes).</summary>
+    public int? PayloadBytes { get; set; }
+
+    /// <summary>Fraction of this group's Create/Update events that carry a large upload.</summary>
+    public double LargeEventFraction { get; set; } = 0;
+    public int? LargeMinBytes { get; set; }
+    public int? LargeMaxBytes { get; set; }
+}
+
+/// <summary>
+/// Generates many heterogeneous groups. Sizes follow a log-normal clamped to [MinSources, MaxSources]
+/// and rescaled so they sum exactly to TotalSources. Per-source base rates per group follow a log-normal
+/// (median RateMedianPerMinute) truncated to [MinRatePerMinute, MaxRatePerMinute], so mid/low rates are
+/// common and high rates rare. A few "large" groups send MB-sized uploads at a low rate.
+/// </summary>
+public sealed class GeneratedGroupsOptions
+{
+    public int Groups { get; set; } = 0;
+    public string Name { get; set; } = "t";
+
+    /// <summary>Exact total number of sources across generated groups (0 = unconstrained, use MedianSources).</summary>
+    public int TotalSources { get; set; } = 16000;
+    public int MedianSources { get; set; } = 20;
+    public int MinSources { get; set; } = 6;
+    public int MaxSources { get; set; } = 200;
+    /// <summary>Log-normal sigma of group sizes; larger = more very small and very large groups.</summary>
+    public double SizeSigma { get; set; } = 1.0;
+
+    /// <summary>Per-source base rate of a group, events per minute.</summary>
+    public double MinRatePerMinute { get; set; } = 10;
+    public double MaxRatePerMinute { get; set; } = 200;
+    public double RateMedianPerMinute { get; set; } = 40;
+    public double RateSigma { get; set; } = 0.7;
+    /// <summary>Each source's rate = group base rate x U[1-j, 1+j].</summary>
+    public double SourceRateJitter { get; set; } = 0.25;
+
+    /// <summary>Regular payload size is chosen per group, log-uniform in this range.</summary>
+    public int SmallPayloadMinBytes { get; set; } = 128;
+    public int SmallPayloadMaxBytes { get; set; } = 4096;
+
+    /// <summary>Number of groups (picked at random) that carry large uploads.</summary>
+    public int LargeGroups { get; set; } = 0;
+    /// <summary>Per-source rate of large groups: low, since clients need time to produce MB-sized uploads.</summary>
+    public double LargeGroupMinRatePerMinute { get; set; } = 1;
+    public double LargeGroupMaxRatePerMinute { get; set; } = 5;
+    /// <summary>Fraction of a large group's Create/Update events that carry an upload (Get/Complete stay small).</summary>
+    public double LargeEventFraction { get; set; } = 1.0;
+    public int LargeMinBytes { get; set; } = 1 * 1024 * 1024;
+    public int LargeMaxBytes { get; set; } = 4 * 1024 * 1024;
 }
 
 public sealed class OpMixOptions
@@ -125,6 +187,20 @@ public enum AckMode
 public sealed class WorkerOptions
 {
     public int WorkersPerGroup { get; set; } = 8;
+
+    /// <summary>
+    /// When &gt; 0, size each group's worker pool by load: ceil(groupEventsPerSec / this), clamped to
+    /// [MinWorkersPerGroup, MaxWorkersPerGroup]. An explicit GroupOptions.Workers still wins.
+    /// </summary>
+    public double EventsPerSecondPerWorker { get; set; } = 0;
+
+    /// <summary>
+    /// When &gt; 0, also size by expected large-upload bandwidth: ceil(groupUploadBytesPerSec / this).
+    /// The larger of the event-based and byte-based counts wins (still clamped to Min/MaxWorkersPerGroup).
+    /// </summary>
+    public double UploadBytesPerSecondPerWorker { get; set; } = 0;
+    public int MinWorkersPerGroup { get; set; } = 1;
+    public int MaxWorkersPerGroup { get; set; } = 16;
 
     /// <summary>Max messages fetched per receive call.</summary>
     public int BatchSize { get; set; } = 10;

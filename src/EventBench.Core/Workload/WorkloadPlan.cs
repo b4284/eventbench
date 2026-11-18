@@ -22,7 +22,7 @@ public sealed class WorkloadPlan
         Scripts = new SourceScript[topology.TotalSources];
         foreach (var g in topology.Groups)
             for (int i = 0; i < g.SourceCount; i++)
-                Scripts[g.FirstSourceId + i] = new SourceScript(g.FirstSourceId + i, g.Id, options.Seed);
+                Scripts[g.FirstSourceId + i] = new SourceScript(g.FirstSourceId + i, g, options.Seed);
     }
 
     public bool TryTakeLarge(ref FastRandom rng)

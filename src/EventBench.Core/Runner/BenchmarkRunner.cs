@@ -94,18 +94,27 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
 
         var publishers = new List<IEventPublisher>();
         var producers = new List<ProducerRunner>();
-        int shards = Math.Max(1, cfg.Workload.ProducersPerGroup);
-        foreach (var g in topology.Groups)
+        void AddProducer(string name, SourceScript[] owned)
         {
-            for (int shard = 0; shard < shards; shard++)
-            {
-                var owned = Enumerable.Range(0, g.SourceCount).Where(i => i % shards == shard)
-                    .Select(i => plan.Scripts[g.FirstSourceId + i]).ToArray();
-                if (owned.Length == 0) continue;
-                var publisher = broker.CreatePublisher(g.Id);
-                publishers.Add(publisher);
-                producers.Add(new ProducerRunner(g, shard, owned, publisher, store, plan, metrics, log));
-            }
+            if (owned.Length == 0) return;
+            var publisher = broker.CreatePublisher(owned[0].GroupId);
+            publishers.Add(publisher);
+            producers.Add(new ProducerRunner(name, producers.Count, owned, publisher, store, plan, metrics, log));
+        }
+        if (cfg.Workload.Producers > 0)
+        {
+            // Shared pool: sources spread round-robin, so every producer serves many groups.
+            int n = Math.Min(cfg.Workload.Producers, topology.TotalSources);
+            for (int p = 0; p < n; p++)
+                AddProducer($"p{p}", plan.Scripts.Where((_, sid) => sid % n == p).ToArray());
+        }
+        else
+        {
+            int shards = Math.Max(1, cfg.Workload.ProducersPerGroup);
+            foreach (var g in topology.Groups)
+                for (int shard = 0; shard < shards; shard++)
+                    AddProducer($"{g.Name}/{shard}", Enumerable.Range(0, g.SourceCount).Where(i => i % shards == shard)
+                        .Select(i => plan.Scripts[g.FirstSourceId + i]).ToArray());
         }
 
         try

@@ -26,6 +26,10 @@ public interface IBroker : IAsyncDisposable
     /// <summary>Create (and purge) the queues/streams/topics required by the topology.</summary>
     Task SetupAsync(CancellationToken ct);
 
+    /// <summary>
+    /// Creates a publisher. <paramref name="groupId"/> is a hint (the first group it will serve): a publisher
+    /// must accept events of any group, because shared producers (Workload:Producers) span many groups.
+    /// </summary>
     IEventPublisher CreatePublisher(int groupId);
 
     /// <summary>Create the consumer for worker <paramref name="workerIndex"/> of the group (workers are typed by group).</summary>

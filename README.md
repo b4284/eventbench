@@ -65,6 +65,27 @@ The exit code is `0` for PASS, `1` for FAIL, and `2` for an error, so you can sc
   payload travels base64 inside the message. With `Mode: ClaimCheck` the producer stores it in the
   store and the message carries only a reference.
 
+### Many heterogeneous groups (`Workload:GeneratedGroups`)
+
+`configs/pgmq-500groups.json` generates 500 groups and 16,000 sources:
+
+* **Sizes** follow a log-normal (`SizeSigma`), clamped to `[MinSources, MaxSources]` and rescaled to
+  sum *exactly* to `TotalSources`. Note that 16k sources over 500 groups averages only 32 per group,
+  so the distribution must be skewed: most groups are small and a few have hundreds.
+* **Rates.** Each group draws a per-source base rate from a log-normal (`RateMedianPerMinute`,
+  `RateSigma`) truncated to `[MinRatePerMinute, MaxRatePerMinute]`. Mid and low rates are common;
+  high rates are rare. Each source's rate is the base × U[1−j, 1+j] (`SourceRateJitter`).
+* **Payloads.** Each regular group gets a small payload size, log-uniform in
+  `[SmallPayloadMinBytes, SmallPayloadMaxBytes]`. `LargeGroups` groups (suffix `L`) run at a low rate
+  and send uploads of `LargeMinBytes..LargeMaxBytes` on a `LargeEventFraction` of their Create/Update events.
+* **Workers** are sized per group by load: `ceil(max(events/s ÷ EventsPerSecondPerWorker,
+  uploadBytes/s ÷ UploadBytesPerSecondPerWorker))`, clamped to `[Min, MaxWorkersPerGroup]`.
+* **Producers.** `Workload:Producers` sets up a shared producer pool that spans all groups (one round
+  trip publishes to many queues) instead of one producer per group.
+
+`eventbench validate -c configs/pgmq-500groups.json` prints the resulting size and rate
+distributions, the worker count, and the expected payload bandwidth.
+
 ### Worker step (one event)
 
 1. **Load**: one query reads the source cursor, the record, and the context blob.

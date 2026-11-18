@@ -1,0 +1,127 @@
+# 3-fifo-claimcheck — PASS ✅
+
+- Broker: `pgmq fifo via read_grouped_head, index=Btree, vt=30s, unlogged=False, delete on ack @ 127.0.0.1:6432/bench (pool max 400)`
+- Store: `postgres @ 127.0.0.1:6432/bench (pool max 400), unlogged=False, fillfactor=70`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 1
+- Topology: 20 groups, 16000 sources, 160 workers, offered 4000 ev/s
+- Phases: run 60.101s, closing 0.174s, drain 2.924s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 276548 | 276548 | 4008.916 | 4008.978 | 11820.9 | 0 | 0 | 0 | 12 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 200493 | 11.161 | 10.351 | 15.663 | 26.415 | 42.047 | 148.095 |
+| e2e_from_send | 200493 | 10.15 | 9.183 | 14.607 | 24.559 | 37.983 | 133.887 |
+| producer_lag | 200493 | 1.011 | 0.734 | 2.385 | 3.721 | 15.159 | 90.495 |
+| publish_call | 199487 | 1.702 | 1.55 | 2.247 | 3.709 | 17.647 | 94.591 |
+| queue_wait | 200493 | 5.127 | 4.971 | 6.883 | 14.023 | 23.151 | 100.863 |
+| broker_dwell | 200493 | 4.791 | 4.587 | 6.551 | 13.671 | 22.671 | 79.551 |
+| receive_call | 147984 | 2.176 | 1.741 | 2.479 | 13.895 | 59.199 | 133.503 |
+| ctx_load | 200493 | 0.38 | 0.317 | 0.586 | 1.113 | 2.609 | 6.183 |
+| process | 200493 | 0.002 | 0.001 | 0.002 | 0.004 | 0.016 | 32.239 |
+| ctx_commit | 200493 | 1.323 | 1.186 | 1.766 | 2.733 | 13.231 | 23.423 |
+| ack | 200493 | 1.335 | 1.241 | 1.917 | 2.821 | 5.835 | 24.735 |
+| service | 200493 | 5.024 | 3.669 | 9.095 | 17.727 | 29.535 | 66.879 |
+| e2e_large | 7 | 102.814 | 102.527 | 135.679 | 140.415 | 140.415 | 140.415 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 4008.978 | 4119.4 |
+| applied_total | 151746.082 | 247885 |
+| bench_cpu_cores | 1.986 | 2.118 |
+| bench_cpu_pct | 8.274 | 8.82 |
+| bench_gc_gen0 | 4.959 | 7 |
+| bench_gc_gen1 | 3.796 | 6 |
+| bench_gc_gen2 | 0.653 | 2 |
+| bench_gc_heap_mb | 44.949 | 66.5 |
+| bench_mem_mb | 157.394 | 183.3 |
+| bench_threadpool_queue | 0.51 | 13 |
+| bench_threadpool_threads | 24.061 | 31 |
+| broker_backlog | 33.837 | 69 |
+| broker_oldest_age_s | 0 | 0 |
+| broker_visible | 9.224 | 19 |
+| ctr_eb_pgbouncer_cpu_pct | 9.594 | 9.89 |
+| ctr_eb_pgbouncer_mem_mb | 13.318 | 15.9 |
+| ctr_eb_postgres_cpu_pct | 109.909 | 113.11 |
+| ctr_eb_postgres_mem_mb | 2157.486 | 2178.2 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 26.26 | 29.77 |
+| in_flight | 26.347 | 43 |
+| nacks_per_s | 0 | 0 |
+| pg_cache_hit_pct | 100 | 100 |
+| pg_conn_active | 14.898 | 29 |
+| pg_conn_idle | 50.102 | 59 |
+| pg_conn_idle_in_tx | 0 | 0 |
+| pg_conn_lock_wait | 0 | 0 |
+| pg_conn_total | 65 | 65 |
+| pg_db_size_mb | 207.21 | 238.8 |
+| pg_deadlocks | 0 | 0 |
+| pg_rollbacks_per_s | 0 | 0 |
+| pg_temp_mb_per_s | 0 | 0 |
+| pg_tps | 25089.114 | 28388.6 |
+| pg_tup_del_per_s | 4037.124 | 4580.5 |
+| pg_tup_fetch_per_s | 76154.784 | 97429.4 |
+| pg_tup_ins_per_s | 5603.065 | 12774.1 |
+| pg_tup_upd_per_s | 10615.88 | 11992.2 |
+| pg_wal_mb_per_s | 12.336 | 26.82 |
+| pgb_cl_active | 227 | 227 |
+| pgb_cl_waiting | 0 | 0 |
+| pgb_maxwait_ms | 0 | 0 |
+| pgb_sv_active | 24.735 | 55 |
+| pgb_sv_idle | 39.265 | 61 |
+| pgb_sv_used | 0 | 0 |
+| produced_per_s | 4008.916 | 4123.4 |
+| produced_total | 151772.429 | 247897 |
+| publish_mb_per_s | 2.067 | 2.13 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 52,676 records are Completed |
+| record_counts | pass | 52,676 records found, 52,676 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 12 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 276,548 events applied by workers, 276,548 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+
+## Groups
+
+| group | sources | workers | offered/s | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| A-0 | 800 | 8 | 300 | 19851 | 19851 | 0 | 10.303 | 26.047 | 96.319 |
+| A-1 | 800 | 8 | 300 | 20008 | 20008 | 0 | 10.391 | 26.287 | 47.231 |
+| A-2 | 800 | 8 | 300 | 20144 | 20144 | 0 | 10.303 | 26.495 | 50.815 |
+| A-3 | 800 | 8 | 300 | 20307 | 20307 | 0 | 10.375 | 28.847 | 126.847 |
+| A-4 | 800 | 8 | 300 | 20175 | 20175 | 0 | 10.351 | 26.671 | 63.583 |
+| A-5 | 800 | 8 | 300 | 19967 | 19967 | 0 | 10.383 | 27.631 | 148.095 |
+| A-6 | 800 | 8 | 300 | 19946 | 19946 | 0 | 10.335 | 28.271 | 137.727 |
+| A-7 | 800 | 8 | 300 | 19820 | 19820 | 0 | 10.335 | 25.871 | 45.407 |
+| A-8 | 800 | 8 | 300 | 20123 | 20123 | 0 | 10.255 | 26.319 | 50.015 |
+| A-9 | 800 | 8 | 300 | 19952 | 19952 | 0 | 10.279 | 25.679 | 52.639 |
+| B-0 | 800 | 8 | 100 | 7612 | 7612 | 0 | 10.343 | 25.887 | 42.047 |
+| B-1 | 800 | 8 | 100 | 7610 | 7610 | 0 | 10.455 | 25.311 | 37.599 |
+| B-2 | 800 | 8 | 100 | 7524 | 7524 | 0 | 10.455 | 26.303 | 52.511 |
+| B-3 | 800 | 8 | 100 | 7567 | 7567 | 0 | 10.415 | 24.703 | 36.351 |
+| B-4 | 800 | 8 | 100 | 7598 | 7598 | 0 | 10.335 | 25.551 | 42.911 |
+| B-5 | 800 | 8 | 100 | 7680 | 7680 | 0 | 10.343 | 24.575 | 47.871 |
+| B-6 | 800 | 8 | 100 | 7723 | 7723 | 0 | 10.383 | 25.311 | 46.367 |
+| B-7 | 800 | 8 | 100 | 7651 | 7651 | 0 | 10.359 | 25.343 | 40.319 |
+| B-8 | 800 | 8 | 100 | 7645 | 7645 | 0 | 10.407 | 26.047 | 40.063 |
+| B-9 | 800 | 8 | 100 | 7645 | 7645 | 0 | 10.367 | 25.631 | 36.447 |

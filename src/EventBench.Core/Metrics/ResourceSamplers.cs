@@ -84,6 +84,9 @@ public sealed partial class ContainerStatsSampler
     private readonly Action<string> _log;
     private volatile IReadOnlyDictionary<string, double> _latest = new Dictionary<string, double>();
     private bool _warned;
+    // podman's cpu_percent with --no-stream is the average since container start, so CPU% is derived
+    // from cumulative cpu_time deltas between samples instead.
+    private readonly Dictionary<string, (double CpuSec, long Ticks)> _prevCpu = new();
 
     public ContainerStatsSampler(string command, TimeSpan interval, Action<string> log)
     {
@@ -101,7 +104,7 @@ public sealed partial class ContainerStatsSampler
             try
             {
                 var output = await RunCommandAsync(ct);
-                if (output != null) _latest = Parse(output);
+                if (output != null) _latest = ParseWithRates(output);
             }
             catch (OperationCanceledException) when (ct.IsCancellationRequested) { break; }
             catch (Exception ex)
@@ -129,6 +132,26 @@ public sealed partial class ContainerStatsSampler
         return await stdout;
     }
 
+    private IReadOnlyDictionary<string, double> ParseWithRates(string json)
+    {
+        var values = new Dictionary<string, double>(Parse(json));
+        long now = Stopwatch.GetTimestamp();
+        foreach (var key in values.Keys.Where(k => k.EndsWith("_cpu_time_s", StringComparison.Ordinal)).ToList())
+        {
+            string name = key[..^"_cpu_time_s".Length];
+            double cpuSec = values[key];
+            values.Remove(key);
+            if (_prevCpu.TryGetValue(name, out var prev) && now > prev.Ticks && cpuSec >= prev.CpuSec)
+            {
+                double wall = (now - prev.Ticks) / (double)Stopwatch.Frequency;
+                values[$"{name}_cpu_pct"] = Math.Round((cpuSec - prev.CpuSec) / wall * 100, 2);
+            }
+            else values.Remove($"{name}_cpu_pct");
+            _prevCpu[name] = (cpuSec, now);
+        }
+        return values;
+    }
+
     public static IReadOnlyDictionary<string, double> Parse(string json)
     {
         var result = new Dictionary<string, double>();
@@ -143,8 +166,11 @@ public sealed partial class ContainerStatsSampler
             string? name = Str(item, "name", "Name");
             if (name is null || name.EndsWith("-infra", StringComparison.Ordinal)) continue; // podman pod infra container
             name = SanitizeRegex().Replace(name, "_");
+            // Prefer cumulative CPU time (converted to a rate by the caller); cpu_percent is a fallback only.
+            var cpuTime = Str(item, "cpu_time", "CPUTime");
+            if (cpuTime != null && TryParseGoDuration(cpuTime, out var sec)) result[$"ctr_{name}_cpu_time_s"] = sec;
             var cpu = Str(item, "cpu_percent", "CPU", "CPUPerc", "cpu");
-            if (cpu != null && TryParseNumber(cpu.TrimEnd('%'), out var c)) result[$"ctr_{name}_cpu_pct"] = c;
+            if (cpuTime == null && cpu != null && TryParseNumber(cpu.TrimEnd('%'), out var c)) result[$"ctr_{name}_cpu_pct"] = c;
             var mem = Str(item, "mem_usage", "MemUsage", "mem");
             if (mem != null && TryParseBytes(mem.Split('/')[0].Trim(), out var bytes)) result[$"ctr_{name}_mem_mb"] = Math.Round(bytes / 1048576.0, 1);
         }
@@ -179,6 +205,26 @@ public sealed partial class ContainerStatsSampler
         bytes = n * mult;
         return true;
     }
+
+    /// <summary>Parses Go duration strings such as "2h7m40.65s", "11m6.9s", "2.213ms", "850µs".</summary>
+    public static bool TryParseGoDuration(string s, out double seconds)
+    {
+        seconds = 0;
+        var matches = GoDurationRegex().Matches(s.Trim());
+        if (matches.Count == 0) return false;
+        foreach (Match m in matches)
+        {
+            if (!TryParseNumber(m.Groups[1].Value, out var n)) return false;
+            seconds += n * m.Groups[2].Value switch
+            {
+                "h" => 3600, "m" => 60, "s" => 1, "ms" => 1e-3, "us" or "µs" => 1e-6, "ns" => 1e-9, _ => 0,
+            };
+        }
+        return true;
+    }
+
+    [GeneratedRegex(@"([\d.]+)(ms|us|µs|ns|h|m|s)")]
+    private static partial Regex GoDurationRegex();
 
     [GeneratedRegex(@"^([\d.]+)\s*([A-Za-z]*)")]
     private static partial Regex BytesRegex();

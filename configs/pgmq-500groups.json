@@ -1,0 +1,87 @@
+{
+  "Name": "pgmq-500groups",
+  "Workload": {
+    "Seed": 12345,
+    "DurationSeconds": 60,
+    "WarmupSeconds": 10,
+    "DrainTimeoutSeconds": 180,
+    "Arrival": "Poisson",
+    "Producers": 32,
+    "MaxPublishBatch": 500,
+    "GeneratedGroups": {
+      "Groups": 500,
+      "Name": "t",
+      "TotalSources": 16000,
+      "MinSources": 6,
+      "MaxSources": 200,
+      "SizeSigma": 1.0,
+      "MinRatePerMinute": 10,
+      "MaxRatePerMinute": 200,
+      "RateMedianPerMinute": 40,
+      "RateSigma": 0.7,
+      "SourceRateJitter": 0.25,
+      "SmallPayloadMinBytes": 128,
+      "SmallPayloadMaxBytes": 4096,
+      "LargeGroups": 4,
+      "LargeGroupMinRatePerMinute": 1,
+      "LargeGroupMaxRatePerMinute": 5,
+      "LargeEventFraction": 1.0,
+      "LargeMinBytes": 1048576,
+      "LargeMaxBytes": 4194304
+    },
+    "OpMix": {
+      "CreateWeight": 1,
+      "GetWeight": 2,
+      "UpdateWeight": 5,
+      "CompleteWeight": 1,
+      "MaxOpenRecordsPerSource": 4
+    },
+    "ContextBytes": 1024,
+    "LargePayload": {
+      "Probability": 0,
+      "MaxCount": 0,
+      "Mode": "Inline"
+    }
+  },
+  "Worker": {
+    "EventsPerSecondPerWorker": 50,
+    "UploadBytesPerSecondPerWorker": 8388608,
+    "MinWorkersPerGroup": 1,
+    "MaxWorkersPerGroup": 16,
+    "BatchSize": 10,
+    "MaxParallelPerWorker": 1,
+    "AckMode": "InTransaction",
+    "SimulatedWorkMicros": 0,
+    "RetryDelayMs": 250,
+    "IdleBackoffMinMs": 1,
+    "IdleBackoffMaxMs": 50
+  },
+  "Metrics": {
+    "SampleIntervalSeconds": 1,
+    "ContainerStats": true,
+    "ContainerStatsCommand": "podman stats --no-stream --format json",
+    "ContainerStatsIntervalSeconds": 3,
+    "ExternalStatsIntervalSeconds": 2
+  },
+  "Broker": {
+    "Type": "pgmq",
+    "ConnectionString": "Host=127.0.0.1;Port=6432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=1000;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60",
+    "AdminConnectionString": "Host=127.0.0.1;Port=5432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=10",
+    "Ordering": "Fifo",
+    "FifoReadFunction": "read_grouped_head",
+    "FifoIndex": "Btree",
+    "QueuePrefix": "eb",
+    "Unlogged": false,
+    "VisibilityTimeoutSeconds": 30,
+    "ArchiveOnAck": false
+  },
+  "Store": {
+    "Type": "postgres",
+    "ConnectionString": "Host=127.0.0.1;Port=6432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=1000;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60",
+    "AdminConnectionString": "Host=127.0.0.1;Port=5432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=10;Command Timeout=600",
+    "PgBouncerStatsCommand": "podman exec eb-postgres psql \"host=127.0.0.1 port=6432 dbname=pgbouncer user=bench password=bench\" --csv -c \"SHOW POOLS\"",
+    "TablePrefix": "eb",
+    "UnloggedTables": false,
+    "FillFactor": 70
+  }
+}

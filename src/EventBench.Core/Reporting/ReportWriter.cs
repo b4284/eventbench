@@ -67,6 +67,9 @@ public static class ReportWriter
             {
                 ["name"] = g.Name, ["sources"] = g.SourceCount, ["workers"] = g.Workers,
                 ["offeredRatePerSec"] = Round(g.RatePerGroup),
+                ["baseRatePerSourcePerMin"] = Round(g.RatePerSource * 60),
+                ["payloadBytes"] = g.PayloadBytes ?? cfg.Workload.PayloadBytes,
+                ["largeEventFraction"] = g.LargeEventFraction,
                 ["produced"] = c.Produced, ["applied"] = c.Applied, ["duplicates"] = c.Duplicates,
                 ["gaps"] = c.Gaps, ["stateMismatches"] = c.StateMismatches, ["errors"] = c.Errors, ["nacks"] = c.Nacks,
                 ["largeEvents"] = c.LargeEvents,
@@ -212,12 +215,19 @@ public static class ReportWriter
             foreach (var x in r.Metrics.ErrorSamples.Take(20)) sb.AppendLine($"- {x}");
         }
         sb.AppendLine();
-        sb.AppendLine("## Groups");
+        var groupRows = s["groups"]!.AsArray().Select(g => g!.AsObject()).ToList();
+        const int maxRows = 25;
+        if (groupRows.Count > maxRows)
+        {
+            sb.AppendLine($"## Groups ({groupRows.Count}; worst {maxRows} by e2e p99 — all groups in summary.json)");
+            groupRows = groupRows.OrderByDescending(g => (double)g["e2eP99Ms"]!).Take(maxRows).ToList();
+        }
+        else sb.AppendLine("## Groups");
         sb.AppendLine();
-        sb.AppendLine("| group | sources | workers | offered/s | produced | applied | dup | e2e p50 | e2e p99 | e2e max |");
-        sb.AppendLine("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
-        foreach (var g in s["groups"]!.AsArray())
-            sb.AppendLine($"| {g!["name"]} | {g["sources"]} | {g["workers"]} | {g["offeredRatePerSec"]} | {g["produced"]} | {g["applied"]} | {g["duplicates"]} | {g["e2eP50Ms"]} | {g["e2eP99Ms"]} | {g["e2eMaxMs"]} |");
+        sb.AppendLine("| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |");
+        sb.AppendLine("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
+        foreach (var g in groupRows)
+            sb.AppendLine($"| {g["name"]} | {g["sources"]} | {g["workers"]} | {g["baseRatePerSourcePerMin"]} | {g["offeredRatePerSec"]} | {g["payloadBytes"]} | {g["largeEventFraction"]} | {g["produced"]} | {g["applied"]} | {g["duplicates"]} | {g["e2eP50Ms"]} | {g["e2eP99Ms"]} | {g["e2eMaxMs"]} |");
         return sb.ToString();
     }
 

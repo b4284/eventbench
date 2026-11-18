@@ -15,12 +15,12 @@ public sealed class LatencyMetric
     public string Name { get; }
     public string Description { get; }
 
-    public LatencyMetric(string name, string description)
+    public LatencyMetric(string name, string description, int significantDigits = 3)
     {
         Name = name;
         Description = description;
-        _recorder = new Recorder(1, MaxTrackableUs, 3, (id, low, high, digits) => new LongConcurrentHistogram(id, low, high, digits));
-        _cumulative = new LongHistogram(1, MaxTrackableUs, 3);
+        _recorder = new Recorder(1, MaxTrackableUs, significantDigits, (id, low, high, digits) => new LongConcurrentHistogram(id, low, high, digits));
+        _cumulative = new LongHistogram(1, MaxTrackableUs, significantDigits);
     }
 
     public void Record(long micros)
@@ -35,8 +35,8 @@ public sealed class LatencyMetric
     {
         lock (_rotateLock)
         {
-            // Multi-writer recorder: the factory must produce concurrent histograms.
-            _interval = _recorder.GetIntervalHistogram();
+            // Multi-writer recorder (factory produces concurrent histograms); recycle the previous interval.
+            _interval = _recorder.GetIntervalHistogram(_interval);
             _cumulative.Add(_interval);
             return IntervalSnapshot.From(_interval);
         }

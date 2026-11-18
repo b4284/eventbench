@@ -36,10 +36,13 @@ public sealed class SourceScript
     public long UploadFold { get; private set; }
     public int OpenRecords => _open.Count;
 
-    public SourceScript(int sourceId, int groupId, int seed)
+    private readonly GroupInfo _group;
+
+    public SourceScript(int sourceId, GroupInfo group, int seed)
     {
         SourceId = sourceId;
-        GroupId = groupId;
+        GroupId = group.Id;
+        _group = group;
         _rng = new FastRandom(Hashing.SplitMix((ulong)seed) ^ Hashing.SplitMix((ulong)sourceId + 0x5151));
     }
 
@@ -48,13 +51,22 @@ public sealed class SourceScript
         var mix = plan.Options.OpMix;
         OpType op = ChooseOp(mix);
 
+        // Random sprinkled large events (Workload:LargePayload) ...
         bool large = plan.TryTakeLarge(ref _rng);
         if (large && op is OpType.Get or OpType.Complete)
             op = _open.Count > 0 ? OpType.Update : OpType.Create;
+        // ... or the group's own profile: uploads ride on Create/Update, Get/Complete stay small.
+        if (!large && _group.LargeEventFraction > 0 && op is OpType.Create or OpType.Update)
+            large = _rng.NextDouble() < _group.LargeEventFraction;
 
-        int size = large
-            ? _rng.NextInt(plan.Options.LargePayload.MinBytes, Math.Max(plan.Options.LargePayload.MinBytes + 1, plan.Options.LargePayload.MaxBytes + 1))
-            : plan.Options.PayloadBytes;
+        int size;
+        if (large)
+        {
+            int min = _group.LargeMinBytes ?? plan.Options.LargePayload.MinBytes;
+            int max = Math.Max(min, _group.LargeMaxBytes ?? plan.Options.LargePayload.MaxBytes);
+            size = _rng.NextInt(min, max + 1);
+        }
+        else size = SmallPayload(plan);
 
         var ev = NewEvent(op, scheduledAtUs, size, large ? EventFlags.Large : EventFlags.None);
 
@@ -108,11 +120,13 @@ public sealed class SourceScript
     {
         while (_open.Count > 0)
         {
-            var ev = NewEvent(OpType.Complete, scheduledAtUs, plan.Options.PayloadBytes, EventFlags.Closing);
+            var ev = NewEvent(OpType.Complete, scheduledAtUs, SmallPayload(plan), EventFlags.Closing);
             CompleteAt(_open.Count - 1, ev);
             output.Add(ev);
         }
     }
+
+    private int SmallPayload(WorkloadPlan plan) => _group.PayloadBytes ?? plan.Options.PayloadBytes;
 
     private void CompleteAt(int idx, EventEnvelope ev)
     {

@@ -54,26 +54,29 @@ public sealed class MetricsHub
     public MetricsHub(Topology topology)
     {
         Groups = topology.Groups.Select(_ => new GroupCounters()).ToArray();
-        GroupE2E = topology.Groups.Select(g => new LatencyMetric($"e2e[{g.Name}]", $"e2e for group {g.Name}")).ToArray();
+        // 2 significant digits (1% resolution) keeps hundreds of per-group histograms small.
+        GroupE2E = topology.Groups.Select(g => new LatencyMetric($"e2e[{g.Name}]", $"e2e for group {g.Name}", 2)).ToArray();
         All = [E2E, E2ESent, ProducerLag, Publish, QueueWait, BrokerDwell, Receive, Load, Process, Commit, Ack, Service, E2ELarge];
     }
 
     public bool ShouldMeasure(EventEnvelope ev) => !ev.IsClosing && ev.ScheduledAtUs >= MeasureFromUs;
 
-    public void OnPublished(int group, IReadOnlyList<EventEnvelope> batch, long callUs, long approxBytes)
+    /// <summary>A batch may span several groups (shared producers); counters are attributed per event.</summary>
+    public void OnPublished(IReadOnlyList<EventEnvelope> batch, long callUs, long approxBytes)
     {
-        var g = Groups[group];
         long closing = 0, large = 0;
         foreach (var ev in batch)
         {
-            if (ev.IsClosing) closing++;
-            if (ev.IsLarge) large++;
+            var g = Groups[ev.Group];
+            Interlocked.Increment(ref g.Produced);
+            if (ev.IsClosing) { closing++; Interlocked.Increment(ref g.ClosingProduced); }
+            if (ev.IsLarge) { large++; Interlocked.Increment(ref g.LargeEvents); }
+            Interlocked.Add(ref g.BytesPublished, 200 + (ev.Payload?.Length ?? 0) * 4 / 3);
             if (ShouldMeasure(ev)) ProducerLag.Record(ev.SentAtUs - ev.ScheduledAtUs);
         }
-        Add(ref g.Produced, ref Total.Produced, batch.Count);
-        if (closing > 0) Add(ref g.ClosingProduced, ref Total.ClosingProduced, closing);
-        if (large > 0) Add(ref g.LargeEvents, ref Total.LargeEvents, large);
-        Interlocked.Add(ref g.BytesPublished, approxBytes);
+        Interlocked.Add(ref Total.Produced, batch.Count);
+        if (closing > 0) Interlocked.Add(ref Total.ClosingProduced, closing);
+        if (large > 0) Interlocked.Add(ref Total.LargeEvents, large);
         Interlocked.Add(ref Total.BytesPublished, approxBytes);
         Publish.Record(callUs);
     }
@@ -144,9 +147,4 @@ public sealed class MetricsHub
         Interlocked.Increment(ref field(Total));
     }
 
-    private static void Add(ref long a, ref long b, long n)
-    {
-        Interlocked.Add(ref a, n);
-        Interlocked.Add(ref b, n);
-    }
 }
