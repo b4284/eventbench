@@ -8,8 +8,8 @@ Implemented today:
 
 | Component | Types |
 |---|---|
-| Broker | `pgmq` (FIFO-grouped or partitioned), `inmemory` (baseline plus chaos injection) |
-| Store  | `postgres`, `inmemory` |
+| Broker | `pgmq` (FIFO-grouped or partitioned), `nats` (JetStream), `inmemory` (baseline plus chaos injection) |
+| Store  | `postgres`, `natskv` (JetStream KV + Object Store), `inmemory` |
 
 ## Quick start (podman)
 
@@ -141,6 +141,79 @@ strings (`Maximum Pool Size`, `Max Auto Prepare`). Server-side settings live in 
 `infra/pgbouncer/pgbouncer.ini` (`default_pool_size`, …). The data path goes through PgBouncer in
 transaction mode. DDL, oracle scans, and stats use the direct port.
 
+## NATS JetStream / KV
+
+```bash
+./infra/nats/up.sh        # nats:2.12-alpine as eb-nats, JetStream file store in volume eb-nats-data, :4222 / :8222
+$B run -c configs/nats-postgres.json     # JetStream broker + Postgres store
+$B run -c configs/nats-natskv.json       # JetStream broker + JetStream KV store
+$B run -c configs/pgmq-natskv.json       # pgmq broker + JetStream KV store
+./infra/nats/down.sh      # removes the container and its volume
+```
+
+`infra/nats/nats-server.conf` raises `max_payload` to 64 MB so inline 16 MB uploads (~22 MB of base64 JSON)
+travel through the broker. `NATS_SYNC_INTERVAL` (default `2m`, the nats-server default) controls fsync.
+With the default, a PubAck means the message was written to the file store but not yet fsynced. With
+`NATS_SYNC_INTERVAL=always` every write is fsynced (comparable to `synchronous_commit=on`). On this host
+that caps the KV store at roughly 450 events/s.
+
+**Broker (`Broker:Type=nats`).**
+
+* One **work-queue stream per group** (`EB_G{g}`, file storage), with one subject per partition
+  (`eb.g{g}.p{p}`). A source maps to a partition by its index in the group. `PartitionsPerGroup: 0`
+  means one partition per worker.
+* Each partition has one durable **pull** consumer filtered on its subject. Exactly one worker owns it
+  (`p % workers == worker`), so per-source order is stream order.
+* **Publish** goes subject by subject, one message at a time, and awaits each PubAck. Subjects publish
+  concurrently. A failure stops that subject's chain, so the stream never holds seq n+1 without seq n.
+  `Nats-Msg-Id = source:seq` turns the producer's batch retry into server-side duplicates.
+* **Ack** is a JetStream ack, and the work-queue retention deletes the message. So the backlog
+  (`GetBacklogAsync`, `broker_backlog`) is the streams' message count.
+* **Nack is never sent to the server.** A JetStream NAK would redeliver the message *after* later
+  messages of the same subject. Instead the partition is **paused** for the retry delay, then its
+  consumer is **deleted and recreated** as the next generation with `DeliverPolicy.All`. Acked messages
+  are already gone, so delivery restarts at the oldest unacked message, in stream order. This covers
+  the failed message, the rest of its lane, and anything fetched after it. Any already-applied
+  redeliveries are skipped by the store cursor. The rewind only happens inside `ReceiveAsync`, when the
+  worker has resolved every delivery of its previous batch.
+* **Lost deliveries.** The consumer delivery sequence grows by exactly one per delivery, so a jump means
+  a message was delivered but never reached the worker, for example a pull that timed out client-side.
+  JetStream would redeliver that message after `AckWait`, which is after later ones. The partition
+  therefore stops handing out messages at the jump and rewinds immediately (`broker_delivery_gaps`,
+  `broker_consumer_resets`). As a result, ordering does not depend on `AckWait` or `MaxAckPending`
+  (default 2 × `BatchSize`).
+* **Receive:** a no-wait fetch of up to `BatchSize` messages. If it is empty and the worker owns a
+  single partition, the worker long-polls for one message (`LongPollMs`) and then takes whatever else is
+  ready. `EnqueuedAtUs` is the JetStream message timestamp.
+
+**KV store (`Store:Type=natskv`).** Buckets `{p}_cursor` and `{p}_record` (KV, file, history 1). The object
+stores `{p}_upload` and `{p}_blob` hold MB-sized uploads and claim-check blobs. JetStream KV has no
+multi-key transactions, so a commit is built from single-key compare-and-set operations:
+
+1. Read cursor key `c{source}` and its revision (an absent key means 0). If cursor ≥ seq, return
+   **Duplicate**. If cursor ≠ seq-1, return **Gap**.
+2. Write record key `r{record}` with a revision CAS (create-only for an insert). The value carries
+   `AppliedSeq` plus the **pre-image**. If `AppliedSeq == seq` the mutation is already there, from an
+   earlier attempt or a concurrent duplicate, so it is skipped (idempotent). A version mismatch returns
+   **RecordConflict** only if a re-read cursor is still seq-1. Otherwise a duplicate already committed it,
+   and the result is **Duplicate**.
+3. Write the upload to the object store as `{source}-{seq}`, with size and checksum in its metadata.
+   Writing it again is idempotent.
+4. **Commit point:** cursor CAS seq-1 → seq on the revision from step 1. **Applied** if it wins. A lost
+   race re-reads the cursor and yields Duplicate.
+
+Readers (`LoadAsync` and the oracle scans) read the cursor *before* the record and resolve visibility
+against it:
+* `AppliedSeq ≤ cursor`: the record is current.
+* `AppliedSeq = cursor+1`: the write is not committed yet, so readers see the pre-image (or "absent" for an insert).
+* Further ahead: the cursor read is stale, so read again.
+
+Writes and uploads from an attempt that never advanced the cursor are therefore never observed.
+`SupportsTransactionalAck` is false (`AckMode: AfterCommit`). Test knobs:
+`Broker:ChaosLoseDeliveryProbability` and `Store:ChaosFailProbability` (Load throws, so the worker nacks).
+Both still PASS. `EB_NATS_URL=nats://127.0.0.1:4222 dotnet test` also runs a concurrent-duplicate
+commit test against the server.
+
 ## Metrics & output
 
 Each run writes `results/<utc-stamp>_<name>/`:
@@ -186,8 +259,9 @@ and `Type` selects the implementation. Ordering approaches for other brokers:
 ```
 src/EventBench.Core       abstractions, config, workload generator, worker runtime, metrics, oracle, reports, in-memory impls
 src/EventBench.Postgres   pgmq broker, Postgres store (schema + commit function), Postgres/PgBouncer stats
+src/EventBench.Nats       NATS JetStream broker, JetStream KV/Object Store state store
 src/EventBench.Cli        `eventbench` CLI (run / validate / compare)
 tests/EventBench.Tests    oracle self-tests + generator determinism
 configs/                  base configs and overlays
-infra/                    podman scripts + PgBouncer config
+infra/                    podman scripts + PgBouncer config (infra/nats: NATS server)
 ```
