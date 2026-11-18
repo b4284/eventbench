@@ -7,6 +7,7 @@ using EventBench.Core.Runner;
 using EventBench.Kafka;
 using EventBench.Mongo;
 using EventBench.Postgres;
+using EventBench.RabbitMq;
 using Microsoft.Extensions.Configuration;
 
 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
@@ -81,6 +82,7 @@ catch (Exception ex)
 static ComponentRegistry CreateRegistry() => ComponentRegistry.WithBuiltIns()
     .Register(new PgmqBrokerFactory())
     .Register(new KafkaBrokerFactory())
+    .Register(new RabbitMqBrokerFactory())
     .Register(new PostgresStoreFactory())
     .Register(new MongoStoreFactory());
 
