@@ -8,7 +8,7 @@ Implemented today:
 
 | Component | Types |
 |---|---|
-| Broker | `pgmq` (FIFO-grouped or partitioned), `inmemory` (baseline plus chaos injection) |
+| Broker | `pgmq` (FIFO-grouped or partitioned), `rabbitmq` (quorum-queue partitions), `inmemory` (baseline plus chaos injection) |
 | Store  | `postgres`, `inmemory` |
 
 ## Quick start (podman)
@@ -27,6 +27,7 @@ $B run -c configs/pgmq-fifo.json --Worker:WorkersPerGroup=16 --Broker:FifoReadFu
 $B compare results/                                                     # one line per run
 ./infra/psql.sh            # psql into Postgres
 ./infra/psql.sh bouncer    # PgBouncer admin console (SHOW POOLS; SHOW STATS;)
+./infra/rabbitmq/up.sh && $B run -c configs/rabbitmq-postgres.json      # RabbitMQ broker + Postgres store
 ./infra/down.sh
 ```
 
@@ -141,6 +142,55 @@ strings (`Maximum Pool Size`, `Max Auto Prepare`). Server-side settings live in 
 `infra/pgbouncer/pgbouncer.ini` (`default_pool_size`, …). The data path goes through PgBouncer in
 transaction mode. DDL, oracle scans, and stats use the direct port.
 
+## RabbitMQ specifics
+
+`./infra/rabbitmq/up.sh` starts `rabbitmq:4.4.1-management` as the standalone podman container `eb-rabbitmq`
+(AMQP `127.0.0.1:5672`, management `http://127.0.0.1:15672`, user `bench`/`bench`); `./infra/rabbitmq/down.sh`
+removes it. It is independent of the Postgres pod; `configs/rabbitmq-postgres.json` uses RabbitMQ as the broker and
+Postgres as the store (`AckMode: AfterCommit`: a transactional ack across RabbitMQ and Postgres is impossible).
+`infra/rabbitmq/rabbitmq.conf` raises `max_message_size` to 64 MiB (the 4.x default of 16 MiB is too small for
+~22 MB base64 inline uploads) and refreshes stats every second (`quorum_tick_interval=1000` via erl args).
+
+* **Topology.** Per group, `PartitionsPerGroup` durable **quorum queues** `{QueuePrefix}.g{group}.p{partition}`
+  (0 = one per worker). A source maps to `partition = indexInGroup % partitions`, and partition `p` is consumed only
+  by worker `p % workers`, so each queue has exactly one consumer. `x-single-active-consumer` is a safety net.
+  `SetupAsync` deletes and redeclares the queues. `x-delivery-limit` is `-1` (unlimited): RabbitMQ 4 defaults to
+  20 and then drops the message, and a consumer channel closing counts as a delivery attempt.
+* **Publish.** Persistent messages and the mandatory flag, on a confirm-mode channel. A batch is pipelined in list
+  order on one channel (so per-queue order equals publish order), and `PublishAsync` returns only after every
+  message is confirmed. A nack, a return or a timeout fails the batch; the producer retries it whole, and the
+  copies that were already confirmed become duplicates that the store cursor skips. Header `eb-ts` carries the
+  publish time (µs) used for `broker_dwell`.
+* **Receive.** One channel per worker (`basic.qos` prefetch = `Prefetch`, default 4 × `BatchSize`). Pushed
+  deliveries go into a `Channel<T>` and then into a local buffer kept in delivery order. `ReceiveAsync` hands out up
+  to `max` of them, or returns empty after `ReceiveWaitMs`.
+* **Ack.** `basic.ack` of the single delivery tag. Only after the ack has been sent can the source's next message
+  be handed out.
+* **Nack — why not `basic.nack(requeue)`.** We probed quorum queues on 4.4.1 with prefetch 10. After `nack(3,
+  requeue)`, message 3 is redelivered, but 4..10 had already been delivered ahead of it. When a channel closes, its
+  unacked messages return to the head of the queue in the order they were *last delivered* (1,2,4..10,3). So a
+  broker requeue breaks per-source order, and so does a channel close after any requeue. Instead, **a nack never
+  goes to the broker.** The message stays unacked and holds its prefetch slot, while the local buffer marks it
+  delayed *in its original position*. The hand-out walk skips every source that has an earlier entry still handed
+  out or delayed, so the failed message is retried after the delay before any later message of its source. Other
+  sources in the same partition keep flowing. Because the client never requeues, the broker's view of delivery
+  order always equals queue order. That makes the failure path safe too: if a channel dies, the broker requeues
+  everything in order, the consumer drops its buffer, and it re-subscribes. Acks of deliveries from the dead
+  channel fail; the state is already committed, so the redelivered copy is skipped as a duplicate.
+  `OrderedRedeliveryBuffer` / `ConfirmTracker` are unit-tested in `tests/EventBench.Tests/RabbitMqBookkeepingTests.cs`.
+* **Backlog.** Ready plus unacked comes from the management API (`ManagementUrl`), combined by `max` with an exact
+  ready count from passive declares. The time series adds `broker_ready`, `broker_unacked`,
+  `broker_max_queue_len` and `broker_consumers`.
+* **Test-only knob.** `Broker:TestNackProbability` (default `0`, never use it for benchmarks) makes the consumer treat
+  that fraction of deliveries as failed by the worker, nacking them with `TestNackDelayMs` (default
+  `Worker:RetryDelayMs`). It exercises the retry path: `--Broker:TestNackProbability=0.02` must still PASS with
+  `runtime_ordering_gap` = 0. Injected nacks are logged and reported as `broker_test_nacks`, not in the worker's `nacks`.
+
+Limitations: a broker-side nack of a message *inside* a batch, while a later message of the same batch is
+confirmed, would leave a gap in the queue. The producer's retry re-publishes the whole batch, but the queue then
+holds `n+1` before the retried `n`, and the worker keeps nacking `n+1` as a gap. No such nack was observed in single-node
+runs. Closing that hole would need idempotent, gap-free publishing, which AMQP 0-9-1 does not offer.
+
 ## Metrics & output
 
 Each run writes `results/<utc-stamp>_<name>/`:
@@ -178,7 +228,7 @@ and `Type` selects the implementation. Ordering approaches for other brokers:
 - Kafka / Redpanda: partitions keyed by source.
 - NATS JetStream: a subject per source partition with `MaxAckPending=1` consumers, or ordered consumers.
 - Redis Streams: a stream per partition with one consumer per stream.
-- RabbitMQ: single-active-consumer queues per partition, or consistent-hash exchange.
+- RabbitMQ: implemented as `rabbitmq` (see below).
 - Pulsar: `Key_Shared` subscription.
 
 ## Layout
@@ -186,8 +236,9 @@ and `Type` selects the implementation. Ordering approaches for other brokers:
 ```
 src/EventBench.Core       abstractions, config, workload generator, worker runtime, metrics, oracle, reports, in-memory impls
 src/EventBench.Postgres   pgmq broker, Postgres store (schema + commit function), Postgres/PgBouncer stats
+src/EventBench.RabbitMq   RabbitMQ broker (quorum-queue partitions, publisher confirms, client-side ordered retry)
 src/EventBench.Cli        `eventbench` CLI (run / validate / compare)
 tests/EventBench.Tests    oracle self-tests + generator determinism
 configs/                  base configs and overlays
-infra/                    podman scripts + PgBouncer config
+infra/                    podman scripts + PgBouncer config; infra/rabbitmq/ for RabbitMQ
 ```

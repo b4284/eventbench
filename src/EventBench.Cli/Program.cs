@@ -5,6 +5,7 @@ using EventBench.Core.Model;
 using EventBench.Core.Reporting;
 using EventBench.Core.Runner;
 using EventBench.Postgres;
+using EventBench.RabbitMq;
 using Microsoft.Extensions.Configuration;
 
 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
@@ -78,6 +79,7 @@ catch (Exception ex)
 
 static ComponentRegistry CreateRegistry() => ComponentRegistry.WithBuiltIns()
     .Register(new PgmqBrokerFactory())
+    .Register(new RabbitMqBrokerFactory())
     .Register(new PostgresStoreFactory());
 
 static (BenchConfig, IConfiguration) LoadConfig(string[] args)
