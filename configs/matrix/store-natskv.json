@@ -1,0 +1,11 @@
+{
+  "Store": {
+    "Type": "natskv",
+    "Url": "nats://127.0.0.1:4222",
+    "BucketPrefix": "eb",
+    "Connections": 4,
+    "RequestTimeoutSeconds": 30,
+    "Storage": "File",
+    "MaxCasAttempts": 16
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "Store": {
+    "Type": "mongo",
+    "ConnectionString": "mongodb://127.0.0.1:27017/?directConnection=true&maxPoolSize=1000&maxConnecting=8",
+    "Database": "eventbench",
+    "CollectionPrefix": "eb",
+    "UseTransactions": true,
+    "ChunkSizeBytes": 1048576
+  }
+}

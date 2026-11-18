@@ -1,0 +1,125 @@
+# pool-128 — PASS ✅
+
+- Broker: `pgmq fifo via read_grouped_head, index=Btree, vt=30s, unlogged=False, delete on ack @ 127.0.0.1:6432/bench (pool max 400)`
+- Store: `postgres @ 127.0.0.1:6432/bench (pool max 400), unlogged=False, fillfactor=70`
+- Ack mode: `InTransaction`, batch 10, parallel/worker 1
+- Topology: 20 groups, 32000 sources, 240 workers, offered 8000 ev/s
+- Phases: run 60.102s, closing 0.341s, drain 5.719s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 551677 | 551677 | 7989.327 | 7989.186 | 22260.7 | 0 | 0 | 0 | 12 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 399381 | 11.423 | 10.567 | 16.655 | 26.079 | 40.575 | 121.727 |
+| e2e_from_send | 399381 | 10.285 | 9.319 | 15.479 | 24.847 | 37.119 | 120.767 |
+| producer_lag | 399381 | 1.138 | 0.991 | 2.405 | 3.859 | 6.703 | 27.599 |
+| publish_call | 296808 | 2.437 | 2.197 | 3.371 | 7.023 | 13.855 | 542.207 |
+| queue_wait | 399381 | 4.925 | 4.635 | 6.875 | 9.951 | 15.087 | 45.023 |
+| broker_dwell | 399381 | 3.786 | 3.503 | 5.659 | 8.575 | 13.527 | 43.935 |
+| receive_call | 255230 | 4.192 | 2.455 | 3.993 | 10.439 | 483.839 | 1996.799 |
+| ctx_load | 399381 | 0.79 | 0.644 | 1.438 | 2.537 | 4.083 | 22.239 |
+| process | 399381 | 0.002 | 0.001 | 0.002 | 0.004 | 0.02 | 5.639 |
+| ctx_commit | 399381 | 2.091 | 1.994 | 2.935 | 4.299 | 6.335 | 84.799 |
+| service | 399381 | 5.36 | 4.049 | 10.359 | 19.503 | 30.143 | 113.727 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 7989.186 | 8225.1 |
+| applied_total | 302608.959 | 494477 |
+| bench_cpu_cores | 2.546 | 2.685 |
+| bench_cpu_pct | 10.606 | 11.19 |
+| bench_gc_gen0 | 3.592 | 5 |
+| bench_gc_gen1 | 2.163 | 4 |
+| bench_gc_gen2 | 0.02 | 1 |
+| bench_gc_heap_mb | 1120.91 | 1323.4 |
+| bench_mem_mb | 906.967 | 1116.7 |
+| bench_threadpool_queue | 3.531 | 39 |
+| bench_threadpool_threads | 24.612 | 28 |
+| broker_backlog | 61.776 | 80 |
+| broker_oldest_age_s | 0 | 0 |
+| broker_visible | 7.857 | 22 |
+| ctr_eb_pgbouncer_cpu_pct | 76.341 | 78.44 |
+| ctr_eb_pgbouncer_mem_mb | 13.898 | 14.7 |
+| ctr_eb_postgres_cpu_pct | 1030.482 | 1073.15 |
+| ctr_eb_postgres_mem_mb | 1819.108 | 1831.1 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 56.04 | 60.49 |
+| in_flight | 64.51 | 101 |
+| nacks_per_s | 0 | 0 |
+| pg_cache_hit_pct | 100 | 100 |
+| pg_conn_active | 27.408 | 44 |
+| pg_conn_idle | 101.878 | 115 |
+| pg_conn_idle_in_tx | 0 | 0 |
+| pg_conn_lock_wait | 0.041 | 1 |
+| pg_conn_total | 129.286 | 130 |
+| pg_db_size_mb | 311.459 | 363.3 |
+| pg_deadlocks | 0 | 0 |
+| pg_rollbacks_per_s | 0 | 0 |
+| pg_temp_mb_per_s | 0 | 0 |
+| pg_tps | 36574.318 | 39432.4 |
+| pg_tup_del_per_s | 8167.32 | 12918.6 |
+| pg_tup_fetch_per_s | 191289.62 | 228154.4 |
+| pg_tup_ins_per_s | 9489.094 | 15768 |
+| pg_tup_upd_per_s | 20983.024 | 22533.9 |
+| pg_wal_mb_per_s | 21.141 | 32.94 |
+| pgb_cl_active | 415 | 415 |
+| pgb_cl_waiting | 0 | 0 |
+| pgb_maxwait_ms | 0 | 0 |
+| pgb_sv_active | 39.408 | 82 |
+| pgb_sv_idle | 87.306 | 114 |
+| pgb_sv_used | 1.286 | 3 |
+| produced_per_s | 7989.327 | 8230.1 |
+| produced_total | 302673.469 | 494550 |
+| publish_mb_per_s | 4.122 | 4.25 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 32000/32000 source cursors at the expected last sequence |
+| records_complete | pass | all 105,163 records are Completed |
+| record_counts | pass | 105,163 records found, 105,163 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 12 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 551,677 events applied by workers, 551,677 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+
+## Groups
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| A-0 | 1600 | 12 | 22.5 | 600 | 256 | 0 | 40008 | 40008 | 0 | 10.687 | 26.879 | 63.999 |
+| A-1 | 1600 | 12 | 22.5 | 600 | 256 | 0 | 40120 | 40120 | 0 | 10.687 | 27.391 | 60.159 |
+| A-2 | 1600 | 12 | 22.5 | 600 | 256 | 0 | 39307 | 39307 | 0 | 10.623 | 26.495 | 70.143 |
+| A-3 | 1600 | 12 | 22.5 | 600 | 256 | 0 | 39873 | 39873 | 0 | 10.623 | 27.135 | 63.231 |
+| A-4 | 1600 | 12 | 22.5 | 600 | 256 | 0 | 40172 | 40172 | 0 | 10.687 | 27.903 | 56.575 |
+| A-5 | 1600 | 12 | 22.5 | 600 | 256 | 0 | 40079 | 40079 | 0 | 10.687 | 26.623 | 121.855 |
+| A-6 | 1600 | 12 | 22.5 | 600 | 256 | 0 | 40015 | 40015 | 0 | 10.687 | 27.135 | 75.263 |
+| A-7 | 1600 | 12 | 22.5 | 600 | 256 | 0 | 40065 | 40065 | 0 | 10.623 | 27.135 | 118.271 |
+| A-8 | 1600 | 12 | 22.5 | 600 | 256 | 0 | 40127 | 40127 | 0 | 10.687 | 26.751 | 69.631 |
+| A-9 | 1600 | 12 | 22.5 | 600 | 256 | 0 | 40434 | 40434 | 0 | 10.687 | 27.775 | 67.583 |
+| B-0 | 1600 | 12 | 7.5 | 200 | 256 | 0 | 15052 | 15052 | 0 | 10.367 | 21.247 | 43.775 |
+| B-1 | 1600 | 12 | 7.5 | 200 | 256 | 0 | 15105 | 15105 | 0 | 10.367 | 21.247 | 41.983 |
+| B-2 | 1600 | 12 | 7.5 | 200 | 256 | 0 | 15083 | 15083 | 0 | 10.367 | 20.607 | 54.783 |
+| B-3 | 1600 | 12 | 7.5 | 200 | 256 | 0 | 15232 | 15232 | 0 | 10.431 | 21.759 | 33.791 |
+| B-4 | 1600 | 12 | 7.5 | 200 | 256 | 0 | 15207 | 15207 | 0 | 10.431 | 21.631 | 37.631 |
+| B-5 | 1600 | 12 | 7.5 | 200 | 256 | 0 | 15105 | 15105 | 0 | 10.367 | 20.735 | 34.815 |
+| B-6 | 1600 | 12 | 7.5 | 200 | 256 | 0 | 15074 | 15074 | 0 | 10.431 | 21.503 | 48.127 |
+| B-7 | 1600 | 12 | 7.5 | 200 | 256 | 0 | 15345 | 15345 | 0 | 10.431 | 20.735 | 45.567 |
+| B-8 | 1600 | 12 | 7.5 | 200 | 256 | 0 | 15167 | 15167 | 0 | 10.431 | 21.631 | 41.215 |
+| B-9 | 1600 | 12 | 7.5 | 200 | 256 | 0 | 15107 | 15107 | 0 | 10.431 | 20.607 | 40.191 |

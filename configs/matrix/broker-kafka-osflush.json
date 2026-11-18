@@ -1,0 +1,14 @@
+{
+  "Broker": {
+    "Type": "kafka",
+    "BootstrapServers": "127.0.0.1:9092",
+    "TopicPrefix": "eb",
+    "PartitionsPerGroup": 0,
+    "FlushMessages": 0,
+    "MaxMessageBytes": 67108864,
+    "ProducerInstances": 0,
+    "LingerMs": 2,
+    "Compression": "none",
+    "CommitIntervalMs": 100
+  }
+}

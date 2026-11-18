@@ -1,0 +1,21 @@
+{
+  "Broker": {
+    "Type": "rabbitmq",
+    "Host": "127.0.0.1",
+    "Port": 5672,
+    "User": "bench",
+    "Password": "bench",
+    "VirtualHost": "/",
+    "ManagementUrl": "http://127.0.0.1:15672",
+    "QueuePrefix": "eb",
+    "PartitionsPerGroup": 0,
+    "Prefetch": 0,
+    "SingleActiveConsumer": true,
+    "DeliveryLimit": -1,
+    "ConsumerConnections": 4,
+    "PublisherConnections": 2,
+    "ReceiveWaitMs": 200,
+    "PublishConfirmTimeoutSeconds": 60,
+    "TestNackProbability": 0
+  }
+}
