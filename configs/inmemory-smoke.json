@@ -1,0 +1,17 @@
+{
+  "Name": "inmemory-smoke",
+  "Workload": {
+    "DurationSeconds": 10,
+    "WarmupSeconds": 2,
+    "DrainTimeoutSeconds": 30,
+    "Groups": [
+      { "Name": "hot",  "Count": 2, "Sources": 200, "RatePerGroup": 2000 },
+      { "Name": "cold", "Count": 2, "Sources": 200, "RatePerGroup": 500 }
+    ],
+    "LargePayload": { "Probability": 0.001, "MaxCount": 3, "MinBytes": 1048576, "MaxBytes": 4194304 }
+  },
+  "Worker": { "WorkersPerGroup": 4, "BatchSize": 10 },
+  "Metrics": { "ContainerStats": false },
+  "Broker": { "Type": "inmemory" },
+  "Store":  { "Type": "inmemory" }
+}

@@ -1,0 +1,10 @@
+{
+  "Name": "pgmq-32k",
+  "Workload": {
+    "Groups": [
+      { "Name": "A", "Count": 10, "Sources": 1600, "RatePerGroup": 600 },
+      { "Name": "B", "Count": 10, "Sources": 1600, "RatePerGroup": 200 }
+    ]
+  },
+  "Worker": { "WorkersPerGroup": 12 }
+}

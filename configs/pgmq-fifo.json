@@ -1,0 +1,58 @@
+{
+  "Name": "pgmq-fifo",
+  "Workload": {
+    "Seed": 12345,
+    "DurationSeconds": 60,
+    "WarmupSeconds": 10,
+    "DrainTimeoutSeconds": 180,
+    "Arrival": "Poisson",
+    "ProducersPerGroup": 1,
+    "MaxPublishBatch": 500,
+    "Groups": [
+      { "Name": "A", "Count": 10, "Sources": 800, "RatePerGroup": 300 },
+      { "Name": "B", "Count": 10, "Sources": 800, "RatePerGroup": 100 }
+    ],
+    "OpMix": { "CreateWeight": 1, "GetWeight": 2, "UpdateWeight": 5, "CompleteWeight": 1, "MaxOpenRecordsPerSource": 4 },
+    "PayloadBytes": 256,
+    "ContextBytes": 1024,
+    "LargePayload": { "Probability": 0.0002, "MaxCount": 12, "MinBytes": 2097152, "MaxBytes": 16777216, "Mode": "Inline" }
+  },
+  "Worker": {
+    "WorkersPerGroup": 8,
+    "BatchSize": 10,
+    "MaxParallelPerWorker": 1,
+    "AckMode": "AfterCommit",
+    "SimulatedWorkMicros": 0,
+    "RetryDelayMs": 250,
+    "IdleBackoffMinMs": 1,
+    "IdleBackoffMaxMs": 50
+  },
+  "Metrics": {
+    "SampleIntervalSeconds": 1,
+    "ContainerStats": true,
+    "ContainerStatsCommand": "podman stats --no-stream --format json",
+    "ContainerStatsIntervalSeconds": 3,
+    "ExternalStatsIntervalSeconds": 2
+  },
+  "Broker": {
+    "Type": "pgmq",
+    "ConnectionString": "Host=127.0.0.1;Port=6432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=400;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60",
+    "AdminConnectionString": "Host=127.0.0.1;Port=5432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=10",
+    "Ordering": "Fifo",
+    "FifoReadFunction": "read_grouped_head",
+    "FifoIndex": "Btree",
+    "QueuePrefix": "eb",
+    "Unlogged": false,
+    "VisibilityTimeoutSeconds": 30,
+    "ArchiveOnAck": false
+  },
+  "Store": {
+    "Type": "postgres",
+    "ConnectionString": "Host=127.0.0.1;Port=6432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=400;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60",
+    "AdminConnectionString": "Host=127.0.0.1;Port=5432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=10;Command Timeout=600",
+    "PgBouncerStatsCommand": "podman exec eb-postgres psql \"host=127.0.0.1 port=6432 dbname=pgbouncer user=bench password=bench\" --csv -c \"SHOW POOLS\"",
+    "TablePrefix": "eb",
+    "UnloggedTables": false,
+    "FillFactor": 70
+  }
+}
