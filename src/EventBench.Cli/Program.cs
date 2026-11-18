@@ -4,6 +4,7 @@ using EventBench.Core.Config;
 using EventBench.Core.Model;
 using EventBench.Core.Reporting;
 using EventBench.Core.Runner;
+using EventBench.Kafka;
 using EventBench.Postgres;
 using Microsoft.Extensions.Configuration;
 
@@ -78,6 +79,7 @@ catch (Exception ex)
 
 static ComponentRegistry CreateRegistry() => ComponentRegistry.WithBuiltIns()
     .Register(new PgmqBrokerFactory())
+    .Register(new KafkaBrokerFactory())
     .Register(new PostgresStoreFactory());
 
 static (BenchConfig, IConfiguration) LoadConfig(string[] args)
