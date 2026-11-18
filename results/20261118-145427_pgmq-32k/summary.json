@@ -1,0 +1,971 @@
+{
+  "name": "pgmq-32k",
+  "verdict": "PASS",
+  "error": null,
+  "startedUtc": "2026-11-18T14:54:27.0878435Z",
+  "broker": "pgmq fifo via read_grouped_head, index=Btree, vt=30s, unlogged=False, delete on ack @ 127.0.0.1:6432/bench (pool max 400)",
+  "store": "postgres @ 127.0.0.1:6432/bench (pool max 400), unlogged=False, fillfactor=70",
+  "ackMode": "AfterCommit",
+  "topology": {
+    "groups": 20,
+    "sources": 32000,
+    "workers": 240,
+    "offeredRatePerSec": 8000
+  },
+  "phases": {
+    "setupSeconds": 0.42,
+    "runSeconds": 30.104,
+    "closingSeconds": 0.368,
+    "drainSeconds": 4.217,
+    "drained": true
+  },
+  "throughput": {
+    "produced": 302109,
+    "applied": 302109,
+    "duplicates": 0,
+    "gaps": 0,
+    "stateMismatches": 0,
+    "errors": 0,
+    "nacks": 0,
+    "publishErrors": 0,
+    "largeEvents": 12,
+    "publishedMB": 322.751,
+    "steadyProducedPerSec": 8158.071,
+    "steadyAppliedPerSec": 8190.987,
+    "peakAppliedPerSec": 14646.6,
+    "overallAppliedPerSec": 8709.047
+  },
+  "latencyMs": [
+    {
+      "metric": "e2e",
+      "count": 204933,
+      "mean": 34.461,
+      "p50": 19.439,
+      "p90": 57.791,
+      "p99": 393.471,
+      "p99_9": 588.799,
+      "p99_99": 656.383,
+      "max": 840.191,
+      "description": "scheduled -\u003E acked (includes producer lag; coordinated-omission safe)"
+    },
+    {
+      "metric": "e2e_from_send",
+      "count": 204933,
+      "mean": 31.503,
+      "p50": 17.855,
+      "p90": 55.007,
+      "p99": 331.775,
+      "p99_9": 536.063,
+      "p99_99": 618.495,
+      "max": 829.439,
+      "description": "handed to broker -\u003E acked"
+    },
+    {
+      "metric": "producer_lag",
+      "count": 204933,
+      "mean": 2.958,
+      "p50": 1.4,
+      "p90": 3.799,
+      "p99": 13.823,
+      "p99_9": 382.463,
+      "p99_99": 519.167,
+      "max": 555.007,
+      "description": "scheduled -\u003E handed to broker"
+    },
+    {
+      "metric": "publish_call",
+      "count": 124757,
+      "mean": 3.502,
+      "p50": 2.769,
+      "p90": 5.511,
+      "p99": 13.703,
+      "p99_9": 26.079,
+      "p99_99": 167.423,
+      "max": 534.015,
+      "description": "duration of one publish (batch) call"
+    },
+    {
+      "metric": "queue_wait",
+      "count": 204933,
+      "mean": 12.168,
+      "p50": 5.951,
+      "p90": 11.095,
+      "p99": 257.663,
+      "p99_9": 441.087,
+      "p99_99": 509.183,
+      "max": 633.343,
+      "description": "handed to broker -\u003E received by a worker"
+    },
+    {
+      "metric": "broker_dwell",
+      "count": 204933,
+      "mean": 10.047,
+      "p50": 3.973,
+      "p90": 7.851,
+      "p99": 252.799,
+      "p99_9": 437.247,
+      "p99_99": 505.343,
+      "max": 621.567,
+      "description": "broker enqueue timestamp -\u003E received (broker clock)"
+    },
+    {
+      "metric": "receive_call",
+      "count": 111611,
+      "mean": 5.014,
+      "p50": 3.041,
+      "p90": 6.387,
+      "p99": 19.359,
+      "p99_9": 318.463,
+      "p99_99": 568.831,
+      "max": 617.471,
+      "description": "duration of a non-empty receive call"
+    },
+    {
+      "metric": "ctx_load",
+      "count": 204933,
+      "mean": 1.756,
+      "p50": 1.226,
+      "p90": 3.737,
+      "p99": 5.487,
+      "p99_9": 17.775,
+      "p99_99": 22.783,
+      "max": 98.367,
+      "description": "load execution context from store"
+    },
+    {
+      "metric": "process",
+      "count": 204933,
+      "mean": 0.002,
+      "p50": 0.001,
+      "p90": 0.002,
+      "p99": 0.004,
+      "p99_9": 0.022,
+      "p99_99": 2.479,
+      "max": 6.203,
+      "description": "worker compute (incl. payload verification \u002B simulated work)"
+    },
+    {
+      "metric": "ctx_commit",
+      "count": 204933,
+      "mean": 3.124,
+      "p50": 2.543,
+      "p90": 5.211,
+      "p99": 8.983,
+      "p99_9": 22.031,
+      "p99_99": 26.607,
+      "max": 116.031,
+      "description": "persist result \u002B advance cursor (\u002B tx ack)"
+    },
+    {
+      "metric": "ack",
+      "count": 204933,
+      "mean": 3.146,
+      "p50": 2.571,
+      "p90": 5.231,
+      "p99": 8.151,
+      "p99_9": 21.791,
+      "p99_99": 26.303,
+      "max": 50.015,
+      "description": "broker ack call (AfterCommit mode)"
+    },
+    {
+      "metric": "service",
+      "count": 204933,
+      "mean": 19.336,
+      "p50": 11.647,
+      "p90": 42.751,
+      "p99": 123.967,
+      "p99_9": 166.783,
+      "p99_99": 188.799,
+      "max": 330.751,
+      "description": "received -\u003E acked"
+    },
+    {
+      "metric": "e2e_large",
+      "count": 4,
+      "mean": 739.84,
+      "p50": 756.735,
+      "p90": 818.175,
+      "p99": 818.175,
+      "p99_9": 818.175,
+      "p99_99": 818.175,
+      "max": 818.175,
+      "description": "e2e of large-payload events only"
+    }
+  ],
+  "groups": [
+    {
+      "name": "A-0",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 600,
+      "produced": 21351,
+      "applied": 21351,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 0,
+      "e2eP50Ms": 19.855,
+      "e2eP99Ms": 135.167,
+      "e2eMaxMs": 219.775
+    },
+    {
+      "name": "A-1",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 600,
+      "produced": 21363,
+      "applied": 21363,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 0,
+      "e2eP50Ms": 20.079,
+      "e2eP99Ms": 133.119,
+      "e2eMaxMs": 196.479
+    },
+    {
+      "name": "A-2",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 600,
+      "produced": 21569,
+      "applied": 21569,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 0,
+      "e2eP50Ms": 20.047,
+      "e2eP99Ms": 139.007,
+      "e2eMaxMs": 222.719
+    },
+    {
+      "name": "A-3",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 600,
+      "produced": 21747,
+      "applied": 21747,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 1,
+      "e2eP50Ms": 20.223,
+      "e2eP99Ms": 202.111,
+      "e2eMaxMs": 337.407
+    },
+    {
+      "name": "A-4",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 600,
+      "produced": 21584,
+      "applied": 21584,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 0,
+      "e2eP50Ms": 20.015,
+      "e2eP99Ms": 144.767,
+      "e2eMaxMs": 234.367
+    },
+    {
+      "name": "A-5",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 600,
+      "produced": 21372,
+      "applied": 21372,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 1,
+      "e2eP50Ms": 20.047,
+      "e2eP99Ms": 496.895,
+      "e2eMaxMs": 656.383
+    },
+    {
+      "name": "A-6",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 600,
+      "produced": 21470,
+      "applied": 21470,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 2,
+      "e2eP50Ms": 20.383,
+      "e2eP99Ms": 404.735,
+      "e2eMaxMs": 840.191
+    },
+    {
+      "name": "A-7",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 600,
+      "produced": 21245,
+      "applied": 21245,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 2,
+      "e2eP50Ms": 20.063,
+      "e2eP99Ms": 562.687,
+      "e2eMaxMs": 756.735
+    },
+    {
+      "name": "A-8",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 600,
+      "produced": 21619,
+      "applied": 21619,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 0,
+      "e2eP50Ms": 19.983,
+      "e2eP99Ms": 143.231,
+      "e2eMaxMs": 248.319
+    },
+    {
+      "name": "A-9",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 600,
+      "produced": 21267,
+      "applied": 21267,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 1,
+      "e2eP50Ms": 20.079,
+      "e2eP99Ms": 559.615,
+      "e2eMaxMs": 811.007
+    },
+    {
+      "name": "B-0",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 200,
+      "produced": 8720,
+      "applied": 8720,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 1,
+      "e2eP50Ms": 17.999,
+      "e2eP99Ms": 95.487,
+      "e2eMaxMs": 181.247
+    },
+    {
+      "name": "B-1",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 200,
+      "produced": 8777,
+      "applied": 8777,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 0,
+      "e2eP50Ms": 17.935,
+      "e2eP99Ms": 94.527,
+      "e2eMaxMs": 180.607
+    },
+    {
+      "name": "B-2",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 200,
+      "produced": 8723,
+      "applied": 8723,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 1,
+      "e2eP50Ms": 17.871,
+      "e2eP99Ms": 108.607,
+      "e2eMaxMs": 192.511
+    },
+    {
+      "name": "B-3",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 200,
+      "produced": 8757,
+      "applied": 8757,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 0,
+      "e2eP50Ms": 17.823,
+      "e2eP99Ms": 94.591,
+      "e2eMaxMs": 182.527
+    },
+    {
+      "name": "B-4",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 200,
+      "produced": 8738,
+      "applied": 8738,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 0,
+      "e2eP50Ms": 17.935,
+      "e2eP99Ms": 103.935,
+      "e2eMaxMs": 202.239
+    },
+    {
+      "name": "B-5",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 200,
+      "produced": 8770,
+      "applied": 8770,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 0,
+      "e2eP50Ms": 17.903,
+      "e2eP99Ms": 93.503,
+      "e2eMaxMs": 169.087
+    },
+    {
+      "name": "B-6",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 200,
+      "produced": 8762,
+      "applied": 8762,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 1,
+      "e2eP50Ms": 18.175,
+      "e2eP99Ms": 333.055,
+      "e2eMaxMs": 640.511
+    },
+    {
+      "name": "B-7",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 200,
+      "produced": 8693,
+      "applied": 8693,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 1,
+      "e2eP50Ms": 17.711,
+      "e2eP99Ms": 96.575,
+      "e2eMaxMs": 189.183
+    },
+    {
+      "name": "B-8",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 200,
+      "produced": 8777,
+      "applied": 8777,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 1,
+      "e2eP50Ms": 17.711,
+      "e2eP99Ms": 96.639,
+      "e2eMaxMs": 178.559
+    },
+    {
+      "name": "B-9",
+      "sources": 1600,
+      "workers": 12,
+      "offeredRatePerSec": 200,
+      "produced": 8805,
+      "applied": 8805,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 0,
+      "e2eP50Ms": 17.935,
+      "e2eP99Ms": 89.151,
+      "e2eMaxMs": 180.223
+    }
+  ],
+  "resourcesSteadyState": {
+    "ack_max_ms": {
+      "mean": 17.684,
+      "max": 26.863
+    },
+    "ack_p50_ms": {
+      "mean": 2.836,
+      "max": 5.535
+    },
+    "ack_p99_ms": {
+      "mean": 7.099,
+      "max": 22.111
+    },
+    "applied_per_s": {
+      "mean": 8190.987,
+      "max": 10028.2
+    },
+    "applied_total": {
+      "mean": 162965.667,
+      "max": 255197
+    },
+    "bench_cpu_cores": {
+      "mean": 2.533,
+      "max": 2.698
+    },
+    "bench_cpu_pct": {
+      "mean": 10.553,
+      "max": 11.24
+    },
+    "bench_gc_gen0": {
+      "mean": 3.75,
+      "max": 4
+    },
+    "bench_gc_gen1": {
+      "mean": 0.375,
+      "max": 4
+    },
+    "bench_gc_gen2": {
+      "mean": 0.083,
+      "max": 1
+    },
+    "bench_gc_heap_mb": {
+      "mean": 1041.154,
+      "max": 1162.3
+    },
+    "bench_mem_mb": {
+      "mean": 954.683,
+      "max": 1043.9
+    },
+    "bench_threadpool_queue": {
+      "mean": 1.5,
+      "max": 18
+    },
+    "bench_threadpool_threads": {
+      "mean": 35.625,
+      "max": 42
+    },
+    "broker_backlog": {
+      "mean": 282.792,
+      "max": 1739
+    },
+    "broker_dwell_max_ms": {
+      "mean": 125.732,
+      "max": 556.543
+    },
+    "broker_dwell_p50_ms": {
+      "mean": 4.052,
+      "max": 6.611
+    },
+    "broker_dwell_p99_ms": {
+      "mean": 68.403,
+      "max": 387.327
+    },
+    "broker_max_queue_len": {
+      "mean": 67.458,
+      "max": 444
+    },
+    "broker_oldest_age_s": {
+      "mean": 0.167,
+      "max": 1
+    },
+    "broker_visible": {
+      "mean": 82.75,
+      "max": 1132
+    },
+    "ctr_eb_pgbouncer_cpu_pct": {
+      "mean": 15.124,
+      "max": 17.17
+    },
+    "ctr_eb_pgbouncer_mem_mb": {
+      "mean": 13.871,
+      "max": 19
+    },
+    "ctr_eb_postgres_cpu_pct": {
+      "mean": 173.376,
+      "max": 197.68
+    },
+    "ctr_eb_postgres_mem_mb": {
+      "mean": 1890.283,
+      "max": 1920.7
+    },
+    "ctx_commit_max_ms": {
+      "mean": 28.562,
+      "max": 116.031
+    },
+    "ctx_commit_p50_ms": {
+      "mean": 2.811,
+      "max": 5.503
+    },
+    "ctx_commit_p99_ms": {
+      "mean": 7.224,
+      "max": 22.607
+    },
+    "ctx_load_max_ms": {
+      "mean": 10.339,
+      "max": 24.127
+    },
+    "ctx_load_p50_ms": {
+      "mean": 1.479,
+      "max": 4.093
+    },
+    "ctx_load_p99_ms": {
+      "mean": 4.68,
+      "max": 19.599
+    },
+    "duplicates_per_s": {
+      "mean": 0,
+      "max": 0
+    },
+    "e2e_from_send_max_ms": {
+      "mean": 195.011,
+      "max": 829.439
+    },
+    "e2e_from_send_p50_ms": {
+      "mean": 20.384,
+      "max": 60.319
+    },
+    "e2e_from_send_p99_ms": {
+      "mean": 120.138,
+      "max": 495.871
+    },
+    "e2e_large_max_ms": {
+      "mean": 795.306,
+      "max": 818.175
+    },
+    "e2e_large_p50_ms": {
+      "mean": 734.548,
+      "max": 818.175
+    },
+    "e2e_large_p99_ms": {
+      "mean": 795.306,
+      "max": 818.175
+    },
+    "e2e_max_ms": {
+      "mean": 199.323,
+      "max": 840.191
+    },
+    "e2e_p50_ms": {
+      "mean": 22.211,
+      "max": 63.775
+    },
+    "e2e_p99_ms": {
+      "mean": 132.218,
+      "max": 592.895
+    },
+    "errors_per_s": {
+      "mean": 0,
+      "max": 0
+    },
+    "host_cpu_pct": {
+      "mean": 59.461,
+      "max": 68.95
+    },
+    "in_flight": {
+      "mean": 161.75,
+      "max": 747
+    },
+    "nacks_per_s": {
+      "mean": 0,
+      "max": 0
+    },
+    "pg_cache_hit_pct": {
+      "mean": 100,
+      "max": 100
+    },
+    "pg_conn_active": {
+      "mean": 46.833,
+      "max": 59
+    },
+    "pg_conn_idle": {
+      "mean": 18.292,
+      "max": 32
+    },
+    "pg_conn_idle_in_tx": {
+      "mean": 0,
+      "max": 0
+    },
+    "pg_conn_lock_wait": {
+      "mean": 0,
+      "max": 0
+    },
+    "pg_conn_total": {
+      "mean": 65.125,
+      "max": 66
+    },
+    "pg_db_size_mb": {
+      "mean": 338.746,
+      "max": 471.1
+    },
+    "pg_deadlocks": {
+      "mean": 0,
+      "max": 0
+    },
+    "pg_rollbacks_per_s": {
+      "mean": 0,
+      "max": 0
+    },
+    "pg_temp_mb_per_s": {
+      "mean": 0,
+      "max": 0
+    },
+    "pg_tps": {
+      "mean": 41489.983,
+      "max": 51188.3
+    },
+    "pg_tup_del_per_s": {
+      "mean": 11428.737,
+      "max": 27981.1
+    },
+    "pg_tup_fetch_per_s": {
+      "mean": 230773.117,
+      "max": 305349.4
+    },
+    "pg_tup_ins_per_s": {
+      "mean": 14828.008,
+      "max": 38847
+    },
+    "pg_tup_upd_per_s": {
+      "mean": 21766.496,
+      "max": 28357.1
+    },
+    "pg_wal_mb_per_s": {
+      "mean": 32.164,
+      "max": 78.27
+    },
+    "pgb_cl_active": {
+      "mean": 351.292,
+      "max": 383
+    },
+    "pgb_cl_waiting": {
+      "mean": 31.375,
+      "max": 120
+    },
+    "pgb_maxwait_ms": {
+      "mean": 1.301,
+      "max": 5.22
+    },
+    "pgb_sv_active": {
+      "mean": 59.25,
+      "max": 64
+    },
+    "pgb_sv_idle": {
+      "mean": 4.75,
+      "max": 18
+    },
+    "pgb_sv_used": {
+      "mean": 0,
+      "max": 0
+    },
+    "process_max_ms": {
+      "mean": 1.689,
+      "max": 6.203
+    },
+    "process_p50_ms": {
+      "mean": 0.001,
+      "max": 0.001
+    },
+    "process_p99_ms": {
+      "mean": 0.004,
+      "max": 0.005
+    },
+    "produced_per_s": {
+      "mean": 8158.071,
+      "max": 9755.1
+    },
+    "produced_total": {
+      "mean": 163127.417,
+      "max": 255257
+    },
+    "producer_lag_max_ms": {
+      "mean": 57.716,
+      "max": 555.007
+    },
+    "producer_lag_p50_ms": {
+      "mean": 1.484,
+      "max": 3.335
+    },
+    "producer_lag_p99_ms": {
+      "mean": 38.143,
+      "max": 443.903
+    },
+    "publish_call_max_ms": {
+      "mean": 57.31,
+      "max": 534.015
+    },
+    "publish_call_p50_ms": {
+      "mean": 2.998,
+      "max": 5.703
+    },
+    "publish_call_p99_ms": {
+      "mean": 7.769,
+      "max": 22.879
+    },
+    "publish_mb_per_s": {
+      "mean": 6.927,
+      "max": 39.76
+    },
+    "queue_wait_max_ms": {
+      "mean": 134.822,
+      "max": 633.343
+    },
+    "queue_wait_p50_ms": {
+      "mean": 6.082,
+      "max": 11.095
+    },
+    "queue_wait_p99_ms": {
+      "mean": 70.89,
+      "max": 393.983
+    },
+    "receive_call_max_ms": {
+      "mean": 35.85,
+      "max": 200.831
+    },
+    "receive_call_p50_ms": {
+      "mean": 3.29,
+      "max": 6.275
+    },
+    "receive_call_p99_ms": {
+      "mean": 8.871,
+      "max": 25.423
+    },
+    "service_max_ms": {
+      "mean": 105.923,
+      "max": 330.751
+    },
+    "service_p50_ms": {
+      "mean": 13.163,
+      "max": 45.631
+    },
+    "service_p99_ms": {
+      "mean": 65.31,
+      "max": 172.799
+    }
+  },
+  "oracle": {
+    "passed": true,
+    "sourcesVerified": 32000,
+    "recordsVerified": 69469,
+    "uploadsVerified": 12,
+    "expectedEvents": 302109,
+    "verifySeconds": 0.094,
+    "checks": [
+      {
+        "name": "cursors",
+        "passed": true,
+        "detail": "32000/32000 source cursors at the expected last sequence"
+      },
+      {
+        "name": "records_complete",
+        "passed": true,
+        "detail": "all 69,469 records are Completed"
+      },
+      {
+        "name": "record_counts",
+        "passed": true,
+        "detail": "69,469 records found, 69,469 expected; 0 sources with count mismatch"
+      },
+      {
+        "name": "record_content",
+        "passed": true,
+        "detail": "0 sources with record content hash mismatch"
+      },
+      {
+        "name": "uploads",
+        "passed": true,
+        "detail": "12 uploads verified, 0 sources mismatched"
+      },
+      {
+        "name": "applied_equals_generated",
+        "passed": true,
+        "detail": "302,109 events applied by workers, 302,109 generated"
+      },
+      {
+        "name": "broker_drained",
+        "passed": true,
+        "detail": "0 messages left in the broker"
+      },
+      {
+        "name": "runtime_ordering_gap",
+        "passed": true,
+        "detail": "none observed"
+      },
+      {
+        "name": "runtime_pre_state",
+        "passed": true,
+        "detail": "none observed"
+      },
+      {
+        "name": "runtime_record_conflict",
+        "passed": true,
+        "detail": "none observed"
+      },
+      {
+        "name": "runtime_payload_corrupt",
+        "passed": true,
+        "detail": "none observed"
+      },
+      {
+        "name": "runtime_context_corrupt",
+        "passed": true,
+        "detail": "none observed"
+      },
+      {
+        "name": "runtime_blob_missing",
+        "passed": true,
+        "detail": "none observed"
+      }
+    ],
+    "mismatchSamples": []
+  },
+  "violationCounts": {},
+  "violationSamples": [],
+  "errorSamples": []
+}

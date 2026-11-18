@@ -1,0 +1,555 @@
+{
+  "name": "inmemory-smoke",
+  "verdict": "PASS",
+  "error": null,
+  "startedUtc": "2026-11-18T14:50:39.9867763Z",
+  "broker": "inmemory (reorder=0, duplicate=0, drop=0)",
+  "store": "inmemory",
+  "ackMode": "AfterCommit",
+  "topology": {
+    "groups": 4,
+    "sources": 800,
+    "workers": 16,
+    "offeredRatePerSec": 5000
+  },
+  "phases": {
+    "setupSeconds": 0.007,
+    "runSeconds": 8.1,
+    "closingSeconds": 0.001,
+    "drainSeconds": 0.1,
+    "drained": true
+  },
+  "throughput": {
+    "produced": 42155,
+    "applied": 42155,
+    "duplicates": 0,
+    "gaps": 0,
+    "stateMismatches": 0,
+    "errors": 0,
+    "nacks": 0,
+    "publishErrors": 0,
+    "largeEvents": 20,
+    "publishedMB": 93.541,
+    "steadyProducedPerSec": 5023.28,
+    "steadyAppliedPerSec": 5024.1,
+    "peakAppliedPerSec": 10179.8,
+    "overallAppliedPerSec": 5140.2
+  },
+  "latencyMs": [
+    {
+      "metric": "e2e",
+      "count": 30061,
+      "mean": 2.906,
+      "p50": 2.549,
+      "p90": 5.975,
+      "p99": 10.159,
+      "p99_9": 13.943,
+      "p99_99": 14.791,
+      "max": 14.919,
+      "description": "scheduled -\u003E acked (includes producer lag; coordinated-omission safe)"
+    },
+    {
+      "metric": "e2e_from_send",
+      "count": 30061,
+      "mean": 2.094,
+      "p50": 1.972,
+      "p90": 4.451,
+      "p99": 7.883,
+      "p99_9": 8.343,
+      "p99_99": 10.495,
+      "max": 11.343,
+      "description": "handed to broker -\u003E acked"
+    },
+    {
+      "metric": "producer_lag",
+      "count": 30061,
+      "mean": 0.812,
+      "p50": 0.001,
+      "p90": 2.593,
+      "p99": 5.659,
+      "p99_9": 6.687,
+      "p99_99": 6.983,
+      "max": 7.439,
+      "description": "scheduled -\u003E handed to broker"
+    },
+    {
+      "metric": "publish_call",
+      "count": 26377,
+      "mean": 0.015,
+      "p50": 0.002,
+      "p90": 0.009,
+      "p99": 0.036,
+      "p99_9": 1.652,
+      "p99_99": 32.863,
+      "max": 32.895,
+      "description": "duration of one publish (batch) call"
+    },
+    {
+      "metric": "queue_wait",
+      "count": 30061,
+      "mean": 2.073,
+      "p50": 1.95,
+      "p90": 4.431,
+      "p99": 7.867,
+      "p99_9": 8.319,
+      "p99_99": 10.463,
+      "max": 11.311,
+      "description": "handed to broker -\u003E received by a worker"
+    },
+    {
+      "metric": "broker_dwell",
+      "count": 30061,
+      "mean": 2.069,
+      "p50": 1.947,
+      "p90": 4.423,
+      "p99": 7.859,
+      "p99_9": 8.319,
+      "p99_99": 10.463,
+      "max": 11.303,
+      "description": "broker enqueue timestamp -\u003E received (broker clock)"
+    },
+    {
+      "metric": "receive_call",
+      "count": 8678,
+      "mean": 0.053,
+      "p50": 0.009,
+      "p90": 0.039,
+      "p99": 0.16,
+      "p99_9": 13.535,
+      "p99_99": 13.935,
+      "max": 17.503,
+      "description": "duration of a non-empty receive call"
+    },
+    {
+      "metric": "ctx_load",
+      "count": 30061,
+      "mean": 0.001,
+      "p50": 0.001,
+      "p90": 0.001,
+      "p99": 0.002,
+      "p99_9": 0.004,
+      "p99_99": 0.022,
+      "max": 0.044,
+      "description": "load execution context from store"
+    },
+    {
+      "metric": "process",
+      "count": 30061,
+      "mean": 0.001,
+      "p50": 0.001,
+      "p90": 0.001,
+      "p99": 0.004,
+      "p99_9": 0.028,
+      "p99_99": 0.066,
+      "max": 1.692,
+      "description": "worker compute (incl. payload verification \u002B simulated work)"
+    },
+    {
+      "metric": "ctx_commit",
+      "count": 30061,
+      "mean": 0.001,
+      "p50": 0.001,
+      "p90": 0.001,
+      "p99": 0.001,
+      "p99_9": 0.002,
+      "p99_99": 0.011,
+      "max": 0.303,
+      "description": "persist result \u002B advance cursor (\u002B tx ack)"
+    },
+    {
+      "metric": "ack",
+      "count": 3672,
+      "mean": 0.001,
+      "p50": 0.001,
+      "p90": 0.001,
+      "p99": 0.001,
+      "p99_9": 0.003,
+      "p99_99": 0.012,
+      "max": 0.012,
+      "description": "broker ack call (AfterCommit mode)"
+    },
+    {
+      "metric": "service",
+      "count": 30061,
+      "mean": 0.021,
+      "p50": 0.017,
+      "p90": 0.038,
+      "p99": 0.059,
+      "p99_9": 0.336,
+      "p99_99": 1.937,
+      "max": 1.944,
+      "description": "received -\u003E acked"
+    }
+  ],
+  "groups": [
+    {
+      "name": "hot-0",
+      "sources": 200,
+      "workers": 4,
+      "offeredRatePerSec": 2000,
+      "produced": 16437,
+      "applied": 16437,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 7,
+      "e2eP50Ms": 2.411,
+      "e2eP99Ms": 9.423,
+      "e2eMaxMs": 14.519
+    },
+    {
+      "name": "hot-1",
+      "sources": 200,
+      "workers": 4,
+      "offeredRatePerSec": 2000,
+      "produced": 16559,
+      "applied": 16559,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 10,
+      "e2eP50Ms": 2.493,
+      "e2eP99Ms": 9.927,
+      "e2eMaxMs": 14.911
+    },
+    {
+      "name": "cold-0",
+      "sources": 200,
+      "workers": 4,
+      "offeredRatePerSec": 500,
+      "produced": 4577,
+      "applied": 4577,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 2,
+      "e2eP50Ms": 2.989,
+      "e2eP99Ms": 11.199,
+      "e2eMaxMs": 14.919
+    },
+    {
+      "name": "cold-1",
+      "sources": 200,
+      "workers": 4,
+      "offeredRatePerSec": 500,
+      "produced": 4582,
+      "applied": 4582,
+      "duplicates": 0,
+      "gaps": 0,
+      "stateMismatches": 0,
+      "errors": 0,
+      "nacks": 0,
+      "largeEvents": 1,
+      "e2eP50Ms": 3.101,
+      "e2eP99Ms": 10.727,
+      "e2eMaxMs": 14.439
+    }
+  ],
+  "resourcesSteadyState": {
+    "ack_max_ms": {
+      "mean": 0.005,
+      "max": 0.012
+    },
+    "ack_p50_ms": {
+      "mean": 0.001,
+      "max": 0.001
+    },
+    "ack_p99_ms": {
+      "mean": 0.001,
+      "max": 0.001
+    },
+    "applied_per_s": {
+      "mean": 5024.1,
+      "max": 5087.9
+    },
+    "applied_total": {
+      "mean": 29812,
+      "max": 39826
+    },
+    "bench_cpu_cores": {
+      "mean": 1.092,
+      "max": 1.141
+    },
+    "bench_cpu_pct": {
+      "mean": 4.552,
+      "max": 4.75
+    },
+    "bench_gc_gen0": {
+      "mean": 1.6,
+      "max": 3
+    },
+    "bench_gc_gen1": {
+      "mean": 0.4,
+      "max": 1
+    },
+    "bench_gc_gen2": {
+      "mean": 0.2,
+      "max": 1
+    },
+    "bench_gc_heap_mb": {
+      "mean": 144.72,
+      "max": 157.7
+    },
+    "bench_mem_mb": {
+      "mean": 261.56,
+      "max": 271.5
+    },
+    "bench_threadpool_queue": {
+      "mean": 0,
+      "max": 0
+    },
+    "bench_threadpool_threads": {
+      "mean": 21,
+      "max": 21
+    },
+    "broker_dwell_max_ms": {
+      "mean": 8.889,
+      "max": 11.303
+    },
+    "broker_dwell_p50_ms": {
+      "mean": 1.921,
+      "max": 2.077
+    },
+    "broker_dwell_p99_ms": {
+      "mean": 7.827,
+      "max": 7.999
+    },
+    "ctx_commit_max_ms": {
+      "mean": 0.098,
+      "max": 0.303
+    },
+    "ctx_commit_p50_ms": {
+      "mean": 0.001,
+      "max": 0.001
+    },
+    "ctx_commit_p99_ms": {
+      "mean": 0.001,
+      "max": 0.001
+    },
+    "ctx_load_max_ms": {
+      "mean": 0.017,
+      "max": 0.029
+    },
+    "ctx_load_p50_ms": {
+      "mean": 0.001,
+      "max": 0.001
+    },
+    "ctx_load_p99_ms": {
+      "mean": 0.002,
+      "max": 0.002
+    },
+    "duplicates_per_s": {
+      "mean": 0,
+      "max": 0
+    },
+    "e2e_from_send_max_ms": {
+      "mean": 8.909,
+      "max": 11.343
+    },
+    "e2e_from_send_p50_ms": {
+      "mean": 1.947,
+      "max": 2.095
+    },
+    "e2e_from_send_p99_ms": {
+      "mean": 7.846,
+      "max": 8.019
+    },
+    "e2e_max_ms": {
+      "mean": 14.618,
+      "max": 14.919
+    },
+    "e2e_p50_ms": {
+      "mean": 2.555,
+      "max": 2.623
+    },
+    "e2e_p99_ms": {
+      "mean": 9.906,
+      "max": 10.607
+    },
+    "errors_per_s": {
+      "mean": 0,
+      "max": 0
+    },
+    "host_cpu_pct": {
+      "mean": 2.268,
+      "max": 2.48
+    },
+    "in_flight": {
+      "mean": 10,
+      "max": 14
+    },
+    "nacks_per_s": {
+      "mean": 0,
+      "max": 0
+    },
+    "process_max_ms": {
+      "mean": 0.43,
+      "max": 1.692
+    },
+    "process_p50_ms": {
+      "mean": 0.001,
+      "max": 0.001
+    },
+    "process_p99_ms": {
+      "mean": 0.005,
+      "max": 0.012
+    },
+    "produced_per_s": {
+      "mean": 5023.28,
+      "max": 5095.9
+    },
+    "produced_total": {
+      "mean": 29822,
+      "max": 39836
+    },
+    "producer_lag_max_ms": {
+      "mean": 7.024,
+      "max": 7.439
+    },
+    "producer_lag_p50_ms": {
+      "mean": 0.005,
+      "max": 0.019
+    },
+    "producer_lag_p99_ms": {
+      "mean": 5.648,
+      "max": 5.867
+    },
+    "publish_call_max_ms": {
+      "mean": 0.93,
+      "max": 2.785
+    },
+    "publish_call_p50_ms": {
+      "mean": 0.001,
+      "max": 0.001
+    },
+    "publish_call_p99_ms": {
+      "mean": 0.018,
+      "max": 0.034
+    },
+    "publish_mb_per_s": {
+      "mean": 2.592,
+      "max": 2.63
+    },
+    "queue_wait_max_ms": {
+      "mean": 8.894,
+      "max": 11.311
+    },
+    "queue_wait_p50_ms": {
+      "mean": 1.925,
+      "max": 2.079
+    },
+    "queue_wait_p99_ms": {
+      "mean": 7.833,
+      "max": 8.011
+    },
+    "receive_call_max_ms": {
+      "mean": 0.58,
+      "max": 1.591
+    },
+    "receive_call_p50_ms": {
+      "mean": 0.007,
+      "max": 0.007
+    },
+    "receive_call_p99_ms": {
+      "mean": 0.03,
+      "max": 0.037
+    },
+    "service_max_ms": {
+      "mean": 1.062,
+      "max": 1.715
+    },
+    "service_p50_ms": {
+      "mean": 0.018,
+      "max": 0.018
+    },
+    "service_p99_ms": {
+      "mean": 0.058,
+      "max": 0.077
+    }
+  },
+  "oracle": {
+    "passed": true,
+    "sourcesVerified": 800,
+    "recordsVerified": 6049,
+    "uploadsVerified": 20,
+    "expectedEvents": 42155,
+    "verifySeconds": 0.006,
+    "checks": [
+      {
+        "name": "cursors",
+        "passed": true,
+        "detail": "800/800 source cursors at the expected last sequence"
+      },
+      {
+        "name": "records_complete",
+        "passed": true,
+        "detail": "all 6,049 records are Completed"
+      },
+      {
+        "name": "record_counts",
+        "passed": true,
+        "detail": "6,049 records found, 6,049 expected; 0 sources with count mismatch"
+      },
+      {
+        "name": "record_content",
+        "passed": true,
+        "detail": "0 sources with record content hash mismatch"
+      },
+      {
+        "name": "uploads",
+        "passed": true,
+        "detail": "20 uploads verified, 0 sources mismatched"
+      },
+      {
+        "name": "applied_equals_generated",
+        "passed": true,
+        "detail": "42,155 events applied by workers, 42,155 generated"
+      },
+      {
+        "name": "broker_drained",
+        "passed": true,
+        "detail": "0 messages left in the broker"
+      },
+      {
+        "name": "runtime_ordering_gap",
+        "passed": true,
+        "detail": "none observed"
+      },
+      {
+        "name": "runtime_pre_state",
+        "passed": true,
+        "detail": "none observed"
+      },
+      {
+        "name": "runtime_record_conflict",
+        "passed": true,
+        "detail": "none observed"
+      },
+      {
+        "name": "runtime_payload_corrupt",
+        "passed": true,
+        "detail": "none observed"
+      },
+      {
+        "name": "runtime_context_corrupt",
+        "passed": true,
+        "detail": "none observed"
+      },
+      {
+        "name": "runtime_blob_missing",
+        "passed": true,
+        "detail": "none observed"
+      }
+    ],
+    "mismatchSamples": []
+  },
+  "violationCounts": {},
+  "violationSamples": [],
+  "errorSamples": []
+}

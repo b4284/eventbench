@@ -1,0 +1,43 @@
+{
+  "Broker": {
+    "ChaosDuplicateProbability": "0.05",
+    "Type": "inmemory"
+  },
+  "Metrics": {
+    "ConsoleProgress": "false",
+    "ContainerStats": "False"
+  },
+  "Name": "chaos",
+  "Store": {
+    "Type": "inmemory"
+  },
+  "Worker": {
+    "BatchSize": "10",
+    "WorkersPerGroup": "4"
+  },
+  "Workload": {
+    "DrainTimeoutSeconds": "8",
+    "DurationSeconds": "5",
+    "Groups": {
+      "0": {
+        "Count": "2",
+        "Name": "hot",
+        "RatePerGroup": "2000",
+        "Sources": "200"
+      },
+      "1": {
+        "Count": "2",
+        "Name": "cold",
+        "RatePerGroup": "500",
+        "Sources": "200"
+      }
+    },
+    "LargePayload": {
+      "MaxBytes": "4194304",
+      "MaxCount": "3",
+      "MinBytes": "1048576",
+      "Probability": "0.001"
+    },
+    "WarmupSeconds": "2"
+  }
+}
