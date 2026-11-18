@@ -4,6 +4,7 @@ using EventBench.Core.Config;
 using EventBench.Core.Model;
 using EventBench.Core.Reporting;
 using EventBench.Core.Runner;
+using EventBench.Mongo;
 using EventBench.Postgres;
 using Microsoft.Extensions.Configuration;
 
@@ -78,7 +79,8 @@ catch (Exception ex)
 
 static ComponentRegistry CreateRegistry() => ComponentRegistry.WithBuiltIns()
     .Register(new PgmqBrokerFactory())
-    .Register(new PostgresStoreFactory());
+    .Register(new PostgresStoreFactory())
+    .Register(new MongoStoreFactory());
 
 static (BenchConfig, IConfiguration) LoadConfig(string[] args)
 {

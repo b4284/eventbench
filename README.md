@@ -9,7 +9,7 @@ Implemented today:
 | Component | Types |
 |---|---|
 | Broker | `pgmq` (FIFO-grouped or partitioned), `inmemory` (baseline plus chaos injection) |
-| Store  | `postgres`, `inmemory` |
+| Store  | `postgres`, `mongo`, `inmemory` |
 
 ## Quick start (podman)
 
@@ -141,6 +141,52 @@ strings (`Maximum Pool Size`, `Max Auto Prepare`). Server-side settings live in 
 `infra/pgbouncer/pgbouncer.ini` (`default_pool_size`, …). The data path goes through PgBouncer in
 transaction mode. DDL, oracle scans, and stats use the direct port.
 
+## MongoDB store
+
+`Store:Type=mongo` (`src/EventBench.Mongo`, official `MongoDB.Driver` 3.x). Start and stop MongoDB 8.0 as a
+single-node replica set (transactions need one) with `./infra/mongo/up.sh` and `./infra/mongo/down.sh`
+(container `eb-mongo`, `127.0.0.1:27017`; env `MONGO_IMAGE`, `MONGO_CACHE_GB`, `MONGO_CPUS`, `MONGO_MEMORY`).
+`configs/pgmq-mongo.json` keeps the PGMQ broker and uses `AckMode: AfterCommit`, because an ack cannot be
+transactional across PGMQ and MongoDB.
+
+```bash
+./infra/mongo/up.sh
+$B run -c configs/pgmq-mongo.json
+$B run -c configs/pgmq-mongo.json --Store:UseTransactions=false     # embedded mode
+EB_MONGO_URL="mongodb://127.0.0.1:27017/?directConnection=true" dotnet test tests/EventBench.Tests   # + live commit tests
+```
+
+* **Durability.** Every write uses `w: majority, j: true`, whatever the connection string says. Loads and
+  scans read with `readConcern: majority`, so a worker never skips an event because of state that could
+  still roll back. Transactions read with `readConcern: snapshot`.
+* **Collections** (`CollectionPrefix`, default `eb`): `_cursors` (`_id` = source, `group`, `lastSeq`),
+  `_records` (`_id` = record id, `src`, `status`, `version`, `hash`, `ctx` binary, created/updated/completed seq),
+  `_uploads` (metadata: `src`, `seq`, `size`, `checksum`), `_blobs` (claim-check metadata), and `_chunks`
+  (1 MiB slices of upload and blob bytes, `ChunkSizeBytes`).
+* **Commit (`UseTransactions=true`, the default).** One multi-document transaction:
+  1. a conditional `updateOne {_id: src, lastSeq: seq-1}`. If it matches nothing, the store re-reads the
+     cursor in the same snapshot and returns Duplicate (`lastSeq >= seq`) or Gap;
+  2. a record insert (duplicate key gives RecordConflict) or a version-guarded `updateOne` (0 matched
+     gives RecordConflict). Either conflict aborts the transaction, so the cursor does not move;
+  3. the upload metadata insert, then commit.
+
+  Two workers that commit the same seq collide on the cursor document with a write conflict
+  (`TransientTransactionError`). The loser retries with jittered backoff on a fresh snapshot, sees
+  `lastSeq = seq`, and returns Duplicate. An `UnknownTransactionCommitResult` is retried by committing again.
+* **Large uploads** (up to about 16 MB, the BSON document limit) are written **before** the transaction
+  as idempotent chunk upserts keyed by (source, seq). A redelivered or concurrent duplicate rewrites
+  identical bytes. Only the metadata that makes an upload visible to the oracle is written inside the commit.
+  Claim-check blobs write their chunks first and their metadata document last.
+* **Load** runs the cursor and record queries in parallel. Every commit at seq k sets
+  `record.updatedSeq = k` together with the cursor, so a record newer than the cursor shows a torn read,
+  and the store then re-reads record first, cursor second.
+* **Embedded mode (`UseTransactions=false`).** Records and upload metadata live inside the source
+  document, so commit is one conditional single-document `updateOne` and load is one `find`. Atomicity
+  comes without transactions. The cost is that a source document grows with its records (about
+  1.1 KB each with a 1 KB context), which caps it at about 14k records per source (16 MB).
+* **Stats.** `serverStatus` opcounters, transactions, connections, and WiredTiger cache, plus the store's
+  own retry counters, are written to the timeseries as `mongo_*` columns.
+
 ## Metrics & output
 
 Each run writes `results/<utc-stamp>_<name>/`:
@@ -186,8 +232,9 @@ and `Type` selects the implementation. Ordering approaches for other brokers:
 ```
 src/EventBench.Core       abstractions, config, workload generator, worker runtime, metrics, oracle, reports, in-memory impls
 src/EventBench.Postgres   pgmq broker, Postgres store (schema + commit function), Postgres/PgBouncer stats
+src/EventBench.Mongo      MongoDB store (transactional or embedded commit, chunked uploads), serverStatus stats
 src/EventBench.Cli        `eventbench` CLI (run / validate / compare)
 tests/EventBench.Tests    oracle self-tests + generator determinism
 configs/                  base configs and overlays
-infra/                    podman scripts + PgBouncer config
+infra/                    podman scripts + PgBouncer config (infra/mongo: MongoDB replica set)
 ```
