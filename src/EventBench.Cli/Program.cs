@@ -6,6 +6,7 @@ using EventBench.Core.Reporting;
 using EventBench.Core.Runner;
 using EventBench.Kafka;
 using EventBench.Mongo;
+using EventBench.Nats;
 using EventBench.Postgres;
 using EventBench.RabbitMq;
 using Microsoft.Extensions.Configuration;
@@ -83,8 +84,10 @@ static ComponentRegistry CreateRegistry() => ComponentRegistry.WithBuiltIns()
     .Register(new PgmqBrokerFactory())
     .Register(new KafkaBrokerFactory())
     .Register(new RabbitMqBrokerFactory())
+    .Register(new NatsBrokerFactory())
     .Register(new PostgresStoreFactory())
-    .Register(new MongoStoreFactory());
+    .Register(new MongoStoreFactory())
+    .Register(new NatsKvStoreFactory());
 
 static (BenchConfig, IConfiguration) LoadConfig(string[] args)
 {
