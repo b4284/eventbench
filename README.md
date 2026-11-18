@@ -8,7 +8,7 @@ Implemented today:
 
 | Component | Types |
 |---|---|
-| Broker | `pgmq` (FIFO-grouped or partitioned), `inmemory` (baseline plus chaos injection) |
+| Broker | `pgmq` (FIFO-grouped or partitioned), `kafka` (partition per worker), `inmemory` (baseline plus chaos injection) |
 | Store  | `postgres`, `mongo`, `inmemory` |
 
 ## Quick start (podman)
@@ -187,6 +187,54 @@ EB_MONGO_URL="mongodb://127.0.0.1:27017/?directConnection=true" dotnet test test
 * **Stats.** `serverStatus` opcounters, transactions, connections, and WiredTiger cache, plus the store's
   own retry counters, are written to the timeseries as `mongo_*` columns.
 
+## Kafka specifics
+
+```bash
+./infra/kafka/up.sh       # single-node KRaft Kafka (apache/kafka image) on 127.0.0.1:9092, 64 MB max message
+$B run -c configs/kafka-postgres.json                    # same workload as pgmq-fifo, Postgres store
+$B run -c configs/kafka-smoke.json                       # small, in-memory store
+./infra/kafka/down.sh     # removes the container and its data (does not touch the eventbench pod)
+```
+
+* **Ordering.** One topic per group (`{TopicPrefix}.g{id}`) with `PartitionsPerGroup` partitions
+  (0 = one per worker). A source always goes to partition `indexInGroup % partitions`. The partition
+  is set explicitly on produce and the key is the source id. Worker `w` owns partitions with
+  `p % workers == w` through manual `Assign`. There is no consumer-group rebalancing, so each partition
+  has exactly one reader and per-partition order is per-source order. A consumer never hands out more
+  of a partition while an earlier batch from that partition is still unacked or unnacked.
+* **Acks** are offsets. Each partition tracks the handed-out offsets. When an ack extends the
+  **contiguous prefix** of acked offsets, the consumer stores that offset (`StoreOffset`). librdkafka
+  auto-commits stored offsets every `CommitIntervalMs` to consumer group `{TopicPrefix}-g{id}`, and
+  dispose adds a final synchronous commit. A restarted consumer resumes from the committed offset
+  (`Offset.Stored`). Out-of-order acks from `MaxParallelPerWorker > 1` never commit past an
+  unfinished message. The `ack` metric is therefore ~0, and the broker-side ack lags by up to
+  `CommitIntervalMs`. If a crash happens in that window, the messages are redelivered and dedup'd as
+  duplicates. `AckMode=InTransaction` is not supported.
+* **Nacks.** Kafka has no per-message nack. A nack at offset `o` pauses the partition, discards
+  everything fetched after `o`, and waits for the nack delay and for in-flight deliveries of that
+  partition to resolve. It then `Seek`s back to `o`. Everything from `o` on is redelivered in order.
+  Later messages of *other* sources come back too and count as duplicates. A nack only stalls its own
+  partition.
+* **Durability.** The producer uses `acks=all` and is idempotent (`max.in.flight=5`), and replication
+  factor is 1 on a single node. Topics set `flush.messages=1` by default (`FlushMessages`), so the
+  log is fsynced on each append, which is comparable to Postgres `synchronous_commit=on`. Set it to
+  `0` to rely on the page cache like a default Kafka. Kafka fsyncs each partition append
+  separately: there is no group commit across partitions, and it serves one request per connection
+  at a time. That is why `ProducerInstances=0` (one producer connection per publisher) is the
+  default. On the dev box, with `kafka-postgres.json` at 4k ev/s, e2e p50 was ~115 ms with fsync
+  and ~20 ms with `FlushMessages=0`.
+* **Large inline payloads** travel through the broker as is. Topic `max.message.bytes`, producer
+  `message.max.bytes`, and consumer `fetch.max.bytes` default to 64 MB (`MaxMessageBytes`). The
+  broker's `message.max.bytes`, `replica.fetch.max.bytes`, `fetch.max.bytes`, and
+  `socket.request.max.bytes` are raised in `infra/kafka/up.sh`.
+* **Backlog** = Σ over partitions of (high watermark − committed offset), read with the admin
+  client. Time-series columns: `broker_backlog`, `broker_max_partition_lag`, `broker_rewinds`,
+  `broker_discarded_msgs`, `broker_commit_errors`.
+* Other knobs: `LingerMs`, `BatchSizeBytes`, `Compression`, `ProducerInstances`,
+  `MaxPartitionFetchBytes`, `FetchWaitMaxMs`, `QueuedMaxMessagesKbytes`. There is one librdkafka
+  consumer per worker. `SetupAsync` deletes and recreates the `{TopicPrefix}.g*` topics and the
+  consumer groups.
+
 ## Metrics & output
 
 Each run writes `results/<utc-stamp>_<name>/`:
@@ -233,6 +281,7 @@ and `Type` selects the implementation. Ordering approaches for other brokers:
 src/EventBench.Core       abstractions, config, workload generator, worker runtime, metrics, oracle, reports, in-memory impls
 src/EventBench.Postgres   pgmq broker, Postgres store (schema + commit function), Postgres/PgBouncer stats
 src/EventBench.Mongo      MongoDB store (transactional or embedded commit, chunked uploads), serverStatus stats
+src/EventBench.Kafka      Kafka broker (Confluent.Kafka), contiguous-offset tracker
 src/EventBench.Cli        `eventbench` CLI (run / validate / compare)
 tests/EventBench.Tests    oracle self-tests + generator determinism
 configs/                  base configs and overlays
