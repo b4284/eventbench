@@ -1,0 +1,7 @@
+{
+  "Workload": {
+    "SlowEvents": { "Fraction": 0.005, "MinMs": 1000, "MaxMs": 3000, "IncludeLarge": true }
+  },
+  "Worker": { "MaxParallelPerWorker": 4 },
+  "Metrics": { "BlockingThresholdMs": 100, "FailOnBlocking": true }
+}

@@ -17,6 +17,8 @@ public sealed class GroupCounters
     public long LargeEvents;
     public long PublishErrors;
     public long BytesPublished;
+    public long SlowEvents;
+    public long BlockingViolations;
 }
 
 /// <summary>Central sink for all benchmark measurements.</summary>
@@ -40,6 +42,17 @@ public sealed class MetricsHub
     public LatencyMetric Ack { get; } = new("ack", "broker ack call (AfterCommit mode)");
     public LatencyMetric Service { get; } = new("service", "received -> acked");
     public LatencyMetric E2ELarge { get; } = new("e2e_large", "e2e of large-payload events only");
+    public LatencyMetric ReadyWait { get; } = new("ready_wait", "ready (in broker and source's previous event done) -> worker starts it");
+    public LatencyMetric Blocked { get; } = new("blocked", "part of ready_wait during which a worker slot of the group was idle");
+
+    public BlockingTracker Blocking { get; }
+    public long BlockingThresholdUs { get; }
+    public bool FailOnBlocking { get; }
+    public ConcurrentQueue<string> BlockingSamples { get; } = new();
+    private long _maxBlockedUs;
+    public long MaxBlockedUs => Interlocked.Read(ref _maxBlockedUs);
+    public long LingerHits;
+    public long LingerMisses;
 
     public IReadOnlyList<LatencyMetric> All { get; }
     public LatencyMetric[] GroupE2E { get; }
@@ -51,12 +64,15 @@ public sealed class MetricsHub
     /// <summary>Events scheduled before this instant are not recorded in latency histograms.</summary>
     public long MeasureFromUs { get; set; }
 
-    public MetricsHub(Topology topology)
+    public MetricsHub(Topology topology, int slotsPerWorker = 1, double blockingThresholdMs = 100, bool failOnBlocking = true)
     {
+        Blocking = new BlockingTracker(topology, slotsPerWorker);
+        BlockingThresholdUs = (long)(blockingThresholdMs * 1000);
+        FailOnBlocking = failOnBlocking;
         Groups = topology.Groups.Select(_ => new GroupCounters()).ToArray();
         // 2 significant digits (1% resolution) keeps hundreds of per-group histograms small.
         GroupE2E = topology.Groups.Select(g => new LatencyMetric($"e2e[{g.Name}]", $"e2e for group {g.Name}", 2)).ToArray();
-        All = [E2E, E2ESent, ProducerLag, Publish, QueueWait, BrokerDwell, Receive, Load, Process, Commit, Ack, Service, E2ELarge];
+        All = [E2E, E2ESent, ProducerLag, Publish, QueueWait, BrokerDwell, Receive, Load, Process, Commit, Ack, Service, E2ELarge, ReadyWait, Blocked];
     }
 
     public bool ShouldMeasure(EventEnvelope ev) => !ev.IsClosing && ev.ScheduledAtUs >= MeasureFromUs;
@@ -71,6 +87,7 @@ public sealed class MetricsHub
             Interlocked.Increment(ref g.Produced);
             if (ev.IsClosing) { closing++; Interlocked.Increment(ref g.ClosingProduced); }
             if (ev.IsLarge) { large++; Interlocked.Increment(ref g.LargeEvents); }
+            if (ev.SlowMs > 0) { Interlocked.Increment(ref g.SlowEvents); Interlocked.Increment(ref Total.SlowEvents); }
             Interlocked.Add(ref g.BytesPublished, 200 + (ev.Payload?.Length ?? 0) * 4 / 3);
             if (ShouldMeasure(ev)) ProducerLag.Record(ev.SentAtUs - ev.ScheduledAtUs);
         }
@@ -104,6 +121,22 @@ public sealed class MetricsHub
         if (ackUs > 0) Ack.Record(ackUs);
         Service.Record(ackedUs - receivedUs);
         if (ev.IsLarge) E2ELarge.Record(ackedUs - ev.ScheduledAtUs);
+    }
+
+    /// <summary>An applied event's wait between ready and start, and how much of it had an idle slot in its group.</summary>
+    public void RecordBlocking(EventEnvelope ev, long readyUs, long startUs, long idleUs)
+    {
+        if (!ShouldMeasure(ev)) return;
+        ReadyWait.Record(Math.Max(0, startUs - readyUs));
+        Blocked.Record(idleUs);
+        long cur;
+        while (idleUs > (cur = Interlocked.Read(ref _maxBlockedUs)) && Interlocked.CompareExchange(ref _maxBlockedUs, idleUs, cur) != cur) { }
+        if (idleUs <= BlockingThresholdUs) return;
+        Inc(ev.Group, static c => ref c.BlockingViolations);
+        ViolationCounts.AddOrUpdate("cross_source_blocking", 1, static (_, v) => v + 1);
+        if (BlockingSamples.Count < 20)
+            BlockingSamples.Enqueue($"[cross_source_blocking] source {ev.SourceId} seq {ev.Seq}: ready {(startUs - readyUs) / 1000.0:F0} ms before start, " +
+                                    $"{idleUs / 1000.0:F0} ms of it with an idle slot in group {ev.Group}");
     }
 
     public void OnDuplicate(int group) => Inc(group, static c => ref c.Duplicates);

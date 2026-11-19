@@ -14,6 +14,9 @@ public sealed class RedisStoreOptions
     public int Connections { get; set; } = 8;
     /// <summary>After each commit, WAITAOF 1 0 (fsync-parity mode). Off = best effort (appendfsync policy).</summary>
     public bool WaitAof { get; set; } = false;
+    /// <summary>After each commit, WAIT this many replicas (0 = async replication). Fail-safe cluster mode.</summary>
+    public int WaitReplicas { get; set; } = 0;
+    public int WaitTimeoutMs { get; set; } = 1000;
 }
 
 /// <summary>
@@ -155,6 +158,7 @@ public sealed class RedisStore : IStateStore
         var db = DbFor(ev.SourceId);
         int code = (int)await db.ScriptEvaluateAsync(CommitScript, keys, args);
         if (_o.WaitAof && code == 0) await db.ExecuteAsync("WAITAOF", 1, 0, 0);
+        if (_o.WaitReplicas > 0 && code == 0) await RedisPool.WaitReplicasAsync(db, _o.WaitReplicas, _o.WaitTimeoutMs);
         return code switch
         {
             0 => CommitStatus.Applied,
@@ -221,7 +225,7 @@ public sealed class RedisStore : IStateStore
     }
 
     public string Describe()
-        => $"redis @ {_o.Configuration}, {_o.Connections} connections, commit = Lua script (cursor check + version-guarded record + upload + cursor), waitaof={_o.WaitAof}";
+        => $"redis @ {_o.Configuration}, {_o.Connections} connections, commit = Lua script (cursor check + version-guarded record + upload + cursor), waitaof={_o.WaitAof}, wait replicas={_o.WaitReplicas}";
 
     public ValueTask DisposeAsync() => _pool.DisposeAsync();
 }

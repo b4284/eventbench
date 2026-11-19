@@ -126,7 +126,9 @@ public sealed class ProducerRunner
 
         long t0 = Clock.NowUs();
         await RetryAsync(() => _publisher.PublishAsync(batch, ct).AsTask(), "publish", batch[0].Group, ct);
-        _metrics.OnPublished(batch, Clock.NowUs() - t0, bytes);
+        long published = Clock.NowUs();
+        _metrics.Blocking.OnPublished(batch, published);
+        _metrics.OnPublished(batch, published - t0, bytes);
 
         // Drop payload references so large buffers can be collected.
         foreach (var ev in batch) ev.Payload = null;

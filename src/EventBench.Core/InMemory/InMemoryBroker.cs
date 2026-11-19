@@ -111,6 +111,8 @@ public sealed class InMemoryBroker : IBroker
 
     private sealed class Consumer(InMemoryBroker broker, GroupQueue g) : IEventConsumer
     {
+        public bool SharedSources => true;
+
         public ValueTask<IReadOnlyList<IDelivery>> ReceiveAsync(int maxCount, CancellationToken ct)
         {
             var taken = new List<(int Source, Message Msg)>();

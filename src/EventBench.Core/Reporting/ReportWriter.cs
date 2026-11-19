@@ -71,7 +71,7 @@ public static class ReportWriter
                 ["payloadBytes"] = g.PayloadBytes ?? cfg.Workload.PayloadBytes,
                 ["largeEventFraction"] = g.LargeEventFraction,
                 ["produced"] = c.Produced, ["applied"] = c.Applied, ["duplicates"] = c.Duplicates,
-                ["gaps"] = c.Gaps, ["stateMismatches"] = c.StateMismatches, ["errors"] = c.Errors, ["nacks"] = c.Nacks,
+                ["gaps"] = c.Gaps, ["stateMismatches"] = c.StateMismatches, ["errors"] = c.Errors, ["nacks"] = c.Nacks, ["slowEvents"] = c.SlowEvents, ["blockingViolations"] = c.BlockingViolations,
                 ["largeEvents"] = c.LargeEvents,
                 ["e2eP50Ms"] = Round(e.P50Ms), ["e2eP99Ms"] = Round(e.P99Ms), ["e2eMaxMs"] = Round(e.MaxMs),
             });
@@ -128,7 +128,8 @@ public static class ReportWriter
             {
                 ["produced"] = t.Produced, ["applied"] = t.Applied, ["duplicates"] = t.Duplicates,
                 ["gaps"] = t.Gaps, ["stateMismatches"] = t.StateMismatches, ["errors"] = t.Errors,
-                ["nacks"] = t.Nacks, ["publishErrors"] = t.PublishErrors, ["largeEvents"] = t.LargeEvents,
+                ["nacks"] = t.Nacks, ["publishErrors"] = t.PublishErrors, ["largeEvents"] = t.LargeEvents, ["slowEvents"] = t.SlowEvents, ["blockingViolations"] = t.BlockingViolations,
+                ["lingerHits"] = Interlocked.Read(ref m.LingerHits), ["lingerMisses"] = Interlocked.Read(ref m.LingerMisses),
                 ["publishedMB"] = Round(t.BytesPublished / 1048576.0),
                 ["steadyProducedPerSec"] = Round(steadyProduced),
                 ["steadyAppliedPerSec"] = Round(steadyApplied),
@@ -171,9 +172,9 @@ public static class ReportWriter
         sb.AppendLine();
         sb.AppendLine("## Throughput");
         sb.AppendLine();
-        sb.AppendLine("| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events |");
-        sb.AppendLine("|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
-        sb.AppendLine($"| {tp["produced"]} | {tp["applied"]} | {tp["steadyProducedPerSec"]} | {tp["steadyAppliedPerSec"]} | {tp["peakAppliedPerSec"]} | {tp["duplicates"]} | {tp["errors"]} | {tp["nacks"]} | {tp["largeEvents"]} |");
+        sb.AppendLine("| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |");
+        sb.AppendLine("|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
+        sb.AppendLine($"| {tp["produced"]} | {tp["applied"]} | {tp["steadyProducedPerSec"]} | {tp["steadyAppliedPerSec"]} | {tp["peakAppliedPerSec"]} | {tp["duplicates"]} | {tp["errors"]} | {tp["nacks"]} | {tp["largeEvents"]} | {tp["slowEvents"]} | {tp["blockingViolations"]} |");
         sb.AppendLine();
         sb.AppendLine("## Latency (ms, after warmup, excluding closing events)");
         sb.AppendLine();
@@ -204,6 +205,11 @@ public static class ReportWriter
             }
         }
         else sb.AppendLine("_not run_");
+        if (!r.Metrics.BlockingSamples.IsEmpty)
+        {
+            sb.AppendLine("\n## Cross-source blocking samples\n");
+            foreach (var x in r.Metrics.BlockingSamples) sb.AppendLine($"- {x}");
+        }
         if (!r.Metrics.ViolationSamples.IsEmpty)
         {
             sb.AppendLine("\n## Runtime violation samples\n");

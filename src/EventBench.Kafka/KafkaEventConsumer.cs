@@ -38,6 +38,12 @@ internal sealed class KafkaEventConsumer : IEventConsumer
     private long _nextToken;
     private int _rr;
     private bool _disposed;
+    private volatile bool _readAhead;
+
+    public void EnableReadAhead() => _readAhead = true;
+
+    // Default: stop-and-wait per partition. Read-ahead (pipelined worker): only a pending rewind stops it.
+    private bool CanHandOut(Part p) => _readAhead ? !p.Tracker.RewindPending : p.Tracker.CanHandOut;
 
     public KafkaEventConsumer(KafkaBroker broker, int groupId, int workerIndex, int[] partitions)
     {
@@ -65,7 +71,7 @@ internal sealed class KafkaEventConsumer : IEventConsumer
                 var p = _parts[(_rr + i) % _parts.Length];
                 // Never hand out more of a partition while any of its messages is unresolved: keeps the
                 // per-source contract even if a caller asks again before acking.
-                if (!p.Tracker.CanHandOut) continue;
+                if (!CanHandOut(p)) continue;
                 while ((taken?.Count ?? 0) < maxCount && p.Buffer.TryDequeue(out var cr))
                 {
                     long offset = cr.Offset.Value;
@@ -127,7 +133,7 @@ internal sealed class KafkaEventConsumer : IEventConsumer
     {
         int ready = 0;
         foreach (var p in _parts)
-            if (p.Tracker.CanHandOut) ready += p.Buffer.Count;
+            if (CanHandOut(p)) ready += p.Buffer.Count;
 
         int budget = maxCount * 4 + 16;
         while (ready < maxCount && budget-- > 0)
@@ -145,7 +151,7 @@ internal sealed class KafkaEventConsumer : IEventConsumer
             else if (offset < p.NextExpected) { Discard(); continue; }
             p.NextExpected = offset + 1;
             p.Buffer.Enqueue(cr);
-            if (p.Tracker.CanHandOut) ready++;
+            if (CanHandOut(p)) ready++;
         }
     }
 

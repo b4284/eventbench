@@ -145,6 +145,14 @@ public static class StateOracle
             Add(report, $"runtime_{kind}", n == 0, n == 0 ? "none observed" : $"{n:N0} observed by workers");
         }
 
+        long blocked = metrics.ViolationCounts.GetValueOrDefault("cross_source_blocking");
+        var bs = metrics.Blocked.Summarize();
+        string bdetail = (blocked == 0 ? "none" : $"{blocked:N0} events")
+            + $" waited > {metrics.BlockingThresholdUs / 1000.0:F0} ms while a worker slot of their group was idle"
+            + $" ({metrics.Blocking.SlotsPerWorker} slot(s)/worker; blocked p99 {bs.P99Ms:F0} ms, max {metrics.MaxBlockedUs / 1000.0:F0} ms)"
+            + (metrics.FailOnBlocking ? "" : " [not enforced]");
+        Add(report, "runtime_cross_source_blocking", blocked == 0 || !metrics.FailOnBlocking, bdetail);
+
         report.VerifySeconds = sw.Elapsed.TotalSeconds;
         return report;
     }

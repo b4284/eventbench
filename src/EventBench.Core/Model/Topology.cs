@@ -79,13 +79,14 @@ public sealed class Topology
         {
             if (spec.BaseRatePerSource <= 0) throw new InvalidOperationException($"Group '{spec.Name}': rate must be > 0");
             int id = groups.Count;
-            var sourceRates = GroupGenerator.JitterRates(spec.BaseRatePerSource, spec.SourceRateJitter, spec.Sources, cfg.Workload.Seed, id);
+            double mult = spec.LargeEventFraction > 0 ? 1.0 : cfg.Workload.RateMultiplier;
+            var sourceRates = GroupGenerator.JitterRates(spec.BaseRatePerSource * mult, spec.SourceRateJitter, spec.Sources, cfg.Workload.Seed, id);
             Array.Copy(sourceRates, 0, rates, nextSource, spec.Sources);
             double groupRate = sourceRates.Sum();
             int workers = spec.Workers ?? SizeWorkers(cfg, spec, groupRate);
             if (workers < 1) throw new InvalidOperationException($"Group '{spec.Name}': Workers must be >= 1");
 
-            groups.Add(new GroupInfo(id, spec.Name, spec.Sources, spec.BaseRatePerSource, workers, nextSource)
+            groups.Add(new GroupInfo(id, spec.Name, spec.Sources, spec.BaseRatePerSource * mult, workers, nextSource)
             {
                 RatePerGroup = groupRate,
                 PayloadBytes = spec.PayloadBytes,
@@ -109,7 +110,21 @@ public sealed class Topology
         int byBytes = w.UploadBytesPerSecondPerWorker > 0
             ? (int)Math.Ceiling(ExpectedUploadBytesPerSec(cfg.Workload, spec, groupRate) / w.UploadBytesPerSecondPerWorker)
             : 1;
-        return Math.Clamp(Math.Max(byEvents, byBytes), Math.Max(1, w.MinWorkersPerGroup), Math.Max(1, w.MaxWorkersPerGroup));
+        // Slow events hold a slot for seconds: size so their expected slot-time fills at most half the slots.
+        double slowBusy = ExpectedSlowSecondsPerSec(cfg.Workload, spec, groupRate);
+        int bySlow = slowBusy > 0 ? (int)Math.Ceiling(slowBusy / (0.5 * Math.Max(1, w.MaxParallelPerWorker))) : 1;
+        return Math.Clamp(Math.Max(Math.Max(byEvents, byBytes), bySlow), Math.Max(1, w.MinWorkersPerGroup), Math.Max(1, w.MaxWorkersPerGroup));
+    }
+
+    /// <summary>Expected seconds of slow (Workload:SlowEvents) processing per second of the group's load.</summary>
+    public static double ExpectedSlowSecondsPerSec(WorkloadOptions wl, GroupSpec spec, double groupRate)
+    {
+        var se = wl.SlowEvents;
+        if (se.Fraction <= 0 && !(se.IncludeLarge && spec.LargeEventFraction > 0)) return 0;
+        var mix = wl.OpMix;
+        double cuShare = (mix.CreateWeight + mix.UpdateWeight) / Math.Max(1e-9, mix.CreateWeight + mix.GetWeight + mix.UpdateWeight + mix.CompleteWeight);
+        double share = se.Fraction + (se.IncludeLarge ? spec.LargeEventFraction * cuShare : 0);
+        return groupRate * Math.Min(1, share) * (se.MinMs + Math.Max(se.MinMs, se.MaxMs)) / 2000.0;
     }
 
     /// <summary>Uploads ride on Create/Update events only, so scale by their share of the op mix.</summary>

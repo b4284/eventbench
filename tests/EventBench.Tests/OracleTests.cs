@@ -77,6 +77,44 @@ public class OracleTests
         Assert.False(r.Drained);
     }
 
+    private static Dictionary<string, string?> Slow(string mode) => new()
+    {
+        ["Worker:Mode"] = mode,
+        ["Worker:MaxParallelPerWorker"] = "4",
+        ["Workload:SlowEvents:Fraction"] = "0.02",
+        ["Workload:SlowEvents:MinMs"] = "300",
+        ["Workload:SlowEvents:MaxMs"] = "500",
+    };
+
+    [Fact]
+    public async Task BatchModeCrossSourceBlockingIsDetected()
+    {
+        var r = await RunAsync(Slow("Batch"));
+        Assert.Contains(r.Oracle!.Checks, c => c.Name == "runtime_cross_source_blocking" && !c.Passed);
+        Assert.True(r.Metrics.Total.SlowEvents > 0);
+    }
+
+    [Fact]
+    public async Task PipelinedModePassesWithSlowEventsAndFailures()
+    {
+        var o = Slow("Pipelined");
+        o["Worker:ChaosFailProbability"] = "0.02";
+        var r = await RunAsync(o);
+        Assert.True(r.Passed, string.Join("; ", r.Oracle!.Checks.Where(c => !c.Passed).Select(c => $"{c.Name}: {c.Detail}")));
+        Assert.True(r.Metrics.Total.Nacks > 0);
+        Assert.Equal(0, r.Metrics.Total.BlockingViolations);
+    }
+
+    [Fact]
+    public async Task PipelinedModeStillDetectsReordering()
+    {
+        var o = Slow("Pipelined");
+        o["Broker:ChaosReorderProbability"] = "0.05";
+        var r = await RunAsync(o);
+        Assert.False(r.Passed);
+        Assert.Contains(r.Oracle!.Checks, c => c.Name == "runtime_ordering_gap" && !c.Passed);
+    }
+
     [Fact]
     public void ScriptsAreDeterministicPerSeed()
     {

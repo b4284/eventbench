@@ -55,6 +55,32 @@ public interface IEventConsumer : IAsyncDisposable
 {
     /// <summary>Returns up to <paramref name="maxCount"/> messages; may return an empty list when idle.</summary>
     ValueTask<IReadOnlyList<IDelivery>> ReceiveAsync(int maxCount, CancellationToken ct);
+
+    /// <summary>
+    /// Called once by a pipelined worker before the first receive. The worker then serialises each source
+    /// itself (later events of an in-flight source are parked in arrival order) and retries failures
+    /// locally instead of nacking, so the consumer may hand out more messages while earlier ones are still
+    /// unacknowledged, as long as each source's messages arrive in order.
+    /// </summary>
+    void EnableReadAhead() { }
+
+    /// <summary>
+    /// True when any worker of the group can receive any source's next message (a shared queue, e.g. PGMQ
+    /// FIFO). A pipelined worker then hands failures back to the broker (nack) instead of retrying them
+    /// locally, so whichever worker has a free slot takes the retry. False for partitioned brokers, where
+    /// a source is pinned to one worker anyway.
+    /// </summary>
+    bool SharedSources => false;
+}
+
+/// <summary>
+/// Optional consumer capability (shared-queue brokers): fetch the next message of the same source right
+/// after the previous one was acked, so the worker keeps the source without a general poll ("linger").
+/// Must return only the source's oldest message, and only if it is visible (no earlier message in flight).
+/// </summary>
+public interface ISourceLinger
+{
+    ValueTask<IDelivery?> NextForSourceAsync(IDelivery done, CancellationToken ct);
 }
 
 public interface IDelivery

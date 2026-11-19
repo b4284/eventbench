@@ -27,7 +27,15 @@ internal sealed class RedisPool : IAsyncDisposable
     public string Configuration { get; }
     public int Count => _muxes.Length;
     public IDatabase Db(int key) => _muxes[(int)((uint)key % (uint)_muxes.Length)].GetDatabase();
-    public IServer Server => _muxes[0].GetServers()[0];
+    /// <summary>The current primary (with Sentinel: whichever node is primary now).</summary>
+    public IServer Server => _muxes[0].GetServers().FirstOrDefault(s => s.IsConnected && !s.IsReplica) ?? _muxes[0].GetServers()[0];
+
+    /// <summary>WAIT numreplicas timeout: returns once that many replicas acknowledged this connection's writes.</summary>
+    public static async Task WaitReplicasAsync(IDatabase db, int replicas, int timeoutMs)
+    {
+        long acked = (long)await db.ExecuteAsync("WAIT", replicas, timeoutMs);
+        if (acked < replicas) throw new RedisException($"WAIT: only {acked}/{replicas} replicas acknowledged within {timeoutMs} ms");
+    }
 
     /// <summary>Deletes every key matching the pattern (SCAN + UNLINK).</summary>
     public async Task<long> DeleteByPatternAsync(string pattern)

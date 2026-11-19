@@ -23,6 +23,9 @@ public sealed class RedisStreamsOptions
     /// (fsync-parity mode; with appendfsync everysec this waits for the next once-a-second fsync).
     /// </summary>
     public bool WaitAof { get; set; } = false;
+    /// <summary>After each publish batch, WAIT this many replicas (0 = async replication).</summary>
+    public int WaitReplicas { get; set; } = 0;
+    public int WaitTimeoutMs { get; set; } = 1000;
 }
 
 /// <summary>Exposes the stream identity of a delivery so the Redis store can XACK it inside its commit script.</summary>
@@ -128,7 +131,7 @@ public sealed class RedisStreamsBroker : IBroker, IStatsProvider
 
     public string Describe()
         => $"redis streams @ {Options.Configuration}, {(Options.PartitionsPerGroup > 0 ? Options.PartitionsPerGroup.ToString() : "=workers")} streams per group, " +
-           $"single consumer per stream, {Options.Connections} connections, {(Options.DeleteOnAck ? "XACK+XDEL" : "XACK")} on ack, waitaof={Options.WaitAof}";
+           $"single consumer per stream, {Options.Connections} connections, {(Options.DeleteOnAck ? "XACK+XDEL" : "XACK")} on ack, waitaof={Options.WaitAof}, wait replicas={Options.WaitReplicas}";
 
     public ValueTask DisposeAsync() => Pool.DisposeAsync();
 
@@ -153,6 +156,7 @@ public sealed class RedisStreamsBroker : IBroker, IStatsProvider
             if (!await tx.ExecuteAsync()) throw new InvalidOperationException("redis MULTI/EXEC aborted");
             await Task.WhenAll(adds);
             if (broker.Options.WaitAof) await _db.ExecuteAsync("WAITAOF", 1, 0, 0);
+            if (broker.Options.WaitReplicas > 0) await RedisPool.WaitReplicasAsync(_db, broker.Options.WaitReplicas, broker.Options.WaitTimeoutMs);
         }
 
         public ValueTask DisposeAsync() => ValueTask.CompletedTask;

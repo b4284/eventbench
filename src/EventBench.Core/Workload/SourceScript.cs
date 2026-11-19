@@ -20,6 +20,8 @@ public sealed class SourceScript
 
     private readonly List<OpenRecord> _open = new(4);
     private FastRandom _rng;
+    // Separate stream so enabling slow events does not change the rest of the script.
+    private FastRandom _slowRng;
     private int _recordCounter;
 
     public int SourceId { get; }
@@ -44,6 +46,7 @@ public sealed class SourceScript
         GroupId = group.Id;
         _group = group;
         _rng = new FastRandom(Hashing.SplitMix((ulong)seed) ^ Hashing.SplitMix((ulong)sourceId + 0x5151));
+        _slowRng = new FastRandom(Hashing.SplitMix((ulong)seed + 0x51077) ^ Hashing.SplitMix((ulong)sourceId + 0x7a7a));
     }
 
     public EventEnvelope Next(long scheduledAtUs, WorkloadPlan plan)
@@ -69,6 +72,9 @@ public sealed class SourceScript
         else size = SmallPayload(plan);
 
         var ev = NewEvent(op, scheduledAtUs, size, large ? EventFlags.Large : EventFlags.None);
+        var slow = plan.Options.SlowEvents;
+        if ((slow.Fraction > 0 && _slowRng.NextDouble() < slow.Fraction) || (large && slow.IncludeLarge))
+            ev.SlowMs = _slowRng.NextInt(slow.MinMs, Math.Max(slow.MinMs, slow.MaxMs) + 1);
 
         switch (op)
         {

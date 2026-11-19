@@ -55,7 +55,39 @@ public interface IPgmqDelivery
 public sealed class PgmqBroker : IBroker, IStatsProvider
 {
     private const string FifoHeader = "x-pgmq-group";
-    private static readonly HashSet<string> FifoFunctions = ["read_grouped_head", "read_grouped", "read_grouped_rr"];
+    private static readonly HashSet<string> FifoFunctions = ["read_grouped_head", "read_grouped", "read_grouped_rr", "eb_read_head"];
+    private const string FifoHeaderConst = "x-pgmq-group";
+
+    /// <summary>
+    /// Head-only FIFO read. pgmq.read_grouped_head computes MIN(msg_id) per group over the whole queue table on
+    /// every call (cost grows with the backlog). This walks the queue in msg_id order and keeps a row only if
+    /// no older message of its group exists (index probe on the FIFO btree), regardless of visibility: an
+    /// in-flight head blocks its group. Row locking + EvalPlanQual re-check vt, as in pgmq.
+    /// </summary>
+    private const string EbReadHeadSql = """
+        CREATE OR REPLACE FUNCTION public.eb_read_head(queue_name text, vt integer, qty integer)
+        RETURNS SETOF pgmq.message_record LANGUAGE plpgsql AS $fn$
+        DECLARE qtable text := pgmq.format_table_name(queue_name, 'q');
+        BEGIN
+          RETURN QUERY EXECUTE format($q$
+            WITH c AS (
+              SELECT q.msg_id FROM pgmq.%1$I q
+              WHERE q.vt <= clock_timestamp()
+                AND NOT EXISTS (
+                  SELECT 1 FROM pgmq.%1$I p
+                  WHERE COALESCE(p.headers->>'x-pgmq-group', '_default_fifo_group')
+                      = COALESCE(q.headers->>'x-pgmq-group', '_default_fifo_group')
+                    AND p.msg_id < q.msg_id)
+              ORDER BY q.msg_id
+              LIMIT $1
+              FOR UPDATE SKIP LOCKED)
+            UPDATE pgmq.%1$I m
+               SET vt = clock_timestamp() + %2$L, read_ct = m.read_ct + 1, last_read_at = clock_timestamp()
+              FROM c WHERE m.msg_id = c.msg_id
+            RETURNING m.msg_id, m.read_ct, m.enqueued_at, m.last_read_at, m.vt, m.message, m.headers
+          $q$, qtable, make_interval(secs => vt)) USING qty;
+        END $fn$;
+        """;
 
     private readonly Topology _topology;
     private readonly Action<string> _log;
@@ -112,6 +144,7 @@ public sealed class PgmqBroker : IBroker, IStatsProvider
     {
         await using var conn = await _admin.OpenConnectionAsync(ct);
         await Exec(conn, "CREATE EXTENSION IF NOT EXISTS pgmq", ct);
+        if (Options.FifoReadFunction == "eb_read_head") await Exec(conn, EbReadHeadSql, ct);
 
         await using (var cmd = new NpgsqlCommand("SELECT extversion FROM pg_extension WHERE extname = 'pgmq'", conn))
             _log($"pgmq extension version {await cmd.ExecuteScalarAsync(ct)}");
@@ -173,7 +206,8 @@ public sealed class PgmqBroker : IBroker, IStatsProvider
     public IEventConsumer CreateConsumer(int groupId, int workerIndex)
     {
         if (Options.Ordering == PgmqOrdering.Fifo)
-            return new PgmqConsumer(this, [QueueName(groupId)], $"pgmq.{Options.FifoReadFunction}");
+            return new PgmqConsumer(this, [QueueName(groupId)],
+                Options.FifoReadFunction == "eb_read_head" ? "public.eb_read_head" : $"pgmq.{Options.FifoReadFunction}");
         var g = _topology.Groups[groupId];
         var owned = Enumerable.Range(0, Partitions(g)).Where(p => p % g.Workers == workerIndex).Select(p => QueueName(groupId, p)).ToArray();
         return new PgmqConsumer(this, owned, "pgmq.read");
@@ -260,9 +294,33 @@ public sealed class PgmqBroker : IBroker, IStatsProvider
         public ValueTask DisposeAsync() => ValueTask.CompletedTask;
     }
 
-    private sealed class PgmqConsumer(PgmqBroker broker, string[] queues, string readFunction) : IEventConsumer
+    private sealed class PgmqConsumer(PgmqBroker broker, string[] queues, string readFunction) : IEventConsumer, ISourceLinger
     {
+        /// <summary>
+        /// Linger (FIFO only): take the source's oldest message if it is visible. The oldest is selected without
+        /// a vt filter, so an in-flight older message makes this return nothing instead of skipping ahead.
+        /// </summary>
+        public async ValueTask<IDelivery?> NextForSourceAsync(IDelivery done, CancellationToken ct)
+        {
+            if (broker.Options.Ordering != PgmqOrdering.Fifo || done is not PgmqDelivery pd) return null;
+            string t = "pgmq.\"q_" + pd.Queue + "\"";
+            await using var conn = await broker.Data.OpenConnectionAsync(ct);
+            await using var cmd = new NpgsqlCommand(
+                $"WITH h AS (SELECT msg_id FROM {t} WHERE COALESCE(headers->>'{FifoHeaderConst}', '_default_fifo_group') = $1 ORDER BY msg_id LIMIT 1), " +
+                $"c AS (SELECT q.msg_id FROM {t} q JOIN h ON q.msg_id = h.msg_id WHERE q.vt <= clock_timestamp() FOR UPDATE OF q SKIP LOCKED) " +
+                $"UPDATE {t} m SET vt = clock_timestamp() + make_interval(secs => $2), read_ct = m.read_ct + 1, last_read_at = clock_timestamp() " +
+                "FROM c WHERE m.msg_id = c.msg_id RETURNING m.msg_id, m.read_ct, m.enqueued_at, m.message::text", conn);
+            cmd.Parameters.Add(new NpgsqlParameter { Value = done.Event.SourceId.ToString(System.Globalization.CultureInfo.InvariantCulture), NpgsqlDbType = NpgsqlDbType.Text });
+            cmd.Parameters.Add(new NpgsqlParameter { Value = (double)broker.Options.VisibilityTimeoutSeconds, NpgsqlDbType = NpgsqlDbType.Double });
+            await using var rd = await cmd.ExecuteReaderAsync(ct);
+            if (!await rd.ReadAsync(ct)) return null;
+            return new PgmqDelivery(broker, pd.Queue, rd.GetInt64(0), rd.GetInt32(1),
+                Clock.ToUs(rd.GetFieldValue<DateTime>(2)), EventEnvelope.FromJson(rd.GetString(3)), Clock.NowUs());
+        }
+
         private int _next;
+
+        public bool SharedSources => broker.Options.Ordering == PgmqOrdering.Fifo;
 
         public async ValueTask<IReadOnlyList<IDelivery>> ReceiveAsync(int maxCount, CancellationToken ct)
         {

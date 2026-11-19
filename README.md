@@ -115,6 +115,7 @@ Any event that is applied out of order, twice, or with the wrong data therefore 
 | `applied_equals_generated` | exactly-once application count |
 | `broker_drained` | nothing left in the queues |
 | `runtime_*` | gaps, pre-state mismatches, conflicts, and corrupt payloads/contexts seen by workers |
+| `runtime_cross_source_blocking` | no event waited > `Metrics:BlockingThresholdMs` while a slot of its group was idle (see below) |
 
 The oracle has been tested against itself: `tests/EventBench.Tests` runs the in-memory broker with
 chaos injection.
@@ -125,6 +126,44 @@ chaos injection.
 `Worker:ChaosFailProbability` works with every broker. The worker fails an event just before
 commit and nacks it, which tests the broker's redelivery path: a retried event must not be overtaken
 by later events of the same source. Use it with a short `Worker:RetryDelayMs` (e.g. 0.01 and 50).
+
+### Cross-source blocking (`runtime_cross_source_blocking`)
+
+The rule: an event of one source must not wait on a slow event of another source while a worker slot
+of its group is free.
+
+**Measurement**, for every applied event:
+- **Ready time** is the later of two moments: its publish call returned, or its source's previous event
+  finished (after a failure: the retry delay has passed).
+- **Wait** runs from ready time until a worker starts processing it.
+- **Blocked time** is the part of that wait during which at least one slot of the group was idle. The
+  group has `workers × Worker:MaxParallelPerWorker` slots, counted across **all** of its workers.
+
+Blocked time above `Metrics:BlockingThresholdMs` (default 100 ms, which covers delivery latency and
+the idle-poll backoff) is a violation. It fails the run unless `Metrics:FailOnBlocking=false`. Both
+times are reported as the `ready_wait` and `blocked` histograms.
+
+**Slow events.** `Workload:SlowEvents` gives a fraction of events a slow external call: the worker
+awaits `MinMs..MaxMs` without using CPU. `IncludeLarge` makes every large-message event slow too.
+`configs/overlay-slow.json` sets 0.5% at 1–3 s, large events included, with 4 slots per worker.
+
+**Worker modes** (`Worker:Mode`):
+- `Batch` (default) receives a batch and finishes all of it before receiving again. A slow event
+  therefore holds up the rest of its batch, and the next batch, even when the broker would hand out
+  other sources.
+- `Pipelined` runs `MaxParallelPerWorker` slots that refill independently:
+  - It receives only when a slot is free, and at most as many messages as there are free slots, so it
+    never hoards work another worker could take.
+  - An event whose source is already in flight is parked behind it, up to `Worker:ReadAheadLimit` per
+    worker.
+  - A failure is retried locally after `RetryDelayMs`. There is no broker nack, so no partition pause or
+    rewind.
+  - Consumers are told through `IEventConsumer.EnableReadAhead()`. For Kafka this lifts the
+    stop-and-wait rule per partition: acks may come out of order, and only the contiguous prefix is
+    committed.
+
+`Workload:RateMultiplier` scales every small-message group's rate (load ramps on the same 500-group
+shape). Large-message groups keep their rate. A multiplier of 1.87 offers about 24k ev/s.
 
 ## PGMQ specifics
 

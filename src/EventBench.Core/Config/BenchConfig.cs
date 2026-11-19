@@ -75,6 +75,25 @@ public sealed class WorkloadOptions
     public int ContextBytes { get; set; } = 1024;
 
     public LargePayloadOptions LargePayload { get; set; } = new();
+
+    /// <summary>Events whose processing waits on a slow external call (no CPU), to test cross-source blocking.</summary>
+    public SlowEventOptions SlowEvents { get; set; } = new();
+
+    /// <summary>
+    /// Scales every small-message group's per-source rate (load ramps on the same group shape). Groups with
+    /// large messages keep their configured rate. Workers sized by EventsPerSecondPerWorker scale along.
+    /// </summary>
+    public double RateMultiplier { get; set; } = 1.0;
+}
+
+public sealed class SlowEventOptions
+{
+    /// <summary>Fraction of (non-closing) events, in every group, that take MinMs..MaxMs to process. 0 disables.</summary>
+    public double Fraction { get; set; } = 0;
+    public int MinMs { get; set; } = 1000;
+    public int MaxMs { get; set; } = 3000;
+    /// <summary>Large-payload events are always slow (MinMs..MaxMs) when true.</summary>
+    public bool IncludeLarge { get; set; } = false;
 }
 
 public sealed class GroupOptions
@@ -184,8 +203,37 @@ public enum AckMode
     InTransaction,
 }
 
+public enum WorkerMode
+{
+    /// <summary>Receive a batch, process it (per-source lanes, MaxParallelPerWorker at a time), then receive the next.</summary>
+    Batch,
+    /// <summary>
+    /// MaxParallelPerWorker slots that refill independently: receive whenever a slot is free, park events of
+    /// a source that is already in flight, retry failures locally. A slow event holds only its own slot and
+    /// its own source's later events.
+    /// </summary>
+    Pipelined,
+}
+
 public sealed class WorkerOptions
 {
+    public WorkerMode Mode { get; set; } = WorkerMode.Batch;
+    /// <summary>Pipelined mode: max events a worker holds parked behind in-flight events of the same source.</summary>
+    public int ReadAheadLimit { get; set; } = 256;
+    /// <summary>
+    /// Pipelined mode: local retries of one event before the worker gives the source's events back to the
+    /// broker (nack, oldest first). Guards against a broker that delivered the source out of order.
+    /// </summary>
+    public int MaxLocalRetries { get; set; } = 5;
+    /// <summary>
+    /// Pipelined mode with a shared-queue broker (ISourceLinger): after finishing a source's event, fetch
+    /// that source's next event straight away and keep the slot, without a poll. Skipped while other
+    /// sources wait for a slot.
+    /// </summary>
+    public bool Linger { get; set; } = false;
+    /// <summary>Consecutive lingers on one source before the slot is released (fairness).</summary>
+    public int LingerMax { get; set; } = 16;
+
     public int WorkersPerGroup { get; set; } = 8;
 
     /// <summary>
@@ -237,4 +285,13 @@ public sealed class MetricsOptions
 
     /// <summary>Write HdrHistogram percentile distributions per metric.</summary>
     public bool WriteHistograms { get; set; } = true;
+
+    /// <summary>
+    /// Cross-source blocking: an event that is ready (sent, and its source's previous event done) but not
+    /// started while some worker slot of its group sits idle for longer than this is a violation.
+    /// Covers delivery latency and the idle-poll backoff (IdleBackoffMaxMs).
+    /// </summary>
+    public double BlockingThresholdMs { get; set; } = 100;
+    /// <summary>Make cross-source blocking violations fail the oracle.</summary>
+    public bool FailOnBlocking { get; set; } = true;
 }

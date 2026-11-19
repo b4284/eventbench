@@ -55,6 +55,8 @@ public sealed class EventEnvelope
     [JsonPropertyName("p")] public byte[]? Payload { get; set; }
     /// <summary>Claim-check reference when the payload was stored out of band.</summary>
     [JsonPropertyName("b")] public long? BlobId { get; set; }
+    /// <summary>Simulated slow external call the worker makes for this event, in ms (0 = none).</summary>
+    [JsonPropertyName("sw"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)] public int SlowMs { get; set; }
 
     [JsonIgnore] public bool IsLarge => (Flags & EventFlags.Large) != 0;
     [JsonIgnore] public bool IsClosing => (Flags & EventFlags.Closing) != 0;

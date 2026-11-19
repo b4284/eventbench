@@ -16,8 +16,9 @@ while [[ $# -gt 0 && "$1" != "--" ]]; do COMMON+=("$1"); shift; done
 shift || true
 VARIANTS=("$@")
 
-BIN=src/EventBench.Cli/bin/Release/net10.0/eventbench.dll
-dotnet build -c Release -v q >/dev/null || exit 2
+# EB_BIN: run a pre-built copy (lets you keep editing/building the tree while a matrix runs).
+if [[ -n "${EB_BIN:-}" ]]; then BIN=$EB_BIN
+else BIN=src/EventBench.Cli/bin/Release/net10.0/eventbench.dll; dotnet build -c Release -v q >/dev/null || exit 2; fi
 mkdir -p "$OUT"
 
 for rep in $(seq 1 "$REPS"); do

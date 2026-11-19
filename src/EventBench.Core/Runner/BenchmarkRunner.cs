@@ -43,7 +43,7 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
     public async Task<RunResult> RunAsync(BenchConfig cfg, IConfiguration raw, CancellationToken ct)
     {
         var topology = Topology.FromConfig(cfg);
-        var metrics = new MetricsHub(topology);
+        var metrics = new MetricsHub(topology, cfg.Worker.MaxParallelPerWorker, cfg.Metrics.BlockingThresholdMs, cfg.Metrics.FailOnBlocking);
         var result = new RunResult { Config = cfg, RawConfig = raw, Topology = topology, Metrics = metrics, StartedUtc = DateTime.UtcNow };
         var context = new BenchContext { Config = cfg, Topology = topology, Log = log };
         var sw = Stopwatch.StartNew();

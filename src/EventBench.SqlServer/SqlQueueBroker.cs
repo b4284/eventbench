@@ -206,6 +206,8 @@ public sealed class SqlQueueBroker : IBroker, IStatsProvider
 
     private sealed class Consumer(SqlQueueBroker broker, int groupId) : IEventConsumer
     {
+        public bool SharedSources => true;
+
         public async ValueTask<IReadOnlyList<IDelivery>> ReceiveAsync(int maxCount, CancellationToken ct)
         {
             return await broker.WithDeadlockRetry(async () =>
