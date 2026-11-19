@@ -1,0 +1,8 @@
+{
+  "Store": {
+    "Type": "sqlserver",
+    "ConnectionString": "Server=127.0.0.1,1433;Database=bench;User Id=sa;Password=EventBench#2026;Encrypt=false;TrustServerCertificate=true;Max Pool Size=1000;Connect Timeout=30;Command Timeout=60",
+    "AdminConnectionString": "Server=127.0.0.1,1433;Database=bench;User Id=sa;Password=EventBench#2026;Encrypt=false;TrustServerCertificate=true;Max Pool Size=20;Command Timeout=600",
+    "TablePrefix": "eb"
+  }
+}

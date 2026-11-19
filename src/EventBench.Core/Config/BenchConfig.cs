@@ -215,6 +215,8 @@ public sealed class WorkerOptions
 
     /// <summary>Delay before a failed message becomes visible again.</summary>
     public double RetryDelayMs { get; set; } = 250;
+    /// <summary>Probability that a worker fails an event just before commit and nacks it (tests ordered redelivery).</summary>
+    public double ChaosFailProbability { get; set; }
 
     public double IdleBackoffMinMs { get; set; } = 1;
     public double IdleBackoffMaxMs { get; set; } = 50;

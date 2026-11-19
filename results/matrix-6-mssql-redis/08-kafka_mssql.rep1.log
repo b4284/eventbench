@@ -1,0 +1,160 @@
+22:03:50.442 topology: 500 groups, 16,000 sources, offered load 12,856 events/s, 598 workers
+22:03:50.540 broker: kafka 500 topics 'eb.g*' (=workers partitions/group, rf=1, flush.messages=default), acks=all idempotent, linger=2ms, compression=none, max.message=64MB, producers=per publisher (max 32), manual assign + contiguous commits every 100ms @ 127.0.0.1:9092
+22:03:50.540 store:  sqlserver @ 127.0.0.1,1433/bench (pool max 1000), commit = proc with UPDLOCK cursor, delayed durability = server setting
+22:03:50.780 sqlserver store: schema created, 16,000 source cursors seeded; server 17.0.5065.9 Enterprise Developer Edition (64-bit), rcsi=True, delayed_durability=FORCED
+22:03:55.356 kafka: deleted 500 old topics, created 500 topics / 598 partitions, backlog 0
+22:03:55.356 setup done in 4.9s
+22:03:55.866 run: 60s (warmup 10s), 32 producers, 598 workers
+22:04:56.813 closing: 35,264 completion events emitted
+22:04:57.822 drained in 1.0s
+22:05:04.632 verifying end state against the oracle ...
+
+# 08-kafka_mssql — PASS ✅
+
+- Broker: `kafka 500 topics 'eb.g*' (=workers partitions/group, rf=1, flush.messages=default), acks=all idempotent, linger=2ms, compression=none, max.message=64MB, producers=per publisher (max 32), manual assign + contiguous commits every 100ms @ 127.0.0.1:9092`
+- Store: `sqlserver @ 127.0.0.1,1433/bench (pool max 1000), commit = proc with UPDLOCK cursor, delayed durability = server setting`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 1
+- Topology: 500 groups, 16000 sources, 598 workers, offered 12856.021 ev/s
+- Phases: run 60.115s, closing 0.831s, drain 1.009s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 814553 | 814553 | 12855.071 | 13166.812 | 24270.3 | 0 | 0 | 0 | 431 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 642832 | 62.717 | 28.943 | 68.863 | 897.023 | 2256.895 | 3633.151 |
+| e2e_from_send | 642832 | 56.164 | 22.895 | 58.623 | 884.223 | 2242.559 | 3622.911 |
+| producer_lag | 642832 | 6.554 | 4.363 | 14.799 | 36.671 | 66.367 | 138.495 |
+| publish_call | 215128 | 8.737 | 6.699 | 15.511 | 35.007 | 77.055 | 444.159 |
+| queue_wait | 642832 | 47.686 | 18.047 | 51.135 | 806.911 | 2195.455 | 3614.719 |
+| broker_dwell | 642832 | 39.814 | 10.031 | 41.503 | 792.575 | 2179.071 | 3604.479 |
+| receive_call | 508348 | 0.033 | 0.011 | 0.025 | 0.213 | 4.619 | 71.615 |
+| ctx_load | 642832 | 2.975 | 1.274 | 3.863 | 14.551 | 450.047 | 1127.423 |
+| process | 642832 | 0.002 | 0.001 | 0.002 | 0.005 | 0.118 | 17.631 |
+| ctx_commit | 642832 | 2.039 | 1.307 | 3.883 | 13.839 | 29.087 | 1084.415 |
+| ack | 642362 | 0.006 | 0.004 | 0.01 | 0.018 | 0.232 | 22.543 |
+| service | 642832 | 8.478 | 3.309 | 13.279 | 79.551 | 674.815 | 1640.447 |
+| e2e_large | 331 | 112.132 | 92.031 | 157.311 | 639.487 | 1229.823 | 1229.823 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 13166.812 | 17521.1 |
+| applied_total | 461893.429 | 771003 |
+| bench_cpu_cores | 6.711 | 7.303 |
+| bench_cpu_pct | 27.961 | 30.43 |
+| bench_gc_gen0 | 8.102 | 14 |
+| bench_gc_gen1 | 2.735 | 5 |
+| bench_gc_gen2 | 2.612 | 5 |
+| bench_gc_heap_mb | 249.957 | 472.3 |
+| bench_mem_mb | 1198.255 | 1312.1 |
+| bench_threadpool_queue | 19.898 | 197 |
+| bench_threadpool_threads | 37.041 | 41 |
+| broker_backlog | 666.408 | 13132 |
+| broker_commit_errors | 0 | 0 |
+| broker_committed_offsets | 444637.592 | 761645 |
+| broker_discarded_msgs | 0 | 0 |
+| broker_end_offsets | 442983.286 | 759641 |
+| broker_rewinds | 0 | 0 |
+| ctr_eb_kafka_cpu_pct | 260.331 | 274.33 |
+| ctr_eb_kafka_mem_mb | 2593.902 | 2830.5 |
+| ctr_eb_mssql_cpu_pct | 617.474 | 814.87 |
+| ctr_eb_mssql_mem_mb | 7403.002 | 7407.2 |
+| ctr_eb_nats_cpu_pct | 0.684 | 3.21 |
+| ctr_eb_nats_mem_mb | 358.284 | 360.6 |
+| ctr_eb_pgbouncer_cpu_pct | 0.019 | 0.02 |
+| ctr_eb_pgbouncer_mem_mb | 10.492 | 10.7 |
+| ctr_eb_postgres_cpu_pct | 0.474 | 0.69 |
+| ctr_eb_postgres_mem_mb | 3179.198 | 3188.1 |
+| ctr_eb_rabbitmq_cpu_pct | 15.958 | 18.13 |
+| ctr_eb_rabbitmq_mem_mb | 1143.239 | 1305.6 |
+| ctr_eb_redis_cpu_pct | 0.298 | 0.32 |
+| ctr_eb_redis_mem_mb | 1347.704 | 1348.5 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 69.731 | 80.09 |
+| in_flight | 569.878 | 10796 |
+| mssql_batch_requests_per_s | 26622.612 | 33995.5 |
+| mssql_deadlocks_per_s | 0 | 0 |
+| mssql_lock_timeouts_per_s | 6.106 | 16.2 |
+| mssql_lock_waits_per_s | 0 | 0 |
+| mssql_log_bytes_flushed_per_s | 49952146.7 | 91185548.4 |
+| mssql_log_flush_waits_per_s | 0.306 | 1.6 |
+| mssql_log_flushes_per_s | 980.386 | 1625 |
+| mssql_processes_blocked | 0 | 0 |
+| mssql_sql_compilations_per_s | 0 | 0 |
+| mssql_transactions_per_s | 13312.018 | 16999.2 |
+| mssql_user_connections | 206.041 | 219 |
+| mssql_wait_async_network_io_ms_per_s | 1.386 | 8.3 |
+| mssql_wait_cxpacket_ms_per_s | 0 | 0 |
+| mssql_wait_hadr_sync_commit_ms_per_s | 0 | 0 |
+| mssql_wait_lck_m_s_ms_per_s | 0 | 0 |
+| mssql_wait_lck_m_u_ms_per_s | 0 | 0 |
+| mssql_wait_lck_m_x_ms_per_s | 0 | 0 |
+| mssql_wait_logbuffer_ms_per_s | 0 | 0 |
+| mssql_wait_pageiolatch_sh_ms_per_s | 59.182 | 403.4 |
+| mssql_wait_pagelatch_ex_ms_per_s | 71.512 | 277.6 |
+| mssql_wait_pagelatch_sh_ms_per_s | 132.233 | 768.5 |
+| mssql_wait_sos_scheduler_yield_ms_per_s | 34.161 | 229.5 |
+| mssql_wait_threadpool_ms_per_s | 0 | 0 |
+| mssql_wait_writelog_ms_per_s | 0.39 | 2.5 |
+| nacks_per_s | 0 | 0 |
+| produced_per_s | 12855.071 | 13234.3 |
+| produced_total | 462463.306 | 771135 |
+| publish_mb_per_s | 44.404 | 68.18 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 117,584 records are Completed |
+| record_counts | pass | 117,584 records found, 117,584 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 431 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 814,553 events applied by workers, 814,553 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-206 | 118 | 2 | 48.629 | 93.697 | 1969 | 0 | 5928 | 5928 | 0 | 26.495 | 2916.351 | 3571.711 |
+| t-461 | 130 | 2 | 45.032 | 97.963 | 3025 | 0 | 6276 | 6276 | 0 | 25.215 | 2801.663 | 3637.247 |
+| t-246 | 32 | 2 | 187.722 | 99.182 | 494 | 0 | 6076 | 6076 | 0 | 25.471 | 2752.511 | 3407.871 |
+| t-264 | 46 | 1 | 60.311 | 46.436 | 3058 | 0 | 2910 | 2910 | 0 | 26.111 | 2523.135 | 2850.815 |
+| t-348 | 125 | 3 | 63.004 | 132.054 | 1340 | 0 | 8390 | 8390 | 0 | 26.111 | 2326.527 | 3227.647 |
+| t-210 | 71 | 2 | 57.482 | 65.449 | 136 | 0 | 4177 | 4177 | 0 | 27.903 | 2260.991 | 2916.351 |
+| t-253 | 26 | 1 | 73.629 | 32.505 | 1433 | 0 | 2037 | 2037 | 0 | 28.415 | 2260.991 | 2457.599 |
+| t-222 | 138 | 3 | 61.993 | 144.282 | 2846 | 0 | 9183 | 9183 | 0 | 24.959 | 2146.303 | 3424.255 |
+| t-045 | 47 | 2 | 82.615 | 64.377 | 1398 | 0 | 3963 | 3963 | 0 | 28.543 | 2097.151 | 3014.655 |
+| t-136 | 146 | 2 | 40.495 | 97.61 | 450 | 0 | 6336 | 6336 | 0 | 24.703 | 1990.655 | 2293.759 |
+| t-362 | 47 | 1 | 47.764 | 36.599 | 3235 | 0 | 2327 | 2327 | 0 | 28.031 | 1802.239 | 2146.303 |
+| t-388 | 78 | 1 | 32.916 | 41.779 | 1205 | 0 | 2738 | 2738 | 0 | 25.855 | 1785.855 | 1949.695 |
+| t-363 | 19 | 1 | 93.142 | 30.223 | 639 | 0 | 1855 | 1855 | 0 | 28.287 | 1695.743 | 1941.503 |
+| t-490 | 56 | 2 | 93.882 | 88.229 | 245 | 0 | 5489 | 5489 | 0 | 26.239 | 1671.167 | 2342.911 |
+| t-161 | 41 | 1 | 60.994 | 41.321 | 339 | 0 | 2614 | 2614 | 0 | 27.391 | 1630.207 | 1753.087 |
+| t-469 | 105 | 3 | 76.658 | 133.383 | 278 | 0 | 8404 | 8404 | 0 | 25.855 | 1613.823 | 2211.839 |
+| t-325 | 98 | 1 | 26.904 | 43.432 | 3394 | 0 | 2870 | 2870 | 0 | 26.495 | 1597.439 | 1826.815 |
+| t-373 | 31 | 1 | 57.544 | 30.618 | 2878 | 0 | 1913 | 1913 | 0 | 29.055 | 1589.247 | 1785.855 |
+| t-374 | 28 | 2 | 178.846 | 82.743 | 1811 | 0 | 4971 | 4971 | 0 | 27.007 | 1581.055 | 2039.807 |
+| t-416 | 57 | 1 | 38.884 | 37.248 | 3430 | 0 | 2352 | 2352 | 0 | 27.263 | 1581.055 | 1966.079 |
+| t-425 | 89 | 3 | 83.116 | 121.502 | 2911 | 0 | 7676 | 7676 | 0 | 26.495 | 1531.903 | 2670.591 |
+| t-037 | 21 | 1 | 73.917 | 25.941 | 272 | 0 | 1594 | 1594 | 0 | 30.207 | 1523.711 | 1900.543 |
+| t-029 | 28 | 2 | 143.274 | 66.438 | 1732 | 0 | 4238 | 4238 | 0 | 27.775 | 1515.519 | 1818.623 |
+| t-441 | 30 | 2 | 141.287 | 68.521 | 2203 | 0 | 4264 | 4264 | 0 | 28.671 | 1490.943 | 1851.391 |
+| t-003 | 30 | 1 | 36.473 | 18.126 | 1633 | 0 | 1208 | 1208 | 0 | 31.359 | 1466.367 | 1662.975 |
+
+22:05:07.294 results written to /home/b4283/benchmark/results/matrix-6-mssql-redis/08-kafka_mssql/20261119-140350_08-kafka_mssql

@@ -1,0 +1,146 @@
+# 07-rabbit_mssql — PASS ✅
+
+- Broker: `rabbitmq quorum queues, =workers partitions/group (598 queues), prefetch 40, SAC=True, delivery-limit=-1, persistent + publisher confirms, client-side ordered retry, 4+2 conns @ 127.0.0.1:5672 vhost /`
+- Store: `sqlserver @ 127.0.0.1,1433/bench (pool max 1000), commit = proc with UPDLOCK cursor, delayed durability = server setting`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 1
+- Topology: 500 groups, 16000 sources, 598 workers, offered 12856.021 ev/s
+- Phases: run 60.11s, closing 1.69s, drain 5.944s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 814354 | 814354 | 13130.835 | 13349.963 | 22030.6 | 0 | 0 | 0 | 430 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 642636 | 119.45 | 21.407 | 323.327 | 1352.703 | 2115.583 | 3358.719 |
+| e2e_from_send | 642636 | 89.501 | 15.463 | 222.591 | 1121.279 | 1838.079 | 3215.359 |
+| producer_lag | 642636 | 29.949 | 5.503 | 93.055 | 340.991 | 596.991 | 888.831 |
+| publish_call | 153346 | 12.504 | 6.647 | 15.295 | 137.599 | 698.367 | 2191.359 |
+| queue_wait | 642636 | 76.556 | 10.383 | 193.023 | 1069.055 | 1788.927 | 3155.967 |
+| broker_dwell | 642636 | 76.364 | 10.359 | 192.511 | 1067.007 | 1786.879 | 3131.391 |
+| receive_call | 554341 | 36.7 | 21.535 | 98.175 | 182.783 | 200.063 | 248.063 |
+| ctx_load | 642636 | 4.553 | 1.478 | 4.631 | 83.839 | 449.023 | 1119.231 |
+| process | 642636 | 0.002 | 0.001 | 0.002 | 0.005 | 0.198 | 8.239 |
+| ctx_commit | 642636 | 2.274 | 1.521 | 4.499 | 9.447 | 60.383 | 968.703 |
+| ack | 637634 | 0.003 | 0.002 | 0.003 | 0.006 | 0.138 | 7.963 |
+| service | 642636 | 12.946 | 3.823 | 22.719 | 179.839 | 734.207 | 1207.295 |
+| e2e_large | 330 | 167.393 | 70.719 | 400.895 | 1232.895 | 1626.111 | 1626.111 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 13349.963 | 22030.6 |
+| applied_total | 467623.449 | 777293 |
+| bench_cpu_cores | 2.661 | 3.352 |
+| bench_cpu_pct | 11.087 | 13.97 |
+| bench_gc_gen0 | 5.041 | 9 |
+| bench_gc_gen1 | 4.02 | 9 |
+| bench_gc_gen2 | 0.306 | 1 |
+| bench_gc_heap_mb | 520.973 | 742.5 |
+| bench_mem_mb | 841.645 | 1006.5 |
+| bench_threadpool_queue | 23.918 | 146 |
+| bench_threadpool_threads | 34.857 | 41 |
+| broker_backlog | 3171.612 | 17980 |
+| broker_consumers | 598 | 598 |
+| broker_ready | 1000.857 | 7006 |
+| broker_test_nacks | 0 | 0 |
+| broker_unacked | 2170.755 | 10974 |
+| ctr_eb_kafka_cpu_pct | 1.83 | 2.2 |
+| ctr_eb_kafka_mem_mb | 3010.992 | 3027 |
+| ctr_eb_mssql_cpu_pct | 599.231 | 896.22 |
+| ctr_eb_mssql_mem_mb | 6034.704 | 6126.4 |
+| ctr_eb_nats_cpu_pct | 0.529 | 0.61 |
+| ctr_eb_nats_mem_mb | 351.159 | 351.3 |
+| ctr_eb_pgbouncer_cpu_pct | 0.02 | 0.02 |
+| ctr_eb_pgbouncer_mem_mb | 10.3 | 10.3 |
+| ctr_eb_postgres_cpu_pct | 0.282 | 0.42 |
+| ctr_eb_postgres_mem_mb | 3138.063 | 3139.5 |
+| ctr_eb_rabbitmq_cpu_pct | 520.336 | 584.34 |
+| ctr_eb_rabbitmq_mem_mb | 1418.008 | 1537.3 |
+| ctr_eb_redis_cpu_pct | 0.282 | 0.3 |
+| ctr_eb_redis_mem_mb | 1349.4 | 1349.4 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 61.94 | 77.78 |
+| in_flight | 522.51 | 10229 |
+| mssql_batch_requests_per_s | 27037.088 | 41455 |
+| mssql_deadlocks_per_s | 0 | 0 |
+| mssql_lock_timeouts_per_s | 5.984 | 16.7 |
+| mssql_lock_waits_per_s | 0 | 0 |
+| mssql_log_bytes_flushed_per_s | 51021287.19 | 90837729.1 |
+| mssql_log_flush_waits_per_s | 0.4 | 1.9 |
+| mssql_log_flushes_per_s | 998.488 | 1640.5 |
+| mssql_processes_blocked | 0 | 0 |
+| mssql_sql_compilations_per_s | 0 | 0 |
+| mssql_transactions_per_s | 13519.206 | 20727.7 |
+| mssql_user_connections | 200.347 | 255 |
+| mssql_wait_async_network_io_ms_per_s | 0.343 | 1.9 |
+| mssql_wait_cxpacket_ms_per_s | 0 | 0 |
+| mssql_wait_hadr_sync_commit_ms_per_s | 0 | 0 |
+| mssql_wait_lck_m_s_ms_per_s | 0.031 | 0.5 |
+| mssql_wait_lck_m_u_ms_per_s | 0.02 | 0.5 |
+| mssql_wait_lck_m_x_ms_per_s | 0 | 0 |
+| mssql_wait_logbuffer_ms_per_s | 0 | 0 |
+| mssql_wait_pageiolatch_sh_ms_per_s | 6.618 | 30.8 |
+| mssql_wait_pagelatch_ex_ms_per_s | 18.543 | 48.2 |
+| mssql_wait_pagelatch_sh_ms_per_s | 24.92 | 95.4 |
+| mssql_wait_sos_scheduler_yield_ms_per_s | 30.316 | 92.8 |
+| mssql_wait_threadpool_ms_per_s | 0 | 0 |
+| mssql_wait_writelog_ms_per_s | 0.257 | 1.4 |
+| nacks_per_s | 0 | 0 |
+| produced_per_s | 13130.835 | 21413.2 |
+| produced_total | 468145.959 | 777398 |
+| publish_mb_per_s | 45.595 | 111.57 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 117,559 records are Completed |
+| record_counts | pass | 117,559 records found, 117,559 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 430 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 814,354 events applied by workers, 814,354 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-245 | 43 | 1 | 71.24 | 48.932 | 2232 | 0 | 3061 | 3061 | 0 | 23.167 | 2883.583 | 3358.719 |
+| t-389 | 64 | 1 | 28.067 | 30.041 | 281 | 0 | 2008 | 2008 | 0 | 20.351 | 2457.599 | 3096.575 |
+| t-263 | 93 | 2 | 59.766 | 94.005 | 374 | 0 | 5910 | 5910 | 0 | 21.759 | 2080.767 | 2850.815 |
+| t-468 | 61 | 3 | 127.029 | 127.053 | 1645 | 0 | 7790 | 7790 | 0 | 21.759 | 2056.191 | 2654.207 |
+| t-147 | 79 | 4 | 145.536 | 195.43 | 1078 | 0 | 12128 | 12128 | 0 | 22.015 | 2023.423 | 2539.519 |
+| t-161 | 41 | 1 | 60.994 | 41.321 | 339 | 0 | 2613 | 2613 | 0 | 22.783 | 2023.423 | 2834.431 |
+| t-388 | 78 | 1 | 32.916 | 41.779 | 1205 | 0 | 2738 | 2738 | 0 | 22.527 | 1966.079 | 2654.207 |
+| t-136 | 146 | 2 | 40.495 | 97.61 | 450 | 0 | 6335 | 6335 | 0 | 22.399 | 1949.695 | 2670.591 |
+| t-016 | 132 | 1 | 18.95 | 41.199 | 137 | 0 | 2765 | 2765 | 0 | 21.119 | 1933.311 | 2359.295 |
+| t-490 | 56 | 2 | 93.882 | 88.229 | 245 | 0 | 5489 | 5489 | 0 | 21.887 | 1916.927 | 2572.287 |
+| t-379 | 57 | 1 | 47.528 | 44.975 | 591 | 0 | 2897 | 2897 | 0 | 21.631 | 1859.583 | 2392.063 |
+| t-041 | 34 | 3 | 194.475 | 109.547 | 2732 | 0 | 6574 | 6574 | 0 | 21.887 | 1851.391 | 2621.439 |
+| t-425 | 89 | 3 | 83.116 | 121.502 | 2911 | 0 | 7672 | 7672 | 0 | 22.783 | 1810.431 | 2588.671 |
+| t-246 | 32 | 2 | 187.722 | 99.182 | 494 | 0 | 6076 | 6076 | 0 | 21.759 | 1785.855 | 2457.599 |
+| t-215 | 31 | 1 | 55.636 | 27.918 | 2427 | 0 | 1749 | 1749 | 0 | 20.863 | 1769.471 | 2023.423 |
+| t-231 | 43 | 1 | 50.375 | 34.767 | 156 | 0 | 2213 | 2213 | 0 | 21.375 | 1769.471 | 2260.991 |
+| t-342 | 15 | 1 | 139.58 | 34.905 | 146 | 0 | 2099 | 2099 | 0 | 20.607 | 1769.471 | 2277.375 |
+| t-383 | 200 | 6 | 77.529 | 257.86 | 2521 | 0 | 16109 | 16109 | 0 | 21.759 | 1728.511 | 2736.127 |
+| t-416 | 57 | 1 | 38.884 | 37.248 | 3430 | 0 | 2352 | 2352 | 0 | 19.839 | 1728.511 | 2211.839 |
+| t-469 | 105 | 3 | 76.658 | 133.383 | 278 | 0 | 8402 | 8402 | 0 | 21.631 | 1728.511 | 2424.831 |
+| t-362 | 47 | 1 | 47.764 | 36.599 | 3235 | 0 | 2327 | 2327 | 0 | 22.911 | 1703.935 | 2310.143 |
+| t-499 | 36 | 1 | 56.749 | 33.449 | 1538 | 0 | 2110 | 2110 | 0 | 22.399 | 1703.935 | 2179.071 |
+| t-347 | 162 | 4 | 62.113 | 168.769 | 833 | 0 | 10471 | 10471 | 0 | 21.759 | 1695.743 | 2441.215 |
+| t-055 | 65 | 3 | 101.454 | 105.002 | 359 | 0 | 6445 | 6445 | 0 | 21.887 | 1679.359 | 2244.607 |
+| t-258 | 52 | 1 | 41.292 | 35.498 | 2470 | 0 | 2371 | 2371 | 0 | 21.375 | 1679.359 | 2179.071 |

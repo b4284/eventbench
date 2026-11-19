@@ -8,8 +8,8 @@ Implemented today:
 
 | Component | Types |
 |---|---|
-| Broker | `pgmq` (FIFO-grouped or partitioned), `kafka` (partition per worker), `rabbitmq` (quorum-queue partitions), `nats` (JetStream), `inmemory` (baseline plus chaos injection) |
-| Store  | `postgres`, `mongo`, `natskv` (JetStream KV + Object Store), `inmemory` |
+| Broker | `pgmq` (FIFO-grouped or partitioned), `kafka` (partition per worker), `rabbitmq` (quorum-queue partitions), `nats` (JetStream), `sqlqueue` (SQL Server table queue), `redis` (Redis Streams, stream per worker), `inmemory` (baseline plus chaos injection) |
+| Store  | `postgres`, `mongo`, `natskv` (JetStream KV + Object Store), `sqlserver`, `redis` (keys + Lua), `inmemory` |
 
 ## Quick start (podman)
 
@@ -121,6 +121,10 @@ chaos injection.
 - `ChaosReorderProbability` → FAIL (gaps)
 - `ChaosDropProbability` → FAIL (cursors, open records, backlog)
 - `ChaosDuplicateProbability` → PASS (idempotent dedup)
+
+`Worker:ChaosFailProbability` works with every broker. The worker fails an event just before
+commit and nacks it, which tests the broker's redelivery path: a retried event must not be overtaken
+by later events of the same source. Use it with a short `Worker:RetryDelayMs` (e.g. 0.01 and 50).
 
 ## PGMQ specifics
 
@@ -358,6 +362,56 @@ Writes and uploads from an attempt that never advanced the cursor are therefore 
 Both still PASS. `EB_NATS_URL=nats://127.0.0.1:4222 dotnet test` also runs a concurrent-duplicate
 commit test against the server.
 
+## SQL Server (store and table queue)
+
+```bash
+./infra/mssql/up.sh                 # SQL Server 2025 Developer, :1433, db "bench" (RCSI on, SIMPLE recovery)
+./infra/mssql/durability.sh forced  # best effort: DELAYED_DURABILITY=FORCED (default) | disabled = fully durable
+B run -c configs/pgmq-500groups.json -c configs/matrix/broker-sqlqueue.json -c configs/matrix/store-sqlserver.json
+```
+
+- **Store (`sqlserver`).** Load is one SELECT, which doesn't block under RCSI. Commit is one stored
+  procedure `eb_commit`. It locks the source cursor with UPDLOCK, writes the record with a version
+  guard, inserts the upload and advances the cursor.
+- **Queue (`sqlqueue`), the PGMQ analogue.** One table `eb_q`, clustered on `(group_id, msg_id)`,
+  with an index on `(group_id, source_id, msg_id)`. Publishing inserts the whole producer batch, across
+  all groups, in one statement through a table-valued parameter. Dequeue takes up to N source *heads*:
+  - Each picked message has no older message of its source left, and its visibility time has passed.
+  - `UPDLOCK, READPAST` makes concurrent workers of a group skip each other's rows.
+  - The "no older message" check must use a locking read (`READCOMMITTEDLOCK`). The RCSI statement
+    snapshot misses predecessors inserted after the snapshot started. The oracle caught exactly that
+    as ordering gaps.
+- **Transactional ack.** With `AckMode: InTransaction` and the same database, the commit batch also
+  deletes the queue row, so state and ack commit together (exactly once).
+- **Memory.** `MSSQL_MEMORY_MB` defaults to 4096 in `up.sh`. Give it 8192 for the 500-group workload,
+  otherwise SQL Server re-reads pages from disk and falls behind.
+- **SqlClient and globalization.** Microsoft.Data.SqlClient does not run with invariant
+  globalization, so the CLI project turns it off.
+
+## Redis (Streams broker and store)
+
+```bash
+./infra/redis/up.sh                 # Redis 8, :6379, AOF appendfsync everysec (best effort), no RDB snapshots
+./infra/redis/fsync.sh always       # fsync before every reply (fsync parity); back with: everysec
+B run -c configs/pgmq-500groups.json -c configs/matrix/broker-redis.json -c configs/matrix/store-redis.json
+```
+
+- **Broker (`redis`).** One stream per (group, partition), with partitions equal to workers. Each
+  stream is read by exactly one worker through a consumer group (`XREADGROUP`), so order comes from
+  single ownership, like Kafka.
+  - Publishing is one `MULTI/EXEC` per producer batch.
+  - Ack is `XACK` + `XDEL`, which keeps `XLEN` equal to the backlog.
+  - A nack pauses the stream. After the retry delay, the consumer re-reads its own pending entries
+    (`ID 0`, oldest first) before taking new ones (`>`), so a failed event is never overtaken.
+  - Stream IDs carry the enqueue time.
+- **Store (`redis`).** Cursor keys (absent = 0), record hashes and upload hashes. Load and commit are
+  Lua scripts, each one atomic round trip.
+- **Transactional ack.** With the Streams broker on the same server and `AckMode: InTransaction`, the
+  commit script also `XACK`s and `XDEL`s the entry (exactly once).
+- **Fsync parity.** `WaitAof: true` on the broker or store adds `WAITAOF 1 0`.
+- **Connections.** Commands share a few multiplexed connections (`Connections`, default 8), which
+  bounds head-of-line blocking behind MB-sized values.
+
 ## Metrics & output
 
 Each run writes `results/<utc-stamp>_<name>/`:
@@ -407,8 +461,10 @@ src/EventBench.Mongo      MongoDB store (transactional or embedded commit, chunk
 src/EventBench.Kafka      Kafka broker (Confluent.Kafka), contiguous-offset tracker
 src/EventBench.RabbitMq   RabbitMQ broker (quorum-queue partitions, publisher confirms, client-side ordered retry)
 src/EventBench.Nats       NATS JetStream broker, JetStream KV/Object Store state store
+src/EventBench.SqlServer  SQL Server table-queue broker, SQL Server store (stored procedure commit), DMV stats
+src/EventBench.Redis      Redis Streams broker, Redis store (Lua commit), INFO stats
 src/EventBench.Cli        `eventbench` CLI (run / validate / compare)
 tests/EventBench.Tests    oracle self-tests, generator determinism, broker/store bookkeeping tests
 configs/                  base configs and overlays
-infra/                    podman scripts + PgBouncer config; infra/{kafka,rabbitmq,nats,mongo} per component
+infra/                    podman scripts + PgBouncer config; infra/{kafka,rabbitmq,nats,mongo,mssql,redis} per component
 ```

@@ -1,0 +1,185 @@
+22:32:09.036 topology: 500 groups, 16,000 sources, offered load 12,856 events/s, 598 workers
+22:32:09.081 broker: sqlqueue table eb_q, per-source FIFO head dequeue (UPDLOCK+READPAST), vt=30s, delete on ack @ 127.0.0.1,1433/bench (pool max 1000)
+22:32:09.081 store:  sqlserver @ 127.0.0.1,1433/bench (pool max 1000), commit = proc with UPDLOCK cursor, delayed durability = server setting
+22:32:09.477 sqlserver store: schema created, 16,000 source cursors seeded; server 17.0.5065.9 Enterprise Developer Edition (64-bit), rcsi=True, delayed_durability=FORCED
+22:32:09.495 sqlqueue: table eb_q (clustered group_id,msg_id + index group_id,source_id,msg_id) for 500 groups
+22:32:09.496 setup done in 0.5s
+22:32:09.517 run: 60s (warmup 10s), 32 producers, 598 workers
+22:33:17.945 closing: 34,997 completion events emitted
+22:34:17.219 drained in 59.3s
+22:34:17.235 worker t-022#0 receive error (1): SqlException: A severe error occurred on the current command.  The results, if any, should be discarded.
+Operation cancelled by user.
+22:34:17.277 verifying end state against the oracle ...
+
+# 01-sqlq_mssql-txack — PASS ✅
+
+- Broker: `sqlqueue table eb_q, per-source FIFO head dequeue (UPDLOCK+READPAST), vt=30s, delete on ack @ 127.0.0.1,1433/bench (pool max 1000)`
+- Store: `sqlserver @ 127.0.0.1,1433/bench (pool max 1000), commit = proc with UPDLOCK cursor, delayed durability = server setting`
+- Ack mode: `InTransaction`, batch 10, parallel/worker 1
+- Topology: 500 groups, 16000 sources, 598 workers, offered 12856.021 ev/s
+- Phases: run 63.743s, closing 4.683s, drain 59.274s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 775203 | 775203 | 11730.76 | 10340.015 | 17726.7 | 0 | 1 | 0 | 413 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 603749 | 10348.355 | 6205.439 | 26460.159 | 51707.903 | 62095.359 | 72220.671 |
+| e2e_from_send | 603749 | 8829.314 | 4403.199 | 24936.447 | 49250.303 | 59080.703 | 64356.351 |
+| producer_lag | 603749 | 1519.032 | 799.231 | 4034.559 | 6533.119 | 8863.743 | 9469.951 |
+| publish_call | 17023 | 123.557 | 13.487 | 199.935 | 3252.223 | 4636.671 | 5677.055 |
+| queue_wait | 603749 | 8681.872 | 4263.935 | 24756.223 | 49119.231 | 58949.631 | 64159.743 |
+| broker_dwell | 603749 | 8584.468 | 4147.199 | 24674.303 | 49020.927 | 58818.559 | 64094.207 |
+| receive_call | 127818 | 122.016 | 18.031 | 111.807 | 3776.511 | 5144.575 | 5971.967 |
+| ctx_load | 603749 | 14.056 | 10.615 | 24.127 | 54.751 | 126.079 | 5480.447 |
+| process | 603749 | 0.003 | 0.001 | 0.003 | 0.006 | 0.092 | 39.071 |
+| ctx_commit | 603749 | 16.344 | 11.311 | 27.391 | 70.463 | 273.151 | 5734.399 |
+| service | 603749 | 147.451 | 111.359 | 277.759 | 469.503 | 4501.503 | 8216.575 |
+| e2e_large | 313 | 6776.513 | 6299.647 | 11968.511 | 18399.231 | 23330.815 | 23330.815 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 10340.015 | 13592 |
+| applied_total | 390094.865 | 634029 |
+| bench_cpu_cores | 2.533 | 3.632 |
+| bench_cpu_pct | 10.554 | 15.13 |
+| bench_gc_gen0 | 3.269 | 6 |
+| bench_gc_gen1 | 2.096 | 5 |
+| bench_gc_gen2 | 0.577 | 2 |
+| bench_gc_heap_mb | 798.66 | 1062.8 |
+| bench_mem_mb | 1285.179 | 1529.5 |
+| bench_threadpool_queue | 25.712 | 196 |
+| bench_threadpool_threads | 37.615 | 44 |
+| broker_backlog | 68575.077 | 118599 |
+| ctr_eb_kafka_cpu_pct | 1.958 | 2.44 |
+| ctr_eb_kafka_mem_mb | 3331.119 | 3408.4 |
+| ctr_eb_mssql_cpu_pct | 1650.628 | 1856.25 |
+| ctr_eb_mssql_mem_mb | 6062.06 | 6356.2 |
+| ctr_eb_nats_cpu_pct | 5.872 | 20.85 |
+| ctr_eb_nats_mem_mb | 2099.012 | 2287.9 |
+| ctr_eb_pgbouncer_cpu_pct | 0.023 | 0.03 |
+| ctr_eb_pgbouncer_mem_mb | 10.4 | 10.4 |
+| ctr_eb_postgres_cpu_pct | 0.29 | 0.63 |
+| ctr_eb_postgres_mem_mb | 3115.273 | 3119.5 |
+| ctr_eb_rabbitmq_cpu_pct | 16.206 | 17.39 |
+| ctr_eb_rabbitmq_mem_mb | 721.369 | 728.6 |
+| ctr_eb_redis_cpu_pct | 0.335 | 0.36 |
+| ctr_eb_redis_mem_mb | 1326.6 | 1326.6 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 85.363 | 93.83 |
+| in_flight | 67036.173 | 115204 |
+| mssql_batch_requests_per_s | 25251.413 | 35318.7 |
+| mssql_deadlocks_per_s | 0 | 0 |
+| mssql_lock_timeouts_per_s | 81276.74 | 260571.9 |
+| mssql_lock_waits_per_s | 2.89 | 92.6 |
+| mssql_log_bytes_flushed_per_s | 150564261.877 | 236823623.4 |
+| mssql_log_flush_waits_per_s | 120.969 | 191.1 |
+| mssql_log_flushes_per_s | 2587.719 | 4008 |
+| mssql_processes_blocked | 0 | 0 |
+| mssql_sql_compilations_per_s | 329.323 | 952.8 |
+| mssql_transactions_per_s | 15157.64 | 19963.3 |
+| mssql_user_connections | 455.038 | 622 |
+| mssql_wait_async_network_io_ms_per_s | 51.102 | 259.9 |
+| mssql_wait_cxpacket_ms_per_s | 0 | 0 |
+| mssql_wait_hadr_sync_commit_ms_per_s | 0 | 0 |
+| mssql_wait_lck_m_s_ms_per_s | 85.115 | 3174.6 |
+| mssql_wait_lck_m_u_ms_per_s | 0.508 | 13.2 |
+| mssql_wait_lck_m_x_ms_per_s | 1.675 | 14.1 |
+| mssql_wait_logbuffer_ms_per_s | 58.087 | 781.2 |
+| mssql_wait_pageiolatch_sh_ms_per_s | 4003.879 | 24306.1 |
+| mssql_wait_pagelatch_ex_ms_per_s | 6009.587 | 16023.8 |
+| mssql_wait_pagelatch_sh_ms_per_s | 35545.602 | 441651.5 |
+| mssql_wait_sos_scheduler_yield_ms_per_s | 10205.8 | 23996.9 |
+| mssql_wait_threadpool_ms_per_s | 0.177 | 4.6 |
+| mssql_wait_writelog_ms_per_s | 279.923 | 431.7 |
+| mssqlq_batch_requests_per_s | 25270.017 | 35613 |
+| mssqlq_deadlocks_per_s | 0 | 0 |
+| mssqlq_lock_timeouts_per_s | 80789.292 | 263902.1 |
+| mssqlq_lock_waits_per_s | 2.917 | 93.3 |
+| mssqlq_log_bytes_flushed_per_s | 150420127.596 | 238309718.6 |
+| mssqlq_log_flush_waits_per_s | 120.912 | 191.7 |
+| mssqlq_log_flushes_per_s | 2585.881 | 4031.8 |
+| mssqlq_processes_blocked | 0 | 0 |
+| mssqlq_sql_compilations_per_s | 328.131 | 937.5 |
+| mssqlq_transactions_per_s | 15166.01 | 20117.3 |
+| mssqlq_user_connections | 454.808 | 622 |
+| mssqlq_wait_async_network_io_ms_per_s | 51.6 | 262.4 |
+| mssqlq_wait_cxpacket_ms_per_s | 0 | 0 |
+| mssqlq_wait_hadr_sync_commit_ms_per_s | 0 | 0 |
+| mssqlq_wait_lck_m_s_ms_per_s | 85.762 | 3198.6 |
+| mssqlq_wait_lck_m_u_ms_per_s | 0.508 | 13.2 |
+| mssqlq_wait_lck_m_x_ms_per_s | 1.673 | 14.2 |
+| mssqlq_wait_logbuffer_ms_per_s | 56.188 | 772.8 |
+| mssqlq_wait_pageiolatch_sh_ms_per_s | 3955.14 | 24199 |
+| mssqlq_wait_pagelatch_ex_ms_per_s | 6112.277 | 15312.3 |
+| mssqlq_wait_pagelatch_sh_ms_per_s | 36044.931 | 454043.6 |
+| mssqlq_wait_sos_scheduler_yield_ms_per_s | 10181.077 | 23740.6 |
+| mssqlq_wait_threadpool_ms_per_s | 0.181 | 4.7 |
+| mssqlq_wait_writelog_ms_per_s | 279.548 | 425.3 |
+| nacks_per_s | 0 | 0 |
+| produced_per_s | 11730.76 | 24399.4 |
+| produced_total | 457131.038 | 729781 |
+| publish_mb_per_s | 41.152 | 112.12 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 112,993 records are Completed |
+| record_counts | pass | 112,993 records found, 112,993 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 413 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 775,203 events applied by workers, 775,203 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+
+## Error samples
+
+- receive t-022#0: SqlException: A severe error occurred on the current command.  The results, if any, should be discarded.
+Operation cancelled by user.
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-222 | 138 | 3 | 61.993 | 144.282 | 2846 | 0 | 8729 | 8729 | 0 | 33816.575 | 67633.151 | 72351.743 |
+| t-496 | 81 | 4 | 145.619 | 197.957 | 278 | 0 | 11619 | 11619 | 0 | 36962.303 | 63963.135 | 68157.439 |
+| t-147 | 79 | 4 | 145.536 | 195.43 | 1078 | 0 | 11539 | 11539 | 0 | 26083.327 | 58195.967 | 62914.559 |
+| t-306 | 134 | 4 | 75.147 | 168.045 | 2978 | 0 | 9983 | 9983 | 0 | 22020.095 | 55836.671 | 60293.119 |
+| t-383 | 200 | 6 | 77.529 | 257.86 | 2521 | 0 | 15331 | 15331 | 0 | 21757.951 | 53477.375 | 57671.679 |
+| t-264 | 46 | 1 | 60.311 | 46.436 | 3058 | 0 | 2749 | 2749 | 0 | 31981.567 | 47185.919 | 50331.647 |
+| t-246 | 32 | 2 | 187.722 | 99.182 | 494 | 0 | 5758 | 5758 | 0 | 27131.903 | 45875.199 | 49020.927 |
+| t-344 | 195 | 6 | 81.919 | 269.578 | 571 | 0 | 15908 | 15908 | 0 | 19267.583 | 44826.623 | 49020.927 |
+| t-461 | 130 | 2 | 45.032 | 97.963 | 3025 | 0 | 5984 | 5984 | 0 | 19398.655 | 44564.479 | 48234.495 |
+| t-194 | 78 | 3 | 98.314 | 131.221 | 1184 | 0 | 7653 | 7653 | 0 | 24379.391 | 44040.191 | 47972.351 |
+| t-131 | 140 | 3 | 60.845 | 143.347 | 961 | 0 | 8391 | 8391 | 0 | 25821.183 | 43253.759 | 46923.775 |
+| t-245 | 43 | 1 | 71.24 | 48.932 | 2232 | 0 | 2897 | 2897 | 0 | 29753.343 | 42991.615 | 47185.919 |
+| t-136 | 146 | 2 | 40.495 | 97.61 | 450 | 0 | 6021 | 6021 | 0 | 27525.119 | 42729.471 | 45875.199 |
+| t-065 | 80 | 5 | 169.666 | 223.962 | 263 | 0 | 13100 | 13100 | 0 | 16908.287 | 41680.895 | 45088.767 |
+| t-263 | 93 | 2 | 59.766 | 94.005 | 374 | 0 | 5613 | 5613 | 0 | 17694.719 | 40632.319 | 44040.191 |
+| t-206 | 118 | 2 | 48.629 | 93.697 | 1969 | 0 | 5641 | 5641 | 0 | 22806.527 | 39583.743 | 43778.047 |
+| t-469 | 105 | 3 | 76.658 | 133.383 | 278 | 0 | 8008 | 8008 | 0 | 17563.647 | 39059.455 | 42205.183 |
+| t-182 | 89 | 3 | 81.941 | 119.217 | 2406 | 0 | 7030 | 7030 | 0 | 23199.743 | 36962.303 | 40894.463 |
+| t-016 | 132 | 1 | 18.95 | 41.199 | 137 | 0 | 2649 | 2649 | 0 | 23986.175 | 36438.015 | 38797.311 |
+| t-490 | 56 | 2 | 93.882 | 88.229 | 245 | 0 | 5202 | 5202 | 0 | 23461.887 | 35651.583 | 38797.311 |
+| t-237 | 74 | 1 | 36.026 | 45.137 | 2944 | 0 | 2755 | 2755 | 0 | 19529.727 | 33816.575 | 36962.303 |
+| t-181 | 35 | 2 | 148.702 | 85.909 | 1367 | 0 | 5067 | 5067 | 0 | 17825.791 | 32767.999 | 35651.583 |
+| t-126 | 93 | 1 | 27.815 | 43.54 | 816 | 0 | 2708 | 2708 | 0 | 21495.807 | 32505.855 | 35389.439 |
+| t-005 | 47 | 1 | 60.561 | 47.065 | 2385 | 0 | 2769 | 2769 | 0 | 18874.367 | 32112.639 | 35913.727 |
+| t-052 | 62 | 1 | 44.036 | 46.205 | 1837 | 0 | 2841 | 2841 | 0 | 16383.999 | 32112.639 | 36175.871 |
+
+22:34:18.112 results written to /home/b4283/benchmark/results/matrix-6-mssql-redis/01-sqlq_mssql-txack/20261119-143209_01-sqlq_mssql-txack

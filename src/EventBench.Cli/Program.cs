@@ -9,6 +9,8 @@ using EventBench.Mongo;
 using EventBench.Nats;
 using EventBench.Postgres;
 using EventBench.RabbitMq;
+using EventBench.Redis;
+using EventBench.SqlServer;
 using Microsoft.Extensions.Configuration;
 
 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
@@ -87,7 +89,11 @@ static ComponentRegistry CreateRegistry() => ComponentRegistry.WithBuiltIns()
     .Register(new NatsBrokerFactory())
     .Register(new PostgresStoreFactory())
     .Register(new MongoStoreFactory())
-    .Register(new NatsKvStoreFactory());
+    .Register(new NatsKvStoreFactory())
+    .Register(new SqlQueueBrokerFactory())
+    .Register(new SqlServerStoreFactory())
+    .Register(new RedisStreamsBrokerFactory())
+    .Register(new RedisStoreFactory());
 
 static (BenchConfig, IConfiguration) LoadConfig(string[] args)
 {

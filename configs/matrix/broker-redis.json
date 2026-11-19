@@ -1,0 +1,11 @@
+{
+  "Broker": {
+    "Type": "redis",
+    "Configuration": "127.0.0.1:6379",
+    "KeyPrefix": "ebq",
+    "PartitionsPerGroup": 0,
+    "Connections": 8,
+    "DeleteOnAck": true,
+    "WaitAof": false
+  }
+}

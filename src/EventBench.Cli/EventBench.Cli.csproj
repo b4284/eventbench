@@ -8,6 +8,8 @@
     <ServerGarbageCollection>true</ServerGarbageCollection>
     <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
     <TieredPGO>true</TieredPGO>
+    <!-- Microsoft.Data.SqlClient refuses to run in invariant globalization mode. -->
+    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +25,8 @@
     <ProjectReference Include="..\EventBench.Postgres\EventBench.Postgres.csproj" />
     <ProjectReference Include="..\EventBench.RabbitMq\EventBench.RabbitMq.csproj" />
     <ProjectReference Include="..\EventBench.Nats\EventBench.Nats.csproj" />
+    <ProjectReference Include="..\EventBench.SqlServer\EventBench.SqlServer.csproj" />
+    <ProjectReference Include="..\EventBench.Redis\EventBench.Redis.csproj" />
   </ItemGroup>
 
 </Project>

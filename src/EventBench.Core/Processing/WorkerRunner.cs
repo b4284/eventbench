@@ -151,6 +151,14 @@ public sealed class WorkerRunner
             var request = await ComputeAsync(ev, ctx, d, ct);
             long t2 = Clock.NowUs();
 
+            if (_options.ChaosFailProbability > 0 && Random.Shared.NextDouble() < _options.ChaosFailProbability)
+            {
+                // Injected worker failure before commit: exercises the broker's nack/redelivery path,
+                // which must not let later events of the source overtake this one.
+                await NackAsync(d, ct);
+                return false;
+            }
+
             var status = await _store.CommitAsync(request, ct);
             if (status == CommitStatus.RecordConflict)
             {
