@@ -1,0 +1,150 @@
+07:48:23.377 topology: 500 groups, 16,000 sources, offered load 12,856 events/s, 598 workers
+07:48:23.490 broker: kafka 500 topics 'eb.g*' (=workers partitions/group, rf=1, flush.messages=default), acks=all idempotent, linger=2ms, compression=none, max.message=64MB, producers=per publisher (max 32), manual assign + contiguous commits every 100ms @ 127.0.0.1:9092
+07:48:23.490 store:  mongo @ 127.0.0.1:27017/eventbench prefix=eb, mode=transactions (readConcern snapshot), BEST-EFFORT w=majority j=false (needs writeConcernMajorityJournalDefault=false), load readConcern majority, chunk=1024KiB, pool max 1000
+07:48:23.735 mongo store: collections recreated in 'eventbench' (transactions mode), 16,000 source cursors seeded
+07:48:28.214 kafka: deleted 500 old topics, created 500 topics / 598 partitions, backlog 0
+07:48:28.215 setup done in 4.8s
+07:48:28.697 run: 60s (warmup 10s), 32 producers, 598 workers
+07:49:29.292 closing: 35,269 completion events emitted
+07:50:41.894 drained in 72.6s
+07:50:48.817 verifying end state against the oracle ...
+
+# 09-kafka_mongo — PASS ✅
+
+- Broker: `kafka 500 topics 'eb.g*' (=workers partitions/group, rf=1, flush.messages=default), acks=all idempotent, linger=2ms, compression=none, max.message=64MB, producers=per publisher (max 32), manual assign + contiguous commits every 100ms @ 127.0.0.1:9092`
+- Store: `mongo @ 127.0.0.1:27017/eventbench prefix=eb, mode=transactions (readConcern snapshot), BEST-EFFORT w=majority j=false (needs writeConcernMajorityJournalDefault=false), load readConcern majority, chunk=1024KiB, pool max 1000`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 1
+- Topology: 500 groups, 16000 sources, 598 workers, offered 12856.021 ev/s
+- Phases: run 60.105s, closing 0.488s, drain 72.601s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 814623 | 814623 | 12966.376 | 5061.218 | 7932.7 | 0 | 0 | 0 | 431 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 642897 | 47528.431 | 52789.247 | 73662.463 | 79364.095 | 82903.039 | 83623.935 |
+| e2e_from_send | 642897 | 47517.22 | 52789.247 | 73596.927 | 79364.095 | 82837.503 | 83623.935 |
+| producer_lag | 642897 | 11.205 | 4.467 | 25.983 | 115.839 | 255.231 | 391.935 |
+| publish_call | 195912 | 9.45 | 5.971 | 17.551 | 55.743 | 180.351 | 535.551 |
+| queue_wait | 642897 | 47238.141 | 52527.103 | 73531.391 | 79233.023 | 82771.967 | 83558.399 |
+| broker_dwell | 642897 | 47226.51 | 52527.103 | 73531.391 | 79233.023 | 82771.967 | 83558.399 |
+| receive_call | 109655 | 0.127 | 0.064 | 0.109 | 1.11 | 12.367 | 79.167 |
+| ctx_load | 642897 | 12.126 | 7.923 | 29.359 | 64.895 | 101.631 | 182.911 |
+| process | 642897 | 0.003 | 0.002 | 0.003 | 0.004 | 0.156 | 10.991 |
+| ctx_commit | 642897 | 43.483 | 32.207 | 93.503 | 182.399 | 257.023 | 446.207 |
+| ack | 642097 | 0.009 | 0.007 | 0.012 | 0.029 | 0.386 | 17.455 |
+| service | 642897 | 279.099 | 209.279 | 600.575 | 1147.903 | 1415.167 | 1913.855 |
+| e2e_large | 331 | 408.748 | 349.695 | 599.551 | 1525.759 | 1958.911 | 1958.911 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 5061.218 | 5825.8 |
+| applied_total | 173882.653 | 290187 |
+| bench_cpu_cores | 6.383 | 6.732 |
+| bench_cpu_pct | 26.593 | 28.05 |
+| bench_gc_gen0 | 5 | 6 |
+| bench_gc_gen1 | 2.755 | 4 |
+| bench_gc_gen2 | 0.592 | 2 |
+| bench_gc_heap_mb | 673.798 | 867.6 |
+| bench_mem_mb | 2253.01 | 2564.3 |
+| bench_threadpool_queue | 3.082 | 28 |
+| bench_threadpool_threads | 36.571 | 44 |
+| broker_backlog | 275506.49 | 474537 |
+| broker_commit_errors | 0 | 0 |
+| broker_committed_offsets | 166841.612 | 287005 |
+| broker_discarded_msgs | 0 | 0 |
+| broker_end_offsets | 442288.082 | 761511 |
+| broker_rewinds | 0 | 0 |
+| ctr_eb_kafka_cpu_pct | 240.229 | 266.04 |
+| ctr_eb_kafka_mem_mb | 3000.712 | 3087 |
+| ctr_eb_mongo_cpu_pct | 789.356 | 819.59 |
+| ctr_eb_mongo_mem_mb | 3982.892 | 4157.1 |
+| ctr_eb_nats_cpu_pct | 1.311 | 10.46 |
+| ctr_eb_nats_mem_mb | 2670.388 | 3187.2 |
+| ctr_eb_pgbouncer_cpu_pct | 0.019 | 0.02 |
+| ctr_eb_pgbouncer_mem_mb | 14.014 | 14.1 |
+| ctr_eb_postgres_cpu_pct | 0.331 | 0.6 |
+| ctr_eb_postgres_mem_mb | 4762.647 | 4847.5 |
+| ctr_eb_rabbitmq_cpu_pct | 15.706 | 16.66 |
+| ctr_eb_rabbitmq_mem_mb | 846.959 | 859.5 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 77.62 | 79.29 |
+| in_flight | 288835.041 | 481551 |
+| mongo_conn_current | 808.551 | 832 |
+| mongo_op_command_per_s | 5075.614 | 5862.8 |
+| mongo_op_delete_per_s | 0 | 0 |
+| mongo_op_getmore_per_s | 0 | 0 |
+| mongo_op_insert_per_s | 822.455 | 1448.6 |
+| mongo_op_query_per_s | 10148.769 | 11702.6 |
+| mongo_op_update_per_s | 8282.092 | 9502.7 |
+| mongo_store_commit_retries_per_s | 0 | 0 |
+| mongo_store_embedded_retries_per_s | 0 | 0 |
+| mongo_store_torn_loads_per_s | 0 | 0 |
+| mongo_store_txn_retries_per_s | 0 | 0 |
+| mongo_txn_aborted_per_s | 0 | 0 |
+| mongo_txn_active | 43.367 | 65 |
+| mongo_txn_committed_per_s | 5073.494 | 5853.1 |
+| mongo_wt_cache_mb | 1634.414 | 1696.2 |
+| mongo_wt_dirty_mb | 108.029 | 154.6 |
+| nacks_per_s | 0 | 0 |
+| produced_per_s | 12966.376 | 15892 |
+| produced_total | 462717.694 | 771738 |
+| publish_mb_per_s | 44.917 | 76.81 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 117,595 records are Completed |
+| record_counts | pass | 117,595 records found, 117,595 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 431 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 814,623 events applied by workers, 814,623 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-147 | 79 | 4 | 145.536 | 195.43 | 1078 | 0 | 12133 | 12133 | 0 | 75497.471 | 83361.791 | 83886.079 |
+| t-246 | 32 | 2 | 187.722 | 99.182 | 494 | 0 | 6076 | 6076 | 0 | 74448.895 | 83361.791 | 83361.791 |
+| t-461 | 130 | 2 | 45.032 | 97.963 | 3025 | 0 | 6274 | 6274 | 0 | 76021.759 | 81264.639 | 81264.639 |
+| t-496 | 81 | 4 | 145.619 | 197.957 | 278 | 0 | 12254 | 12254 | 0 | 76021.759 | 80740.351 | 81264.639 |
+| t-136 | 146 | 2 | 40.495 | 97.61 | 450 | 0 | 6336 | 6336 | 0 | 76021.759 | 80216.063 | 80216.063 |
+| t-222 | 138 | 3 | 61.993 | 144.282 | 2846 | 0 | 9186 | 9186 | 0 | 74448.895 | 79691.775 | 79691.775 |
+| t-131 | 140 | 3 | 60.845 | 143.347 | 961 | 0 | 8789 | 8789 | 0 | 73924.607 | 79167.487 | 79167.487 |
+| t-443 | 49 | 1 | 57.19 | 47.514 | 261 | 0 | 3026 | 3026 | 0 | 74973.183 | 79167.487 | 79167.487 |
+| t-206 | 118 | 2 | 48.629 | 93.697 | 1969 | 0 | 5928 | 5928 | 0 | 73924.607 | 78643.199 | 79167.487 |
+| t-245 | 43 | 1 | 71.24 | 48.932 | 2232 | 0 | 3063 | 3063 | 0 | 74448.895 | 78643.199 | 78643.199 |
+| t-456 | 21 | 1 | 143.85 | 48.988 | 512 | 0 | 3007 | 3007 | 0 | 74448.895 | 78643.199 | 78643.199 |
+| t-065 | 80 | 5 | 169.666 | 223.962 | 263 | 0 | 13791 | 13791 | 0 | 71303.167 | 78118.911 | 78643.199 |
+| t-075 | 37 | 1 | 75.485 | 46.624 | 232 | 0 | 2876 | 2876 | 0 | 73400.319 | 77594.623 | 77594.623 |
+| t-263 | 93 | 2 | 59.766 | 94.005 | 374 | 0 | 5912 | 5912 | 0 | 73924.607 | 77594.623 | 78118.911 |
+| t-052 | 62 | 1 | 44.036 | 46.205 | 1837 | 0 | 2989 | 2989 | 0 | 73400.319 | 77070.335 | 77070.335 |
+| t-264 | 46 | 1 | 60.311 | 46.436 | 3058 | 0 | 2910 | 2910 | 0 | 73400.319 | 77070.335 | 77070.335 |
+| t-344 | 195 | 6 | 81.919 | 269.578 | 571 | 0 | 16766 | 16766 | 0 | 71827.455 | 77070.335 | 77594.623 |
+| t-005 | 47 | 1 | 60.561 | 47.065 | 2385 | 0 | 2903 | 2903 | 0 | 72876.031 | 76546.047 | 76546.047 |
+| t-194 | 78 | 3 | 98.314 | 131.221 | 1184 | 0 | 8037 | 8037 | 0 | 69730.303 | 76546.047 | 76546.047 |
+| t-237 | 74 | 1 | 36.026 | 45.137 | 2944 | 0 | 2894 | 2894 | 0 | 72876.031 | 76546.047 | 76546.047 |
+| t-315 | 88 | 2 | 62.869 | 92.077 | 2927 | 0 | 5703 | 5703 | 0 | 72351.743 | 76546.047 | 76546.047 |
+| t-469 | 105 | 3 | 76.658 | 133.383 | 278 | 0 | 8404 | 8404 | 0 | 71827.455 | 76546.047 | 77070.335 |
+| t-483 | 200 | 3 | 41.15 | 138.556 | 2470 | 0 | 8602 | 8602 | 0 | 71827.455 | 76546.047 | 76546.047 |
+| t-379 | 57 | 1 | 47.528 | 44.975 | 591 | 0 | 2899 | 2899 | 0 | 72876.031 | 76021.759 | 76021.759 |
+| t-383 | 200 | 6 | 77.529 | 257.86 | 2521 | 0 | 16118 | 16118 | 0 | 70254.591 | 76021.759 | 76021.759 |
+
+07:50:51.619 results written to /home/b4283/benchmark/results/matrix-5-besteffort/09-kafka_mongo/20261118-234823_09-kafka_mongo
