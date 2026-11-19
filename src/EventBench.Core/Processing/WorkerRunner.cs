@@ -151,6 +151,7 @@ public sealed class WorkerRunner
         finally
         {
             blocking.SlotFree(ev.Group);
+            (d as IDeliveryCompletion)?.Completed(outcome != Outcome.Failed);
             long now = Clock.NowUs();
             if (outcome == Outcome.Failed) blocking.SourceRetry(ev, now + (long)(_retryDelay.TotalMilliseconds * 1000));
             else blocking.SourceDone(ev, now);

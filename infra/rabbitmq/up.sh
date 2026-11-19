@@ -23,8 +23,13 @@ fi
 
 # A fixed hostname keeps the node name (rabbit@eb-rabbitmq) stable. CLI calls run as user rabbitmq:
 # as root (HOME=/var/lib/rabbitmq) they would create .erlang.cookie with the wrong owner and crash the node.
+# Networking: EB_NETWORK=host (default) runs on the host network. Rootless podman's published ports go
+# through a single-threaded userspace proxy (pasta) that capped Postgres paths at ~19k ev/s. EB_NETWORK=pasta
+# restores published ports.
+NETMODE=${EB_NETWORK:-host}
+ports=(-p "$BIND:5672:5672" -p "$BIND:15672:15672"); [[ "$NETMODE" == host ]] && ports=(--network host)
 podman run -d --name "$NAME" --hostname eb-rabbitmq "${limits[@]}" \
-  -p "$BIND:5672:5672" -p "$BIND:15672:15672" \
+  "${ports[@]}" \
   -v "$PWD/rabbitmq.conf:/etc/rabbitmq/conf.d/90-eventbench.conf:ro,Z" \
   -e RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS="-rabbit quorum_tick_interval 1000" \
   "$IMAGE" >/dev/null

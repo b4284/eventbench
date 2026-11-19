@@ -3,7 +3,9 @@
 # the database (WAL, autovacuum, cache) spreads evenly across variants.
 #
 # usage: scripts/run-matrix.sh <out-dir> <reps> <base-config> [<extra -c/--Key=value args for all runs>] -- \
-#            "<name>|<args...>" "<name>|<args...>" ...
+#            "<name>|<args...>[|<containers>]" ...
+# The optional third field lists the containers the variant needs (scripts/only.sh aliases, space
+# separated): everything else is stopped before the run.
 # example:
 #   scripts/run-matrix.sh results/matrix 3 configs/pgmq-fifo.json -- \
 #     "fifo-base|" "fifo-txack|--Worker:AckMode=InTransaction"
@@ -23,7 +25,10 @@ mkdir -p "$OUT"
 
 for rep in $(seq 1 "$REPS"); do
   for v in "${VARIANTS[@]}"; do
-    name=${v%%|*}; args=${v#*|}
+    name=${v%%|*}; rest=${v#*|}; args=${rest%%|*}; need=""
+    [[ "$rest" == *"|"* ]] && need=${rest#*|}
+    # shellcheck disable=SC2086
+    [[ -n "$need" ]] && scripts/only.sh $need >/dev/null
     echo "$(date +%T) rep $rep/$REPS  $name  $args"
     # shellcheck disable=SC2086
     dotnet "$BIN" run -c "$BASE" "${COMMON[@]}" $args \

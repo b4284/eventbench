@@ -59,6 +59,25 @@ public sealed class PostgresServerStats : IStatsProvider
                     result["pg_conn_total"] = rd.GetInt64(4);
                 }
             }
+            // Active backends by statement type: how many polls / loads / commits / sends run at this instant.
+            await using (var cmd = new NpgsqlCommand(
+                "SELECT count(*) FILTER (WHERE query ~* '(read_grouped|eb_read_head|pgmq\\.read\\(|pgmq\\.read_with_poll)'), " +
+                "count(*) FILTER (WHERE query ~* 'FROM \\w+_source s'), " +
+                "count(*) FILTER (WHERE query ~* '_commit(_many)?\\('), " +
+                "count(*) FILTER (WHERE query ~* 'send_batch'), " +
+                "count(*) FILTER (WHERE query ~* 'pgmq\\.(delete|archive|set_vt)') " +
+                "FROM pg_stat_activity WHERE state = 'active' AND datname = current_database() AND pid <> pg_backend_pid()", conn))
+            await using (var rd = await cmd.ExecuteReaderAsync(ct))
+            {
+                if (await rd.ReadAsync(ct))
+                {
+                    result["pg_active_polls"] = rd.GetInt64(0);
+                    result["pg_active_loads"] = rd.GetInt64(1);
+                    result["pg_active_commits"] = rd.GetInt64(2);
+                    result["pg_active_sends"] = rd.GetInt64(3);
+                    result["pg_active_acks"] = rd.GetInt64(4);
+                }
+            }
         }
 
         long now = Stopwatch.GetTimestamp();

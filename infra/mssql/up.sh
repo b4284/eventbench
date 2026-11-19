@@ -25,7 +25,12 @@ if podman container exists "$NAME"; then
   echo "container $NAME already exists (run infra/mssql/down.sh first to recreate)"; exit 0
 fi
 
-podman run -d --name "$NAME" "${limits[@]}" -p "127.0.0.1:${PORT}:1433" \
+# Networking: EB_NETWORK=host (default) runs on the host network. Rootless podman's published ports go
+# through a single-threaded userspace proxy (pasta) that capped Postgres paths at ~19k ev/s. EB_NETWORK=pasta
+# restores published ports.
+NETMODE=${EB_NETWORK:-host}
+ports=(-p "127.0.0.1:${PORT}:1433"); [[ "$NETMODE" == host ]] && ports=(--network host)
+podman run -d --name "$NAME" "${limits[@]}" "${ports[@]}" \
   -e ACCEPT_EULA=Y -e MSSQL_PID=Developer -e "MSSQL_SA_PASSWORD=$PASSWORD" \
   -e "MSSQL_MEMORY_LIMIT_MB=$MEMORY_MB" \
   "$IMAGE" >/dev/null

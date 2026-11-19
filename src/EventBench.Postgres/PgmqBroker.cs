@@ -42,6 +42,15 @@ public sealed class PgmqOptions
     public int VisibilityTimeoutSeconds { get; set; } = 30;
     /// <summary>pgmq.archive instead of pgmq.delete on ack.</summary>
     public bool ArchiveOnAck { get; set; } = false;
+    /// <summary>
+    /// Drop pgmq's vt index. Reads update vt on every delivery; with vt indexed that update can never be HOT,
+    /// so each read writes a new tuple plus an entry in every index. FIFO reads do not use the vt index.
+    /// </summary>
+    public bool DropVtIndex { get; set; } = false;
+    /// <summary>Queue table fillfactor (null = default 100). Free space lets vt updates stay on the page (HOT).</summary>
+    public int? QueueFillFactor { get; set; }
+    /// <summary>Per-queue-table autovacuum tuned for constant churn (vacuum after ~1000 dead rows, no cost delay).</summary>
+    public bool AggressiveVacuum { get; set; } = false;
 }
 
 /// <summary>Exposes the pgmq identity of a delivery so the Postgres store can delete it inside its own transaction.</summary>
@@ -190,6 +199,13 @@ public sealed class PgmqBroker : IBroker, IStatsProvider
                         break;
                 }
             }
+            if (Options.DropVtIndex) await Exec(conn, $"DROP INDEX IF EXISTS pgmq.q_{q}_vt_idx", ct);
+            var rel = new List<string>();
+            if (Options.QueueFillFactor is { } ff) rel.Add($"fillfactor = {ff}");
+            if (Options.AggressiveVacuum)
+                rel.Add("autovacuum_vacuum_scale_factor = 0, autovacuum_vacuum_threshold = 1000, autovacuum_vacuum_cost_delay = 0, " +
+                        "autovacuum_vacuum_insert_scale_factor = 0, autovacuum_vacuum_insert_threshold = 5000");
+            if (rel.Count > 0) await Exec(conn, $"ALTER TABLE pgmq.q_{q} SET ({string.Join(", ", rel)})", ct);
             created++;
         }
         _log($"pgmq: dropped {existing.Count} old queues, created {created} queues ({Options.Ordering})");
@@ -360,7 +376,7 @@ public sealed class PgmqBroker : IBroker, IStatsProvider
         public ValueTask DisposeAsync() => ValueTask.CompletedTask;
     }
 
-    private sealed class PgmqDelivery(PgmqBroker broker, string queue, long msgId, int readCount, long enqueuedUs,
+    internal sealed class PgmqDelivery(PgmqBroker broker, string queue, long msgId, int readCount, long enqueuedUs,
         EventEnvelope ev, long receivedUs) : IDelivery, IPgmqDelivery
     {
         public EventEnvelope Event => ev;

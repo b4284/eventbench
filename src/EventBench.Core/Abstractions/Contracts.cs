@@ -83,6 +83,13 @@ public interface ISourceLinger
     ValueTask<IDelivery?> NextForSourceAsync(IDelivery done, CancellationToken ct);
 }
 
+/// <summary>Optional delivery capability: told when the worker is done with the delivery (dispatcher bookkeeping).</summary>
+public interface IDeliveryCompletion
+{
+    /// <param name="success">applied or skipped as duplicate (false: failed, will be retried).</param>
+    void Completed(bool success);
+}
+
 public interface IDelivery
 {
     EventEnvelope Event { get; }

@@ -1,4 +1,6 @@
 using System.Runtime.CompilerServices;
+using System.Threading.Channels;
+using EventBench.Core.Util;
 using EventBench.Core.Abstractions;
 using EventBench.Core.Model;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +24,15 @@ public sealed class PostgresStoreOptions
     public bool UnloggedTables { get; set; } = false;
     /// <summary>Fillfactor for the hot cursor/record tables (lower = more HOT updates).</summary>
     public int FillFactor { get; set; } = 70;
+    /// <summary>
+    /// Group commit: commits from all workers are queued and executed many per transaction
+    /// (eb_commit_many, one round trip), with their in-transaction pgmq deletes. Events with an upload
+    /// still commit alone. Batches form naturally while the previous ones execute.
+    /// </summary>
+    public bool BatchCommits { get; set; } = false;
+    public int BatchMaxSize { get; set; } = 64;
+    /// <summary>Concurrent batch executors (connections busy with batches).</summary>
+    public int BatchExecutors { get; set; } = 8;
 }
 
 /// <summary>
@@ -39,6 +50,11 @@ public sealed class PostgresStore : IStateStore
     private readonly NpgsqlDataSource _admin;
     private readonly string _src, _rec, _upl, _blob, _commitFn;
     private readonly string _loadSql, _commitSql;
+
+    private readonly Channel<(CommitRequest Req, TaskCompletionSource<CommitStatus> Tcs)>? _batchQueue;
+    private readonly List<Task> _executors = new();
+    private readonly CancellationTokenSource _cts = new();
+    private long _batches, _batchedCommits, _batchFallbacks, _preloadHits;
 
     public string Name => "postgres";
     public IStatsProvider? Stats { get; }
@@ -58,15 +74,24 @@ public sealed class PostgresStore : IStateStore
                    $"LEFT JOIN {_rec} r ON r.record_id = $2 AND r.source_id = s.source_id WHERE s.source_id = $1";
         _commitSql = $"SELECT {_commitFn}($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)";
         Stats = new PostgresServerStats(_admin, options.PgBouncerStatsCommand, log);
+        if (options.BatchCommits)
+        {
+            _batchQueue = Channel.CreateUnbounded<(CommitRequest, TaskCompletionSource<CommitStatus>)>(new UnboundedChannelOptions { SingleReader = false });
+            for (int i = 0; i < Math.Max(1, options.BatchExecutors); i++) _executors.Add(Task.Run(() => BatchLoopAsync(_cts.Token)));
+        }
     }
+
+    public long Batches => Interlocked.Read(ref _batches);
+    public long BatchedCommits => Interlocked.Read(ref _batchedCommits);
 
     public bool SupportsTransactionalAck(IBroker broker)
     {
-        if (broker is not PgmqBroker pgmq) return false;
+        string? db = broker switch { PgmqBroker p => p.DatabaseName, PgDispatchBroker d => d.DatabaseName, _ => null };
+        if (db is null) return false;
         var mine = new NpgsqlConnectionStringBuilder(_o.ConnectionString);
-        if (!string.Equals(mine.Database, pgmq.DatabaseName, StringComparison.Ordinal))
+        if (!string.Equals(mine.Database, db, StringComparison.Ordinal))
         {
-            _log($"transactional ack unavailable: store database '{mine.Database}' != broker database '{pgmq.DatabaseName}'");
+            _log($"transactional ack unavailable: store database '{mine.Database}' != broker database '{db}'");
             return false;
         }
         return true;
@@ -167,6 +192,25 @@ public sealed class PostgresStore : IStateStore
                 RETURN 0;
             END
             $fn$;
+
+            -- Group commit: many events in one transaction; statuses in input order.
+            CREATE OR REPLACE FUNCTION {_commitFn}_many(
+                p_source int[], p_seq bigint[], p_kind smallint[], p_record bigint[], p_prev_version int[],
+                p_version int[], p_hash bigint[], p_status smallint[], p_ctx bytea[],
+                p_ack_queue text[], p_ack_msg bigint[])
+            RETURNS smallint[] LANGUAGE plpgsql AS $fn$
+            DECLARE
+                r smallint[] := ARRAY[]::smallint[];
+                i int;
+            BEGIN
+                FOR i IN 1 .. coalesce(array_length(p_source, 1), 0) LOOP
+                    r := r || {_commitFn}(p_source[i], p_seq[i], p_kind[i], p_record[i], p_prev_version[i],
+                                          p_version[i], p_hash[i], p_status[i], p_ctx[i], NULL, NULL, NULL,
+                                          p_ack_queue[i], p_ack_msg[i], false);
+                END LOOP;
+                RETURN r;
+            END
+            $fn$;
             """;
 
         await using var conn = await _admin.OpenConnectionAsync(ct);
@@ -188,6 +232,12 @@ public sealed class PostgresStore : IStateStore
 
     public async ValueTask<WorkContext> LoadAsync(EventEnvelope ev, CancellationToken ct)
     {
+        // Context loaded by a dispatcher together with the message (pgdispatch PreloadContext).
+        if (PreloadedContexts.TryTake(ev.SourceId, ev.Seq, out var pre))
+        {
+            Interlocked.Increment(ref _preloadHits);
+            return pre;
+        }
         await using var conn = await _data.OpenConnectionAsync(ct);
         await using var cmd = new NpgsqlCommand(_loadSql, conn);
         cmd.Parameters.Add(new NpgsqlParameter { Value = ev.SourceId, NpgsqlDbType = NpgsqlDbType.Integer });
@@ -207,6 +257,95 @@ public sealed class PostgresStore : IStateStore
     }
 
     public async ValueTask<CommitStatus> CommitAsync(CommitRequest req, CancellationToken ct)
+    {
+        if (_batchQueue != null && req.Upload is null && (req.TransactionalAck is null or IPgmqDelivery { Archive: false }))
+        {
+            var tcs = new TaskCompletionSource<CommitStatus>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _batchQueue.Writer.TryWrite((req, tcs));
+            return await tcs.Task.WaitAsync(ct);
+        }
+        return await CommitOneAsync(req, ct);
+    }
+
+    private async Task BatchLoopAsync(CancellationToken ct)
+    {
+        var reader = _batchQueue!.Reader;
+        var items = new List<(CommitRequest Req, TaskCompletionSource<CommitStatus> Tcs)>(_o.BatchMaxSize);
+        while (!ct.IsCancellationRequested)
+        {
+            items.Clear();
+            try
+            {
+                if (!await reader.WaitToReadAsync(ct)) return;
+            }
+            catch (OperationCanceledException) { return; }
+            while (items.Count < _o.BatchMaxSize && reader.TryRead(out var it)) items.Add(it);
+            if (items.Count == 0) continue;
+            try
+            {
+                var codes = await CommitManyAsync(items.Select(x => x.Req).ToList(), ct);
+                Interlocked.Increment(ref _batches);
+                Interlocked.Add(ref _batchedCommits, items.Count);
+                for (int i = 0; i < items.Count; i++) items[i].Tcs.TrySetResult(ToStatus(codes[i]));
+            }
+            catch (Exception e) when (e is not OperationCanceledException || !ct.IsCancellationRequested)
+            {
+                // Isolate: one bad event must not fail its batchmates.
+                Interlocked.Increment(ref _batchFallbacks);
+                foreach (var (req, tcs) in items)
+                {
+                    try { tcs.TrySetResult(await CommitOneAsync(req, ct)); }
+                    catch (Exception ex) { tcs.TrySetException(ex); }
+                }
+            }
+        }
+    }
+
+    private async Task<short[]> CommitManyAsync(List<CommitRequest> reqs, CancellationToken ct)
+    {
+        // Lock rows in source order (deadlock-free across concurrent batches); map results back.
+        var order = Enumerable.Range(0, reqs.Count).OrderBy(i => reqs[i].Event.SourceId).ToArray();
+        int n = reqs.Count;
+        var src = new int[n]; var seq = new long[n]; var kind = new short[n]; var rec = new long[n];
+        var prev = new int[n]; var ver = new int[n]; var hash = new long[n]; var st = new short[n];
+        var ctx = new byte[]?[n]; var aq = new string?[n]; var am = new long?[n];
+        for (int j = 0; j < n; j++)
+        {
+            var r = reqs[order[j]];
+            var ack = r.TransactionalAck as IPgmqDelivery;
+            src[j] = r.Event.SourceId; seq[j] = r.Event.Seq; kind[j] = (short)r.Kind; rec[j] = r.Event.RecordId;
+            prev[j] = r.PrevVersion; ver[j] = r.NewVersion; hash[j] = r.NewHash; st[j] = (short)r.NewStatus;
+            ctx[j] = r.NewContext; aq[j] = ack?.Queue; am[j] = ack?.MsgId;
+        }
+        await using var conn = await _data.OpenConnectionAsync(ct);
+        await using var cmd = new NpgsqlCommand($"SELECT {_commitFn}_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)", conn);
+        var ps = cmd.Parameters;
+        ps.Add(P(src, NpgsqlDbType.Array | NpgsqlDbType.Integer));
+        ps.Add(P(seq, NpgsqlDbType.Array | NpgsqlDbType.Bigint));
+        ps.Add(P(kind, NpgsqlDbType.Array | NpgsqlDbType.Smallint));
+        ps.Add(P(rec, NpgsqlDbType.Array | NpgsqlDbType.Bigint));
+        ps.Add(P(prev, NpgsqlDbType.Array | NpgsqlDbType.Integer));
+        ps.Add(P(ver, NpgsqlDbType.Array | NpgsqlDbType.Integer));
+        ps.Add(P(hash, NpgsqlDbType.Array | NpgsqlDbType.Bigint));
+        ps.Add(P(st, NpgsqlDbType.Array | NpgsqlDbType.Smallint));
+        ps.Add(P(ctx, NpgsqlDbType.Array | NpgsqlDbType.Bytea));
+        ps.Add(P(aq, NpgsqlDbType.Array | NpgsqlDbType.Text));
+        ps.Add(P(am, NpgsqlDbType.Array | NpgsqlDbType.Bigint));
+        var sorted = (short[])(await cmd.ExecuteScalarAsync(ct))!;
+        var codes = new short[n];
+        for (int j = 0; j < n; j++) codes[order[j]] = sorted[j];
+        return codes;
+    }
+
+    private static CommitStatus ToStatus(short code) => code switch
+    {
+        0 => CommitStatus.Applied,
+        1 => CommitStatus.Duplicate,
+        2 => CommitStatus.Gap,
+        _ => CommitStatus.RecordConflict,
+    };
+
+    private async Task<CommitStatus> CommitOneAsync(CommitRequest req, CancellationToken ct)
     {
         var ev = req.Event;
         var ack = req.TransactionalAck as IPgmqDelivery;
@@ -231,14 +370,7 @@ public sealed class PostgresStore : IStateStore
         ps.Add(P(ack?.Queue, NpgsqlDbType.Text));
         ps.Add(P(ack?.MsgId, NpgsqlDbType.Bigint));
         ps.Add(P(ack?.Archive ?? false, NpgsqlDbType.Boolean));
-        var code = (short)(await cmd.ExecuteScalarAsync(ct))!;
-        return code switch
-        {
-            0 => CommitStatus.Applied,
-            1 => CommitStatus.Duplicate,
-            2 => CommitStatus.Gap,
-            _ => CommitStatus.RecordConflict,
-        };
+        return ToStatus((short)(await cmd.ExecuteScalarAsync(ct))!);
     }
 
     private static NpgsqlParameter P(object? value, NpgsqlDbType type)
@@ -292,11 +424,18 @@ public sealed class PostgresStore : IStateStore
     public string Describe()
     {
         var csb = new NpgsqlConnectionStringBuilder(_o.ConnectionString);
-        return $"postgres @ {csb.Host}:{csb.Port}/{csb.Database} (pool max {csb.MaxPoolSize}), unlogged={_o.UnloggedTables}, fillfactor={_o.FillFactor}";
+        return $"postgres @ {csb.Host}:{csb.Port}/{csb.Database} (pool max {csb.MaxPoolSize}), unlogged={_o.UnloggedTables}, fillfactor={_o.FillFactor}" +
+               (_o.BatchCommits ? $", group commit (max {_o.BatchMaxSize}/tx, {_o.BatchExecutors} executors)" : "");
     }
 
     public async ValueTask DisposeAsync()
     {
+        _cts.Cancel();
+        _batchQueue?.Writer.TryComplete();
+        try { await Task.WhenAll(_executors); } catch { /* shutting down */ }
+        if (_o.BatchCommits)
+            _log($"postgres store: {Batches:N0} commit batches, {BatchedCommits:N0} batched commits " +
+                 $"(avg {(Batches > 0 ? (double)BatchedCommits / Batches : 0):F1}/tx), {_batchFallbacks} fallbacks, {_preloadHits:N0} preloaded contexts used");
         await _data.DisposeAsync();
         await _admin.DisposeAsync();
     }

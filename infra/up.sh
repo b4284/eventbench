@@ -5,6 +5,10 @@
 # Tunables via env: PG_IMAGE, PGB_IMAGE, PG_SHARED_BUFFERS, PG_MAX_CONNECTIONS, PG_SYNC_COMMIT, PG_CPUS, PG_MEMORY
 set -euo pipefail
 cd "$(dirname "$0")"
+# Networking: EB_NETWORK=host (default) runs on the host network. Rootless podman's published ports go
+# through a single-threaded userspace proxy (pasta) that capped Postgres paths at ~19k ev/s. EB_NETWORK=pasta
+# restores published ports.
+NETMODE=${EB_NETWORK:-host}
 
 POD=${POD:-eventbench}
 PG_IMAGE=${PG_IMAGE:-ghcr.io/pgmq/pg18-pgmq:latest}
@@ -23,7 +27,8 @@ if podman pod exists "$POD"; then
   echo "pod $POD already exists (run infra/down.sh first to recreate)"; exit 0
 fi
 
-podman pod create --name "$POD" -p 5432:5432 -p 6432:6432 >/dev/null
+if [[ "$NETMODE" == host ]]; then podman pod create --name "$POD" --network host >/dev/null
+else podman pod create --name "$POD" -p 5432:5432 -p 6432:6432 >/dev/null; fi
 
 podman run -d --pod "$POD" --name eb-postgres "${limits[@]}" \
   --shm-size=1g \

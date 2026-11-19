@@ -21,7 +21,12 @@ if podman container exists "$NAME"; then
   echo "container $NAME already exists (run infra/mongo/down.sh first to recreate)"; exit 0
 fi
 
-podman run -d --name "$NAME" "${limits[@]}" -p "127.0.0.1:${PORT}:27017" \
+# Networking: EB_NETWORK=host (default) runs on the host network. Rootless podman's published ports go
+# through a single-threaded userspace proxy (pasta) that capped Postgres paths at ~19k ev/s. EB_NETWORK=pasta
+# restores published ports.
+NETMODE=${EB_NETWORK:-host}
+ports=(-p "127.0.0.1:${PORT}:27017"); [[ "$NETMODE" == host ]] && ports=(--network host)
+podman run -d --name "$NAME" "${limits[@]}" "${ports[@]}" \
   "$IMAGE" mongod --replSet rs0 --bind_ip_all --wiredTigerCacheSizeGB "$CACHE_GB" >/dev/null
 
 echo -n "waiting for mongod"

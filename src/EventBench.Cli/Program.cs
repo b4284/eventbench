@@ -84,6 +84,7 @@ catch (Exception ex)
 
 static ComponentRegistry CreateRegistry() => ComponentRegistry.WithBuiltIns()
     .Register(new PgmqBrokerFactory())
+    .Register(new PgDispatchBrokerFactory())
     .Register(new KafkaBrokerFactory())
     .Register(new RabbitMqBrokerFactory())
     .Register(new NatsBrokerFactory())

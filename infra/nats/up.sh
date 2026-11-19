@@ -22,14 +22,19 @@ if podman container exists "$NAME"; then
   echo "container $NAME already exists (run infra/nats/down.sh first to recreate)"; exit 0
 fi
 
+# Networking: EB_NETWORK=host (default) runs on the host network. Rootless podman's published ports go
+# through a single-threaded userspace proxy (pasta) that capped Postgres paths at ~19k ev/s. EB_NETWORK=pasta
+# restores published ports.
+NETMODE=${EB_NETWORK:-host}
+ports=(-p 4222:4222 -p 8222:8222); [[ "$NETMODE" == host ]] && ports=(--network host)
 podman volume exists "$VOLUME" || podman volume create "$VOLUME" >/dev/null
 
 # Render the config outside the repo (a quoted duration: an unquoted 2m would parse as "2 million").
-CONF="${TMPDIR:-/tmp}/eb-nats-$(id -u).conf"
+mkdir -p "$HOME/.cache/eventbench"; CONF="$HOME/.cache/eventbench/eb-nats.conf"  # survives WSL restarts
 sed "s|__SYNC_INTERVAL__|$NATS_SYNC_INTERVAL|" nats-server.conf > "$CONF"
 
 podman run -d --name "$NAME" "${limits[@]}" \
-  -p 4222:4222 -p 8222:8222 \
+  "${ports[@]}" \
   -v "$CONF:/etc/nats/eventbench.conf:ro,Z" \
   -v "$VOLUME:/data" \
   "$NATS_IMAGE" -js -c /etc/nats/eventbench.conf >/dev/null
