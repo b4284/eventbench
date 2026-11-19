@@ -1,0 +1,17 @@
+{
+  "Broker": {
+    "Type": "nats",
+    "Url": "nats://127.0.0.1:4222,nats://127.0.0.1:4223,nats://127.0.0.1:4224",
+    "StreamPrefix": "EB",
+    "SubjectPrefix": "eb",
+    "PartitionsPerGroup": 0,
+    "AckWaitSeconds": 30,
+    "MaxAckPending": 1000,
+    "DuplicateWindowSeconds": 120,
+    "Connections": 4,
+    "RequestTimeoutSeconds": 30,
+    "Storage": "File",
+    "LongPollMs": 1000,
+    "Replicas": 3
+  }
+}

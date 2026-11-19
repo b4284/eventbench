@@ -10,6 +10,7 @@ for a in "$@"; do
   case "$a" in
     pg) want+=(eb-postgres $(podman ps -a --format '{{.Names}}' | grep -E '^eb-pgbouncer(-[0-9]+)?$')) ;;
     pg-ha) want+=(eb-postgres $(podman ps -a --format '{{.Names}}' | grep -E '^eb-pgbouncer(-[0-9]+)?$') eb-pg-standby) ;;
+    nats-cluster) want+=(eb-nats-1 eb-nats-2 eb-nats-3) ;;
     kafka-cluster) want+=(eb-kafka-1 eb-kafka-2 eb-kafka-3) ;;
     redis-ha) want+=(eb-redis-6380 eb-redis-6381 eb-redis-6382 eb-sentinel-26380 eb-sentinel-26381 eb-sentinel-26382) ;;
     redis|kafka|nats|rabbitmq|mssql|mongo) want+=("eb-$a") ;;

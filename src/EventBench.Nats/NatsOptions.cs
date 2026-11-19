@@ -14,6 +14,8 @@ public sealed class NatsBrokerOptions
     public int AckWaitSeconds { get; set; } = 30;
     /// <summary>Consumer MaxAckPending; 0 = 2 x Worker:BatchSize.</summary>
     public int MaxAckPending { get; set; } = 0;
+    /// <summary>Stream replicas (1 = single node; 3 = R3 Raft group in a 3-node cluster).</summary>
+    public int Replicas { get; set; } = 1;
     /// <summary>Stream duplicate window used with Nats-Msg-Id = "{source}:{seq}" (makes producer retries idempotent).</summary>
     public int DuplicateWindowSeconds { get; set; } = 120;
     /// <summary>Number of client connections (publishers/consumers are spread round-robin).</summary>

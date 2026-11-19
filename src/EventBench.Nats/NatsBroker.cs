@@ -113,18 +113,20 @@ public sealed class NatsBroker : IBroker, IStatsProvider
         int consumers = 0;
         foreach (var g in _topology.Groups)
         {
-            await js.CreateStreamAsync(new StreamConfig(StreamName(g.Id), [$"{_o.SubjectPrefix}.g{g.Id}.>"])
+            await SetupRetry(() => js.CreateStreamAsync(new StreamConfig(StreamName(g.Id), [$"{_o.SubjectPrefix}.g{g.Id}.>"])
             {
                 Storage = StorageType,
                 Retention = StreamConfigRetention.Workqueue,
                 Discard = StreamConfigDiscard.Old,
-                NumReplicas = 1,
+                NumReplicas = Math.Max(1, _o.Replicas),
                 MaxMsgSize = -1,
                 DuplicateWindow = TimeSpan.FromSeconds(Math.Max(1, _o.DuplicateWindowSeconds)),
-            }, ct);
+            }, ct).AsTask(), $"create stream {StreamName(g.Id)}", ct);
             for (int p = 0; p < Partitions(g); p++)
             {
-                await js.CreateOrUpdateConsumerAsync(StreamName(g.Id), ConsumerConfigFor(g.Id, p, 0), ct);
+                int part = p;
+                await SetupRetry(() => js.CreateOrUpdateConsumerAsync(StreamName(g.Id), ConsumerConfigFor(g.Id, part, 0), ct).AsTask(),
+                    $"create consumer {StreamName(g.Id)}/{part}", ct);
                 consumers++;
             }
         }
@@ -180,6 +182,23 @@ public sealed class NatsBroker : IBroker, IStatsProvider
 
     // ------------------------------------------------------------------------------------------------
 
+    /// <summary>
+    /// JetStream API calls during setup can time out while a freshly started cluster elects stream leaders
+    /// (hundreds of R3 Raft groups): retry with backoff. Create calls are idempotent.
+    /// </summary>
+    private async Task SetupRetry(Func<Task> call, string what, CancellationToken ct)
+    {
+        for (int attempt = 1; ; attempt++)
+        {
+            try { await call(); return; }
+            catch (Exception e) when (attempt < 8 && e is not OperationCanceledException)
+            {
+                _log($"nats setup: {what} failed ({e.GetType().Name}: {e.Message}), retry {attempt}");
+                await Task.Delay(TimeSpan.FromSeconds(Math.Min(10, attempt * 2)), ct);
+            }
+        }
+    }
+
     private sealed class Publisher(NatsBroker broker, NatsJSContext js) : IEventPublisher
     {
         public async ValueTask PublishAsync(IReadOnlyList<EventEnvelope> events, CancellationToken ct)
@@ -208,9 +227,15 @@ public sealed class NatsBroker : IBroker, IStatsProvider
             foreach (var ev in list)
             {
                 var body = JsonSerializer.SerializeToUtf8Bytes(ev, EventJsonContext.Default.EventEnvelope);
-                var ack = await js.PublishAsync(subject, body,
-                    opts: new NatsJSPubOpts { MsgId = $"{ev.SourceId}:{ev.Seq}" }, cancellationToken: ct);
-                ack.EnsureSuccess();
+                try
+                {
+                    var ack = await js.PublishAsync(subject, body,
+                        opts: new NatsJSPubOpts { MsgId = $"{ev.SourceId}:{ev.Seq}" }, cancellationToken: ct);
+                    // A duplicate PubAck means the stream already has this message (a retry after a lost
+                    // ack, e.g. across a leader change): it is stored exactly once, which is a success.
+                    if (!ack.Duplicate) ack.EnsureSuccess();
+                }
+                catch (NatsJSDuplicateMessageException) { /* already stored: success */ }
             }
         }
 
