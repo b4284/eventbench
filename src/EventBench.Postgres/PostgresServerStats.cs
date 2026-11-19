@@ -59,6 +59,19 @@ public sealed class PostgresServerStats : IStatsProvider
                     result["pg_conn_total"] = rd.GetInt64(4);
                 }
             }
+            // Streaming replicas: how far the standby is behind (bytes not yet replayed, replay lag).
+            await using (var cmd = new NpgsqlCommand(
+                "SELECT count(*), coalesce(max(pg_wal_lsn_diff(pg_current_wal_lsn(), replay_lsn)), 0)::float8, " +
+                "coalesce(max(extract(epoch FROM replay_lag) * 1000), 0)::float8 FROM pg_stat_replication", conn))
+            await using (var rd = await cmd.ExecuteReaderAsync(ct))
+            {
+                if (await rd.ReadAsync(ct) && rd.GetInt64(0) > 0)
+                {
+                    result["pg_replicas"] = rd.GetInt64(0);
+                    result["pg_replica_lag_mb"] = Math.Round(rd.GetDouble(1) / 1048576.0, 2);
+                    result["pg_replica_replay_lag_ms"] = Math.Round(rd.GetDouble(2), 1);
+                }
+            }
             // Active backends by statement type: how many polls / loads / commits / sends run at this instant.
             await using (var cmd = new NpgsqlCommand(
                 "SELECT count(*) FILTER (WHERE query ~* '(read_grouped|eb_read_head|pgmq\\.read\\(|pgmq\\.read_with_poll)'), " +

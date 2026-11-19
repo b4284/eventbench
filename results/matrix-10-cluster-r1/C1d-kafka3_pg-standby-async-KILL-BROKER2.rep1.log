@@ -1,0 +1,247 @@
+01:13:37.158 topology: 500 groups, 16,000 sources, offered load 24,033 events/s, 780 workers
+01:13:37.225 broker: kafka 500 topics 'eb.g*' (=workers partitions/group, rf=3, flush.messages=default), acks=all idempotent, linger=2ms, compression=none, max.message=64MB, producers=per publisher (max 32), manual assign + contiguous commits every 100ms @ 127.0.0.1:9192,127.0.0.1:9292,127.0.0.1:9392
+01:13:37.225 store:  postgres @ 127.0.0.1:6432/bench (pool max 1000), unlogged=False, fillfactor=70, group commit (max 64/tx, 8 executors)
+01:13:37.535 postgres store: schema created, 16,000 source cursors seeded
+01:13:40.173 kafka: deleted 500 old topics, created 500 topics / 780 partitions, backlog 0
+01:13:40.174 setup done in 3.0s
+01:13:41.030 run: 60s (warmup 10s), 32 producers, 780 workers
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31341ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31344ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31340ms in state UP)
+01:14:12.538 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31345ms in state UP)
+01:14:12.538 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31251ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31349ms in state UP)
+01:14:12.538 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31347ms in state UP)
+01:14:12.538 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31345ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31247ms in state UP)
+01:14:12.539 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31347ms in state UP)
+01:14:12.539 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31347ms in state UP)
+01:14:12.539 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31319ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31347ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31341ms in state UP)
+01:14:12.539 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31349ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31346ms in state UP)
+01:14:12.539 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31250ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31342ms in state UP)
+01:14:12.540 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31248ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31309ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31346ms in state UP)
+01:14:12.537 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31345ms in state UP)
+01:14:12.541 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 31773ms in state UP)
+01:14:12.541 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31349ms in state UP)
+01:14:12.539 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 31654ms in state UP)
+01:14:12.542 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 31773ms in state UP)
+01:14:12.542 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31349ms in state UP)
+01:14:12.542 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 31772ms in state UP)
+01:14:12.543 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 31842ms in state UP)
+01:14:12.543 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31319ms in state UP)
+01:14:12.543 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31349ms in state UP)
+01:14:12.544 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 31861ms in state UP)
+01:14:12.544 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31350ms in state UP)
+01:14:12.544 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31317ms in state UP)
+01:14:12.546 kafka producer [Warning] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Disconnected: connection reset by peer (after 31349ms in state UP)
+01:14:12.547 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 31973ms in state UP)
+01:14:12.548 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32062ms in state UP)
+01:14:12.549 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32068ms in state UP)
+01:14:12.549 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32071ms in state UP)
+01:14:12.550 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32125ms in state UP)
+01:14:12.551 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32174ms in state UP)
+01:14:12.551 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32164ms in state UP)
+01:14:12.552 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32182ms in state UP)
+01:14:12.552 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32149ms in state UP)
+01:14:12.552 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32166ms in state UP)
+01:14:12.553 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32257ms in state UP)
+01:14:12.553 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32269ms in state UP)
+01:14:12.554 kafka consumer [Warning] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: 127.0.0.1:9292: Disconnected: connection reset by peer (after 32261ms in state UP)
+01:14:12.558 kafka consumer [Error] FAIL: [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9292 failed: Connection refused (after 12ms in state CONNECT)
+01:14:12.558 kafka consumer [Error] FAIL: [thrd:127.0.0.1:9292/2]: 127.0.0.1:9292/2: Connect to ipv4#127.0.0.1:9292 failed: Connection refused (after 12ms in state CONNECT)
+01:14:42.898 closing: 35,880 completion events emitted
+01:15:15.350 drained in 32.5s
+01:15:54.906 verifying end state against the oracle ...
+01:16:20.342 postgres store: 149,426 commit batches, 942,461 batched commits (avg 6.3/tx), 0 fallbacks, 0 preloaded contexts used
+
+# C1d-kafka3_pg-standby-async-KILL-BROKER2 — FAIL ❌
+
+- Broker: `kafka 500 topics 'eb.g*' (=workers partitions/group, rf=3, flush.messages=default), acks=all idempotent, linger=2ms, compression=none, max.message=64MB, producers=per publisher (max 32), manual assign + contiguous commits every 100ms @ 127.0.0.1:9192,127.0.0.1:9292,127.0.0.1:9392`
+- Store: `postgres @ 127.0.0.1:6432/bench (pool max 1000), unlogged=False, fillfactor=70, group commit (max 64/tx, 8 executors)`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 4
+- Topology: 500 groups, 16000 sources, 780 workers, offered 24033.262 ev/s
+- Phases: run 60.46s, closing 1.407s, drain 32.452s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 942763 | 942763 | 14599.988 | 14640.95 | 21451.4 | 0 | 0 | 0 | 302 | 4745 | 316759 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 658728 | 13206.669 | 15441.919 | 21774.335 | 23937.023 | 25051.135 | 27901.951 |
+| e2e_from_send | 658728 | 531.978 | 362.495 | 783.871 | 9601.023 | 11223.039 | 13975.551 |
+| producer_lag | 658728 | 12674.691 | 7962.623 | 21364.735 | 23429.119 | 24461.311 | 24952.831 |
+| publish_call | 1961 | 1001.879 | 845.311 | 1023.487 | 11182.079 | 11354.111 | 11419.647 |
+| queue_wait | 658728 | 489.716 | 338.687 | 743.935 | 9601.023 | 11206.655 | 11460.607 |
+| broker_dwell | 658728 | 26.3 | 19.759 | 47.871 | 64.287 | 311.295 | 10543.103 |
+| receive_call | 519249 | 0.044 | 0.014 | 0.035 | 0.457 | 4.927 | 66.175 |
+| ctx_load | 658728 | 2.21 | 1.341 | 4.939 | 13.607 | 26.319 | 56.159 |
+| process | 658728 | 10.531 | 0.001 | 0.003 | 0.013 | 2609.151 | 3004.415 |
+| ctx_commit | 658728 | 4.989 | 2.807 | 11.511 | 32.127 | 57.663 | 185.215 |
+| ack | 630454 | 0.007 | 0.003 | 0.01 | 0.025 | 0.646 | 40.255 |
+| service | 658728 | 42.263 | 7.671 | 30.671 | 1451.007 | 2797.567 | 6238.207 |
+| e2e_large | 201 | 14276.863 | 10067.967 | 23347.199 | 25640.959 | 25837.567 | 25837.567 |
+| ready_wait | 658728 | 268.749 | 81.407 | 632.831 | 971.263 | 11108.351 | 11419.647 |
+| blocked | 658728 | 268.335 | 81.215 | 631.295 | 970.751 | 11108.351 | 11419.647 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 14640.95 | 21451.4 |
+| applied_total | 556657.78 | 902522 |
+| bench_cpu_cores | 5.354 | 7.689 |
+| bench_cpu_pct | 22.31 | 32.04 |
+| bench_gc_gen0 | 1.62 | 3 |
+| bench_gc_gen1 | 0.78 | 2 |
+| bench_gc_gen2 | 0.22 | 1 |
+| bench_gc_heap_mb | 927.746 | 1229.9 |
+| bench_mem_mb | 2375.626 | 2607.7 |
+| bench_threadpool_queue | 38.56 | 237 |
+| bench_threadpool_threads | 38.5 | 44 |
+| broker_backlog | 5039.18 | 6413 |
+| broker_commit_errors | 0 | 0 |
+| broker_committed_offsets | 441067.04 | 515934 |
+| broker_discarded_msgs | 0 | 0 |
+| broker_end_offsets | 443401.26 | 517480 |
+| broker_rewinds | 0 | 0 |
+| ctr_eb_kafka_1_cpu_pct | 231.781 | 287.93 |
+| ctr_eb_kafka_1_mem_mb | 3169.246 | 3324.5 |
+| ctr_eb_kafka_2_cpu_pct | 260.717 | 268.27 |
+| ctr_eb_kafka_2_mem_mb | 3177.081 | 3225.3 |
+| ctr_eb_kafka_3_cpu_pct | 251.168 | 344.97 |
+| ctr_eb_kafka_3_mem_mb | 3227.488 | 3557.2 |
+| ctr_eb_pg_standby_cpu_pct | 18.556 | 32.42 |
+| ctr_eb_pg_standby_mem_mb | 1430.372 | 1449.6 |
+| ctr_eb_pgbouncer_2_cpu_pct | 15.029 | 19.82 |
+| ctr_eb_pgbouncer_2_mem_mb | 10.5 | 11.3 |
+| ctr_eb_pgbouncer_3_cpu_pct | 15.328 | 20.52 |
+| ctr_eb_pgbouncer_3_mem_mb | 11.084 | 11.9 |
+| ctr_eb_pgbouncer_4_cpu_pct | 15.903 | 21.36 |
+| ctr_eb_pgbouncer_4_mem_mb | 10.932 | 11.7 |
+| ctr_eb_pgbouncer_cpu_pct | 13.748 | 18.27 |
+| ctr_eb_pgbouncer_mem_mb | 10.584 | 11.2 |
+| ctr_eb_postgres_cpu_pct | 261.741 | 346.54 |
+| ctr_eb_postgres_mem_mb | 3134.896 | 3171.9 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 63.686 | 80.73 |
+| in_flight | -8334.78 | -5762 |
+| nacks_per_s | 0 | 0 |
+| pg_active_acks | 0 | 0 |
+| pg_active_commits | 1.1 | 7 |
+| pg_active_loads | 2.26 | 4 |
+| pg_active_polls | 0 | 0 |
+| pg_active_sends | 0 | 0 |
+| pg_cache_hit_pct | 100 | 100 |
+| pg_conn_active | 6.6 | 9 |
+| pg_conn_idle | 186.12 | 191 |
+| pg_conn_idle_in_tx | 0 | 0 |
+| pg_conn_lock_wait | 0 | 0 |
+| pg_conn_total | 192.72 | 193 |
+| pg_db_size_mb | 1444.304 | 1540.2 |
+| pg_deadlocks | 0 | 0 |
+| pg_replica_lag_mb | 2.318 | 25.78 |
+| pg_replica_replay_lag_ms | 59.748 | 464.1 |
+| pg_replicas | 1 | 1 |
+| pg_rollbacks_per_s | 0 | 0 |
+| pg_temp_mb_per_s | 0 | 0 |
+| pg_tps | 20747.132 | 23050.9 |
+| pg_tup_del_per_s | 0 | 0 |
+| pg_tup_fetch_per_s | 87006.278 | 99560.2 |
+| pg_tup_ins_per_s | 11752.774 | 15237 |
+| pg_tup_upd_per_s | 31135.138 | 34124.6 |
+| pg_wal_mb_per_s | 40.064 | 59.94 |
+| pgb_cl_active | 203.32 | 232 |
+| pgb_cl_waiting | 0 | 0 |
+| pgb_maxwait_ms | 0 | 0 |
+| pgb_sv_active | 6.96 | 27 |
+| pgb_sv_idle | 41.04 | 46 |
+| pgb_sv_used | 0 | 0 |
+| produced_per_s | 14599.988 | 22507.8 |
+| produced_total | 548323 | 892383 |
+| publish_mb_per_s | 41.582 | 86.84 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 132,273 records are Completed |
+| record_counts | pass | 132,273 records found, 132,273 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 302 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 942,763 events applied by workers, 942,763 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+| runtime_cross_source_blocking | **FAIL** | 316,759 events waited > 100 ms while a worker slot of their group was idle (4 slot(s)/worker; blocked p99 971 ms, max 11415 ms) |
+
+## Cross-source blocking samples
+
+- [cross_source_blocking] source 6627 seq 24: ready 108 ms before start, 108 ms of it with an idle slot in group 222
+- [cross_source_blocking] source 11011 seq 9: ready 438 ms before start, 393 ms of it with an idle slot in group 359
+- [cross_source_blocking] source 2979 seq 8: ready 444 ms before start, 444 ms of it with an idle slot in group 98
+- [cross_source_blocking] source 12675 seq 10: ready 572 ms before start, 572 ms of it with an idle slot in group 399
+- [cross_source_blocking] source 6787 seq 10: ready 616 ms before start, 616 ms of it with an idle slot in group 231
+- [cross_source_blocking] source 5795 seq 10: ready 672 ms before start, 672 ms of it with an idle slot in group 200
+- [cross_source_blocking] source 547 seq 15: ready 706 ms before start, 706 ms of it with an idle slot in group 16
+- [cross_source_blocking] source 10684 seq 17: ready 107 ms before start, 107 ms of it with an idle slot in group 350
+- [cross_source_blocking] source 131 seq 7: ready 823 ms before start, 823 ms of it with an idle slot in group 1
+- [cross_source_blocking] source 284 seq 24: ready 128 ms before start, 128 ms of it with an idle slot in group 7
+- [cross_source_blocking] source 2268 seq 49: ready 132 ms before start, 132 ms of it with an idle slot in group 65
+- [cross_source_blocking] source 11644 seq 20: ready 160 ms before start, 160 ms of it with an idle slot in group 378
+- [cross_source_blocking] source 9052 seq 7: ready 165 ms before start, 165 ms of it with an idle slot in group 313
+- [cross_source_blocking] source 12956 seq 18: ready 190 ms before start, 190 ms of it with an idle slot in group 409
+- [cross_source_blocking] source 4796 seq 13: ready 212 ms before start, 212 ms of it with an idle slot in group 167
+- [cross_source_blocking] source 6332 seq 21: ready 235 ms before start, 235 ms of it with an idle slot in group 215
+- [cross_source_blocking] source 9212 seq 6: ready 224 ms before start, 224 ms of it with an idle slot in group 316
+- [cross_source_blocking] source 12227 seq 14: ready 103 ms before start, 103 ms of it with an idle slot in group 389
+- [cross_source_blocking] source 13315 seq 44: ready 102 ms before start, 102 ms of it with an idle slot in group 425
+- [cross_source_blocking] source 3523 seq 29: ready 108 ms before start, 108 ms of it with an idle slot in group 120
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-119L | 64 | 4 | 4.456 | 4.863 | 156 | 1 | 275 | 275 | 0 | 10092.543 | 25690.111 | 25952.255 |
+| t-079 | 6 | 1 | 180.755 | 18.586 | 1522 | 0 | 715 | 715 | 0 | 8323.071 | 25559.039 | 26083.327 |
+| t-272 | 14 | 1 | 187.801 | 46.679 | 394 | 0 | 1803 | 1803 | 0 | 18087.935 | 25427.967 | 25821.183 |
+| t-308L | 26 | 1 | 1.861 | 0.85 | 201 | 1 | 71 | 71 | 0 | 10878.975 | 25427.967 | 25427.967 |
+| t-154 | 18 | 1 | 38.911 | 11.523 | 2158 | 0 | 422 | 422 | 0 | 18087.935 | 25165.823 | 25952.255 |
+| t-187 | 6 | 1 | 105.141 | 10.46 | 685 | 0 | 408 | 408 | 0 | 18219.007 | 25165.823 | 25690.111 |
+| t-115 | 10 | 1 | 62.309 | 9.965 | 3658 | 0 | 417 | 417 | 0 | 8585.215 | 25034.751 | 25427.967 |
+| t-191 | 11 | 1 | 71.442 | 12.704 | 3529 | 0 | 512 | 512 | 0 | 8847.359 | 25034.751 | 25821.183 |
+| t-319L | 29 | 2 | 4.084 | 1.953 | 1917 | 1 | 120 | 120 | 0 | 9830.399 | 25034.751 | 25821.183 |
+| t-056 | 7 | 1 | 90.183 | 10.895 | 347 | 0 | 453 | 453 | 0 | 18219.007 | 24903.679 | 25952.255 |
+| t-130 | 13 | 1 | 59.173 | 13.199 | 136 | 0 | 556 | 556 | 0 | 18481.151 | 24903.679 | 25165.823 |
+| t-166 | 6 | 1 | 48.855 | 4.694 | 292 | 0 | 181 | 181 | 0 | 19005.439 | 24903.679 | 25034.751 |
+| t-171 | 14 | 1 | 180.351 | 42.778 | 142 | 0 | 1647 | 1647 | 0 | 18087.935 | 24903.679 | 26345.471 |
+| t-310 | 6 | 1 | 131.802 | 13.811 | 1910 | 0 | 556 | 556 | 0 | 8454.143 | 24903.679 | 25034.751 |
+| t-112 | 6 | 1 | 86.754 | 8.91 | 774 | 0 | 347 | 347 | 0 | 17956.863 | 24772.607 | 25034.751 |
+| t-164 | 7 | 1 | 190.865 | 20.52 | 236 | 0 | 764 | 764 | 0 | 17563.647 | 24772.607 | 25427.967 |
+| t-223 | 13 | 1 | 201.174 | 42.551 | 2372 | 0 | 1546 | 1546 | 0 | 17432.575 | 24772.607 | 25296.895 |
+| t-247 | 8 | 1 | 46.471 | 6.189 | 506 | 0 | 243 | 243 | 0 | 8159.231 | 24772.607 | 25427.967 |
+| t-412 | 6 | 1 | 53.174 | 4.922 | 468 | 0 | 215 | 215 | 0 | 8650.751 | 24772.607 | 24772.607 |
+| t-033 | 6 | 1 | 131.683 | 14.356 | 859 | 0 | 557 | 557 | 0 | 8323.071 | 24641.535 | 25296.895 |
+| t-048 | 18 | 1 | 43.964 | 13.768 | 136 | 0 | 523 | 523 | 0 | 8290.303 | 24641.535 | 25296.895 |
+| t-104 | 46 | 1 | 59.619 | 45.723 | 2163 | 0 | 1816 | 1816 | 0 | 8388.607 | 24641.535 | 26083.327 |
+| t-118 | 15 | 1 | 45.074 | 11.403 | 138 | 0 | 436 | 436 | 0 | 18087.935 | 24641.535 | 26083.327 |
+| t-145 | 6 | 1 | 96.173 | 9.69 | 517 | 0 | 354 | 354 | 0 | 8585.215 | 24641.535 | 25559.039 |
+| t-148 | 6 | 1 | 117.588 | 10.748 | 715 | 0 | 410 | 410 | 0 | 17694.719 | 24641.535 | 24772.607 |
+
+01:16:22.564 results written to /home/b4283/benchmark/results/matrix-10-cluster-r1/C1d-kafka3_pg-standby-async-KILL-BROKER2/20261119-171337_C1d-kafka3_pg-standby-async-KILL-BROKER2

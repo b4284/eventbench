@@ -1,0 +1,110 @@
+{
+  "Broker": {
+    "AdminConnectionString": "Host=127.0.0.1;Port=5432;Database=bench;Username=bench;Password=***;Maximum Pool Size=10",
+    "ArchiveOnAck": "False",
+    "BootstrapServers": "127.0.0.1:9192,127.0.0.1:9292,127.0.0.1:9392",
+    "CommitIntervalMs": "100",
+    "Compression": "lz4",
+    "ConnectionString": "Host=127.0.0.1;Port=6432;Database=bench;Username=bench;Password=***;Maximum Pool Size=1000;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60",
+    "FifoIndex": "Btree",
+    "FifoReadFunction": "read_grouped_head",
+    "FlushMessages": "0",
+    "LingerMs": "10",
+    "MaxMessageBytes": "67108864",
+    "Ordering": "Fifo",
+    "PartitionsPerGroup": "0",
+    "ProducerInstances": "0",
+    "QueuePrefix": "eb",
+    "ReplicationFactor": "3",
+    "TopicPrefix": "eb",
+    "Type": "kafka",
+    "Unlogged": "False",
+    "VisibilityTimeoutSeconds": "30"
+  },
+  "Metrics": {
+    "BlockingThresholdMs": "100",
+    "ConsoleProgress": "false",
+    "ContainerStats": "True",
+    "ContainerStatsCommand": "podman stats --no-stream --format json",
+    "ContainerStatsIntervalSeconds": "3",
+    "ExternalStatsIntervalSeconds": "2",
+    "FailOnBlocking": "True",
+    "SampleIntervalSeconds": "1"
+  },
+  "Name": "C1e-kafka3_pg-standby-tuned",
+  "ResultsDirectory": "results/matrix-11-cluster-r2/C1e-kafka3_pg-standby-tuned",
+  "Store": {
+    "AdminConnectionString": "Host=127.0.0.1;Port=5432;Database=bench;Username=bench;Password=***;Maximum Pool Size=10;Command Timeout=600",
+    "BatchCommits": "true",
+    "ConnectionString": "Host=127.0.0.1;Port=6432;Database=bench;Username=bench;Password=***;Maximum Pool Size=1000;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60",
+    "FillFactor": "70",
+    "PgBouncerStatsCommand": "podman exec eb-postgres psql \u0022host=127.0.0.1 port=6432 dbname=pgbouncer user=bench password=***",
+    "TablePrefix": "eb",
+    "Type": "postgres",
+    "UnloggedTables": "False"
+  },
+  "Worker": {
+    "AckMode": "AfterCommit",
+    "BatchSize": "10",
+    "EventsPerSecondPerWorker": "50",
+    "IdleBackoffMaxMs": "50",
+    "IdleBackoffMinMs": "1",
+    "MaxParallelPerWorker": "4",
+    "MaxWorkersPerGroup": "16",
+    "MinWorkersPerGroup": "1",
+    "Mode": "Pipelined",
+    "RetryDelayMs": "250",
+    "SimulatedWorkMicros": "0",
+    "UploadBytesPerSecondPerWorker": "8388608"
+  },
+  "Workload": {
+    "Arrival": "Poisson",
+    "ContextBytes": "1024",
+    "DrainTimeoutSeconds": "600",
+    "DurationSeconds": "60",
+    "GeneratedGroups": {
+      "Groups": "500",
+      "LargeEventFraction": "1.0",
+      "LargeGroupMaxRatePerMinute": "5",
+      "LargeGroupMinRatePerMinute": "1",
+      "LargeGroups": "4",
+      "LargeMaxBytes": "4194304",
+      "LargeMinBytes": "1048576",
+      "MaxRatePerMinute": "200",
+      "MaxSources": "200",
+      "MinRatePerMinute": "10",
+      "MinSources": "6",
+      "Name": "t",
+      "RateMedianPerMinute": "40",
+      "RateSigma": "0.7",
+      "SizeSigma": "1.0",
+      "SmallPayloadMaxBytes": "4096",
+      "SmallPayloadMinBytes": "128",
+      "SourceRateJitter": "0.25",
+      "TotalSources": "16000"
+    },
+    "LargePayload": {
+      "MaxCount": "0",
+      "Mode": "Inline",
+      "Probability": "0"
+    },
+    "MaxPublishBatch": "500",
+    "OpMix": {
+      "CompleteWeight": "1",
+      "CreateWeight": "1",
+      "GetWeight": "2",
+      "MaxOpenRecordsPerSource": "4",
+      "UpdateWeight": "5"
+    },
+    "Producers": "32",
+    "RateMultiplier": "1.87",
+    "Seed": "12345",
+    "SlowEvents": {
+      "Fraction": "0.005",
+      "IncludeLarge": "True",
+      "MaxMs": "3000",
+      "MinMs": "1000"
+    },
+    "WarmupSeconds": "10"
+  }
+}
