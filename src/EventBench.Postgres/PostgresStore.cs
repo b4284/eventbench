@@ -33,6 +33,8 @@ public sealed class PostgresStoreOptions
     public int BatchMaxSize { get; set; } = 64;
     /// <summary>Concurrent batch executors (connections busy with batches).</summary>
     public int BatchExecutors { get; set; } = 8;
+    /// <summary>pgqueue table deleted from inside the commit (AckMode=InTransaction with the pgqueue broker).</summary>
+    public string PgQueueTable { get; set; } = "ebq_msg";
 }
 
 /// <summary>
@@ -86,7 +88,13 @@ public sealed class PostgresStore : IStateStore
 
     public bool SupportsTransactionalAck(IBroker broker)
     {
-        string? db = broker switch { PgmqBroker p => p.DatabaseName, PgDispatchBroker d => d.DatabaseName, _ => null };
+        string? db = broker switch
+        {
+            PgmqBroker p => p.DatabaseName,
+            PgDispatchBroker d => d.DatabaseName,
+            PgQueueBroker q when q.Table == _o.PgQueueTable => q.DatabaseName,
+            _ => null,
+        };
         if (db is null) return false;
         var mine = new NpgsqlConnectionStringBuilder(_o.ConnectionString);
         if (!string.Equals(mine.Database, db, StringComparison.Ordinal))
@@ -197,16 +205,22 @@ public sealed class PostgresStore : IStateStore
             CREATE OR REPLACE FUNCTION {_commitFn}_many(
                 p_source int[], p_seq bigint[], p_kind smallint[], p_record bigint[], p_prev_version int[],
                 p_version int[], p_hash bigint[], p_status smallint[], p_ctx bytea[],
-                p_ack_queue text[], p_ack_msg bigint[])
+                p_ack_queue text[], p_ack_msg bigint[], p_q_group int[], p_q_msg bigint[])
             RETURNS smallint[] LANGUAGE plpgsql AS $fn$
             DECLARE
                 r smallint[] := ARRAY[]::smallint[];
+                rc smallint;
                 i int;
             BEGIN
                 FOR i IN 1 .. coalesce(array_length(p_source, 1), 0) LOOP
-                    r := r || {_commitFn}(p_source[i], p_seq[i], p_kind[i], p_record[i], p_prev_version[i],
-                                          p_version[i], p_hash[i], p_status[i], p_ctx[i], NULL, NULL, NULL,
-                                          p_ack_queue[i], p_ack_msg[i], false);
+                    rc := {_commitFn}(p_source[i], p_seq[i], p_kind[i], p_record[i], p_prev_version[i],
+                                      p_version[i], p_hash[i], p_status[i], p_ctx[i], NULL, NULL, NULL,
+                                      p_ack_queue[i], p_ack_msg[i], false);
+                    -- pgqueue: delete the message in the same transaction (applied or duplicate).
+                    IF p_q_msg[i] IS NOT NULL AND rc IN (0, 1) THEN
+                        DELETE FROM {_o.PgQueueTable} WHERE group_id = p_q_group[i] AND msg_id = p_q_msg[i];
+                    END IF;
+                    r := r || rc;
                 END LOOP;
                 RETURN r;
             END
@@ -258,7 +272,7 @@ public sealed class PostgresStore : IStateStore
 
     public async ValueTask<CommitStatus> CommitAsync(CommitRequest req, CancellationToken ct)
     {
-        if (_batchQueue != null && req.Upload is null && (req.TransactionalAck is null or IPgmqDelivery { Archive: false }))
+        if (_batchQueue != null && req.Upload is null && (req.TransactionalAck is null or IPgmqDelivery { Archive: false } or IPgQueueDelivery))
         {
             var tcs = new TaskCompletionSource<CommitStatus>(TaskCreationOptions.RunContinuationsAsynchronously);
             _batchQueue.Writer.TryWrite((req, tcs));
@@ -308,7 +322,7 @@ public sealed class PostgresStore : IStateStore
         int n = reqs.Count;
         var src = new int[n]; var seq = new long[n]; var kind = new short[n]; var rec = new long[n];
         var prev = new int[n]; var ver = new int[n]; var hash = new long[n]; var st = new short[n];
-        var ctx = new byte[]?[n]; var aq = new string?[n]; var am = new long?[n];
+        var ctx = new byte[]?[n]; var aq = new string?[n]; var am = new long?[n]; var qg = new int?[n]; var qm = new long?[n];
         for (int j = 0; j < n; j++)
         {
             var r = reqs[order[j]];
@@ -316,9 +330,10 @@ public sealed class PostgresStore : IStateStore
             src[j] = r.Event.SourceId; seq[j] = r.Event.Seq; kind[j] = (short)r.Kind; rec[j] = r.Event.RecordId;
             prev[j] = r.PrevVersion; ver[j] = r.NewVersion; hash[j] = r.NewHash; st[j] = (short)r.NewStatus;
             ctx[j] = r.NewContext; aq[j] = ack?.Queue; am[j] = ack?.MsgId;
+            if (r.TransactionalAck is IPgQueueDelivery qd) { qg[j] = qd.GroupId; qm[j] = qd.MsgId; }
         }
         await using var conn = await _data.OpenConnectionAsync(ct);
-        await using var cmd = new NpgsqlCommand($"SELECT {_commitFn}_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)", conn);
+        await using var cmd = new NpgsqlCommand($"SELECT {_commitFn}_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)", conn);
         var ps = cmd.Parameters;
         ps.Add(P(src, NpgsqlDbType.Array | NpgsqlDbType.Integer));
         ps.Add(P(seq, NpgsqlDbType.Array | NpgsqlDbType.Bigint));
@@ -331,6 +346,8 @@ public sealed class PostgresStore : IStateStore
         ps.Add(P(ctx, NpgsqlDbType.Array | NpgsqlDbType.Bytea));
         ps.Add(P(aq, NpgsqlDbType.Array | NpgsqlDbType.Text));
         ps.Add(P(am, NpgsqlDbType.Array | NpgsqlDbType.Bigint));
+        ps.Add(P(qg, NpgsqlDbType.Array | NpgsqlDbType.Integer));
+        ps.Add(P(qm, NpgsqlDbType.Array | NpgsqlDbType.Bigint));
         var sorted = (short[])(await cmd.ExecuteScalarAsync(ct))!;
         var codes = new short[n];
         for (int j = 0; j < n; j++) codes[order[j]] = sorted[j];
@@ -349,11 +366,14 @@ public sealed class PostgresStore : IStateStore
     {
         var ev = req.Event;
         var ack = req.TransactionalAck as IPgmqDelivery;
-        if (req.TransactionalAck != null && ack is null)
-            throw new InvalidOperationException("transactional ack requires a pgmq delivery");
+        var qack = req.TransactionalAck as IPgQueueDelivery;
+        if (req.TransactionalAck != null && ack is null && qack is null)
+            throw new InvalidOperationException("transactional ack requires a pgmq or pgqueue delivery");
 
         await using var conn = await _data.OpenConnectionAsync(ct);
-        await using var cmd = new NpgsqlCommand(_commitSql, conn);
+        await using var cmd = new NpgsqlCommand(qack is null ? _commitSql :
+            $"WITH c AS ({_commitSql} AS rc), d AS (DELETE FROM {_o.PgQueueTable} WHERE group_id = $16 AND msg_id = $17 " +
+            "AND (SELECT rc FROM c) IN (0, 1)) SELECT rc FROM c", conn);
         var ps = cmd.Parameters;
         ps.Add(P(ev.SourceId, NpgsqlDbType.Integer));
         ps.Add(P(ev.Seq, NpgsqlDbType.Bigint));
@@ -370,6 +390,11 @@ public sealed class PostgresStore : IStateStore
         ps.Add(P(ack?.Queue, NpgsqlDbType.Text));
         ps.Add(P(ack?.MsgId, NpgsqlDbType.Bigint));
         ps.Add(P(ack?.Archive ?? false, NpgsqlDbType.Boolean));
+        if (qack != null)
+        {
+            ps.Add(P(qack.GroupId, NpgsqlDbType.Integer));
+            ps.Add(P(qack.MsgId, NpgsqlDbType.Bigint));
+        }
         return ToStatus((short)(await cmd.ExecuteScalarAsync(ct))!);
     }
 

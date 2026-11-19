@@ -1,0 +1,193 @@
+02:14:44.740 topology: 500 groups, 16,000 sources, offered load 24,033 events/s, 780 workers
+02:14:44.767 broker: pgqueue table ebq_msg (16 hash partitions) @ 127.0.0.1:6432/bench; head reads without vt writes, notify=True, fallback 200 ms, 64 groups/fetch x 4, preload=True
+02:14:44.767 store:  postgres @ 127.0.0.1:6432/bench (pool max 1000), unlogged=False, fillfactor=70, group commit (max 64/tx, 8 executors)
+02:14:45.101 postgres store: schema created, 16,000 source cursors seeded
+02:14:45.403 pgqueue: table ebq_msg (16 hash partitions), notify=True, preload=True, 64 groups/fetch x 4
+02:14:45.404 setup done in 0.7s
+02:14:45.431 run: 60s (warmup 10s), 32 producers, 780 workers
+02:15:45.800 closing: 37,267 completion events emitted
+02:15:50.207 drained in 4.4s
+02:15:50.212 verifying end state against the oracle ...
+02:15:50.421 postgres store: 141,604 commit batches, 1,487,021 batched commits (avg 10.5/tx), 0 fallbacks, 1,487,446 preloaded contexts used
+
+# Q3-pgqueue-24k-standby-sync — FAIL ❌
+
+- Broker: `pgqueue table ebq_msg (16 hash partitions) @ 127.0.0.1:6432/bench; head reads without vt writes, notify=True, fallback 200 ms, 64 groups/fetch x 4, preload=True`
+- Store: `postgres @ 127.0.0.1:6432/bench (pool max 1000), unlogged=False, fillfactor=70, group commit (max 64/tx, 8 executors)`
+- Ack mode: `InTransaction`, batch 10, parallel/worker 4
+- Topology: 500 groups, 16000 sources, 780 workers, offered 24033.262 ev/s
+- Phases: run 60.106s, closing 0.263s, drain 4.407s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1487446 | 1487446 | 24043.28 | 23972.949 | 38868 | 0 | 0 | 0 | 425 | 7514 | 54516 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 1202024 | 82.374 | 25.343 | 113.535 | 1624.063 | 2828.287 | 6279.167 |
+| e2e_from_send | 1202024 | 77.965 | 23.679 | 101.631 | 1619.967 | 2824.191 | 6279.167 |
+| producer_lag | 1202024 | 4.409 | 0.888 | 4.459 | 87.359 | 299.775 | 356.607 |
+| publish_call | 731639 | 1.695 | 1.059 | 3.427 | 8.343 | 54.367 | 357.375 |
+| queue_wait | 1202024 | 54.789 | 12.055 | 69.055 | 1227.775 | 2533.375 | 5955.583 |
+| broker_dwell | 1202024 | 53.357 | 11.183 | 67.007 | 1226.751 | 2533.375 | 5955.583 |
+| receive_call | 1020195 | 45.178 | 34.687 | 81.535 | 242.175 | 436.735 | 505.855 |
+| ctx_load | 1202024 | 0.001 | 0.001 | 0.001 | 0.001 | 0.002 | 8.975 |
+| process | 1202024 | 10.39 | 0.001 | 0.002 | 0.005 | 2613.247 | 3004.415 |
+| ctx_commit | 1202024 | 5.295 | 4.767 | 8.263 | 18.303 | 105.151 | 427.775 |
+| service | 1202024 | 23.176 | 10.639 | 21.807 | 85.631 | 2627.583 | 3330.047 |
+| e2e_large | 324 | 2310.904 | 2263.039 | 3092.479 | 5013.503 | 5521.407 | 5521.407 |
+| ready_wait | 1202024 | 27.894 | 15.287 | 50.719 | 247.807 | 541.695 | 1567.743 |
+| blocked | 1202024 | 27.803 | 15.287 | 50.655 | 244.095 | 534.015 | 1379.327 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 23972.949 | 29045 |
+| applied_total | 868492.735 | 1442316 |
+| bench_cpu_cores | 3.762 | 4.556 |
+| bench_cpu_pct | 15.675 | 18.98 |
+| bench_gc_gen0 | 4.388 | 8 |
+| bench_gc_gen1 | 3.122 | 7 |
+| bench_gc_gen2 | 0.306 | 2 |
+| bench_gc_heap_mb | 785.251 | 1049.1 |
+| bench_mem_mb | 1084.718 | 1201.3 |
+| bench_threadpool_queue | 12.776 | 216 |
+| bench_threadpool_threads | 40.735 | 44 |
+| broker_backlog | 1769.082 | 5700 |
+| ctr_eb_pg_standby_cpu_pct | 67.201 | 98.1 |
+| ctr_eb_pg_standby_mem_mb | 2542.208 | 2572.1 |
+| ctr_eb_pgbouncer_2_cpu_pct | 19.747 | 21.2 |
+| ctr_eb_pgbouncer_2_mem_mb | 11.667 | 14.2 |
+| ctr_eb_pgbouncer_3_cpu_pct | 23.267 | 25 |
+| ctr_eb_pgbouncer_3_mem_mb | 11.539 | 12.4 |
+| ctr_eb_pgbouncer_4_cpu_pct | 22.076 | 23.35 |
+| ctr_eb_pgbouncer_4_mem_mb | 9.951 | 10.8 |
+| ctr_eb_pgbouncer_cpu_pct | 19.632 | 20.91 |
+| ctr_eb_pgbouncer_mem_mb | 12.351 | 13 |
+| ctr_eb_postgres_cpu_pct | 890.186 | 1055.2 |
+| ctr_eb_postgres_mem_mb | 6123.051 | 6278 |
+| dispatch_empty_reads_per_s | 7122.598 | 9069.1 |
+| dispatch_fetch_calls_per_s | 475.837 | 611.4 |
+| dispatch_group_reads_per_s | 19948.996 | 23268.4 |
+| dispatch_in_flight | 412.51 | 755 |
+| dispatch_notifies_per_s | 23652.643 | 24004 |
+| dispatch_preloaded_per_s | 24056.445 | 25344.5 |
+| dispatch_rows_per_s | 24057.024 | 25347 |
+| dispatch_waiting_receives | 756.959 | 780 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 58.413 | 63.15 |
+| in_flight | 1785.286 | 6581 |
+| nacks_per_s | 0 | 0 |
+| pg_active_acks | 0 | 0 |
+| pg_active_commits | 2.714 | 8 |
+| pg_active_loads | 0 | 0 |
+| pg_active_polls | 0 | 0 |
+| pg_active_sends | 0 | 0 |
+| pg_cache_hit_pct | 99.994 | 100 |
+| pg_conn_active | 15.122 | 33 |
+| pg_conn_idle | 54.245 | 68 |
+| pg_conn_idle_in_tx | 0 | 0 |
+| pg_conn_lock_wait | 5.673 | 21 |
+| pg_conn_total | 69.367 | 70 |
+| pg_db_size_mb | 2703.082 | 3230.4 |
+| pg_deadlocks | 0 | 0 |
+| pg_replica_lag_mb | 14.893 | 66.52 |
+| pg_replica_replay_lag_ms | 95.855 | 497.1 |
+| pg_replicas | 1 | 1 |
+| pg_rollbacks_per_s | 0 | 0 |
+| pg_temp_mb_per_s | 0 | 0 |
+| pg_tps | 17225.943 | 37961.5 |
+| pg_tup_del_per_s | 57188.847 | 72281.6 |
+| pg_tup_fetch_per_s | 382226.994 | 449322.5 |
+| pg_tup_ins_per_s | 68633.422 | 90610.5 |
+| pg_tup_upd_per_s | 39902.353 | 44470.9 |
+| pg_wal_mb_per_s | 130.529 | 191.21 |
+| pgb_cl_active | 12.041 | 13 |
+| pgb_cl_waiting | 0 | 0 |
+| pgb_maxwait_ms | 0 | 0 |
+| pgb_sv_active | 4.776 | 10 |
+| pgb_sv_idle | 7.265 | 12 |
+| pgb_sv_used | 4.653 | 6 |
+| produced_per_s | 24043.28 | 25812.8 |
+| produced_total | 870278.02 | 1447445 |
+| publish_mb_per_s | 64.023 | 89.24 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 193,901 records are Completed |
+| record_counts | pass | 193,901 records found, 193,901 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 425 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 1,487,446 events applied by workers, 1,487,446 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+| runtime_cross_source_blocking | **FAIL** | 54,516 events waited > 100 ms while a worker slot of their group was idle (4 slot(s)/worker; blocked p99 244 ms, max 1379 ms) |
+
+## Cross-source blocking samples
+
+- [cross_source_blocking] source 8090 seq 40: ready 105 ms before start, 105 ms of it with an idle slot in group 272
+- [cross_source_blocking] source 8088 seq 49: ready 106 ms before start, 106 ms of it with an idle slot in group 272
+- [cross_source_blocking] source 9288 seq 30: ready 102 ms before start, 102 ms of it with an idle slot in group 320
+- [cross_source_blocking] source 11765 seq 12: ready 117 ms before start, 101 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11797 seq 9: ready 903 ms before start, 119 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11778 seq 17: ready 907 ms before start, 122 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11777 seq 13: ready 894 ms before start, 110 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11818 seq 6: ready 792 ms before start, 105 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11799 seq 7: ready 733 ms before start, 112 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11796 seq 16: ready 717 ms before start, 122 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11795 seq 14: ready 750 ms before start, 153 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11793 seq 13: ready 129 ms before start, 106 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11778 seq 18: ready 178 ms before start, 136 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11767 seq 12: ready 768 ms before start, 211 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11811 seq 19: ready 779 ms before start, 221 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11777 seq 14: ready 222 ms before start, 179 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11789 seq 13: ready 776 ms before start, 248 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11801 seq 13: ready 782 ms before start, 260 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11770 seq 9: ready 810 ms before start, 288 ms of it with an idle slot in group 382
+- [cross_source_blocking] source 11788 seq 15: ready 812 ms before start, 297 ms of it with an idle slot in group 382
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-119L | 64 | 4 | 4.456 | 4.863 | 156 | 1 | 379 | 379 | 0 | 1933.311 | 5013.503 | 5537.791 |
+| t-093L | 20 | 1 | 2.903 | 0.952 | 711 | 1 | 85 | 85 | 0 | 1998.847 | 4489.215 | 4489.215 |
+| t-319L | 29 | 2 | 4.084 | 1.953 | 1917 | 1 | 158 | 158 | 0 | 1736.703 | 4456.447 | 4587.519 |
+| t-308L | 26 | 1 | 1.861 | 0.85 | 201 | 1 | 95 | 95 | 0 | 1556.479 | 4145.151 | 5505.023 |
+| t-106 | 24 | 3 | 332.963 | 135.379 | 824 | 0 | 8089 | 8089 | 0 | 29.695 | 2637.823 | 4947.967 |
+| t-132 | 22 | 2 | 282.036 | 95.907 | 2676 | 0 | 5769 | 5769 | 0 | 30.975 | 2572.287 | 4259.839 |
+| t-295 | 12 | 1 | 103.993 | 20.658 | 3396 | 0 | 1309 | 1309 | 0 | 25.087 | 2572.287 | 4423.679 |
+| t-090 | 7 | 1 | 74.668 | 8.784 | 242 | 0 | 527 | 527 | 0 | 21.503 | 2539.519 | 3014.655 |
+| t-288 | 6 | 1 | 108.569 | 10.982 | 214 | 0 | 675 | 675 | 0 | 23.551 | 2506.751 | 2981.887 |
+| t-115 | 10 | 1 | 62.309 | 9.965 | 3658 | 0 | 641 | 641 | 0 | 23.551 | 2490.367 | 2834.431 |
+| t-079 | 6 | 1 | 180.755 | 18.586 | 1522 | 0 | 1136 | 1136 | 0 | 24.063 | 2473.983 | 3686.399 |
+| t-418 | 6 | 1 | 226.411 | 22.866 | 201 | 0 | 1383 | 1383 | 0 | 24.959 | 2375.679 | 2932.735 |
+| t-346 | 12 | 1 | 52.432 | 10.16 | 1247 | 0 | 648 | 648 | 0 | 23.167 | 2342.911 | 2932.735 |
+| t-437 | 9 | 1 | 108.419 | 16.278 | 1067 | 0 | 994 | 994 | 0 | 23.807 | 2326.527 | 3997.695 |
+| t-082 | 42 | 1 | 33.494 | 23.642 | 150 | 0 | 1579 | 1579 | 0 | 24.703 | 2293.759 | 2981.887 |
+| t-067 | 11 | 1 | 162.679 | 29.921 | 3490 | 0 | 1763 | 1763 | 0 | 24.319 | 2277.375 | 4456.447 |
+| t-302 | 12 | 1 | 172.999 | 37 | 1189 | 0 | 2258 | 2258 | 0 | 26.239 | 2260.991 | 2949.119 |
+| t-427 | 16 | 2 | 207.863 | 55.174 | 1711 | 0 | 3314 | 3314 | 0 | 25.215 | 2244.607 | 2998.271 |
+| t-447 | 17 | 1 | 84.714 | 22.861 | 558 | 0 | 1451 | 1451 | 0 | 24.191 | 2228.223 | 2998.271 |
+| t-496 | 81 | 8 | 272.308 | 370.179 | 278 | 0 | 22482 | 22482 | 0 | 23.423 | 2228.223 | 3932.159 |
+| t-441 | 30 | 3 | 264.206 | 128.135 | 2203 | 0 | 7773 | 7773 | 0 | 26.623 | 2211.839 | 3080.191 |
+| t-456 | 21 | 2 | 268.999 | 91.607 | 512 | 0 | 5526 | 5526 | 0 | 27.647 | 2195.455 | 2998.271 |
+| t-355 | 10 | 1 | 56.521 | 9.909 | 349 | 0 | 667 | 667 | 0 | 22.911 | 2179.071 | 2932.735 |
+| t-012 | 6 | 1 | 115.634 | 11.982 | 556 | 0 | 779 | 779 | 0 | 21.759 | 2162.687 | 2637.823 |
+| t-251 | 9 | 1 | 70.825 | 10.64 | 1193 | 0 | 698 | 698 | 0 | 24.191 | 2162.687 | 3031.039 |
+
+02:15:51.023 results written to /home/b4283/benchmark/results/matrix-13-pgqueue/Q3-pgqueue-24k-standby-sync/20261119-181444_Q3-pgqueue-24k-standby-sync

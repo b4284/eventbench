@@ -1,0 +1,707 @@
+02:31:51.746 topology: 500 groups, 16,000 sources, offered load 24,033 events/s, 780 workers
+02:31:51.786 broker: pgqueue table ebq_msg (16 hash partitions) @ 127.0.0.1:5432,127.0.0.1:5433:5432/bench; head reads without vt writes, notify=True, fallback 200 ms, 64 groups/fetch x 4, preload=True
+02:31:51.786 store:  postgres @ 127.0.0.1:5432,127.0.0.1:5433:5432/bench (pool max 200), unlogged=False, fillfactor=70, group commit (max 64/tx, 8 executors)
+02:31:52.057 postgres store: schema created, 16,000 source cursors seeded
+02:31:52.258 pgqueue: table ebq_msg (16 hash partitions), notify=True, preload=True, 64 groups/fetch x 4
+02:31:52.258 setup done in 0.5s
+02:31:52.283 run: 60s (warmup 10s), 32 producers, 780 workers
+02:32:23.460 pgqueue listen connection lost (NpgsqlException: Exception while reading from stream); reconnecting
+02:32:23.504 pgqueue fetch error: NpgsqlException: Exception while reading from stream
+02:32:23.504 pgqueue fetch error: NpgsqlException: Exception while reading from stream
+02:32:23.504 pgqueue fetch error: NpgsqlException: Exception while reading from stream
+02:32:23.505 producer p15 publish failed (attempt 1): Exception while reading from stream
+02:32:23.505 producer p5 publish failed (attempt 1): Exception while reading from stream
+02:32:23.506 producer p25 publish failed (attempt 1): Exception while reading from stream
+02:32:23.507 producer p24 publish failed (attempt 1): Exception while reading from stream
+02:32:23.508 producer p2 publish failed (attempt 1): Exception while reading from stream
+02:32:23.508 producer p31 publish failed (attempt 1): Exception while reading from stream
+02:32:23.508 producer p21 publish failed (attempt 1): Exception while reading from stream
+02:32:23.508 producer p20 publish failed (attempt 1): Exception while reading from stream
+02:32:23.508 producer p8 publish failed (attempt 1): Exception while reading from stream
+02:32:23.508 producer p12 publish failed (attempt 1): Exception while reading from stream
+02:32:23.512 producer p22 publish failed (attempt 1): Exception while reading from stream
+02:32:23.512 producer p1 publish failed (attempt 1): Exception while reading from stream
+02:32:23.514 producer p3 publish failed (attempt 1): Exception while reading from stream
+02:32:23.514 pgqueue fetch error: NpgsqlException: Exception while reading from stream
+02:32:23.515 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.515 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.515 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.516 pgqueue listen reconnect failed: No suitable host was found.
+02:32:23.517 producer p14 publish failed (attempt 1): Exception while reading from stream
+02:32:23.522 producer p11 publish failed (attempt 1): Exception while reading from stream
+02:32:23.522 producer p18 publish failed (attempt 1): Exception while reading from stream
+02:32:23.522 producer p7 publish failed (attempt 1): Exception while reading from stream
+02:32:23.522 producer p30 publish failed (attempt 1): Exception while reading from stream
+02:32:23.525 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.525 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.525 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.525 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.533 producer p26 publish failed (attempt 1): Exception while reading from stream
+02:32:23.533 producer p6 publish failed (attempt 1): Exception while reading from stream
+02:32:23.533 producer p10 publish failed (attempt 1): Exception while reading from stream
+02:32:23.533 producer p4 publish failed (attempt 1): Exception while reading from stream
+02:32:23.533 producer p13 publish failed (attempt 1): Exception while reading from stream
+02:32:23.533 producer p28 publish failed (attempt 1): Exception while reading from stream
+02:32:23.538 producer p23 publish failed (attempt 1): Exception while reading from stream
+02:32:23.538 producer p0 publish failed (attempt 1): Exception while reading from stream
+02:32:23.539 producer p29 publish failed (attempt 1): Exception while reading from stream
+02:32:23.538 producer p19 publish failed (attempt 1): Exception while reading from stream
+02:32:23.538 producer p16 publish failed (attempt 1): Exception while reading from stream
+02:32:23.539 producer p17 publish failed (attempt 1): Exception while reading from stream
+02:32:23.539 producer p9 publish failed (attempt 1): Exception while reading from stream
+02:32:23.545 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.553 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.563 producer p27 publish failed (attempt 1): Exception while reading from stream
+02:32:23.584 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.596 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.600 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.605 producer p15 publish failed (attempt 2): No suitable host was found.
+02:32:23.605 producer p5 publish failed (attempt 2): No suitable host was found.
+02:32:23.605 producer p25 publish failed (attempt 2): No suitable host was found.
+02:32:23.609 producer p21 publish failed (attempt 2): No suitable host was found.
+02:32:23.609 producer p31 publish failed (attempt 2): No suitable host was found.
+02:32:23.609 producer p12 publish failed (attempt 2): No suitable host was found.
+02:32:23.609 producer p24 publish failed (attempt 2): No suitable host was found.
+02:32:23.609 producer p20 publish failed (attempt 2): No suitable host was found.
+02:32:23.609 producer p2 publish failed (attempt 2): No suitable host was found.
+02:32:23.609 producer p8 publish failed (attempt 2): No suitable host was found.
+02:32:23.612 producer p22 publish failed (attempt 2): No suitable host was found.
+02:32:23.612 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.612 producer p3 publish failed (attempt 2): No suitable host was found.
+02:32:23.612 producer p1 publish failed (attempt 2): No suitable host was found.
+02:32:23.617 producer p14 publish failed (attempt 2): No suitable host was found.
+02:32:23.621 producer p18 publish failed (attempt 2): No suitable host was found.
+02:32:23.621 producer p11 publish failed (attempt 2): No suitable host was found.
+02:32:23.621 producer p30 publish failed (attempt 2): No suitable host was found.
+02:32:23.621 producer p7 publish failed (attempt 2): No suitable host was found.
+02:32:23.628 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.628 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.632 producer p28 publish failed (attempt 2): No suitable host was found.
+02:32:23.632 producer p4 publish failed (attempt 2): No suitable host was found.
+02:32:23.632 producer p13 publish failed (attempt 2): No suitable host was found.
+02:32:23.632 producer p26 publish failed (attempt 2): No suitable host was found.
+02:32:23.632 producer p10 publish failed (attempt 2): No suitable host was found.
+02:32:23.632 producer p6 publish failed (attempt 2): No suitable host was found.
+02:32:23.636 producer p0 publish failed (attempt 2): No suitable host was found.
+02:32:23.636 producer p17 publish failed (attempt 2): No suitable host was found.
+02:32:23.636 producer p16 publish failed (attempt 2): No suitable host was found.
+02:32:23.636 producer p29 publish failed (attempt 2): No suitable host was found.
+02:32:23.636 producer p23 publish failed (attempt 2): No suitable host was found.
+02:32:23.636 producer p9 publish failed (attempt 2): No suitable host was found.
+02:32:23.636 producer p19 publish failed (attempt 2): No suitable host was found.
+02:32:23.644 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.656 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.661 producer p27 publish failed (attempt 2): No suitable host was found.
+02:32:23.716 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.716 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.716 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.716 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.720 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.732 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.732 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.732 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.732 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.748 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.765 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.765 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.765 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.765 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.765 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.765 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.765 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.766 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.766 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.766 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.765 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.766 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.766 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.766 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.766 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.766 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.766 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.766 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.768 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.768 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.768 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.768 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.785 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.785 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.785 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.785 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.785 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.785 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.785 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.789 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.789 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.789 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.789 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.789 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.789 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.789 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.789 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.792 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.792 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.792 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.792 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.792 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.792 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.792 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.792 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.792 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.797 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.807 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.816 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.824 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.828 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.832 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.836 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.836 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.848 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.848 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.867 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.867 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.881 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.896 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.900 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.913 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.913 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.920 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.920 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.920 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.920 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.920 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.936 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.936 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.937 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.937 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.937 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.937 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.948 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.948 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.960 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.964 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.976 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.976 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.981 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:23.997 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.016 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.016 pgqueue listen reconnect failed: No suitable host was found.
+02:32:24.016 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.037 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.037 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.037 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.049 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.049 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.069 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.069 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.069 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.069 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.075 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.080 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.092 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.101 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.105 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.116 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.120 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.120 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.124 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.124 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.124 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.136 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.148 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.148 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.148 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.159 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.164 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.164 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.172 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.177 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.177 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.181 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.200 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.205 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.216 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.220 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.220 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.233 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.236 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.244 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.247 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.252 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.256 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.269 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.269 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.276 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.276 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.284 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.284 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.288 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.292 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.296 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.305 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.305 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.313 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.316 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.316 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.320 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.324 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.324 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.324 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.329 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.337 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.348 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.348 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.348 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.353 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.361 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.372 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.376 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.376 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.376 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.381 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.381 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.385 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.385 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.396 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.396 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.396 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.409 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.412 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.416 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.416 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.416 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.421 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.421 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.421 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.428 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.432 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.432 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.436 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.445 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.445 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.452 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.452 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.452 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.460 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.472 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.476 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.485 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.497 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.499 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.504 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.518 pgqueue listen reconnect failed: Unable to connect to a suitable host. Check inner exception for more details.
+02:32:24.521 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.528 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.528 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.528 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.532 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.532 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.532 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.532 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.537 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.544 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.549 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.549 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.557 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.568 pgqueue fetch error: NpgsqlException: Unable to connect to a suitable host. Check inner exception for more details.
+02:32:24.568 pgqueue fetch error: NpgsqlException: Unable to connect to a suitable host. Check inner exception for more details.
+02:32:24.573 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.577 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.581 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.581 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.592 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.598 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.600 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.600 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.620 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.624 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.628 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.637 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.637 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.641 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.641 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.648 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.664 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.664 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.668 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.680 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.680 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.692 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.696 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.696 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.700 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.708 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.712 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.712 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.720 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.725 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.729 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.729 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.741 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.752 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.752 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.776 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.776 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.788 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.788 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.793 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.796 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.799 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.804 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.813 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.821 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.825 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.828 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.836 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.841 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.845 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.845 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.845 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.849 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.854 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.856 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.864 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.864 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.868 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.868 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.876 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.876 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.881 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.889 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.891 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.896 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.900 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.912 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.916 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.916 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.921 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.921 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.925 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.929 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.929 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.929 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.929 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.929 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.929 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.929 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.936 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.940 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.944 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.952 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.952 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.952 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.957 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.957 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.971 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:24.984 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.000 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.000 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.000 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.009 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.013 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.016 pgqueue listen reconnect failed: No suitable host was found.
+02:32:25.021 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.025 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.040 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.040 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.044 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.053 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.053 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.065 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.066 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.080 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.084 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.084 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.089 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.089 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.089 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.097 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.105 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.105 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.114 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.116 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.116 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.120 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.120 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.128 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.145 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.145 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.145 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.152 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.152 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.160 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.160 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.160 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.172 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.188 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.200 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.206 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.206 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.212 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.216 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.233 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.236 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.240 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.248 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.257 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.261 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.269 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.276 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.280 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.285 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.289 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.300 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.304 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.308 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.308 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.316 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.316 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.324 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.333 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.348 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.348 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.352 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.352 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.361 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.361 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.361 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.369 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.371 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.380 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.389 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.404 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.413 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.413 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.413 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.419 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.432 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.437 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.441 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.445 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.449 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.452 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.452 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.452 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.452 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.452 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.452 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.456 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.460 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.463 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.464 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.464 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.464 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.484 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.504 pgqueue fetch error: NpgsqlException: No suitable host was found.
+02:32:25.516 pgqueue listen reconnect failed: No suitable host was found.
+02:32:25.708 pgbouncer stats disabled: exit 255: Error: can only create exec sessions on running containers: container state improper
+02:32:26.018 pgqueue listen reconnected
+02:32:53.057 closing: 37,232 completion events emitted
+02:33:06.476 drained in 13.4s
+02:33:06.498 verifying end state against the oracle ...
+02:33:07.280 postgres store: 73,672 commit batches, 1,480,266 batched commits (avg 20.1/tx), 178 fallbacks, 1,481,336 preloaded contexts used
+
+# D2-pgqueue-24k-sync-KILL-PRIMARY — FAIL ❌
+
+- Broker: `pgqueue table ebq_msg (16 hash partitions) @ 127.0.0.1:5432,127.0.0.1:5433:5432/bench; head reads without vt writes, notify=True, fallback 200 ms, 64 groups/fetch x 4, preload=True`
+- Store: `postgres @ 127.0.0.1:5432,127.0.0.1:5433:5432/bench (pool max 200), unlogged=False, fillfactor=70, group commit (max 64/tx, 8 executors)`
+- Ack mode: `InTransaction`, batch 10, parallel/worker 4
+- Topology: 500 groups, 16000 sources, 780 workers, offered 24033.262 ev/s
+- Phases: run 60.451s, closing 0.322s, drain 13.419s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1480688 | 1480688 | 23950.284 | 21512.271 | 28873.3 | 0 | 648 | 648 | 422 | 7473 | 412423 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 1195301 | 2683.039 | 712.191 | 8019.967 | 12902.399 | 13983.743 | 18907.135 |
+| e2e_from_send | 1195301 | 2457.317 | 495.871 | 7872.511 | 12689.407 | 13811.711 | 18317.311 |
+| producer_lag | 1195301 | 225.722 | 40.703 | 469.247 | 2820.095 | 3237.887 | 3405.823 |
+| publish_call | 27256 | 70.959 | 47.967 | 105.791 | 408.063 | 3221.503 | 3405.823 |
+| queue_wait | 1195301 | 2410.49 | 422.143 | 7806.975 | 12656.639 | 13754.367 | 18120.703 |
+| broker_dwell | 1195301 | 2401.19 | 406.783 | 7802.879 | 12648.447 | 13746.175 | 18120.703 |
+| receive_call | 939910 | 47.236 | 37.151 | 79.295 | 251.391 | 451.839 | 503.295 |
+| ctx_load | 1195301 | 0.001 | 0.001 | 0.001 | 0.001 | 0.002 | 5.295 |
+| process | 1195301 | 10.383 | 0.001 | 0.002 | 0.004 | 2613.247 | 3002.367 |
+| ctx_commit | 1195301 | 23.468 | 11.575 | 57.471 | 148.351 | 429.055 | 470.015 |
+| service | 1195301 | 46.83 | 26.863 | 76.863 | 224.127 | 2646.015 | 3221.503 |
+| e2e_large | 321 | 2820.404 | 2615.295 | 4358.143 | 6410.239 | 8634.367 | 8634.367 |
+| ready_wait | 1195301 | 267.488 | 43.231 | 783.359 | 2713.599 | 5062.655 | 12345.343 |
+| blocked | 1195301 | 241.216 | 43.135 | 703.999 | 2367.487 | 4415.487 | 11018.239 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 21512.271 | 28828.8 |
+| applied_total | 816501.408 | 1319816 |
+| bench_cpu_cores | 1.668 | 2.047 |
+| bench_cpu_pct | 6.951 | 8.53 |
+| bench_gc_gen0 | 2.327 | 4 |
+| bench_gc_gen1 | 2.041 | 4 |
+| bench_gc_gen2 | 0.306 | 1 |
+| bench_gc_heap_mb | 781.657 | 973.8 |
+| bench_mem_mb | 1088.143 | 1182.5 |
+| bench_threadpool_queue | 3.184 | 64 |
+| bench_threadpool_threads | 36.143 | 38 |
+| broker_backlog | 42876.224 | 120278 |
+| ctr_eb_pg_standby_cpu_pct | 380.368 | 832.93 |
+| ctr_eb_pg_standby_mem_mb | 2752.896 | 3509.5 |
+| ctr_eb_pgbouncer_2_cpu_pct | 0.011 | 0.02 |
+| ctr_eb_pgbouncer_2_mem_mb | 10.9 | 10.9 |
+| ctr_eb_pgbouncer_3_cpu_pct | 0.014 | 0.03 |
+| ctr_eb_pgbouncer_3_mem_mb | 10.9 | 10.9 |
+| ctr_eb_pgbouncer_4_cpu_pct | 0.011 | 0.03 |
+| ctr_eb_pgbouncer_4_mem_mb | 9.3 | 9.3 |
+| ctr_eb_pgbouncer_cpu_pct | 0.014 | 0.03 |
+| ctr_eb_pgbouncer_mem_mb | 11.8 | 11.8 |
+| ctr_eb_postgres_cpu_pct | 799.395 | 826.7 |
+| ctr_eb_postgres_mem_mb | 4571.635 | 4645.3 |
+| dispatch_empty_reads_per_s | 3204.512 | 6307.9 |
+| dispatch_fetch_calls_per_s | 293.396 | 424 |
+| dispatch_group_reads_per_s | 12280.549 | 18024.3 |
+| dispatch_in_flight | 857.878 | 2714 |
+| dispatch_notifies_per_s | 18274.155 | 21861.9 |
+| dispatch_preloaded_per_s | 21865.873 | 27818.5 |
+| dispatch_rows_per_s | 21865.961 | 27738.3 |
+| dispatch_waiting_receives | 714.939 | 780 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 13.216 | 511.7 |
+| host_cpu_pct | 39.409 | 49.73 |
+| in_flight | 44902.571 | 121164 |
+| nacks_per_s | 13.216 | 511.7 |
+| pg_active_acks | 0 | 0 |
+| pg_active_commits | 6.898 | 9 |
+| pg_active_loads | 0 | 0 |
+| pg_active_polls | 0 | 0 |
+| pg_active_sends | 0 | 0 |
+| pg_cache_hit_pct | 99.994 | 100 |
+| pg_conn_active | 40.816 | 45 |
+| pg_conn_idle | 6.551 | 13 |
+| pg_conn_idle_in_tx | 0 | 0 |
+| pg_conn_lock_wait | 27.959 | 31 |
+| pg_conn_total | 47.367 | 50 |
+| pg_db_size_mb | 3396.733 | 5110 |
+| pg_deadlocks | 0 | 0 |
+| pg_replica_lag_mb | 0.296 | 0.47 |
+| pg_replica_replay_lag_ms | 1.788 | 3.8 |
+| pg_replicas | 1 | 1 |
+| pg_rollbacks_per_s | 0 | 0 |
+| pg_temp_mb_per_s | 13.725 | 51.16 |
+| pg_tps | 927.982 | 6850 |
+| pg_tup_del_per_s | 22678.331 | 74696.8 |
+| pg_tup_fetch_per_s | 1010582.998 | 2615161.1 |
+| pg_tup_ins_per_s | 29106.053 | 116791.1 |
+| pg_tup_upd_per_s | 16030.837 | 46396.1 |
+| pg_wal_mb_per_s | 99.173 | 262.89 |
+| pgb_cl_active | 0 | 0 |
+| pgb_cl_waiting | 0 | 0 |
+| pgb_maxwait_ms | 0 | 0 |
+| pgb_sv_active | 0 | 0 |
+| pgb_sv_idle | 0 | 0 |
+| pgb_sv_used | 0 | 0 |
+| produced_per_s | 23950.284 | 86149.4 |
+| produced_total | 861403.98 | 1440980 |
+| publish_mb_per_s | 63.763 | 219.24 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 193,136 records are Completed |
+| record_counts | pass | 193,136 records found, 193,136 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 422 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 1,480,688 events applied by workers, 1,480,688 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+| runtime_cross_source_blocking | **FAIL** | 412,423 events waited > 100 ms while a worker slot of their group was idle (4 slot(s)/worker; blocked p99 2367 ms, max 11011 ms) |
+
+## Cross-source blocking samples
+
+- [cross_source_blocking] source 8090 seq 40: ready 174 ms before start, 173 ms of it with an idle slot in group 272
+- [cross_source_blocking] source 3119 seq 9: ready 177 ms before start, 155 ms of it with an idle slot in group 104
+- [cross_source_blocking] source 8088 seq 49: ready 150 ms before start, 149 ms of it with an idle slot in group 272
+- [cross_source_blocking] source 3126 seq 14: ready 183 ms before start, 161 ms of it with an idle slot in group 104
+- [cross_source_blocking] source 3117 seq 8: ready 200 ms before start, 165 ms of it with an idle slot in group 104
+- [cross_source_blocking] source 3136 seq 7: ready 219 ms before start, 184 ms of it with an idle slot in group 104
+- [cross_source_blocking] source 3123 seq 12: ready 230 ms before start, 195 ms of it with an idle slot in group 104
+- [cross_source_blocking] source 8080 seq 28: ready 114 ms before start, 103 ms of it with an idle slot in group 272
+- [cross_source_blocking] source 14064 seq 11: ready 116 ms before start, 101 ms of it with an idle slot in group 447
+- [cross_source_blocking] source 693 seq 26: ready 288 ms before start, 166 ms of it with an idle slot in group 20
+- [cross_source_blocking] source 3137 seq 13: ready 134 ms before start, 121 ms of it with an idle slot in group 104
+- [cross_source_blocking] source 14057 seq 18: ready 149 ms before start, 136 ms of it with an idle slot in group 447
+- [cross_source_blocking] source 3127 seq 14: ready 150 ms before start, 138 ms of it with an idle slot in group 104
+- [cross_source_blocking] source 3133 seq 8: ready 181 ms before start, 156 ms of it with an idle slot in group 104
+- [cross_source_blocking] source 12926 seq 17: ready 110 ms before start, 100 ms of it with an idle slot in group 409
+- [cross_source_blocking] source 6076 seq 23: ready 118 ms before start, 103 ms of it with an idle slot in group 208
+- [cross_source_blocking] source 682 seq 14: ready 136 ms before start, 102 ms of it with an idle slot in group 20
+- [cross_source_blocking] source 14063 seq 16: ready 164 ms before start, 154 ms of it with an idle slot in group 447
+- [cross_source_blocking] source 3134 seq 15: ready 178 ms before start, 155 ms of it with an idle slot in group 104
+- [cross_source_blocking] source 3118 seq 11: ready 175 ms before start, 153 ms of it with an idle slot in group 104
+
+## Error samples
+
+- publish p15 attempt 1: NpgsqlException: Exception while reading from stream
+- publish p5 attempt 1: NpgsqlException: Exception while reading from stream
+- publish p25 attempt 1: NpgsqlException: Exception while reading from stream
+- publish p24 attempt 1: NpgsqlException: Exception while reading from stream
+- publish p2 attempt 1: NpgsqlException: Exception while reading from stream
+- publish p31 attempt 1: NpgsqlException: Exception while reading from stream
+- publish p20 attempt 1: NpgsqlException: Exception while reading from stream
+- publish p12 attempt 1: NpgsqlException: Exception while reading from stream
+- publish p21 attempt 1: NpgsqlException: Exception while reading from stream
+- publish p8 attempt 1: NpgsqlException: Exception while reading from stream
+- t-045#0 src=1498 seq=99 op=Update rec=6433861009420 ev=1: NpgsqlException: No suitable host was found.
+- t-119L#3 src=3485 seq=4 op=Update rec=14967961026561 ev=3: NpgsqlException: No suitable host was found.
+- t-263#2 src=7705 seq=71 op=Update rec=33092723015688 ev=2: NpgsqlException: No suitable host was found.
+- t-394#0 src=12399 seq=32 op=Update rec=53253299503109 ev=3: NpgsqlException: No suitable host was found.
+- t-348#3 src=10613 seq=50 op=Update rec=45582487912457 ev=1: NpgsqlException: No suitable host was found.
+- t-049#1 src=1641 seq=37 op=Get rec=7048041332740 ev=2: NpgsqlException: No suitable host was found.
+- t-306#1 src=8846 seq=92 op=Update rec=37993280700430 ev=1: NpgsqlException: No suitable host was found.
+- t-397#0 src=12639 seq=15 op=Update rec=54284091654146 ev=2: NpgsqlException: No suitable host was found.
+- t-334#0 src=9653 seq=55 op=Update rec=41459319308297 ev=6: NpgsqlException: No suitable host was found.
+- t-056#0 src=1967 seq=68 op=Get rec=8448200671237 ev=7: NpgsqlException: No suitable host was found.
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-465 | 66 | 3 | 132.285 | 142.732 | 667 | 0 | 8794 | 8794 | 0 | 5570.559 | 14417.919 | 16187.391 |
+| t-348 | 125 | 5 | 117.817 | 246.942 | 1340 | 0 | 15021 | 15021 | 0 | 5406.719 | 14286.847 | 16646.143 |
+| t-468 | 61 | 5 | 237.543 | 237.588 | 1645 | 0 | 14260 | 14260 | 0 | 5275.647 | 13959.167 | 16777.215 |
+| t-469 | 105 | 5 | 143.35 | 249.426 | 278 | 0 | 15164 | 15164 | 0 | 5013.503 | 13893.631 | 16383.999 |
+| t-378 | 55 | 3 | 160.573 | 143.865 | 3659 | 0 | 9059 | 9059 | 0 | 5603.327 | 13697.023 | 16449.535 |
+| t-450 | 63 | 3 | 142.193 | 147.252 | 165 | 0 | 9079 | 9079 | 0 | 5406.719 | 13434.879 | 15859.711 |
+| t-376 | 65 | 1 | 43.578 | 48.459 | 566 | 0 | 3172 | 3172 | 0 | 5308.415 | 13369.343 | 14614.527 |
+| t-456 | 21 | 2 | 268.999 | 91.607 | 512 | 0 | 5495 | 5495 | 0 | 4784.127 | 13369.343 | 15663.103 |
+| t-438 | 121 | 6 | 139.659 | 292.416 | 1839 | 0 | 17922 | 17922 | 0 | 5144.575 | 13238.271 | 19005.439 |
+| t-488 | 26 | 1 | 107.861 | 47.761 | 1017 | 0 | 2915 | 2915 | 0 | 4784.127 | 13238.271 | 15204.351 |
+| t-344 | 195 | 11 | 153.189 | 504.11 | 571 | 0 | 30610 | 30610 | 0 | 5275.647 | 13172.735 | 15794.175 |
+| t-383 | 200 | 10 | 144.979 | 482.198 | 2521 | 0 | 29332 | 29332 | 0 | 5210.111 | 13041.663 | 15663.103 |
+| t-350 | 85 | 3 | 100.24 | 137.772 | 285 | 0 | 8469 | 8469 | 0 | 4521.983 | 12386.303 | 14876.671 |
+| t-340 | 184 | 3 | 45.82 | 141.132 | 141 | 0 | 9089 | 9089 | 0 | 5079.039 | 12320.767 | 14811.135 |
+| t-464 | 153 | 5 | 93.129 | 234.299 | 352 | 0 | 14552 | 14552 | 0 | 4816.895 | 12320.767 | 14352.383 |
+| t-496 | 81 | 8 | 272.308 | 370.179 | 278 | 0 | 22394 | 22394 | 0 | 4882.431 | 12320.767 | 15204.351 |
+| t-354 | 90 | 2 | 65.114 | 97.451 | 157 | 0 | 6120 | 6120 | 0 | 4947.967 | 12255.231 | 14155.775 |
+| t-461 | 130 | 4 | 84.209 | 183.191 | 3025 | 0 | 11214 | 11214 | 0 | 5177.343 | 12255.231 | 14024.703 |
+| t-382 | 59 | 1 | 44.037 | 43.77 | 2368 | 0 | 2820 | 2820 | 0 | 5963.775 | 12124.159 | 13369.343 |
+| t-409 | 48 | 2 | 120.851 | 95.245 | 671 | 0 | 5835 | 5835 | 0 | 5144.575 | 12058.623 | 14155.775 |
+| t-347 | 162 | 7 | 116.152 | 315.598 | 833 | 0 | 19406 | 19406 | 0 | 4521.983 | 11993.087 | 14090.239 |
+| t-460 | 71 | 1 | 38.387 | 45.799 | 141 | 0 | 3040 | 3040 | 0 | 5013.503 | 11665.407 | 11993.087 |
+| t-132 | 22 | 2 | 282.036 | 95.907 | 2676 | 0 | 5746 | 5746 | 0 | 4325.375 | 11534.335 | 13369.343 |
+| t-439 | 22 | 1 | 127.568 | 47.568 | 3339 | 0 | 2805 | 2805 | 0 | 5603.327 | 11468.799 | 11730.943 |
+| t-194 | 78 | 5 | 183.847 | 245.382 | 1184 | 0 | 14961 | 14961 | 0 | 4521.983 | 11403.263 | 14221.311 |
+
+02:33:07.942 results written to /home/b4283/benchmark/results/matrix-13-pgqueue/D2-pgqueue-24k-sync-KILL-PRIMARY/20261119-183151_D2-pgqueue-24k-sync-KILL-PRIMARY

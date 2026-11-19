@@ -451,6 +451,57 @@ B run -c configs/pgmq-500groups.json -c configs/matrix/broker-redis.json -c conf
 - **Connections.** Commands share a few multiplexed connections (`Connections`, default 8), which
   bounds head-of-line blocking behind MB-sized values.
 
+## Postgres dispatcher, group commit and pgqueue
+
+**Group commit (`Store:BatchCommits=true`).** This works with any broker. Commits from all workers are queued
+and executed many per transaction (`eb_commit_many`), together with their in-transaction acks. Events with an
+upload still commit alone. Batches form naturally while earlier ones execute (`BatchMaxSize`,
+`BatchExecutors`).
+
+**`pgdispatch` broker.** An in-process dispatcher over the PGMQ FIFO queues. Workers wait in memory instead of
+polling. The dispatcher reads a group only when there is demand and a reason to look:
+- a statement-level insert trigger with `LISTEN`;
+- a completed event of the group;
+- a fallback interval.
+
+Reads of many groups go out in one round trip. With `Dispatch:PreloadContext=true`, each fetched event's
+context is loaded in the same pass and handed to the store (`PreloadedContexts`).
+
+**`pgqueue` broker.** A dispatcher-native queue, with no PGMQ:
+- **Table:** one hash-partitioned table for all groups (`Table`, `Partitions`).
+- **Publish:** one multi-row INSERT per producer batch.
+- **Reads:** source heads (no older row of the same source) minus what is in flight, tracked in memory. There
+  is no `vt` column and nothing is written on read. A source's next message appears only when the previous
+  one is deleted, and the delete is inside the commit transaction (`AckMode=InTransaction`, store
+  `PgQueueTable`).
+- **Retries:** in memory, no database write.
+- **Failover:** the LISTEN connection reconnects after a failover; use multi-host connection strings
+  (`configs/overlay-pg-failover.json`).
+
+`results/matrix-13-pgqueue/SUMMARY.md` has the numbers: 24k ev/s on about 9 Postgres cores, and no loss on a
+primary kill with a synchronous standby.
+
+**Other worker and PGMQ options:**
+- `Worker:Linger=true` (pipelined, PGMQ FIFO): fetch the source's next event right after finishing one.
+- `Broker:FifoReadFunction=eb_read_head`: head-only FIFO read through an index probe.
+- `Broker:DropVtIndex`, `Broker:QueueFillFactor`, `Broker:AggressiveVacuum`: PGMQ queue-table tuning.
+
+## Clusters, HA and failover drills
+
+| script | what |
+|---|---|
+| `infra/kafka-cluster/up.sh`, `kill-broker.sh` | 3 KRaft nodes on 9192/9292/9392, RF 3, `min.insync.replicas=2`; use `configs/matrix/broker-kafka-cluster.json` |
+| `infra/nats-cluster/up.sh`, `kill-node.sh` | 3 nats-servers (4222–4224), R3 streams; `configs/matrix/broker-nats-cluster.json` |
+| `infra/redis-ha/up.sh`, `failover.sh` | primary + 2 replicas + 3 Sentinels; `*-redis-ha.json`, `WaitReplicas=1` for WAIT after writes |
+| `infra/pg-standby/up.sh`, `sync.sh on/off`, `failover.sh`, `restore.sh` | streaming standby on 5433, async or synchronous `remote_write`; kill the primary + promote; rebuild |
+
+**Running only what a test needs.** `scripts/only.sh <aliases>` keeps only the named containers running
+(aliases: `pg`, `pg-ha`, `kafka`, `kafka-cluster`, `nats`, `nats-cluster`, `redis`, `redis-ha`, …) and
+waits until each is ready. `run-matrix.sh` takes the aliases as a third `|`-separated field per variant.
+
+**Networking.** All infra uses host networking by default (`EB_NETWORK=pasta` restores published ports).
+Rootless podman's per-container userspace proxy capped Postgres paths at about 19k ev/s.
+
 ## Metrics & output
 
 Each run writes `results/<utc-stamp>_<name>/`:
