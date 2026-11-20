@@ -180,6 +180,21 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   last seq of the previous epoch (if known), so the old epoch can be drained before the new one starts; if not
   known, an operator or policy decides. Proto fields, schema column, TLA+ model update.
 
+### B23 — Octopus: heal permanent gaps automatically · proposed
+- **From:** user, 2026-11-20: at 24k ev/s nobody can chase single missing events, and not every event matters.
+- **Proposal:** (1) explicit skip markers from the producer (it gives up on a seq, or a new epoch declares where the
+  old one ended); (2) a per-group gap timeout: when cursor + 1 is missing and a later event has waited longer than
+  T (database clock), the owner skips the gap in one transaction (cursor moves, a skip record is kept); `none` for
+  strict groups; (3) the next delivery carries the skipped range so the application can compensate or resync;
+  (4) a late arrival of a skipped seq is rejected with its own status and kept in a late table; (5) metrics and
+  alerts on rates (skips, late arrivals, gap age), not on single events. TLA+: a Skip action; safety becomes
+  "in order, minus declared skips; nothing applied after it was skipped".
+
+### B24 — Octopus: producer retries forever, gap alarm, conflict check, out-of-order e2e test · open
+- The .NET producer gives up after 20 attempts (a permanent gap); it should retry forever and alert.
+- Report sources whose next event is missing too long; store a body hash and report a reused seq with a different
+  body as a conflict; an end-to-end test with out-of-order and lost publishes.
+
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
 - **Why:** one logical database with shards by group, if one primary is not enough.
