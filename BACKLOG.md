@@ -32,6 +32,10 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - Measure the cost of the extra hop.
 
 ### B2 — Producers publish one event at a time · **next**
+- **User direction, 2026-11-20:** if this is a bottleneck, the publishers go through the same dispatcher
+  cluster. Any instance accepts a publish and coalesces concurrent ones into one INSERT; the call returns once
+  the row is committed. It is idempotent on (source, seq), and when it owns the group it hands the event
+  straight to a waiting worker. This makes the dispatcher a complete queue system backed by SQL.
 - **From:** user correction, 2026-11-20. Real producers send each event as soon as it is generated.
   `ProducerRunner` collects up to 500 per publish (`MaxPublishBatch`).
 - **Why:** this flatters every Postgres path. For pgqueue at 24k it means about 24k insert transactions/s and
@@ -109,6 +113,16 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - **Why:** production would likely run `synchronous_commit=on` locally plus the sync standby. The cost at 24k
   with batched commits is unknown.
 - **Test:** rerun pgqueue Q3 with local fsync on.
+
+### B16 — The dispatcher queue on SQL Server and MySQL · **requested to consider**
+- **From:** user, 2026-11-20. Once the dispatcher owns the queue logic, the database only needs transactions,
+  batched inserts, an index and row locks for the commit, so other SQL engines may have the same property.
+- **Test:**
+  - Put the queue table and batched-commit procedure behind a backend interface. Ports: SQL Server (table +
+    procedure, `READPAST` not needed) and MySQL/InnoDB.
+  - Same 24k runs with one-event publishes.
+  - Failover drills with each engine's synchronous replication: an SQL Server availability group with
+    synchronous commit; MySQL semi-sync `AFTER_SYNC` or Group Replication.
 
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
