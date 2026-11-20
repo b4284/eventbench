@@ -16,6 +16,9 @@ using EventBench.Redis;
 using EventBench.SqlServer;
 using Microsoft.Extensions.Configuration;
 
+// EB_MIN_THREADS: raise the thread pool's minimum (diagnosing blocked pool threads).
+if (int.TryParse(Environment.GetEnvironmentVariable("EB_MIN_THREADS"), out var minThreads) && minThreads > 0)
+    ThreadPool.SetMinThreads(minThreads, minThreads);
 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 

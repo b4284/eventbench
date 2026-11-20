@@ -1,0 +1,11 @@
+NOTICE:  drop cascades to 9 other objects
+DETAIL:  drop cascades to table octopus.grp
+drop cascades to table octopus.source
+drop cascades to table octopus.event
+drop cascades to table octopus.member
+drop cascades to table octopus.lease
+drop cascades to function octopus.publish(text[],text[],bigint[],bytea[])
+drop cascades to function octopus.commit_many(text[],bigint[],bytea[],text)
+drop cascades to function octopus.remove_next(text[],bigint[])
+drop cascades to function octopus.purge_applied(integer)
+octopus: 2 dispatchers up (pids 60631 60660 )
