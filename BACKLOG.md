@@ -29,7 +29,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - **Test:** the 24k workload with one-event publishes; order, exactly-once, blocking and drain checks; and a
   node-kill drill.
 
-### B1 — Dispatcher as a separate 2–3 instance cluster · **requested**
+### B1 — Dispatcher as a separate 2–3 instance cluster · **done** (Octopus; MQTT instead of gRPC; kill/stop/scale-out drills pass: matrix-16 R1–R3, P1)
 - **Now a standalone product: Octopus, https://github.com/b4284/octopus** (public, GPL-3.0). The design lives
   there; this repository will only hold the adapter and the runs.
 - **From:** the dispatcher plan, step 2 ("sounds good"); the user asked for it 2026-11-20.
@@ -47,7 +47,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
     timeout.
   - Measure the cost of the extra hop.
 
-### B2 — Producers publish one event at a time · **measured**
+### B2 — Producers publish one event at a time · **done** (every Octopus run publishes one event per call through the dispatchers)
 - **Result (matrix-14):**
   - Direct inserts collapse under concurrent one-event producers: 2.5k/s, because `NOTIFY` takes a global lock
     at commit.
@@ -69,13 +69,13 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
     trigger.
 - **Related:** the publishing half of the user's "layer 1" idea (a layer between the event sources and PG).
 
-### B3 — Dispatcher-kill drill
+### B3 — Dispatcher-kill drill · **done** (matrix-16 D1, R1, P1)
 - **From:** the failover discussion. Drill D2 killed Postgres; the dispatcher survived with its memory.
 - **Why:** this checks the claim that in-memory state is only a cache. After a restart, re-fetched heads may
   be processed twice, but must be applied once (cursor check), in order.
 - **Test:** part of B1. Until then, kill the in-process dispatcher (restart the worker host) mid-run.
 
-### B4 — pgqueue blocking at 24k with a standby
+### B4 — pgqueue blocking at 24k with a standby · parked (Octopus chosen; pgqueue stays the in-process baseline)
 - **From:** matrix-13. 106 violations on the primary alone, 11k with an async standby, 55k with sync
   `remote_write`; 0 at 12.9k.
 - **Why:** the no-cross-source-blocking rule fails at the target rate.
@@ -97,31 +97,31 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   measure time to a new primary, and check that the oracle passes. Also partition the old primary instead of
   killing it.
 
-### B7 — Separate machines
+### B7 — Separate machines · **partly done** (matrix-17: app on a Mac mini; the 1 GbE link saturates at 16k with inline large events; a real cluster comparison still needs 10 GbE hosts)
 - **From:** every cluster round. Everything shares one 24-core host, so a cluster pays its replication cost
   without any scale-out benefit.
 - **Why:** sizing, and a fair Kafka/NATS cluster comparison.
 - **Test:** 3+ VMs or hosts. Rerun pgqueue (with sync standby), the Kafka cluster and the NATS cluster.
 
-### B8 — Dynamic slots: one slot per active key
+### B8 — Dynamic slots: one slot per active key · parked (for partitioned brokers, not chosen)
 - **From:** user idea (slots = number of unique keys in the partition).
 - **Why:** on a partitioned broker, a slow event cannot block others if each active source has its own slot.
 - **Test:** set slots per worker to K (8/16/32) or adapt them to the parked sources. Measure blocking and memory
   on Kafka + PG and NATS + PG.
 
-### B9 — Kafka cluster replication tuning
+### B9 — Kafka cluster replication tuning · parked (Kafka not chosen)
 - **From:** matrix-10/11. With 3 brokers, publish takes about 900 ms p50 and throughput is 16.5–18.8k.
 - **Test:** `replica.fetch.wait.max.ms`, `num.replica.fetchers`, `replica.fetch.min.bytes`, fewer partitions
   (780 × RF3). Best done together with B7.
 
-### B10 — NATS R3 tuning
+### B10 — NATS R3 tuning · parked (NATS not chosen)
 - **From:** matrix-12. R3 reaches 3–6k because producers wait about 2 s for each PubAck.
 - **Test:**
   - Pipelined publishing with `Nats-Expected-Last-Subject-Sequence`.
   - Fewer, larger streams than one stream per group: 500 Raft groups is heavy.
   - Single-node NATS + PG is stuck at about 22k, limited by publish latency.
 
-### B11 — pgqueue under a large backlog
+### B11 — pgqueue under a large backlog · parked; the same question applies to Octopus (catch-up after a long consumer outage), see B27
 - **From:** the pgqueue design review. The `NOT EXISTS` head probe runs once per candidate, so a large
   backlog makes fetches slower.
 - **Test:**
@@ -129,7 +129,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - Also measure standby catch-up after an outage: in Q2, a standby that started 11 GB behind dragged the
     primary to 10.8k.
 
-### B12 — Local durability with a synchronous standby
+### B12 — Local durability with a synchronous standby · open (now for Octopus: `synchronous_commit=on` locally plus the sync standby)
 - **From:** the best-effort comparison rule (`synchronous_commit=off` locally).
 - **Why:** production would likely run `synchronous_commit=on` locally plus the sync standby. The cost at 24k
   with batched commits is unknown.
