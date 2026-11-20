@@ -86,7 +86,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
         {
             var c = await OctopusConnection.ConnectAsync(Options($"eb-{run}-p{i}"), ct);
             _producerConns.Add(c);
-            _producers.Add(await OctopusProducer.CreateAsync(c, $"eb-{run}-p{i}", ct));
+            _producers.Add(new OctopusProducer(c));
         }
         for (int i = 0; i < _o.WorkerConnections; i++) _workerConns.Add(await OctopusConnection.ConnectAsync(Options($"eb-{run}-w{i}"), ct));
 
@@ -116,8 +116,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
     public IEventConsumer CreateConsumer(int groupId, int workerIndex)
     {
         var conn = _workerConns[Interlocked.Increment(ref _nextConn) % _workerConns.Count];
-        var w = OctopusWorker.CreateAsync(conn, $"{conn.Topics.Ns}-w{groupId}-{workerIndex}-{Guid.NewGuid().ToString("N")[..6]}", [Group(groupId)], _slots)
-            .GetAwaiter().GetResult();
+        var w = OctopusWorker.Create(conn, $"w{groupId}-{workerIndex}-{Guid.NewGuid().ToString("N")[..6]}", [Group(groupId)], _slots);
         lock (_workers) _workers.Add(w);
         return new Consumer(this, w);
     }
@@ -136,6 +135,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
         var r = new Dictionary<string, double>();
         try { r["broker_backlog"] = await GetBacklogAsync(ct); } catch (Exception e) when (e is not OperationCanceledException) { _log($"octopus backlog: {e.Message}"); }
         r["octopus_mqtt_sent_total"] = _producerConns.Concat(_workerConns).Sum(c => Interlocked.Read(ref c.Sent));
+        r["octopus_items_sent_total"] = _producerConns.Concat(_workerConns).Sum(c => Interlocked.Read(ref c.ItemsSent));
         r["octopus_mqtt_received_total"] = _producerConns.Concat(_workerConns).Sum(c => Interlocked.Read(ref c.Received));
         r["octopus_publish_retries_total"] = _producers.Sum(p => Interlocked.Read(ref p.Retries));
         // dispatcher processes' CPU (they run outside containers)

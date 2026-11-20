@@ -7,7 +7,7 @@
     "Schema": "octopus",
     "AdminConnectionString": "Host=127.0.0.1;Port=5432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=4;Command Timeout=600",
     "ProducerConnections": 4,
-    "WorkerConnections": 8,
+    "WorkerConnections": 2,
     "DispatcherPidFile": "~/.cache/eventbench/octopus/pids"
   },
   "Store": { "Type": "octopus" },
