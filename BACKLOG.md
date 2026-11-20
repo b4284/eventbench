@@ -173,6 +173,13 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - From the user, 2026-11-20. Not measured yet: in every run Postgres saturates first. Measure with one dispatcher,
   rising load, until its own CPU or its database round trips limit it.
 
+### B22 — Octopus: source epoch next to seq · open
+- **From:** user, 2026-11-20: every event source will stamp a gapless seq plus an epoch (the origin of the sequence).
+- **Plan:** key (source, epoch, seq); cursor (epoch, seq). A publish from an older epoch than the source's current one
+  is rejected (fencing: a stale producer instance cannot inject events). The first event of a new epoch carries the
+  last seq of the previous epoch (if known), so the old epoch can be drained before the new one starts; if not
+  known, an operator or policy decides. Proto fields, schema column, TLA+ model update.
+
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
 - **Why:** one logical database with shards by group, if one primary is not enough.
