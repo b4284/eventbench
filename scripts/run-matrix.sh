@@ -5,6 +5,7 @@
 # usage: scripts/run-matrix.sh <out-dir> <reps> <base-config> [<extra -c/--Key=value args for all runs>] -- \
 #            "<name>|<args...>[|<containers>]" ...
 # EB_PRE_RUN (env): command run before every run, after the containers are up.
+# EB_CMD_PREFIX (env): prefix for the benchmark process, e.g. "taskset -c 12-23" (CPU pinning).
 # The optional third field lists the containers the variant needs (scripts/only.sh aliases, space
 # separated): everything else is stopped before the run.
 # example:
@@ -32,9 +33,11 @@ for rep in $(seq 1 "$REPS"); do
     [[ -n "$need" ]] && scripts/only.sh $need >/dev/null
     # EB_PRE_RUN: a command run before every run (e.g. "infra/octopus/up.sh 3" for a fresh dispatcher cluster)
     if [[ -n "${EB_PRE_RUN:-}" ]]; then bash -c "$EB_PRE_RUN" > "$OUT/$name.rep$rep.pre.log" 2>&1 || echo "  pre-run command failed"; fi
+    # never two benchmark processes at once: they would share tables and topics and corrupt each other's results
+    if pgrep -f "eventbench.dll run" >/dev/null; then echo "another eventbench run is active; aborting" >&2; exit 3; fi
     echo "$(date +%T) rep $rep/$REPS  $name  $args"
     # shellcheck disable=SC2086
-    dotnet "$BIN" run -c "$BASE" "${COMMON[@]}" $args \
+    ${EB_CMD_PREFIX:-} dotnet "$BIN" run -c "$BASE" "${COMMON[@]}" $args \
       --Name="$name" --ResultsDirectory="$OUT/$name" --Metrics:ConsoleProgress=false \
       > "$OUT/$name.rep$rep.log" 2>&1
     rc=$?

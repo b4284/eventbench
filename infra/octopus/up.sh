@@ -5,6 +5,7 @@
 #   - N octopusd processes (members d1..dN) built from the Octopus repository next to this one,
 #     connected directly to Postgres (5432); logs and pids under ~/.cache/eventbench/octopus
 # usage: infra/octopus/up.sh [N=3]      extra env for the dispatchers: OCTOPUSD_ENV="OCTOPUS_X=y ..."
+#        OCTOPUSD_PREFIX: command prefix for the dispatchers, e.g. "taskset -c 12-23"
 set -euo pipefail
 cd "$(dirname "$0")"
 N=${1:-3}
@@ -69,7 +70,7 @@ for i in $(seq 1 "$N"); do
   env OCTOPUS_MEMBER_ID="d$i" OCTOPUS_NS=octopus OCTOPUS_SCHEMA=octopus \
       OCTOPUS_PG="host=127.0.0.1 port=5432 user=bench password=bench dbname=bench" OCTOPUS_PG_POOL="${OCTOPUS_PG_POOL:-32}" \
       ${HOOK_ENV} RUST_LOG="${RUST_LOG:-info}" ${OCTOPUSD_ENV:-} \
-      nohup "$BIN" >"$STATE/d$i.log" 2>&1 &
+      nohup ${OCTOPUSD_PREFIX:-} "$BIN" >"$STATE/d$i.log" 2>&1 &
   echo $! >> "$STATE/pids"
   [[ $i -eq 1 ]] && sleep 1   # the first one creates the schema
 done
