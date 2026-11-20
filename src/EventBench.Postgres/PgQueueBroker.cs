@@ -25,6 +25,13 @@ public sealed class PgQueueOptions
     public bool PreloadContext { get; set; } = true;
     public string StoreTablePrefix { get; set; } = "eb";
     public int ReceiveWaitMs { get; set; } = 500;
+    /// <summary>
+    /// false: this instance only creates the schema, publishes and counts the backlog; no LISTEN and no
+    /// dispatch loop (the remote dispatcher instances read the queue).
+    /// </summary>
+    public bool Dispatch { get; set; } = true;
+    /// <summary>Include the backlog count (a full count(*)) in the periodic stats.</summary>
+    public bool SampleBacklog { get; set; } = true;
 }
 
 /// <summary>Lets the Postgres store delete a pgqueue message inside its commit transaction.</summary>
@@ -32,6 +39,8 @@ public interface IPgQueueDelivery
 {
     int GroupId { get; }
     long MsgId { get; }
+    /// <summary>The message as stored (UTF-8 JSON envelope).</summary>
+    byte[] Body { get; }
 }
 
 /// <summary>
@@ -83,6 +92,8 @@ public sealed class PgQueueBroker : IBroker, IStatsProvider
     private readonly string _fetchSql, _loadSql, _insertSql;
     private Task? _loop, _listenTask;
     private NpgsqlConnection? _listen;
+    /// <summary>Groups this instance serves; null = all (single dispatcher). Set by a lease manager.</summary>
+    private bool[]? _serving;
 
     private long _fetchCalls, _groupReads, _emptyGroupReads, _rows, _notifies, _preloaded;
     private long _prevTicks;
@@ -156,15 +167,130 @@ public sealed class PgQueueBroker : IBroker, IStatsProvider
                 """);
         await using (var cmd = new NpgsqlCommand(ddl.ToString(), conn)) await cmd.ExecuteNonQueryAsync(ct);
 
+        if (_o.Dispatch) await StartDispatchAsync(ct);
+        _log($"pgqueue: table {t} ({n} hash partitions), notify={_o.Notify}, preload={_o.PreloadContext}, " +
+             (_o.Dispatch ? $"{_o.MaxGroupsPerFetch} groups/fetch x {_o.FetchParallelism}" : "remote dispatchers"));
+    }
+
+    /// <summary>Starts LISTEN and the dispatch loop without touching the schema (remote dispatcher instances).</summary>
+    public async Task StartDispatchAsync(CancellationToken ct)
+    {
         if (_o.Notify)
         {
             await OpenListenAsync(ct);
             _listenTask = Task.Run(() => ListenLoopAsync(_cts.Token));
         }
         _loop = Task.Run(() => DispatchLoopAsync(_cts.Token));
-        _log($"pgqueue: table {t} ({n} hash partitions), notify={_o.Notify}, preload={_o.PreloadContext}, " +
-             $"{_o.MaxGroupsPerFetch} groups/fetch x {_o.FetchParallelism}");
     }
+
+    // ---- group ownership (remote dispatcher instances; null _serving = this instance serves every group) ----
+
+    public int GroupCount => _groups.Length;
+
+    public void EnableOwnership() => _serving = new bool[_groups.Length];
+
+    public bool IsServing(int group) => _serving is not { } s || Volatile.Read(ref s[group]);
+
+    /// <summary>
+    /// Start serving a group just acquired: forget any earlier state of it (another instance may have handed
+    /// out and finished its messages meanwhile) and read its heads.
+    /// </summary>
+    public void StartServing(int group)
+    {
+        var g = _groups[group];
+        lock (g.Gate)
+        {
+            g.InFlight.Clear();
+            g.Ready.Clear();
+            g.Dirty = true;
+            Volatile.Write(ref _serving![group], true);
+        }
+        _wake.Release();
+    }
+
+    /// <summary>
+    /// Stop handing out the group's messages. Messages already handed out stay in the in-flight set until
+    /// their commits arrive (drain); fetched but not handed ones are dropped; waiting receives return empty.
+    /// </summary>
+    public void StopServing(int group)
+    {
+        var g = _groups[group];
+        List<Waiter> waiters;
+        lock (g.Gate)
+        {
+            Volatile.Write(ref _serving![group], false);
+            while (g.Ready.TryDequeue(out var d)) g.InFlight.Remove(((Delivery)d).MsgId);
+            waiters = g.Waiters.ToList();
+            g.Waiters.Clear();
+            g.Demand = 0;
+        }
+        foreach (var w in waiters) w.Tcs.TrySetResult([]);
+    }
+
+    /// <summary>Serve a draining group again (it was not handed over after all); its in-flight set is still valid.</summary>
+    public void ResumeServing(int group)
+    {
+        var g = _groups[group];
+        lock (g.Gate)
+        {
+            g.Dirty = true;
+            Volatile.Write(ref _serving![group], true);
+        }
+        _wake.Release();
+    }
+
+    /// <summary>Forget a group entirely (after its lease was handed over).</summary>
+    public void DropGroup(int group)
+    {
+        var g = _groups[group];
+        lock (g.Gate) { g.InFlight.Clear(); g.Ready.Clear(); }
+    }
+
+    public int InFlightCount(int group)
+    {
+        var g = _groups[group];
+        lock (g.Gate) return g.InFlight.Count;
+    }
+
+    /// <summary>Release a handed-out message (completed, or failed: then offered again after the delay).</summary>
+    public void Release(int group, long msgId, int delayMs = 0)
+    {
+        var g = _groups[group];
+        if (delayMs <= 0)
+        {
+            lock (g.Gate) g.InFlight.Remove(msgId);
+            MarkDirty(g);
+            return;
+        }
+        _ = Task.Delay(delayMs, CancellationToken.None).ContinueWith(_ =>
+        {
+            lock (g.Gate) g.InFlight.Remove(msgId);
+            MarkDirty(g);
+        }, TaskScheduler.Default);
+    }
+
+    /// <summary>Delete a message outside a commit (the worker skipped it as already applied).</summary>
+    public async Task DeleteAsync(int group, long msgId, CancellationToken ct)
+    {
+        await using var conn = await Data.OpenConnectionAsync(ct);
+        await using var cmd = new NpgsqlCommand($"DELETE FROM {_o.Table} WHERE group_id = $1 AND msg_id = $2", conn);
+        cmd.Parameters.Add(new NpgsqlParameter { Value = group, NpgsqlDbType = NpgsqlDbType.Integer });
+        cmd.Parameters.Add(new NpgsqlParameter { Value = msgId, NpgsqlDbType = NpgsqlDbType.Bigint });
+        await cmd.ExecuteNonQueryAsync(ct);
+    }
+
+    /// <summary>Start of a new run (the queue table was recreated, ids restart): forget every group's state.</summary>
+    public void ResetAll()
+    {
+        PreloadedContexts.Clear();
+        foreach (var g in _groups)
+            lock (g.Gate) { g.InFlight.Clear(); g.Ready.Clear(); g.Dirty = true; }
+        _wake.Release();
+    }
+
+    public (long FetchCalls, long GroupReads, long EmptyReads, long Rows, long Notifies, long Preloaded) Counters =>
+        (Interlocked.Read(ref _fetchCalls), Interlocked.Read(ref _groupReads), Interlocked.Read(ref _emptyGroupReads),
+         Interlocked.Read(ref _rows), Interlocked.Read(ref _notifies), Interlocked.Read(ref _preloaded));
 
     private async Task OpenListenAsync(CancellationToken ct)
     {
@@ -233,6 +359,7 @@ public sealed class PgQueueBroker : IBroker, IStatsProvider
             {
                 lock (g.Gate)
                 {
+                    if (!IsServing(g.Id)) continue;
                     int want = g.Demand - g.Ready.Count;
                     if (want <= 0 || g.Fetching) continue;
                     if (!g.Dirty && now - g.LastFetchUs < fallbackUs) continue;
@@ -272,9 +399,9 @@ public sealed class PgQueueBroker : IBroker, IStatsProvider
                 while (await rd.ReadAsync(ct))
                 {
                     int gid = rd.GetInt32(0);
-                    var ev = EventEnvelope.FromJson(rd.GetFieldValue<byte[]>(4));
                     if (!got.TryGetValue(gid, out var list)) got[gid] = list = new List<Delivery>();
-                    list.Add(new Delivery(this, _groups[gid], rd.GetInt64(1), Clock.ToUs(rd.GetFieldValue<DateTime>(3)), ev, now));
+                    var body = rd.GetFieldValue<byte[]>(4);
+                    list.Add(new Delivery(this, _groups[gid], rd.GetInt64(1), Clock.ToUs(rd.GetFieldValue<DateTime>(3)), EventEnvelope.FromJson(body), body, now));
                 }
             }
             if (_o.PreloadContext && got.Count > 0) await PreloadAsync(conn, got.Values.SelectMany(l => l).ToList(), ct);
@@ -298,7 +425,7 @@ public sealed class PgQueueBroker : IBroker, IStatsProvider
             {
                 g.Fetching = false;
                 g.LastFetchUs = done;
-                if (list is { Count: > 0 })
+                if (list is { Count: > 0 } && IsServing(g.Id))
                 {
                     foreach (var d in list.OrderBy(d => d.MsgId))
                         if (g.InFlight.Add(d.MsgId)) g.Ready.Enqueue(d);
@@ -354,7 +481,7 @@ public sealed class PgQueueBroker : IBroker, IStatsProvider
     public async Task<IReadOnlyDictionary<string, double>> SampleAsync(CancellationToken ct)
     {
         var r = new Dictionary<string, double>();
-        try { r["broker_backlog"] = await GetBacklogAsync(ct); }
+        try { if (_o.SampleBacklog) r["broker_backlog"] = await GetBacklogAsync(ct); }
         catch (Exception e) when (e is not OperationCanceledException) { _log($"pgqueue backlog sample failed: {e.Message}"); }
         long now = Environment.TickCount64;
         var cur = (Interlocked.Read(ref _fetchCalls), Interlocked.Read(ref _groupReads), Interlocked.Read(ref _emptyGroupReads),
@@ -431,6 +558,7 @@ public sealed class PgQueueBroker : IBroker, IStatsProvider
         public async ValueTask<IReadOnlyList<IDelivery>> ReceiveAsync(int maxCount, CancellationToken ct)
         {
             Waiter w;
+            if (!broker.IsServing(g.Id)) return [];
             lock (g.Gate)
             {
                 if (g.Ready.Count > 0)
@@ -462,7 +590,7 @@ public sealed class PgQueueBroker : IBroker, IStatsProvider
         public ValueTask DisposeAsync() => ValueTask.CompletedTask;
     }
 
-    private sealed class Delivery(PgQueueBroker broker, GroupState g, long msgId, long enqueuedUs, EventEnvelope ev, long receivedUs)
+    private sealed class Delivery(PgQueueBroker broker, GroupState g, long msgId, long enqueuedUs, EventEnvelope ev, byte[] body, long receivedUs)
         : IDelivery, IPgQueueDelivery, IDeliveryCompletion
     {
         private int _attempts = 1;
@@ -472,6 +600,7 @@ public sealed class PgQueueBroker : IBroker, IStatsProvider
         public int DeliveryCount => _attempts;
         public int GroupId => g.Id;
         public long MsgId => msgId;
+        public byte[] Body => body;
 
         /// <summary>AfterCommit mode: delete the row (the in-flight entry goes on completion).</summary>
         public async ValueTask AckAsync(CancellationToken ct)

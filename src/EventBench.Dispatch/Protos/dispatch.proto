@@ -1,0 +1,82 @@
+// Wire protocol between workers (bench process) and dispatcher instances.
+// Transport: TCP, each frame = 4-byte little-endian length + one ClientMsg / ServerMsg.
+// Every frame batches whatever was queued while the previous frame was being written.
+syntax = "proto3";
+option csharp_namespace = "EventBench.Dispatch.Proto";
+package ebdispatch;
+
+message ClientMsg {
+  repeated Demand demands = 1;        // credits: "send me up to N more messages of this group"
+  repeated CommitReq commits = 2;     // state change + queue delete, one transaction (group commit)
+  repeated MsgRef acks = 3;           // delete without a state change (skip path)
+  repeated NackReq nacks = 4;         // failed: offer again after the delay
+  repeated MsgRef dones = 5;          // finished and not yet released by a commit/ack
+  repeated LoadReq loads = 6;         // context not shipped with the delivery
+  repeated Call calls = 7;            // routes / reset / stats
+}
+
+message Demand { int32 group = 1; int32 count = 2; }
+message MsgRef { int32 group = 1; int64 msg_id = 2; }
+message NackReq { int32 group = 1; int64 msg_id = 2; int32 delay_ms = 3; }
+
+message CommitReq {
+  int64 req_id = 1;
+  bool has_ack = 2;
+  int32 group = 3;
+  int64 msg_id = 4;
+  int32 source_id = 5;
+  int64 seq = 6;
+  int64 record_id = 7;
+  int32 kind = 8;
+  int32 prev_version = 9;
+  int32 new_version = 10;
+  int64 new_hash = 11;
+  int32 new_status = 12;
+  optional bytes new_context = 13;
+  bool has_upload = 14;
+  int32 upload_size = 15;
+  int64 upload_checksum = 16;
+  optional bytes upload_data = 17;
+}
+
+message LoadReq { int64 req_id = 1; int32 group = 2; int32 source_id = 3; int64 seq = 4; int64 record_id = 5; }
+
+message Ctx {
+  int64 last_seq = 1;
+  bool record_exists = 2;
+  int32 version = 3;
+  int64 hash = 4;
+  int32 status = 5;
+  optional bytes context = 6;
+}
+
+enum CallKind { CALL_NONE = 0; CALL_ROUTES = 1; CALL_RESET = 2; CALL_STATS = 3; }
+message Call { int64 req_id = 1; CallKind kind = 2; }
+
+message ServerMsg {
+  repeated Delivery deliveries = 1;
+  repeated CommitRes commit_results = 2;
+  repeated LoadRes load_results = 3;
+  repeated int32 not_owner = 4;        // groups this instance no longer serves: re-route their demand
+  repeated CallRes call_results = 5;
+}
+
+message Delivery {
+  int32 group = 1;
+  int64 msg_id = 2;
+  int64 enqueued_us = 3;
+  bytes body = 4;
+  Ctx ctx = 5;                         // preloaded state (absent: worker asks with a LoadReq)
+}
+
+message CommitRes { int64 req_id = 1; int32 status = 2; string error = 3; }
+message LoadRes { int64 req_id = 1; Ctx ctx = 2; string error = 3; }
+
+message CallRes {
+  int64 req_id = 1;
+  string error = 2;
+  string member_id = 3;
+  repeated Route routes = 4;
+  map<string, double> stats = 5;
+}
+message Route { int32 group = 1; string member_id = 2; string addr = 3; }
