@@ -195,6 +195,13 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   skips at once. No answer within T: skip. Only useful if the source can regenerate lost events: a producer that is
   still retrying needs no request. Producers also announce their high-water mark (epoch, last seq) now and then, so
   a lost *last* event (no later event shows the gap) is detected too.
+- **Gap report in the publish acknowledgement (user, 2026-11-20; preferred):** each publish reply also says which
+  seqs directly below it are missing (e.g. "N+2 stored, missing N+1"): one backward index probe for the highest
+  stored or applied seq below it, inside the publish statement. The producer judges each missing seq: still pending
+  in its own retries = ignore (in flight); never sent or lost after a restart = replay from durable storage, or
+  send a skip marker; acknowledged earlier = a bug, alert. A report may be transient (the missing event is
+  committing in another dispatcher), which this rule tolerates. Resend requests stay for sources that stop
+  publishing (a lost last event).
 
 ### B24 — Octopus: producer retries forever, gap alarm, conflict check, out-of-order e2e test · open
 - The .NET producer gives up after 20 attempts (a permanent gap); it should retry forever and alert.
