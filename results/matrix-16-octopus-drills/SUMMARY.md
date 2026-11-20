@@ -17,6 +17,28 @@ failure 30 s into the run (`scripts/octopus-drill.sh`). 3 dispatchers unless sta
 
 D1–D3 ran before the fixes below; their design paths are unchanged by them.
 
+## Rerun with every fix (Octopus `4e596b1`)
+
+No standby running for R0–R3 (see below); PgBouncer; async commits. R6 as D6.
+
+| run | load | failure | correctness | e2e p50 / p99 | ready p99 | blocking violations | notes |
+|---|---|---|---|---|---|---|---|
+| R0 | 16k | none (3 dispatchers) | pass | 33 ms / 2.8 s | 205 ms | 19.9k | reference for R1–R3 |
+| R1 | 16k | `kill -9` of 1 of 3 | pass | 33 ms / 4.4 s | 218 ms | 20.2k | 329 redeliveries, all flagged; drained 2.2 s |
+| R2 | 16k | SIGTERM of 1 of 3 | pass | 31 ms / 3.8 s | 216 ms | 18.8k | no redeliveries |
+| R3 | 16k | scale-out 2 → 3 | pass | 30 ms / 2.8 s | 121 ms | 8.6k | no redeliveries |
+| R6 | 12.9k | Postgres primary killed, sync standby promoted | **pass** | 814 ms / 17 s | 2.3 s | 295k | drained 11.2 s; no loss, no double apply |
+
+Dispatcher failures cost nothing measurable at 16k. A database failover costs a slow recovery (B19).
+
+### Lessons from getting there
+- A first rerun showed e2e p50 152-530 ms at 16k. Cause: an async standby left running from the failover drills
+  (WAL replay on the same cores), not the code: without it, 33 ms. (B26)
+- The first version of the credit clamp counted a delivery whose result was already sent as still held, so it
+  took a credit back after every result and granted it again on release. Fixed in both clients.
+- Two identical 16k runs gave 55k and 20k blocking violations: single runs on this saturated host are noisy.
+
+
 ## Defects found and fixed (Octopus)
 1. A worker's progress report extended any in-flight delivery of the source, whoever held it; a stale entry kept a
    lost delivery alive forever. In-flight deliveries now record their worker; only its reports count.

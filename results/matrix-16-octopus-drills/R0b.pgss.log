@@ -1,0 +1,16 @@
+ calls  | total_s | mean_ms |  rows  |                                                q                                                
+--------+---------+---------+--------+-------------------------------------------------------------------------------------------------
+  36874 |    96.3 |   2.612 |  36874 | SELECT octopus.publish($1, $2, $3, $4, $5)
+ 101008 |    93.7 |   0.928 | 101008 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+  36874 |    71.2 |   1.931 |  36874 | WITH u AS ( SELECT * FROM unnest(p_grp, p_source, p_seq, p_body, p_hash) WITH ORDINALITY AS u(g
+ 628915 |    65.6 |   0.104 | 628915 | SELECT s.last_seq, r.version, r.hash, r.status, r.ctx FROM eb_source s LEFT JOIN eb_record r ON
+  56182 |    43.4 |   0.773 | 408694 | SELECT x.grp, x.source, x.seq, x.body, x.attempts, (extract(epoch FROM x.enqueued_at) * 1000000
+    933 |    22.8 |  24.408 |    933 | SELECT octopus.advance($1, $2)
+   2696 |    22.2 |   8.251 |  36192 | SELECT e.grp, e.source, e.seq, e.body, e.attempts, (extract(epoch FROM e.enqueued_at) * 1000000
+ 427836 |    17.9 |   0.042 | 427836 | UPDATE eb_record SET version = p_version, hash = p_hash, status = p_status, ctx = COALESCE(p_ct
+ 629108 |    17.6 |   0.028 | 629108 | SELECT last_seq FROM eb_source WHERE source_id = p_source FOR UPDATE
+    933 |    13.4 |  14.329 | 630680 | DELETE FROM octopus.event e USING (SELECT s, max(q) AS q FROM unnest(p_source, p_seq) AS u(s, q
+  70536 |     8.7 |   0.123 |  70536 | INSERT INTO eb_record (record_id, source_id, status, version, hash, created_seq, updated_seq, c
+  36874 |     8.5 |   0.231 |      6 | INSERT INTO octopus.source (source, grp) SELECT DISTINCT ON (s) s, g FROM unnest(p_source, p_gr
+(12 rows)
+

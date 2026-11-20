@@ -196,6 +196,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
             }).ToList();
             var status = await p.PublishAsync(items, ct);
             if (status.Any(s => s == PublishStatus.PublishGroupMismatch)) throw new InvalidOperationException("octopus: source published to the wrong group");
+            if (status.Any(s => s == PublishStatus.PublishConflict)) throw new InvalidOperationException("octopus: a (source, seq) was published with a different body");
         }
 
         public ValueTask DisposeAsync() => ValueTask.CompletedTask;

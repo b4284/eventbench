@@ -152,7 +152,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   well. The dispatcher's large batches suit its higher cost per write.
 - **Test:** the dispatcher backend on it, at 24k, with node-loss and DC-loss drills.
 
-### B18 — Octopus: the Rust client keys running deliveries by source · open
+### B18 — Octopus: the Rust client keys running deliveries by source · **done** (Octopus `4e596b1`, see matrix-16 R0–R6)
 - **From:** D4 failover drills, 2026-11-20. The .NET client aliased two deliveries of one source, so each such pair
   leaked one credit and workers ended up holding 5x their slots (fixed there: deliveries by identity, plus the
   invariant running + granted <= slots, enforced after each result and every second).
@@ -203,10 +203,20 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   committing in another dispatcher), which this rule tolerates. Resend requests stay for sources that stop
   publishing (a lost last event).
 
-### B24 — Octopus: producer retries forever, gap alarm, conflict check, out-of-order e2e test · open
+### B24 — Octopus: producer retries forever, gap alarm, conflict check, out-of-order e2e test · **done** (matrix-16 R0–R6)
 - The .NET producer gives up after 20 attempts (a permanent gap); it should retry forever and alert.
 - Report sources whose next event is missing too long; store a body hash and report a reused seq with a different
   body as a conflict; an end-to-end test with out-of-order and lost publishes.
+
+### B25 — Octopus: database cost of head scans and key lookups · open
+- R0 (16k, 3 dispatchers), pg_stat_statements over 40 s: fallback head scans 56k calls / 43 s, key lookups
+  2.7k calls at 8 ms each / 22 s, publish 2.6 ms per call / 96 s. Fewer fallback scans when hints and "done"
+  already say what is next; cheaper key lookups.
+
+### B26 — Benchmark: no replica during performance runs; repeat runs for variance · open
+- A running async standby on the same host raised e2e p50 at 16k from ~33 ms to 150-530 ms (WAL replay competes
+  for the same cores). Performance runs must check that no standby is running. Two identical 16k runs gave
+  55k and 20k blocking violations: compare configurations with 2-3 repeats, not single runs.
 
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
