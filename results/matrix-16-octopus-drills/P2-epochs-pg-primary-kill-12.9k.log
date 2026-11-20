@@ -1,0 +1,209 @@
+00:12:19.392 topology: 500 groups, 16,000 sources, offered load 12,856 events/s, 601 workers
+00:12:19.421 broker: Octopus dispatchers via MQTT 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook
+00:12:19.421 store:  postgres @ 127.0.0.1:5432,127.0.0.1:5433:5432/bench (pool max 200), unlogged=False, fillfactor=70, group commit (max 32/tx, 16 executors)
+00:12:19.683 postgres store: schema created, 16,000 source cursors seeded
+00:12:19.707 octopus: 3 live dispatchers
+00:12:19.959 octopus: all 500 groups owned (d3=242, d2=258); 4 producer + 2 worker MQTT connections
+00:12:19.960 setup done in 0.6s
+00:12:20.005 run: 60s (warmup 10s), 32 producers, 601 workers
+00:12:20.325 pgbouncer stats disabled: exit 2: psql: error: connection to server at "127.0.0.1", port 6432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+00:12:51.311 stats provider 'store' disabled: Exception while reading from stream
+00:13:23.419 closing: 35,266 completion events emitted
+00:13:33.392 drained in 10.0s
+00:13:33.405 verifying end state against the oracle ...
+00:13:33.802 postgres store: 39,762 commit batches, 814,186 batched commits (avg 20.5/tx), 95 fallbacks, 0 preloaded contexts used
+
+# P2-epochs-pg-primary-kill-12.9k — FAIL ❌
+
+- Broker: `Octopus dispatchers via MQTT 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook`
+- Store: `postgres @ 127.0.0.1:5432,127.0.0.1:5433:5432/bench (pool max 200), unlogged=False, fillfactor=70, group commit (max 32/tx, 16 executors)`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 4
+- Topology: 500 groups, 16000 sources, 601 workers, offered 12856.021 ev/s
+- Phases: run 60.303s, closing 3.11s, drain 9.973s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 814649 | 814649 | 12861.22 | 12456.873 | 18637 | 0 | 4316 | 4316 | 431 | 4254 | 263817 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 642894 | 3163.469 | 1110.015 | 8372.223 | 28999.679 | 34701.311 | 42467.327 |
+| e2e_from_send | 642894 | 2877.659 | 523.519 | 8220.671 | 27967.487 | 34668.543 | 42467.327 |
+| producer_lag | 642926 | 285.798 | 3.985 | 1229.823 | 1887.231 | 2207.743 | 2717.695 |
+| publish_call | 814649 | 84.07 | 59.711 | 148.095 | 479.999 | 1895.423 | 2057.215 |
+| queue_wait | 642894 | 2797.989 | 431.359 | 8155.135 | 27934.719 | 34635.775 | 42434.559 |
+| broker_dwell | 642894 | 2721.779 | 336.127 | 8077.311 | 27721.727 | 34603.007 | 42401.791 |
+| receive_call | 722384 | 32.89 | 9.495 | 88.511 | 346.367 | 491.263 | 541.183 |
+| ctx_load | 642894 | 7.796 | 5.119 | 16.847 | 45.087 | 73.151 | 592.383 |
+| process | 642894 | 10.911 | 0.002 | 0.004 | 0.048 | 2623.487 | 3026.943 |
+| ctx_commit | 642894 | 60.915 | 46.943 | 104.319 | 286.463 | 1636.351 | 1821.695 |
+| ack | 641807 | 0.007 | 0.003 | 0.005 | 0.027 | 0.425 | 37.439 |
+| service | 642894 | 79.67 | 55.071 | 119.039 | 499.967 | 2734.079 | 4583.423 |
+| e2e_large | 331 | 3152.118 | 2959.359 | 4747.263 | 7532.543 | 9551.871 | 9551.871 |
+| ready_wait | 642894 | 321.907 | 108.607 | 737.791 | 1860.607 | 30785.535 | 34078.719 |
+| blocked | 642894 | 166.279 | 62.143 | 383.231 | 867.839 | 14245.887 | 18071.551 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 12456.873 | 17483.6 |
+| applied_total | 429376.061 | 728286 |
+| bench_cpu_cores | 3.742 | 4.949 |
+| bench_cpu_pct | 15.592 | 20.62 |
+| bench_gc_gen0 | 2.98 | 5 |
+| bench_gc_gen1 | 2.776 | 5 |
+| bench_gc_gen2 | 0.592 | 2 |
+| bench_gc_heap_mb | 1001.104 | 1265 |
+| bench_mem_mb | 1542.324 | 1673.1 |
+| bench_threadpool_queue | 57.327 | 767 |
+| bench_threadpool_threads | 42.571 | 44 |
+| broker_backlog | 36558.224 | 53302 |
+| ctr_eb_mosquitto_cpu_pct | 51.39 | 63.35 |
+| ctr_eb_mosquitto_mem_mb | 7.612 | 13.2 |
+| ctr_eb_pg_standby_cpu_pct | 549.661 | 1015.08 |
+| ctr_eb_pg_standby_mem_mb | 3442.822 | 5125 |
+| ctr_eb_postgres_cpu_pct | 1057.602 | 1095.12 |
+| ctr_eb_postgres_mem_mb | 4935.123 | 5142.2 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 88.141 | 2885.9 |
+| host_cpu_pct | 71.478 | 80.92 |
+| in_flight | 34447.469 | 52882 |
+| nacks_per_s | 88.141 | 2885.9 |
+| octopus_dispatcher_cores | 1.633 | 1.77 |
+| octopus_dispatchers_alive | 3 | 3 |
+| octopus_items_sent_total | 905319.49 | 1554622 |
+| octopus_missing_reports_total | 0 | 0 |
+| octopus_mqtt_received_total | 178742.204 | 298236 |
+| octopus_mqtt_sent_total | 268007.898 | 474567 |
+| octopus_publish_retries_total | 5130 | 9310 |
+| pg_active_acks | 0 | 0 |
+| pg_active_commits | 13.714 | 16 |
+| pg_active_loads | 5.469 | 27 |
+| pg_active_polls | 0 | 0 |
+| pg_active_sends | 0 | 0 |
+| pg_cache_hit_pct | 100 | 100 |
+| pg_conn_active | 48.122 | 85 |
+| pg_conn_idle | 220.98 | 244 |
+| pg_conn_idle_in_tx | 0 | 0 |
+| pg_conn_lock_wait | 2.122 | 24 |
+| pg_conn_total | 269.102 | 270 |
+| pg_db_size_mb | 3492.302 | 3612.3 |
+| pg_deadlocks | 0 | 0 |
+| pg_replica_lag_mb | 1.288 | 8.77 |
+| pg_replica_replay_lag_ms | 5.153 | 34.8 |
+| pg_replicas | 1 | 1 |
+| pg_rollbacks_per_s | 0 | 0 |
+| pg_temp_mb_per_s | 0 | 0 |
+| pg_tps | 31577.255 | 37458.3 |
+| pg_tup_del_per_s | 39074.163 | 46476.2 |
+| pg_tup_fetch_per_s | 580711.982 | 676406.1 |
+| pg_tup_ins_per_s | 46436.608 | 58429.6 |
+| pg_tup_upd_per_s | 36795.624 | 39711.2 |
+| pg_wal_mb_per_s | 94.598 | 116.91 |
+| produced_per_s | 12861.22 | 20484.7 |
+| produced_total | 463823.531 | 776558 |
+| publish_mb_per_s | 44.404 | 79.88 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 117,598 records are Completed |
+| record_counts | pass | 117,598 records found, 117,598 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 431 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 814,649 events applied by workers, 814,649 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+| runtime_cross_source_blocking | **FAIL** | 263,817 events waited > 100 ms while a worker slot of their group was idle (4 slot(s)/worker; blocked p99 868 ms, max 18064 ms) |
+
+## Cross-source blocking samples
+
+- [cross_source_blocking] source 2390 seq 7: ready 100 ms before start, 100 ms of it with an idle slot in group 70
+- [cross_source_blocking] source 1074 seq 10: ready 107 ms before start, 107 ms of it with an idle slot in group 33
+- [cross_source_blocking] source 3050 seq 8: ready 110 ms before start, 110 ms of it with an idle slot in group 102
+- [cross_source_blocking] source 12822 seq 10: ready 122 ms before start, 119 ms of it with an idle slot in group 406
+- [cross_source_blocking] source 2755 seq 17: ready 145 ms before start, 105 ms of it with an idle slot in group 84
+- [cross_source_blocking] source 398 seq 8: ready 200 ms before start, 135 ms of it with an idle slot in group 11
+- [cross_source_blocking] source 6744 seq 22: ready 108 ms before start, 101 ms of it with an idle slot in group 230
+- [cross_source_blocking] source 11132 seq 11: ready 150 ms before start, 105 ms of it with an idle slot in group 363
+- [cross_source_blocking] source 10780 seq 10: ready 116 ms before start, 100 ms of it with an idle slot in group 353
+- [cross_source_blocking] source 10871 seq 10: ready 104 ms before start, 101 ms of it with an idle slot in group 354
+- [cross_source_blocking] source 4564 seq 7: ready 106 ms before start, 106 ms of it with an idle slot in group 160
+- [cross_source_blocking] source 10781 seq 12: ready 136 ms before start, 103 ms of it with an idle slot in group 353
+- [cross_source_blocking] source 5441 seq 20: ready 148 ms before start, 122 ms of it with an idle slot in group 186
+- [cross_source_blocking] source 181 seq 21: ready 244 ms before start, 135 ms of it with an idle slot in group 4
+- [cross_source_blocking] source 4594 seq 11: ready 102 ms before start, 102 ms of it with an idle slot in group 160
+- [cross_source_blocking] source 12669 seq 4: ready 133 ms before start, 103 ms of it with an idle slot in group 399
+- [cross_source_blocking] source 11049 seq 8: ready 245 ms before start, 123 ms of it with an idle slot in group 361
+- [cross_source_blocking] source 4742 seq 11: ready 282 ms before start, 129 ms of it with an idle slot in group 163
+- [cross_source_blocking] source 6316 seq 10: ready 238 ms before start, 175 ms of it with an idle slot in group 215
+- [cross_source_blocking] source 11340 seq 25: ready 271 ms before start, 160 ms of it with an idle slot in group 369
+- [cross_source_blocking] source 1294 seq 23: ready 240 ms before start, 196 ms of it with an idle slot in group 41
+
+## Error samples
+
+- t-458#0 src=14272 seq=7 op=Create rec=61297773248515 ev=0: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-314#1 src=9107 seq=128 op=Create rec=39114267164688 ev=0: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-468#0 src=14952 seq=82 op=Update rec=64218351009800 ev=15: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-191#0 src=5566 seq=19 op=Create rec=23905787969541 ev=0: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-266#0 src=7913 seq=62 op=Complete rec=33986076213251 ev=10: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-372#0 src=11436 seq=21 op=Get rec=49117245997059 ev=4: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-194#1 src=5610 seq=50 op=Complete rec=24094766530566 ev=6: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-275#0 src=8128 seq=31 op=Update rec=34909494181891 ev=8: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-131#0 src=3923 seq=29 op=Update rec=16849156702212 ev=5: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-374#1 src=11519 seq=72 op=Get rec=49473728282628 ev=12: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-176#0 src=5054 seq=20 op=Complete rec=21706764713985 ev=5: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-383#0 src=11841 seq=46 op=Update rec=50856707751942 ev=11: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-136#0 src=4075 seq=20 op=Update rec=17501991731202 ev=5: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-418#0 src=13176 seq=53 op=Create rec=56590489092104 ev=0: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-119L#2 src=3465 seq=4 op=Update rec=14882061680641 ev=1: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-043#0 src=1372 seq=15 op=Create rec=5892695130116 ev=0: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-157#0 src=4512 seq=16 op=Get rec=19378892439554 ev=1: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-304#0 src=8742 seq=58 op=Update rec=37546604101640 ev=2: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-344#1 src=10157 seq=35 op=Update rec=43623982825473 ev=13: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+- t-383#2 src=11905 seq=37 op=Get rec=51131585658888 ev=1: PostgresException: 57P01: terminating connection due to unexpected postmaster exit
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-222 | 138 | 3 | 61.993 | 144.282 | 2846 | 0 | 9186 | 9186 | 0 | 8159.231 | 36438.015 | 37748.735 |
+| t-136 | 146 | 2 | 40.495 | 97.61 | 450 | 0 | 6336 | 6336 | 0 | 6029.311 | 35389.439 | 36438.015 |
+| t-206 | 118 | 2 | 48.629 | 93.697 | 1969 | 0 | 5928 | 5928 | 0 | 5799.935 | 35389.439 | 38010.879 |
+| t-052 | 62 | 1 | 44.036 | 46.205 | 1837 | 0 | 2989 | 2989 | 0 | 6225.919 | 35127.295 | 35651.583 |
+| t-245 | 43 | 1 | 71.24 | 48.932 | 2232 | 0 | 3063 | 3063 | 0 | 5668.863 | 35127.295 | 37486.591 |
+| t-246 | 32 | 2 | 187.722 | 99.182 | 494 | 0 | 6076 | 6076 | 0 | 9568.255 | 35127.295 | 37486.591 |
+| t-461 | 130 | 2 | 45.032 | 97.963 | 3025 | 0 | 6276 | 6276 | 0 | 5406.719 | 34603.007 | 36700.159 |
+| t-147 | 79 | 4 | 145.536 | 195.43 | 1078 | 0 | 12133 | 12133 | 0 | 8355.839 | 34340.863 | 37486.591 |
+| t-237 | 74 | 1 | 36.026 | 45.137 | 2944 | 0 | 2894 | 2894 | 0 | 5472.255 | 34340.863 | 36438.015 |
+| t-161 | 41 | 1 | 60.994 | 41.321 | 339 | 0 | 2614 | 2614 | 0 | 3538.943 | 34078.719 | 42467.327 |
+| t-131 | 140 | 3 | 60.845 | 143.347 | 961 | 0 | 8789 | 8789 | 0 | 3670.015 | 33816.575 | 36438.015 |
+| t-496 | 81 | 4 | 145.619 | 197.957 | 278 | 0 | 12255 | 12255 | 0 | 7602.175 | 33816.575 | 35127.295 |
+| t-443 | 49 | 1 | 57.19 | 47.514 | 261 | 0 | 3026 | 3026 | 0 | 4980.735 | 33554.431 | 34603.007 |
+| t-456 | 21 | 1 | 143.85 | 48.988 | 512 | 0 | 3009 | 3009 | 0 | 6127.615 | 33423.359 | 36700.159 |
+| t-126 | 93 | 1 | 27.815 | 43.54 | 816 | 0 | 2833 | 2833 | 0 | 2621.439 | 33292.287 | 34078.719 |
+| t-263 | 93 | 2 | 59.766 | 94.005 | 374 | 0 | 5912 | 5912 | 0 | 5668.863 | 33292.287 | 34603.007 |
+| t-325 | 98 | 1 | 26.904 | 43.432 | 3394 | 0 | 2870 | 2870 | 0 | 3063.807 | 33161.215 | 34340.863 |
+| t-379 | 57 | 1 | 47.528 | 44.975 | 591 | 0 | 2899 | 2899 | 0 | 2850.815 | 33030.143 | 35913.727 |
+| t-483 | 200 | 3 | 41.15 | 138.556 | 2470 | 0 | 8602 | 8602 | 0 | 2949.119 | 33030.143 | 34865.151 |
+| t-005 | 47 | 1 | 60.561 | 47.065 | 2385 | 0 | 2903 | 2903 | 0 | 4489.215 | 32899.071 | 34603.007 |
+| t-348 | 125 | 3 | 63.004 | 132.054 | 1340 | 0 | 8391 | 8391 | 0 | 3211.263 | 32767.999 | 35651.583 |
+| t-178 | 90 | 1 | 27.367 | 41.476 | 131 | 0 | 2679 | 2679 | 0 | 2801.663 | 32636.927 | 34340.863 |
+| t-315 | 88 | 2 | 62.869 | 92.077 | 2927 | 0 | 5703 | 5703 | 0 | 4358.143 | 32505.855 | 34078.719 |
+| t-264 | 46 | 1 | 60.311 | 46.436 | 3058 | 0 | 2910 | 2910 | 0 | 3424.255 | 32112.639 | 34603.007 |
+| t-344 | 195 | 6 | 81.919 | 269.578 | 571 | 0 | 16766 | 16766 | 0 | 3964.927 | 31850.495 | 35127.295 |
+
+00:13:34.774 results written to /home/b4283/benchmark/results/matrix-16-octopus-drills/P2-epochs-pg-primary-kill-12.9k/20261120-161219_P2-epochs-pg-primary-kill-12_9k

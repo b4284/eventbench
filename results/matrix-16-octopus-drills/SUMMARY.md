@@ -55,3 +55,18 @@ Dispatcher failures cost nothing measurable at 16k. A database failover costs a 
   count as applied, not as duplicates.
 - On a drain timeout the benchmark prints events held over 30 s, the worker slots and each Octopus worker's
   credit state.
+
+## Positions, epochs and gap healing (Octopus, 2026-11-21)
+
+Same conditions as R0–R2 (no standby for P0/P1; P2 as R6).
+
+| run | load | failure | correctness | e2e p50 / p99 | blocking violations | Postgres cores |
+|---|---|---|---|---|---|---|
+| P0 / P0b / P0c | 16k | none (3 repeats) | pass | 83 / 36 / 45 ms; p99 2.9-3.7 s | 128k / 19k / 52k | 9.2 / 8.2 / 8.5 |
+| P1 | 16k | `kill -9` of 1 of 3 | pass | 48 ms / 4.9 s | 85k | 8.3 |
+| P2 | 12.9k | Postgres primary killed, sync standby promoted | pass | 1.1 s / 35 s | 264k | 10.6 |
+
+Compared with R0 (33 ms, 20k, 7.9 cores) the new schema costs roughly half a Postgres core and a few ms at the
+median, with this host's usual outliers. Found on the way: re-polling the next event of every idle source every
+100 ms (about 1.4 Postgres cores at 16k; now looked up only when it is known to be stored), and the benchmark's
+backlog query still using the old schema (the first P runs had no oracle; discarded).

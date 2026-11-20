@@ -51,6 +51,8 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
 
     public string Name => "octopus";
     public IStatsProvider Stats => this;
+    /// <summary>Publish acknowledgements that reported missing positions below the item (a reordering hint).</summary>
+    internal static long MissingReports;
     internal string Schema => _o.Schema;
 
     public OctopusBroker(OctopusBrokerOptions o, Topology topology, int slotsPerWorker, Action<string> log)
@@ -132,7 +134,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
         await using var conn = new NpgsqlConnection(_o.AdminConnectionString);
         await conn.OpenAsync(ct);
         await using var cmd = new NpgsqlCommand(
-            $"SELECT count(*) FROM {_o.Schema}.event e JOIN {_o.Schema}.source s USING (source) WHERE e.seq > s.last_seq", conn);
+            $"SELECT count(*) FROM {_o.Schema}.event e JOIN {_o.Schema}.source s ON s.id = e.sid WHERE (e.epoch, e.seq) > (s.epoch, s.last_seq)", conn);
         return (long)(await cmd.ExecuteScalarAsync(ct))!;
     }
 
@@ -144,6 +146,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
         r["octopus_items_sent_total"] = _producerConns.Concat(_workerConns).Sum(c => Interlocked.Read(ref c.ItemsSent));
         r["octopus_mqtt_received_total"] = _producerConns.Concat(_workerConns).Sum(c => Interlocked.Read(ref c.Received));
         r["octopus_publish_retries_total"] = _producers.Sum(p => Interlocked.Read(ref p.Retries));
+        r["octopus_missing_reports_total"] = Interlocked.Read(ref MissingReports);
         // dispatcher processes' CPU (they run outside containers)
         string? f = _o.DispatcherPidFile?.Replace("~", Environment.GetEnvironmentVariable("HOME") ?? "~");
         if (f != null && File.Exists(f))
@@ -191,12 +194,18 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
             {
                 Group = Group(e.Group),
                 Source = e.SourceId.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                Epoch = 1,              // the benchmark's sources never lose their counters
                 Seq = e.Seq,
                 Body = ByteString.CopyFrom(JsonSerializer.SerializeToUtf8Bytes(e, EventJsonContext.Default.EventEnvelope)),
             }).ToList();
-            var status = await p.PublishAsync(items, ct);
-            if (status.Any(s => s == PublishStatus.PublishGroupMismatch)) throw new InvalidOperationException("octopus: source published to the wrong group");
-            if (status.Any(s => s == PublishStatus.PublishConflict)) throw new InvalidOperationException("octopus: a (source, seq) was published with a different body");
+            var acks = await p.PublishAsync(items, ct);
+            foreach (var a in acks)
+            {
+                if (a.Status == PublishStatus.PublishGroupMismatch) throw new InvalidOperationException("octopus: source published to the wrong group");
+                if (a.Status == PublishStatus.PublishConflict) throw new InvalidOperationException("octopus: a (source, epoch, seq) was published with a different body");
+                if (a.Status is PublishStatus.PublishStaleEpoch or PublishStatus.PublishLate) throw new InvalidOperationException($"octopus: publish rejected ({a.Status})");
+                if (a.MissingBelow > 0) Interlocked.Increment(ref MissingReports);
+            }
         }
 
         public ValueTask DisposeAsync() => ValueTask.CompletedTask;

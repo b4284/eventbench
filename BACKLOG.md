@@ -173,14 +173,20 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - From the user, 2026-11-20. Not measured yet: in every run Postgres saturates first. Measure with one dispatcher,
   rising load, until its own CPU or its database round trips limit it.
 
-### B22 — Octopus: source epoch next to seq · open
+### B22 — Octopus: source epoch next to seq · **done** (2026-11-21; positions `(epoch, seq)`, integer source ids in event rows, epoch declarations, fencing)
 - **From:** user, 2026-11-20: every event source will stamp a gapless seq plus an epoch (the origin of the sequence).
 - **Plan:** key (source, epoch, seq); cursor (epoch, seq). A publish from an older epoch than the source's current one
   is rejected (fencing: a stale producer instance cannot inject events). The first event of a new epoch carries the
   last seq of the previous epoch (if known), so the old epoch can be drained before the new one starts; if not
   known, an operator or policy decides. Proto fields, schema column, TLA+ model update.
 
-### B23 — Octopus: heal permanent gaps automatically · proposed
+### B23 — Octopus: heal permanent gaps automatically · **mostly done** (2026-11-21)
+- **Done:** "missing below" in every publish reply; skip markers; per-group gap policy (`grp.gap_skip_ms`,
+  `OCTOPUS_GAP_SKIP_MS`) skipping within an epoch or closing an epoch; skips recorded and listed on the next
+  delivery; `LATE` status and late table; TLA+ model `spec/WorkerCommit.tla`.
+- **Not built yet:** resend requests from Octopus to the producer, and producers' periodic high-water
+  announcements (catch a lost *last* event); a client helper that reacts to "missing below" (replay from an
+  outbox or send a marker).
 - **From:** user, 2026-11-20: at 24k ev/s nobody can chase single missing events, and not every event matters.
 - **Proposal:** (1) explicit skip markers from the producer (it gives up on a seq, or a new epoch declares where the
   old one ended); (2) a per-group gap timeout: when cursor + 1 is missing and a later event has waited longer than
