@@ -124,6 +124,13 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - Failover drills with each engine's synchronous replication: an SQL Server availability group with
     synchronous commit; MySQL semi-sync `AFTER_SYNC` or Group Replication.
 
+### B17 — Distributed SQL under the dispatcher · idea
+- **From:** dispatcher design §4.1. The dispatchers are active-active, but SQL is single-writer with synchronous
+  replicas.
+- **Why:** a Raft-based, Postgres-compatible database (YugabyteDB, CockroachDB) makes storage multi-writer as
+  well. The dispatcher's large batches suit its higher cost per write.
+- **Test:** the dispatcher backend on it, at 24k, with node-loss and DC-loss drills.
+
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
 - **Why:** one logical database with shards by group, if one primary is not enough.
