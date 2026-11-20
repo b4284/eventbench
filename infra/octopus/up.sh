@@ -61,12 +61,14 @@ $PSQL < hooks.sql
 
 (cd "$OCTO" && cargo build --release -q -p octopusd)
 BIN="$OCTO/target/release/octopusd"
+# Workers commit their own writes by default; EB_OCTOPUS_HOOKS=1 lets the dispatchers commit through the hooks.
+HOOK_ENV=""
+[[ "${EB_OCTOPUS_HOOKS:-0}" == 1 ]] && HOOK_ENV="OCTOPUS_APPLY_HOOK=public.eb_octopus_apply OCTOPUS_LOAD_HOOK=public.eb_octopus_load"
 : > "$STATE/pids"
 for i in $(seq 1 "$N"); do
   env OCTOPUS_MEMBER_ID="d$i" OCTOPUS_NS=octopus OCTOPUS_SCHEMA=octopus \
       OCTOPUS_PG="host=127.0.0.1 port=5432 user=bench password=bench dbname=bench" OCTOPUS_PG_POOL="${OCTOPUS_PG_POOL:-32}" \
-      OCTOPUS_APPLY_HOOK=public.eb_octopus_apply OCTOPUS_LOAD_HOOK=public.eb_octopus_load \
-      RUST_LOG="${RUST_LOG:-info}" ${OCTOPUSD_ENV:-} \
+      ${HOOK_ENV} RUST_LOG="${RUST_LOG:-info}" ${OCTOPUSD_ENV:-} \
       nohup "$BIN" >"$STATE/d$i.log" 2>&1 &
   echo $! >> "$STATE/pids"
   [[ $i -eq 1 ]] && sleep 1   # the first one creates the schema

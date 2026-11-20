@@ -1,0 +1,16 @@
+{
+  "Broker": {
+    "Type": "octopus",
+    "MqttHost": "127.0.0.1",
+    "MqttPort": 1883,
+    "Namespace": "octopus",
+    "Schema": "octopus",
+    "AdminConnectionString": "Host=127.0.0.1;Port=5432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=4;Command Timeout=600",
+    "ProducerConnections": 4,
+    "WorkerConnections": 2,
+    "DispatcherPidFile": "~/.cache/eventbench/octopus/pids"
+  },
+  "Store": { "Type": "postgres", "BatchCommits": false },
+  "Worker": { "Mode": "Pipelined", "AckMode": "AfterCommit" },
+  "Workload": { "MaxPublishBatch": 1, "PublishConcurrency": 64 }
+}

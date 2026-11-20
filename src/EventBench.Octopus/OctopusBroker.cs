@@ -234,12 +234,19 @@ internal sealed class BenchDelivery(OctopusWorker worker, OctopusDelivery d, Eve
     public long EnqueuedAtUs => d.Item.EnqueuedUs;
     public int DeliveryCount => d.Item.Attempts + 1;
 
-    /// <summary>Skip path (already applied by the snapshot): commit with no effect; the cursor check says duplicate.</summary>
-    public async ValueTask AckAsync(CancellationToken ct) => await worker.CompleteAsync(d, ByteString.Empty, ct);
+    /// <summary>
+    /// The bench worker has committed its own writes (AckMode=AfterCommit, store "postgres" through PgBouncer), or
+    /// found the event already applied: report done, Octopus removes the event.
+    /// </summary>
+    public ValueTask AckAsync(CancellationToken ct)
+    {
+        worker.ReportDone(d);
+        return ValueTask.CompletedTask;
+    }
 
     public ValueTask NackAsync(TimeSpan delay, CancellationToken ct) => new(worker.Fail(d, delay, ct));
 
-    public void Completed(bool success) => worker.Done(d);
+    public void Completed(bool success) => worker.Release(d);
 }
 
 public sealed class OctopusBrokerFactory : IBrokerFactory
