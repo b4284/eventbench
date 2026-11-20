@@ -4,6 +4,7 @@
 #
 # usage: scripts/run-matrix.sh <out-dir> <reps> <base-config> [<extra -c/--Key=value args for all runs>] -- \
 #            "<name>|<args...>[|<containers>]" ...
+# EB_PRE_RUN (env): command run before every run, after the containers are up.
 # The optional third field lists the containers the variant needs (scripts/only.sh aliases, space
 # separated): everything else is stopped before the run.
 # example:
@@ -29,6 +30,8 @@ for rep in $(seq 1 "$REPS"); do
     [[ "$rest" == *"|"* ]] && need=${rest#*|}
     # shellcheck disable=SC2086
     [[ -n "$need" ]] && scripts/only.sh $need >/dev/null
+    # EB_PRE_RUN: a command run before every run (e.g. "infra/octopus/up.sh 3" for a fresh dispatcher cluster)
+    if [[ -n "${EB_PRE_RUN:-}" ]]; then bash -c "$EB_PRE_RUN" > "$OUT/$name.rep$rep.pre.log" 2>&1 || echo "  pre-run command failed"; fi
     echo "$(date +%T) rep $rep/$REPS  $name  $args"
     # shellcheck disable=SC2086
     dotnet "$BIN" run -c "$BASE" "${COMMON[@]}" $args \

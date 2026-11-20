@@ -9,6 +9,7 @@ using EventBench.MassTransit;
 using EventBench.Temporal;
 using EventBench.Mongo;
 using EventBench.Nats;
+using EventBench.Octopus;
 using EventBench.Postgres;
 using EventBench.RabbitMq;
 using EventBench.Redis;
@@ -90,6 +91,8 @@ static ComponentRegistry CreateRegistry() => ComponentRegistry.WithBuiltIns()
     .Register(new PgQueueBrokerFactory())
     .Register(new MtSqlBrokerFactory())
     .Register(new TemporalBrokerFactory())
+    .Register(new OctopusBrokerFactory())
+    .Register(new OctopusStoreFactory())
     .Register(new KafkaBrokerFactory())
     .Register(new RabbitMqBrokerFactory())
     .Register(new NatsBrokerFactory())

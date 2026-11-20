@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EventBench.Core\EventBench.Core.csproj" />
+    <ProjectReference Include="..\EventBench.Postgres\EventBench.Postgres.csproj" />
+    <!-- The Octopus repository checked out next to this one (https://github.com/b4284/octopus). -->
+    <ProjectReference Include="..\..\..\octopus\clients\dotnet\Octopus.Client\Octopus.Client.csproj" />
+  </ItemGroup>
+
+</Project>

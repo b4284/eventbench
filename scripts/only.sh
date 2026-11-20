@@ -16,6 +16,7 @@ for a in "$@"; do
     redis-ha) want+=(eb-redis-6380 eb-redis-6381 eb-redis-6382 eb-sentinel-26380 eb-sentinel-26381 eb-sentinel-26382) ;;
     redis|kafka|nats|rabbitmq|mssql|mongo) want+=("eb-$a") ;;
     temporal) want+=(eb-temporal) ;;
+    octopus) want+=(eb-postgres $(podman ps -a --format '{{.Names}}' | grep -E '^eb-pgbouncer(-[0-9]+)?$') eb-${EB_MQTT:-nanomq}) ;;
     *) want+=("$a") ;;
   esac
 done
