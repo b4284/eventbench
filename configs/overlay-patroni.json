@@ -1,0 +1,11 @@
+{
+  "_comment": "The Patroni pair (infra/patroni): direct multi-host connections that follow the leader; no PgBouncer.",
+  "Broker": {
+    "ConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=200;Timeout=15;Command Timeout=60;Keepalive=5",
+    "AdminConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=10;Timeout=15"
+  },
+  "Store": {
+    "ConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=200;Timeout=15;Command Timeout=60;Keepalive=5",
+    "AdminConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=10;Timeout=15;Command Timeout=600"
+  }
+}

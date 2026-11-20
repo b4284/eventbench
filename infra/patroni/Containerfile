@@ -1,0 +1,6 @@
+# Postgres 18 (+ pgmq, as the lab's other images) with Patroni for automatic failover.
+FROM ghcr.io/pgmq/pg18-pgmq:latest
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends patroni curl && rm -rf /var/lib/apt/lists/*
+USER postgres
+ENTRYPOINT ["patroni"]

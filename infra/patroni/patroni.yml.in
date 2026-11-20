@@ -1,0 +1,60 @@
+scope: octopus-lab
+name: @NAME@
+restapi:
+  listen: 127.0.0.1:@API@
+  connect_address: 127.0.0.1:@API@
+etcd3:
+  hosts: 127.0.0.1:2379
+bootstrap:
+  dcs:
+    ttl: 20
+    loop_wait: 5
+    retry_timeout: 5
+    maximum_lag_on_failover: 0
+    synchronous_mode: true
+    synchronous_mode_strict: true
+    postgresql:
+      use_pg_rewind: true
+      parameters:
+        max_connections: 300
+        shared_buffers: 2GB
+        effective_cache_size: 6GB
+        work_mem: 16MB
+        maintenance_work_mem: 512MB
+        synchronous_commit: remote_write
+        wal_level: replica
+        wal_compression: lz4
+        wal_log_hints: "on"
+        max_wal_size: 8GB
+        min_wal_size: 1GB
+        wal_keep_size: 8GB
+        checkpoint_timeout: 15min
+        checkpoint_completion_target: 0.9
+        random_page_cost: 1.1
+        autovacuum_naptime: 10s
+        autovacuum_vacuum_scale_factor: 0.05
+        autovacuum_vacuum_cost_limit: 2000
+        shared_preload_libraries: pg_stat_statements
+  initdb:
+    - encoding: UTF8
+    - data-checksums
+  post_bootstrap: /etc/patroni/post_bootstrap.sh
+  pg_hba:
+    - local all all trust
+    - host all all 127.0.0.1/32 md5
+    - host replication replicator 127.0.0.1/32 md5
+    - host all all 0.0.0.0/0 md5
+postgresql:
+  listen: 0.0.0.0:@PG@
+  connect_address: 127.0.0.1:@PG@
+  data_dir: /var/lib/postgresql/patroni/data
+  bin_dir: /usr/lib/postgresql/18/bin
+  authentication:
+    superuser:
+      username: postgres
+      password: postgres
+    replication:
+      username: replicator
+      password: replicator
+  parameters:
+    unix_socket_directories: /tmp

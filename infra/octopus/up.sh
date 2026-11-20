@@ -59,7 +59,9 @@ CONF
   sleep 1
 fi
 
-PSQL="podman exec -i eb-postgres psql -U bench -d bench -v ON_ERROR_STOP=1 -q"
+# EB_PSQL: how to reach the database for setup (default: the lab primary container; for the Patroni pair, a psql
+# with a multi-host connection string that finds the leader)
+PSQL=${EB_PSQL:-"podman exec -i eb-postgres psql -U bench -d bench -v ON_ERROR_STOP=1 -q"}
 $PSQL -c "DROP SCHEMA IF EXISTS octopus CASCADE"
 $PSQL < hooks.sql
 
@@ -68,10 +70,15 @@ BIN="$OCTO/target/release/octopusd"
 # Workers commit their own writes by default; EB_OCTOPUS_HOOKS=1 lets the dispatchers commit through the hooks.
 HOOK_ENV=""
 [[ "${EB_OCTOPUS_HOOKS:-0}" == 1 ]] && HOOK_ENV="OCTOPUS_APPLY_HOOK=public.eb_octopus_apply OCTOPUS_LOAD_HOOK=public.eb_octopus_load"
+# the database for dispatcher i: OCTOPUS_PG_CONN_<i> (e.g. through a proxy a drill can freeze), else OCTOPUS_PG_CONN
+conn_for() {
+  local v="OCTOPUS_PG_CONN_$1"
+  echo "${!v:-${OCTOPUS_PG_CONN:-host=127.0.0.1 port=5432 user=bench password=bench dbname=bench}}"
+}
 : > "$STATE/pids"
 for i in $(seq 1 "$N"); do
   env OCTOPUS_MEMBER_ID="d$i" OCTOPUS_NS=octopus OCTOPUS_SCHEMA=octopus \
-      OCTOPUS_PG="${OCTOPUS_PG_CONN:-host=127.0.0.1 port=5432 user=bench password=bench dbname=bench}" OCTOPUS_PG_POOL="${OCTOPUS_PG_POOL:-32}" \
+      OCTOPUS_PG="$(conn_for "$i")" OCTOPUS_PG_POOL="${OCTOPUS_PG_POOL:-32}" \
       ${HOOK_ENV} RUST_LOG="${RUST_LOG:-info}" ${OCTOPUSD_ENV:-} \
       nohup ${OCTOPUSD_PREFIX:-} "$BIN" >"$STATE/d$i.log" 2>&1 &
   echo $! >> "$STATE/pids"
