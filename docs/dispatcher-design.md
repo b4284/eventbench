@@ -267,6 +267,18 @@ Postgres comes first. SQL Server (availability group with synchronous commit) an
    idempotency key.
 4. **Event that always fails:** retry for ever with capped backoff and alert; an operator tool can skip it.
 
+## 10b. Product boundary (user, 2026-11-20)
+
+The dispatcher is a **standalone product in its own repository**:
+- the server;
+- the Protobuf protocol specification;
+- client SDKs for producers and workers;
+- backends (Postgres first);
+- Kubernetes manifests and Helm;
+- its own tests, the TLA+ model and the fault-injection suite.
+
+This benchmark repository only adds an adapter (`Broker:Type=dispatch`) and the oracle runs.
+
 ## 11. Build plan (each step ends with its tests passing)
 
 1. **Protocol model.** TLA+ model of publish, leases, hand-over and commit. Model-check G2–G5, including a
