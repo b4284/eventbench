@@ -3,7 +3,8 @@
 # This session is the sole podman user, so anything not needed by the next run is stopped to free CPU/RAM.
 # usage: scripts/only.sh eb-postgres eb-pgbouncer eb-redis ...
 #   aliases: pg = eb-postgres + all eb-pgbouncer*, redis, kafka, nats, rabbitmq, mssql, mongo,
-#            redis-ha = 3 redis + 3 sentinels, plus any literal container name
+#            redis-ha = 3 redis + 3 sentinels, temporal (start it fresh with infra/temporal/up.sh),
+#            plus any literal container name
 set -uo pipefail
 want=()
 for a in "$@"; do
@@ -14,6 +15,7 @@ for a in "$@"; do
     kafka-cluster) want+=(eb-kafka-1 eb-kafka-2 eb-kafka-3) ;;
     redis-ha) want+=(eb-redis-6380 eb-redis-6381 eb-redis-6382 eb-sentinel-26380 eb-sentinel-26381 eb-sentinel-26382) ;;
     redis|kafka|nats|rabbitmq|mssql|mongo) want+=("eb-$a") ;;
+    temporal) want+=(eb-temporal) ;;
     *) want+=("$a") ;;
   esac
 done

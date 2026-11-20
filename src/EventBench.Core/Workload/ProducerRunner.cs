@@ -28,6 +28,9 @@ public sealed class ProducerRunner
     private readonly MetricsHub _metrics;
     private readonly Action<string> _log;
     private FastRandom _rng;
+    private readonly SemaphoreSlim? _slots;
+    private readonly Dictionary<int, Task> _lastBySource = new();
+    private readonly HashSet<Task> _inFlight = new();
 
     public string Name => _name;
     public int SourceCount => _scripts.Length;
@@ -44,6 +47,45 @@ public sealed class ProducerRunner
         _log = log;
         _meanIntervalUs = scripts.Select(s => 1_000_000.0 / plan.Topology.SourceRate(s.SourceId)).ToArray();
         _rng = new FastRandom((ulong)plan.Options.Seed * 31 + (ulong)salt * 7919 + 17);
+        if (plan.Options.PublishConcurrency > 1) _slots = new SemaphoreSlim(plan.Options.PublishConcurrency);
+    }
+
+    /// <summary>
+    /// Sends the batch: awaited (PublishConcurrency 1), or started in the background behind the previous publish
+    /// of each of its sources (PublishConcurrency above 1). Takes ownership of the list.
+    /// </summary>
+    private async Task DispatchAsync(List<EventEnvelope> batch, CancellationToken ct)
+    {
+        if (_slots is null)
+        {
+            await SendAsync(batch, ct);
+            return;
+        }
+        await _slots.WaitAsync(ct);
+        Task[] deps = batch.Select(e => _lastBySource.GetValueOrDefault(e.SourceId)).Where(t => t is { IsCompleted: false }).Distinct().ToArray()!;
+        var task = SendAfterAsync(deps, batch, ct);
+        foreach (var e in batch) _lastBySource[e.SourceId] = task;
+        lock (_inFlight) _inFlight.Add(task);
+        _ = task.ContinueWith(t =>
+        {
+            lock (_inFlight) _inFlight.Remove(t);
+            _slots.Release();
+        }, TaskScheduler.Default);
+    }
+
+    private async Task SendAfterAsync(Task[] deps, List<EventEnvelope> batch, CancellationToken ct)
+    {
+        if (deps.Length > 0) await Task.WhenAll(deps);
+        await SendAsync(batch, ct);
+    }
+
+    /// <summary>Waits for every publish still in flight (PublishConcurrency above 1).</summary>
+    private async Task FlushAsync()
+    {
+        Task[] pending;
+        lock (_inFlight) pending = _inFlight.ToArray();
+        await Task.WhenAll(pending);
+        _lastBySource.Clear();
     }
 
     public async Task RunAsync(long startUs, long endUs, CancellationToken ct)
@@ -77,9 +119,18 @@ public sealed class ProducerRunner
                 continue;
             }
 
-            await SendAsync(batch, ct);
-            batch.Clear();
+            if (_slots is null)
+            {
+                await SendAsync(batch, ct);
+                batch.Clear();
+            }
+            else
+            {
+                await DispatchAsync(batch, ct);
+                batch = new List<EventEnvelope>(opts.MaxPublishBatch);
+            }
         }
+        await FlushAsync();
     }
 
     /// <summary>Completes every still-open record of this producer's sources.</summary>
@@ -94,11 +145,12 @@ public sealed class ProducerRunner
             batch.Add(ev);
             if (batch.Count >= _plan.Options.MaxPublishBatch)
             {
-                await SendAsync(batch, ct);
-                batch.Clear();
+                await DispatchAsync(batch, ct);
+                batch = new List<EventEnvelope>(_plan.Options.MaxPublishBatch);
             }
         }
-        if (batch.Count > 0) await SendAsync(batch, ct);
+        if (batch.Count > 0) await DispatchAsync(batch, ct);
+        await FlushAsync();
     }
 
     private long NextIntervalUs(int idx) => _plan.Options.Arrival switch

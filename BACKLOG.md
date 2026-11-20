@@ -15,7 +15,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 
 ## Open
 
-### B0 — Bake-off: existing products before building our own dispatcher · **proposed**
+### B0 — Bake-off: existing products before building our own dispatcher · **done**
 - **From:** user, 2026-11-20: "are we re-creating something that's already out there?"
 - **Why:** per-key ordered queues ("message groups", "sessions", "partition keys") are a known pattern. Building
   our own is a long-term operating commitment, so first test what exists, with the same oracle and drills.
@@ -45,7 +45,12 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
     timeout.
   - Measure the cost of the extra hop.
 
-### B2 — Producers publish one event at a time · **next**
+### B2 — Producers publish one event at a time · **measured**
+- **Result (matrix-14):**
+  - Direct inserts collapse under concurrent one-event producers: 2.5k/s, because `NOTIFY` takes a global lock
+    at commit.
+  - With `NOTIFY` off, publishing reaches 24k, but consumption falls to 12.9k (200 ms polling, growing backlog).
+  - The fix is publishes through the dispatcher (B1).
 - **User direction, 2026-11-20:** if this is a bottleneck, the publishers go through the same dispatcher
   cluster. Any instance accepts a publish and coalesces concurrent ones into one INSERT; the call returns once
   the row is committed. It is idempotent on (source, seq), and when it owns the group it hands the event
@@ -171,6 +176,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 | Kafka 3-node + PG standby, broker-kill drill | Passes; 16.5–18.8k (`matrix-10`, `matrix-11`) |
 | Redis Sentinel, async and `WAIT 1`, failover drills | Out: loses or duplicates acknowledged work (`matrix-11`) |
 | NATS R3, node-kill drill | Passes; 3–6k (`matrix-12`) |
+| Bake-off (B0): MassTransit v8 SQL transport, Temporal | Both correct; about 4k and under 1k ev/s. Neither comes near 24k (`matrix-14`) |
 | pgqueue + PG sync standby, primary-kill drill | #1: 24.0k on about 9 cores, no loss with sync; async loses data (`matrix-13`) |
 
 ## Dropped

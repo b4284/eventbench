@@ -5,6 +5,8 @@ using EventBench.Core.Model;
 using EventBench.Core.Reporting;
 using EventBench.Core.Runner;
 using EventBench.Kafka;
+using EventBench.MassTransit;
+using EventBench.Temporal;
 using EventBench.Mongo;
 using EventBench.Nats;
 using EventBench.Postgres;
@@ -86,6 +88,8 @@ static ComponentRegistry CreateRegistry() => ComponentRegistry.WithBuiltIns()
     .Register(new PgmqBrokerFactory())
     .Register(new PgDispatchBrokerFactory())
     .Register(new PgQueueBrokerFactory())
+    .Register(new MtSqlBrokerFactory())
+    .Register(new TemporalBrokerFactory())
     .Register(new KafkaBrokerFactory())
     .Register(new RabbitMqBrokerFactory())
     .Register(new NatsBrokerFactory())

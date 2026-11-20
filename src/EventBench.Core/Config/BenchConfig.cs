@@ -57,6 +57,13 @@ public sealed class WorkloadOptions
 
     /// <summary>Upper bound of events per publish call.</summary>
     public int MaxPublishBatch { get; set; } = 500;
+    /// <summary>
+    /// Publish calls a producer keeps in flight (1 = wait for each publish before the next). Above 1, a producer
+    /// behaves like many independent sources firing at once: only publishes of the same source wait for each
+    /// other (so per-source publish order still equals sequence order). Use with MaxPublishBatch=1 to model
+    /// producers that send each event the moment it is generated.
+    /// </summary>
+    public int PublishConcurrency { get; set; } = 1;
 
     /// <summary>Max sleep between producer scheduling passes when nothing is due.</summary>
     public double ProducerTickMs { get; set; } = 5;

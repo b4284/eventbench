@@ -121,7 +121,35 @@ A source's **head** is the row with `seq = last_seq + 1`. Only heads are handed 
 only when its predecessor's commit has moved the cursor, so ordering comes from the database. It does not
 depend on insert order or on ids.
 
-## 5. Protocol (gRPC, HTTP/2, mTLS; Protobuf messages, versioned)
+## 5. Protocol over a pub/sub fabric (user, 2026-11-20)
+
+**The organisation already runs Solace,** so producers, dispatchers and workers talk over the existing pub/sub
+fabric instead of gRPC.
+- **The transport is pluggable.** The first binding is **MQTT 5**: Solace PubSub+ speaks it natively, and so do
+  small brokers that run in a container (Mosquitto, EMQX). The same client code then runs against Solace in
+  production and against a container in tests.
+- **Later bindings:** AMQP 1.0, which Solace also speaks, or Solace's native API if its throughput is needed.
+- **Tests:** the free Solace PubSub+ Standard container image can be used alongside Mosquitto, so the binding is
+  checked against the real product.
+
+**The fabric is never the durability point.** Every message is idempotent, and every acknowledgement that
+matters is an *application* reply sent only after the SQL commit. So messages can travel as non-persistent
+(direct) messages; a lost message is simply retried. Persistent queues on the fabric would add cost without
+adding safety, and a Solace queue would bring back the "one slow event blocks the queue" problem. Payloads are
+Protobuf, versioned. TLS and client authentication come from the fabric.
+
+**Topics** (`{ns}` = a namespace prefix):
+
+| topic | from → to | carries |
+|---|---|---|
+| `{ns}/pub/{group}/{source}` | producer → any dispatcher (shared subscription) | `Publish`; reply on the producer's response topic after the commit |
+| `{ns}/disp/{member}/hint` | dispatcher → owner dispatcher | "group g has new heads" |
+| `{ns}/work/{worker}` | dispatcher → one worker | `Deliver` |
+| `{ns}/credit/{member}` | worker → one dispatcher | credits; the worker's hello (groups served, slots) |
+| `{ns}/commit/{member}` | worker → the dispatcher that delivered (any dispatcher if it is gone) | `Commit` / `Fail`; reply on the worker's topic |
+| `{ns}/members` (retained) | dispatcher → everyone | live members and their topics, for discovery; the database stays the authority |
+
+Request/reply uses MQTT 5 response topics and correlation data, or Solace's own request/reply.
 
 All messages are idempotent, so any of them can be retried.
 
@@ -283,16 +311,16 @@ This benchmark repository only adds an adapter (`Broker:Type=dispatch`) and the 
 
 1. **Protocol model.** TLA+ model of publish, leases, hand-over and commit. Model-check G2–G5, including a
    paused instance and lost messages.
-2. **Tooling.** Install the gRPC toolchain: the ASP.NET Core runtime is missing here; a user-local `dotnet-install`
-   adds it. Dispatchers run as containers, like pods.
+2. **Tooling.** An MQTT 5 broker container (Mosquitto; EMQX for a clustered fabric) and the Solace PubSub+
+   Standard container. The .NET MQTT client is MQTTnet. Dispatchers run as containers, like pods.
 3. **Core.** The backend interface and its Postgres implementation:
    - seq-based heads;
    - guarded idempotent publish;
    - batched commit;
    - attempts and backoff;
    - leases and members.
-4. **Dispatcher service** (gRPC): publish, work stream with credits, commit/fail, mesh hints, local lease
-   deadline, planned hand-over on SIGTERM, health, metrics.
+4. **Dispatcher service** (pub/sub transport, MQTT 5 first): publish, work with credits, commit/fail, hints
+   between dispatchers, local lease deadline, planned hand-over on SIGTERM, health, metrics.
 5. **Client libraries** for producers and workers, used by the bench (`Broker:Type=dispatch`). Producers record
    every acknowledgement so the oracle can check G1.
 6. **Single-DC drills at 24k:** kill, SIGTERM, pause, scale out and in, worker kill, dispatcher↔database and
