@@ -189,6 +189,12 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   (4) a late arrival of a skipped seq is rejected with its own status and kept in a late table; (5) metrics and
   alerts on rates (skips, late arrivals, gap age), not on single events. TLA+: a Skip action; safety becomes
   "in order, minus declared skips; nothing applied after it was skipped".
+- **Resend requests (user, 2026-11-20):** before skipping, Octopus asks the source to replay the missing range
+  (a resend request to the producer; repeated until answered, rate-limited, deduplicated per range). The producer
+  replays from durable storage (outbox or source DB) with the same epoch and seq, or answers "unavailable", which
+  skips at once. No answer within T: skip. Only useful if the source can regenerate lost events: a producer that is
+  still retrying needs no request. Producers also announce their high-water mark (epoch, last seq) now and then, so
+  a lost *last* event (no later event shows the gap) is detected too.
 
 ### B24 — Octopus: producer retries forever, gap alarm, conflict check, out-of-order e2e test · open
 - The .NET producer gives up after 20 attempts (a permanent gap); it should retry forever and alert.
