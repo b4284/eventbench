@@ -152,6 +152,27 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   well. The dispatcher's large batches suit its higher cost per write.
 - **Test:** the dispatcher backend on it, at 24k, with node-loss and DC-loss drills.
 
+### B18 — Octopus: the Rust client keys running deliveries by source · open
+- **From:** D4 failover drills, 2026-11-20. The .NET client aliased two deliveries of one source, so each such pair
+  leaked one credit and workers ended up holding 5x their slots (fixed there: deliveries by identity, plus the
+  invariant running + granted <= slots, enforced after each result and every second).
+- **Next:** apply the same to `octopus-client` (`running: HashMap<String, Running>`), and add the invariant check
+  to the dispatcher too (refuse to hand a worker more than its declared slots).
+
+### B19 — Octopus: recovery after a database failover · open
+- D6 (12.9k, synchronous standby): no loss, drained in 9 s, but blocking violations 289k vs 107k in the baseline
+  and e2e p99 25 s vs 4 s. Find where the minutes of recovery go (publish retries backing off to 2 s; worker
+  retries; ready heads dropped on the lapsed lease) and shorten them.
+
+### B20 — Cost of the synchronous standby on one host · open
+- D7: the same 12.9k with `remote_write` to a standby on the same host: e2e p50 164 ms (16 ms async), commit p50
+  36 ms, Postgres 8.0 cores (5.8). Measure with the standby on its own cores (CPU pinning) and with an added
+  network delay (tc netem) to estimate a real second DC.
+
+### B21 — Peak capacity of one dispatcher · open
+- From the user, 2026-11-20. Not measured yet: in every run Postgres saturates first. Measure with one dispatcher,
+  rising load, until its own CPU or its database round trips limit it.
+
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
 - **Why:** one logical database with shards by group, if one primary is not enough.

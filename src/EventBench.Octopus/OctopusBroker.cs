@@ -1,3 +1,4 @@
+using EventBench.Core.Processing;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Channels;
@@ -117,7 +118,12 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
     {
         var conn = _workerConns[Interlocked.Increment(ref _nextConn) % _workerConns.Count];
         var w = OctopusWorker.Create(conn, $"w{groupId}-{workerIndex}-{Guid.NewGuid().ToString("N")[..6]}", [Group(groupId)], _slots);
-        lock (_workers) _workers.Add(w);
+        lock (_workers)
+        {
+            if (_workers.Count == 0)
+                WorkerRunner.ExtraDumps.Add(() => { lock (_workers) return _workers.Select(x => x.Describe()).Where(d => !d.Contains("running 0,")).ToList(); });
+            _workers.Add(w);
+        }
         return new Consumer(this, w);
     }
 

@@ -306,6 +306,8 @@ public sealed class PostgresStore : IStateStore
             {
                 // Isolate: one bad event must not fail its batchmates.
                 Interlocked.Increment(ref _batchFallbacks);
+                // the batch may have committed before the error reached us: its events are in doubt
+                foreach (var (req, _) in items) EventBench.Core.Processing.InDoubt.Add(req.Event.SourceId, req.Event.Seq);
                 foreach (var (req, tcs) in items)
                 {
                     try { tcs.TrySetResult(await CommitOneAsync(req, ct)); }

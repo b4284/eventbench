@@ -145,6 +145,10 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
             log(result.Drained
                 ? $"drained in {result.DrainSeconds:F1}s"
                 : $"DRAIN TIMEOUT after {result.DrainSeconds:F1}s: {Interlocked.Read(ref metrics.Total.Produced) - Interlocked.Read(ref metrics.Total.Applied):N0} events not applied");
+            if (!result.Drained)
+                foreach (var line in Processing.WorkerRunner.DumpHeld(TimeSpan.FromSeconds(30)).Take(50)) log($"  held: {line}");
+            if (!result.Drained)
+                foreach (var line in Processing.WorkerRunner.DumpRunners().Take(60)) log($"  state: {line}");
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested)
         {

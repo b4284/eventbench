@@ -11,8 +11,51 @@ namespace EventBench.Core.Processing;
 /// load context from the store -> process -> commit result -> ack. Events of the same source in a
 /// batch are processed sequentially; different sources may run in parallel (MaxParallelPerWorker).
 /// </summary>
+/// <summary>
+/// Events whose commit outcome is unknown (the commit threw, e.g. the connection died while committing). If a later
+/// attempt finds the event already applied, that earlier attempt applied it: it counts as applied, not as a duplicate.
+/// </summary>
+public static class InDoubt
+{
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<(int Source, long Seq), byte> Keys = new();
+    public static void Add(int source, long seq) => Keys.TryAdd((source, seq), 0);
+    public static bool Resolve(int source, long seq) => Keys.TryRemove((source, seq), out _);
+}
+
 public sealed class WorkerRunner
 {
+    /// <summary>Diagnostics: every event held by a worker and where it is (dumped when the drain times out).</summary>
+    public static readonly System.Collections.Concurrent.ConcurrentDictionary<IDelivery, (string Stage, long SinceUs, string Worker)> Held = new();
+    private void Stage(IDelivery d, string stage) => Held[d] = (stage, Held.TryGetValue(d, out var h) && h.Stage == stage ? h.SinceUs : Clock.NowUs(), $"{_group.Name}#{_index}");
+
+    /// <summary>Diagnostics hooks (e.g. a broker's view of its consumers), added to the drain-timeout dump.</summary>
+    public static readonly List<Func<IEnumerable<string>>> ExtraDumps = new();
+    private static readonly System.Collections.Concurrent.ConcurrentBag<WorkerRunner> All = new();
+
+    /// <summary>Pipelined runners with work: free slots, running lanes, parked events, sources waiting for a slot.</summary>
+    public static IEnumerable<string> DumpRunners()
+    {
+        foreach (var r in All)
+        {
+            string? line = null;
+            lock (r._gate)
+                if (r._lanes.Count > 0 || r._ready.Count > 0)
+                    line = $"runner {r._group.Name}#{r._index}: free {r._free}, running {Volatile.Read(ref r._running)}, lanes {r._lanes.Count}, parked {r._parked}, waiting {r._ready.Count}";
+            if (line != null) yield return line;
+        }
+        foreach (var f in ExtraDumps)
+            foreach (var l in f()) yield return l;
+    }
+
+    /// <summary>Events held longer than <paramref name="minAge"/>, oldest first.</summary>
+    public static IEnumerable<string> DumpHeld(TimeSpan minAge)
+    {
+        long now = Clock.NowUs();
+        return Held.Where(kv => now - kv.Value.SinceUs >= minAge.TotalMicroseconds)
+                   .OrderBy(kv => kv.Value.SinceUs)
+                   .Select(kv => $"{kv.Key.Event} at {kv.Value.Worker}: {kv.Value.Stage} for {(now - kv.Value.SinceUs) / 1_000_000.0:F1}s");
+    }
+
     private readonly GroupInfo _group;
     private readonly int _index;
     private readonly IEventConsumer _consumer;
@@ -29,6 +72,7 @@ public sealed class WorkerRunner
         BenchConfig config, MetricsHub metrics, bool txAck, Action<string> log)
     {
         _group = group;
+        All.Add(this);
         _index = index;
         _consumer = consumer;
         _store = store;
@@ -151,6 +195,7 @@ public sealed class WorkerRunner
         finally
         {
             blocking.SlotFree(ev.Group);
+            Held.TryRemove(d, out _);
             (d as IDeliveryCompletion)?.Completed(outcome != Outcome.Failed);
             long now = Clock.NowUs();
             if (outcome == Outcome.Failed) blocking.SourceRetry(ev, now + (long)(_retryDelay.TotalMilliseconds * 1000));
@@ -164,12 +209,14 @@ public sealed class WorkerRunner
         try
         {
             long t0 = Clock.NowUs();
+            Stage(d, "load");
             var ctx = await _store.LoadAsync(ev, ct);
             long t1 = Clock.NowUs();
 
             if (ctx.LastSeq >= ev.Seq)
             {
-                _metrics.OnDuplicate(ev.Group);
+                if (ctx.LastSeq == ev.Seq && InDoubt.Resolve(ev.SourceId, ev.Seq)) _metrics.OnApplied(ev);
+                else _metrics.OnDuplicate(ev.Group);
                 await d.AckAsync(ct);
                 return Outcome.Skipped;
             }
@@ -180,6 +227,7 @@ public sealed class WorkerRunner
                 return Outcome.Failed;
             }
 
+            Stage(d, "compute");
             var request = await ComputeAsync(ev, ctx, d, ct);
             long t2 = Clock.NowUs();
 
@@ -191,7 +239,11 @@ public sealed class WorkerRunner
                 return Outcome.Failed;
             }
 
-            var status = await _store.CommitAsync(request, ct);
+            Stage(d, "commit");
+            CommitStatus status;
+            try { status = await _store.CommitAsync(request, ct); }
+            catch (Exception) when (!ct.IsCancellationRequested) { InDoubt.Add(ev.SourceId, ev.Seq); throw; }
+            if (status == CommitStatus.Applied) InDoubt.Resolve(ev.SourceId, ev.Seq);
             if (status == CommitStatus.RecordConflict)
             {
                 // The record row changed underneath us although the cursor matched: lost update / corruption.
@@ -229,7 +281,8 @@ public sealed class WorkerRunner
                     return Outcome.Applied;
                 }
                 case CommitStatus.Duplicate:
-                    _metrics.OnDuplicate(ev.Group);
+                    if (InDoubt.Resolve(ev.SourceId, ev.Seq)) _metrics.OnApplied(ev);
+                    else _metrics.OnDuplicate(ev.Group);
                     if (!_txAck) await d.AckAsync(ct);
                     return Outcome.Skipped;
                 case CommitStatus.Gap:
@@ -436,11 +489,13 @@ public sealed class WorkerRunner
                         // An empty lane is a slot lingering on this source: the event becomes its head.
                         if (lane.Count > 0) _parked++;
                         lane.Enqueue(d);
+                        Stage(d, lane.Count > 1 ? "parked" : "lane head (waiting for a slot)");
                     }
                     else
                     {
                         lane = new Queue<IDelivery>(2);
                         lane.Enqueue(d);
+                        Stage(d, "waiting for a slot");
                         _lanes[src] = lane;
                         _ready.Enqueue(src);
                     }

@@ -6,6 +6,8 @@
 #     connected directly to Postgres (5432); logs and pids under ~/.cache/eventbench/octopus
 # usage: infra/octopus/up.sh [N=3]      extra env for the dispatchers: OCTOPUSD_ENV="OCTOPUS_X=y ..."
 #        OCTOPUSD_PREFIX: command prefix for the dispatchers, e.g. "taskset -c 12-23"
+#        OCTOPUS_PG_CONN: the dispatchers' database (default: the primary on 5432); for failover drills a multi-host
+#          string such as "host=127.0.0.1,127.0.0.1 port=5432,5433 ... target_session_attrs=read-write"
 set -euo pipefail
 cd "$(dirname "$0")"
 N=${1:-3}
@@ -68,7 +70,7 @@ HOOK_ENV=""
 : > "$STATE/pids"
 for i in $(seq 1 "$N"); do
   env OCTOPUS_MEMBER_ID="d$i" OCTOPUS_NS=octopus OCTOPUS_SCHEMA=octopus \
-      OCTOPUS_PG="host=127.0.0.1 port=5432 user=bench password=bench dbname=bench" OCTOPUS_PG_POOL="${OCTOPUS_PG_POOL:-32}" \
+      OCTOPUS_PG="${OCTOPUS_PG_CONN:-host=127.0.0.1 port=5432 user=bench password=bench dbname=bench}" OCTOPUS_PG_POOL="${OCTOPUS_PG_POOL:-32}" \
       ${HOOK_ENV} RUST_LOG="${RUST_LOG:-info}" ${OCTOPUSD_ENV:-} \
       nohup ${OCTOPUSD_PREFIX:-} "$BIN" >"$STATE/d$i.log" 2>&1 &
   echo $! >> "$STATE/pids"
