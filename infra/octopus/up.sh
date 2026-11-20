@@ -22,8 +22,9 @@ for other in eb-mosquitto eb-nanomq; do [[ $other == eb-$MQ ]] || podman stop -t
 if [[ "$(podman inspect -f '{{.State.Running}}' eb-$MQ 2>/dev/null)" != true ]]; then
   podman rm -f eb-$MQ >/dev/null 2>&1 || true
   if [[ $MQ == mosquitto ]]; then
-    cat > "$STATE/mosquitto.conf" <<'CONF'
-listener 1883 127.0.0.1
+    # EB_MQTT_BIND: listen address (default loopback; 0.0.0.0 when clients run on another machine)
+    cat > "$STATE/mosquitto.conf" <<CONF
+listener 1883 ${EB_MQTT_BIND:-127.0.0.1}
 allow_anonymous true
 persistence false
 max_inflight_messages 0
