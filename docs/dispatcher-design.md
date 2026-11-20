@@ -1,5 +1,8 @@
 # Dispatcher queue system: design (draft for review)
 
+> **Moved:** the dispatcher is now the standalone product **Octopus**, https://github.com/b4284/octopus.
+> Its `docs/design.md` is the maintained version; this copy is kept for history.
+
 Status: **draft for review, 2026-11-20; the user's decisions are in §10.** Nothing here is built yet except prototype pieces (lease manager, wire framing)
 that will be reworked to match this document.
 

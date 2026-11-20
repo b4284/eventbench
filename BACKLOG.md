@@ -30,6 +30,8 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   node-kill drill.
 
 ### B1 — Dispatcher as a separate 2–3 instance cluster · **requested**
+- **Now a standalone product: Octopus, https://github.com/b4284/octopus** (public, GPL-3.0). The design lives
+  there; this repository will only hold the adapter and the runs.
 - **From:** the dispatcher plan, step 2 ("sounds good"); the user asked for it 2026-11-20.
 - **Why:** today the dispatcher runs inside the worker process, as one instance. Production needs:
   - surviving the loss of a dispatcher;
