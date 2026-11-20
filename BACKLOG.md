@@ -218,6 +218,13 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   for the same cores). Performance runs must check that no standby is running. Two identical 16k runs gave
   55k and 20k blocking violations: compare configurations with 2-3 repeats, not single runs.
 
+### B27 — Octopus: failure drills not run yet · open
+- From the drill review, 2026-11-20. Passed so far: dispatcher kill/stop/scale-out (16k), Postgres primary
+  failover with a synchronous standby (12.9k; correct, slow recovery: B19).
+- Still to drill: MQTT broker loss and restart; a dispatcher cut off from the database while alive (its leases
+  expire under it); network partition between DCs and loss of a DC (needs the two-DC lab, B5); a database outage
+  of minutes; many workers dying at once; failover through Patroni (realistic detection time) rather than a script.
+
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
 - **Why:** one logical database with shards by group, if one primary is not enough.
