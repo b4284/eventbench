@@ -15,6 +15,20 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 
 ## Open
 
+### B0 — Bake-off: existing products before building our own dispatcher · **proposed**
+- **From:** user, 2026-11-20: "are we re-creating something that's already out there?"
+- **Why:** per-key ordered queues ("message groups", "sessions", "partition keys") are a known pattern. Building
+  our own is a long-term operating commitment, so first test what exists, with the same oracle and drills.
+- **Candidates:**
+  - MassTransit SQL transport, `PartitionedOrdered` mode: .NET; Postgres and SQL Server. Check the license.
+  - Temporal: .NET SDK; an entity workflow per source; persistence on SQL.
+  - Hatchet: an engine plus gRPC workers on Postgres; concurrency keys; no .NET SDK.
+  - DBOS partitioned queues: no .NET SDK.
+  - For reference: Kafka with key-level parallel consumption, which is already our pipelined worker
+    (matrix 10).
+- **Test:** the 24k workload with one-event publishes; order, exactly-once, blocking and drain checks; and a
+  node-kill drill.
+
 ### B1 — Dispatcher as a separate 2–3 instance cluster · **requested**
 - **From:** the dispatcher plan, step 2 ("sounds good"); the user asked for it 2026-11-20.
 - **Why:** today the dispatcher runs inside the worker process, as one instance. Production needs:
