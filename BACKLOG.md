@@ -263,7 +263,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   for the same cores). Performance runs must check that no standby is running. Two identical 16k runs gave
   55k and 20k blocking violations: compare configurations with 2-3 repeats, not single runs.
 
-### B27 — Octopus: failure drills not run yet · **mostly done** (2026-11-21)
+### B27 — Octopus: failure drills · **done** (2026-11-21; real DC partition matrix-22; DC drills on separate machines deferred, see B5)
 - Done: MQTT broker restart (found and fixed a bug), a dispatcher cut from the database, database frozen 2 min,
   Patroni leader kill/freeze (1+1), node kill, either DC killed, DC frozen 60 s (2+2; found the etcd 3.5.9 split
   brain and the multi-host client stall). Done since: a 10-minute database outage under load (matrix-19 L1); half of
