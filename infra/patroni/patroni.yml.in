@@ -1,18 +1,19 @@
-scope: octopus-lab
+scope: @SCOPE@
 name: @NAME@
 restapi:
   listen: 127.0.0.1:@API@
   connect_address: 127.0.0.1:@API@
 etcd3:
-  hosts: 127.0.0.1:2379
+  hosts: @ETCD@
 bootstrap:
   dcs:
     ttl: 20
     loop_wait: 5
     retry_timeout: 5
     maximum_lag_on_failover: 0
-    synchronous_mode: true
+    synchronous_mode: @SYNC_MODE@
     synchronous_mode_strict: true
+    synchronous_node_count: @SYNC_COUNT@
     postgresql:
       use_pg_rewind: true
       parameters:
@@ -44,7 +45,11 @@ bootstrap:
     - host all all 127.0.0.1/32 md5
     - host replication replicator 127.0.0.1/32 md5
     - host all all 0.0.0.0/0 md5
+tags:
+  dc: @DC@
 postgresql:
+  remove_data_directory_on_rewind_failure: true
+  remove_data_directory_on_diverged_timelines: true
   listen: 0.0.0.0:@PG@
   connect_address: 127.0.0.1:@PG@
   data_dir: /var/lib/postgresql/patroni/data

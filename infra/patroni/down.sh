@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Remove the Patroni pair and etcd, with their data.
-podman rm -f eb-pat1 eb-pat2 eb-etcd >/dev/null 2>&1 || true
-podman volume rm -f eb-pat1-data eb-pat2-data >/dev/null 2>&1 || true
+# Remove every Patroni node and etcd member, with their data.
+for c in $(podman ps -a --format '{{.Names}}' | grep -E '^eb-(etcd|pat[0-9]|dc[12][ab])'); do podman rm -f $c >/dev/null; done
+for v in $(podman volume ls --format '{{.Name}}' | grep -E '^eb-(pat[0-9]|dc[12][ab])-data$'); do podman volume rm -f $v >/dev/null; done
 echo "patroni cluster removed"

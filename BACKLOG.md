@@ -231,7 +231,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   expire under it); network partition between DCs and loss of a DC (needs the two-DC lab, B5); a database outage
   of minutes; many workers dying at once; failover through Patroni (realistic detection time) rather than a script.
 
-### B28 — Decision: write availability after losing one of two database nodes · **needs the owner**
+### B28 — Decision: write availability after losing one of two database nodes · **decided: 2 + 2** (2026-11-21; two nodes per DC, Patroni quorum mode ANY 2 of 3 standbys, 3 etcd members)
 - **From:** the Patroni drill T1, 2026-11-21. Two data nodes in strict synchronous mode: after a failover the new
   primary has no synchronous standby, so no commit completes until the lost node is back.
 - **Options:**

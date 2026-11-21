@@ -10,7 +10,9 @@
 #             lease; the killed node is started again r seconds later (default 30), as a crashed pod comes back. With
 #             two nodes in strict synchronous mode, no commit can complete between the failover and its return.)
 #           | patroni-freeze:<s> (freeze the leader for s seconds: a hang or partition, not a crash; tests fencing)
-#           | db-freeze:<s> (freeze both database nodes for s seconds: an outage no failover can mend)
+#           | db-freeze:<s> (freeze every database node for s seconds: an outage no failover can mend)
+#           | node-kill (SIGKILL the leader, not restarted) | dc-kill:leader|other (SIGKILL a DC: its database nodes and
+#             its etcd member) | dc-freeze:leader|other:<s> (freeze a DC for s seconds: a partition, tests fencing)
 #           | mqtt-restart (restart the MQTT broker) | dispatcher-db-cut:<i>:<s> (dispatcher i keeps running, but its
 #             database connections hang for s seconds: it goes through a proxy that is frozen)
 # env: DRILL_AT (seconds into the run, default 30); OCTOPUS_PG_CONN for the dispatchers (multi-host for pgfail)
@@ -35,6 +37,12 @@ LOG="$OUT/$NAME.log"
 timeout --signal=INT --kill-after=30 "${DRILL_TIMEOUT:-900}" dotnet "$BIN" run "$@" --Name="$NAME" --ResultsDirectory="$OUT/$NAME" --Metrics:ConsoleProgress=false > "$LOG" 2>&1 &
 BENCH=$!
 until grep -q " run: " "$LOG" 2>/dev/null; do kill -0 $BENCH 2>/dev/null || break; sleep 0.5; done
+# Patroni helpers: the node registry is ~/.cache/eventbench/patroni/nodes ("name pgport apiport dc")
+NODES_FILE=~/.cache/eventbench/patroni/nodes
+dc_of() { awk -v n="$1" '$1==n{print $4}' "$NODES_FILE"; }
+pick_dc() { local l; l=$(infra/patroni/leader.sh); if [[ $1 == leader ]]; then dc_of "$l"; elif [[ $1 == other ]]; then awk -v d="$(dc_of "$l")" '$4!=d{print $4; exit}' "$NODES_FILE"; else echo "$1"; fi; }
+dc_containers() { awk -v d="$1" '$4==d{printf "eb-%s ", $1}' "$NODES_FILE"; podman container exists "eb-etcd-$1" && echo -n "eb-etcd-$1"; }
+wait_new_leader() { for _ in $(seq 1 240); do n=$(infra/patroni/leader.sh 2>/dev/null) && [[ -n $n && $n != "$1" ]] && { echo "$(date +%T.%3N) new leader $n"; return; }; sleep 0.5; done; echo "no new leader within 120 s"; }
 sleep "$AT"
 {
   echo "$(date +%T.%3N) drill: $ACTION"
@@ -45,14 +53,18 @@ sleep "$AT"
     add) infra/octopus/add.sh ;;
     pgfail) infra/pg-standby/failover.sh ;;
     patroni-kill*) r=${ACTION#patroni-kill}; r=${r#:}; r=${r:-30}; l=$(infra/patroni/leader.sh); podman kill eb-$l >/dev/null && echo "killed leader $l"
-      t0=$(date +%s)
-      for _ in $(seq 1 120); do n=$(infra/patroni/leader.sh) && [[ $n != "$l" ]] && { echo "$(date +%T.%3N) new leader $n"; break; }; sleep 0.5; done
+      t0=$(date +%s); wait_new_leader "$l"
       sleep $(( r - ($(date +%s) - t0) > 0 ? r - ($(date +%s) - t0) : 0 )); podman start eb-$l >/dev/null; echo "$(date +%T.%3N) restarted $l"
-      for _ in $(seq 1 240); do curl -s --max-time 1 127.0.0.1:$((8007 + ${l#pat}))/patroni | grep -q '"role": *"sync_standby"\|"role": *"replica"' && { echo "$(date +%T.%3N) $l rejoined as standby"; break; }; sleep 0.5; done ;;
+      for _ in $(seq 1 240); do infra/patroni/status.sh 2>/dev/null | awk -v n="$l" '$1==n && $2!="leader" && $3=="streaming"{f=1} END{exit !f}' && { echo "$(date +%T.%3N) $l rejoined as standby"; break; }; sleep 0.5; done ;;
+    node-kill) l=$(infra/patroni/leader.sh); podman kill eb-$l >/dev/null && echo "killed leader $l (not restarted)"; wait_new_leader "$l" ;;
     patroni-freeze:*) s=${ACTION#patroni-freeze:}; l=$(infra/patroni/leader.sh); podman pause eb-$l >/dev/null && echo "froze leader $l for ${s}s"
-      for _ in $(seq 1 $((s * 2))); do n=$(curl -s --max-time 1 127.0.0.1:$((8007 + ${l#pat} % 2 + 1))/cluster | python3 -c 'import json,sys; print(next((m["name"] for m in json.load(sys.stdin)["members"] if m["role"]=="leader"), ""))' 2>/dev/null); [[ -n $n && $n != "$l" ]] && { echo "$(date +%T.%3N) new leader $n"; break; }; sleep 0.5; done
-      sleep "$s"; podman unpause eb-$l >/dev/null; echo "$(date +%T.%3N) unfroze $l" ;;
-    db-freeze:*) s=${ACTION#db-freeze:}; podman pause eb-pat1 eb-pat2 >/dev/null && echo "froze both database nodes for ${s}s"; sleep "$s"; podman unpause eb-pat1 eb-pat2 >/dev/null; echo "$(date +%T.%3N) unfroze" ;;
+      wait_new_leader "$l"; sleep "$s"; podman unpause eb-$l >/dev/null; echo "$(date +%T.%3N) unfroze $l" ;;
+    dc-kill:*) dc=$(pick_dc "${ACTION#dc-kill:}"); l=$(infra/patroni/leader.sh); c=$(dc_containers "$dc")
+      podman kill $c >/dev/null && echo "killed $dc: $c (leader was $l)"; [[ $(dc_of "$l") == "$dc" ]] && wait_new_leader "$l" ;;
+    dc-freeze:*) spec=${ACTION#dc-freeze:}; dc=$(pick_dc "${spec%%:*}"); s=${spec##*:}; l=$(infra/patroni/leader.sh); c=$(dc_containers "$dc")
+      podman pause $c >/dev/null && echo "froze $dc for ${s}s: $c (leader was $l)"; [[ $(dc_of "$l") == "$dc" ]] && wait_new_leader "$l"
+      sleep "$s"; podman unpause $c >/dev/null; echo "$(date +%T.%3N) unfroze $dc" ;;
+    db-freeze:*) s=${ACTION#db-freeze:}; c=$(awk '{printf "eb-%s ", $1}' ~/.cache/eventbench/patroni/nodes); podman pause $c >/dev/null && echo "froze every database node for ${s}s"; sleep "$s"; podman unpause $c >/dev/null; echo "$(date +%T.%3N) unfroze" ;;
     mqtt-restart) podman restart -t 1 eb-mosquitto >/dev/null; echo "$(date +%T.%3N) restarted the MQTT broker" ;;
     dispatcher-db-cut:*) s=$(cut -d: -f3 <<<"$ACTION"); kill -STOP $PROXY && echo "cut dispatcher $(cut -d: -f2 <<<"$ACTION") from the database for ${s}s"; sleep "$s"; kill -CONT $PROXY; echo "$(date +%T.%3N) reconnected" ;;
   esac
