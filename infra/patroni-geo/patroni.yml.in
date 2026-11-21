@@ -54,3 +54,5 @@ postgresql:
     replication: {username: replicator, password: replicator}
   parameters:
     unix_socket_directories: /tmp
+    # the Linux image's base config (copied to every replica) preloads pg_partman_bgw, which the macOS build lacks
+    shared_preload_libraries: pg_stat_statements

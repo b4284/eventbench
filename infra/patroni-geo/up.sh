@@ -39,7 +39,15 @@ done
 for n in "dc2a 5441 8008" "dc2b 5442 8009"; do set -- $n
   render $1 $M4 $2 $3 dc2 '~/octolab/data/'$1 '~/octolab/env/bin' /bin/true > "$STATE/$1.yml"
   scp -q "$STATE/$1.yml" m4mini:octolab/$1.yml
-  ssh -o BatchMode=yes m4mini "cd ~/octolab; sed -i '' \"s|~/|\$HOME/|g\" $1.yml; if [ -f $1.pid ] && kill -0 \$(cat $1.pid) 2>/dev/null; then :; else mkdir -p data && chmod 700 data; nohup ~/octolab/env/bin/patroni ~/octolab/$1.yml > $1.log 2>&1 & echo \$! > $1.pid; fi"
+  ssh -o BatchMode=yes m4mini "cd ~/octolab; sed -i '' \"s|~/|\$HOME/|g\" $1.yml; mkdir -p data && chmod 700 data"
+  # macOS 15 Local Network privacy: a process that outlives its ssh session gets "No route to host" for every other
+  # LAN address. So Patroni (and the Postgres it starts) stays attached to an ssh session held open from here;
+  # its log streams back to $STATE/<node>.log. Killing that ssh (or the laptop losing m4mini) ends the node.
+  if [[ -f "$STATE/$1.ssh.pid" ]] && kill -0 "$(cat "$STATE/$1.ssh.pid")" 2>/dev/null; then :; else
+    setsid nohup ssh -n -o BatchMode=yes -o ServerAliveInterval=5 -o ServerAliveCountMax=3 m4mini \
+      "exec ~/octolab/env/bin/patroni ~/octolab/$1.yml" >> "$STATE/$1.log" 2>&1 < /dev/null &
+    echo $! > "$STATE/$1.ssh.pid"
+  fi
 done
 # HAProxy: the leader, wherever it is
 {
