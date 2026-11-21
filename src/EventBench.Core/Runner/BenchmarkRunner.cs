@@ -63,7 +63,17 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
             throw new InvalidOperationException($"AckMode=InTransaction is not supported by store '{store.Name}' with broker '{broker.Name}'.");
 
         _phase = "setup";
-        await store.SetupAsync(ct);
+        var wl = cfg.Workload;
+        if (wl.ShardCount > 1)
+        {
+            int ownedGroups = topology.Groups.Count(g => wl.OwnsGroup(g.Id));
+            log($"shard {wl.ShardIndex} of {wl.ShardCount}: {ownedGroups} groups, "
+                + $"{topology.Groups.Where(g => wl.OwnsGroup(g.Id)).Sum(g => g.SourceCount):N0} sources, "
+                + $"{topology.Groups.Where(g => wl.OwnsGroup(g.Id)).Sum(g => g.RatePerGroup):N0} events/s");
+        }
+        // a shared store is set up by shard 0 only (an in-memory store is per process: every shard sets up its own)
+        if (wl.ShardIndex == 0 || store.Name == "inmemory") await store.SetupAsync(ct);
+        else log("store setup left to shard 0");
         await broker.SetupAsync(ct);
         result.SetupSeconds = sw.Elapsed.TotalSeconds;
         log($"setup done in {result.SetupSeconds:F1}s");
@@ -82,7 +92,7 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
         var consumers = new List<IEventConsumer>();
         var workerTasks = new List<Task>();
         var runnersByGroup = new List<List<WorkerRunner>>();
-        foreach (var g in topology.Groups)
+        foreach (var g in topology.Groups.Where(g => wl.OwnsGroup(g.Id)))
         {
             var groupRunners = new List<WorkerRunner>();
             runnersByGroup.Add(groupRunners);
@@ -108,14 +118,15 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
         if (cfg.Workload.Producers > 0)
         {
             // Shared pool: sources spread round-robin, so every producer serves many groups.
-            int n = Math.Min(cfg.Workload.Producers, topology.TotalSources);
+            var mine = plan.Scripts.Where(s => wl.OwnsGroup(s.GroupId)).ToArray();
+            int n = Math.Min(cfg.Workload.Producers, mine.Length);
             for (int p = 0; p < n; p++)
-                AddProducer($"p{p}", plan.Scripts.Where((_, sid) => sid % n == p).ToArray());
+                AddProducer($"p{p}", mine.Where((_, i) => i % n == p).ToArray());
         }
         else
         {
             int shards = Math.Max(1, cfg.Workload.ProducersPerGroup);
-            foreach (var g in topology.Groups)
+            foreach (var g in topology.Groups.Where(g => wl.OwnsGroup(g.Id)))
                 for (int shard = 0; shard < shards; shard++)
                     AddProducer($"{g.Name}/{shard}", Enumerable.Range(0, g.SourceCount).Where(i => i % shards == shard)
                         .Select(i => plan.Scripts[g.FirstSourceId + i]).ToArray());
@@ -125,9 +136,17 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
         {
             // ---- run ----
             long startUs = Clock.NowUs() + 100_000;
+            if (wl.StartAtUnixMs > 0)
+            {
+                startUs = wl.StartAtUnixMs * 1000;
+                long waitUs = startUs - Clock.NowUs();
+                if (waitUs < 0) log($"WARNING: the common start (StartAtUnixMs) passed {-waitUs / 1000} ms before setup ended");
+                else log($"waiting {waitUs / 1000} ms for the common start");
+            }
             long endUs = startUs + (long)(cfg.Workload.DurationSeconds * 1_000_000);
             metrics.MeasureFromUs = startUs + (long)(cfg.Workload.WarmupSeconds * 1_000_000);
-            result.RunStartT = samplerClock.Elapsed.TotalSeconds + 0.1;
+            // (the steady-state window starts when producing does: after the wait for a common start)
+            result.RunStartT = samplerClock.Elapsed.TotalSeconds + Math.Max(0, startUs - Clock.NowUs()) / 1e6;
             _phase = "run";
             log($"run: {cfg.Workload.DurationSeconds}s (warmup {cfg.Workload.WarmupSeconds}s), {producers.Count} producers, {workerTasks.Count} workers");
             var phaseSw = Stopwatch.StartNew();
@@ -205,7 +224,8 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
         {
             result.BrokerBacklog = await broker.GetBacklogAsync(CancellationToken.None);
             log("verifying end state against the oracle ...");
-            result.Oracle = await StateOracle.VerifyAsync(plan, store, metrics, result.BrokerBacklog, CancellationToken.None);
+            result.Oracle = await StateOracle.VerifyAsync(plan, store, metrics, result.BrokerBacklog, CancellationToken.None,
+                sid => wl.OwnsGroup(plan.Scripts[sid].GroupId));
         }
         catch (Exception ex)
         {

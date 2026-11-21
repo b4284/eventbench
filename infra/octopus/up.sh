@@ -19,6 +19,10 @@ mkdir -p "$STATE"
 # MQTT broker: EB_MQTT=mosquitto (single-threaded) or nanomq (multi-threaded, MQTT 5)
 MQ=${EB_MQTT:-nanomq}
 for other in eb-mosquitto eb-nanomq; do [[ $other == eb-$MQ ]] || podman stop -t 5 $other >/dev/null 2>&1 || true; done
+# a running Mosquitto listening on another address than requested is recreated (remote clients need 0.0.0.0)
+if [[ $MQ == mosquitto ]] && ! grep -qx "listener 1883 ${EB_MQTT_BIND:-127.0.0.1}" "$STATE/mosquitto.conf" 2>/dev/null; then
+  podman rm -f eb-mosquitto >/dev/null 2>&1 || true
+fi
 if [[ "$(podman inspect -f '{{.State.Running}}' eb-$MQ 2>/dev/null)" != true ]]; then
   podman rm -f eb-$MQ >/dev/null 2>&1 || true
   if [[ $MQ == mosquitto ]]; then

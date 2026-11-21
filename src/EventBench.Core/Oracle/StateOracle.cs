@@ -44,8 +44,9 @@ public static class StateOracle
     }
 
     public static async Task<OracleReport> VerifyAsync(WorkloadPlan plan, IStateStore store, MetricsHub metrics,
-        long brokerBacklog, CancellationToken ct)
+        long brokerBacklog, CancellationToken ct, Func<int, bool>? owns = null)
     {
+        owns ??= _ => true;
         var sw = System.Diagnostics.Stopwatch.StartNew();
         var report = new OracleReport();
         var scripts = plan.Scripts;
@@ -85,8 +86,11 @@ public static class StateOracle
 
         long cursorMismatch = 0, missingCursor = 0, countMismatch = 0, foldMismatch = 0, openRecords = 0, uploadMismatch = 0;
         long expectedEvents = 0, expectedRecords = 0;
+        long ownedSources = 0;
         for (int sid = 0; sid < scripts.Length; sid++)
         {
+            if (!owns(sid)) continue;   // another shard's source
+            ownedSources++;
             var e = scripts[sid];
             var a = actual[sid];
             expectedEvents += e.LastSeq;
@@ -119,11 +123,11 @@ public static class StateOracle
                 Sample(report, $"source {sid}: {a.Uploads} uploads, expected {e.Uploads} (or checksum mismatch)");
             }
         }
-        report.SourcesVerified = scripts.Length;
+        report.SourcesVerified = ownedSources;
         report.ExpectedEvents = expectedEvents;
 
         Add(report, "cursors", missingCursor == 0 && cursorMismatch == 0 && unknownCursors == 0,
-            $"{scripts.Length - missingCursor - cursorMismatch}/{scripts.Length} source cursors at the expected last sequence"
+            $"{ownedSources - missingCursor - cursorMismatch}/{ownedSources} source cursors at the expected last sequence"
             + (missingCursor > 0 ? $", {missingCursor} missing" : "") + (unknownCursors > 0 ? $", {unknownCursors} unknown" : ""));
         Add(report, "records_complete", openRecords == 0,
             openRecords == 0 ? $"all {report.RecordsVerified:N0} records are Completed" : $"{openRecords:N0} records not Completed");

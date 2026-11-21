@@ -91,6 +91,19 @@ public sealed class WorkloadOptions
     /// large messages keep their configured rate. Workers sized by EventsPerSecondPerWorker scale along.
     /// </summary>
     public double RateMultiplier { get; set; } = 1.0;
+
+    /// <summary>
+    /// Several benchmark processes (e.g. on different machines) can share one run: each builds the same topology
+    /// (same seed) and takes the groups whose id % ShardCount == ShardIndex: it produces their events, runs their
+    /// workers and verifies their sources. Shard 0 sets up the shared store; the others skip that.
+    /// </summary>
+    public int ShardCount { get; set; } = 1;
+    public int ShardIndex { get; set; } = 0;
+
+    /// <summary>Start producing at this Unix time (ms) instead of right after setup: a common start for shards.</summary>
+    public long StartAtUnixMs { get; set; } = 0;
+
+    public bool OwnsGroup(int groupId) => ShardCount <= 1 || groupId % ShardCount == ShardIndex;
 }
 
 public sealed class SlowEventOptions
