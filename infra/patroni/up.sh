@@ -6,6 +6,7 @@
 #   Quorum mode, synchronous_node_count 2: a commit waits for ANY 2 of the 3 standbys, so it always reaches the
 #   other DC. After losing a node or a DC, Patroni lowers the quorum to the standbys still alive; writes go on.
 #
+# PATRONI_TTL / PATRONI_LOOP / PATRONI_RETRY: leader lease, loop and retry (default 20 / 5 / 5 s).
 # Node i (1-based): Postgres on 5440+i, REST API on 8007+i. The node list is written to $STATE/nodes
 # ("name pgport apiport dc" per line) for psql.sh, leader.sh, heal.sh and the drills.
 # Clients: OCTOPUS_PG_CONN / configs/overlay-patroni*.json (multi-host, target_session_attrs=read-write).
@@ -44,7 +45,7 @@ for nd in $NODES; do
   i=$((i + 1)); name=${nd%%:*}; dc=${nd##*:}; pg=$((5440 + i)); api=$((8007 + i))
   echo "$name $pg $api $dc" >> "$STATE/nodes"
   sed -e "s/@NAME@/$name/g" -e "s/@PG@/$pg/g" -e "s/@API@/$api/g" -e "s/@ETCD@/$HOSTS/g" -e "s/@DC@/$dc/g" \
-      -e "s/@SYNC_MODE@/$SYNC_MODE/g" -e "s/@SYNC_COUNT@/$SYNC_COUNT/g" -e "s/@SCOPE@/octopus-lab-${LAYOUT/+/x}/g" \
+      -e "s/@TTL@/${PATRONI_TTL:-20}/g" -e "s/@LOOP@/${PATRONI_LOOP:-5}/g" -e "s/@RETRY@/${PATRONI_RETRY:-5}/g" -e "s/@SYNC_MODE@/$SYNC_MODE/g" -e "s/@SYNC_COUNT@/$SYNC_COUNT/g" -e "s/@SCOPE@/octopus-lab-${LAYOUT/+/x}/g" \
       patroni.yml.in > "$STATE/$name.yml"
   podman container exists eb-$name && continue
   podman run -d --name eb-$name --network host --shm-size=1g --user postgres \

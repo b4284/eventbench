@@ -147,6 +147,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
         r["octopus_mqtt_received_total"] = _producerConns.Concat(_workerConns).Sum(c => Interlocked.Read(ref c.Received));
         r["octopus_publish_retries_total"] = _producers.Sum(p => Interlocked.Read(ref p.Retries));
         r["octopus_missing_reports_total"] = Interlocked.Read(ref MissingReports);
+        r["octopus_publish_stuck"] = _producers.Sum(p => p.StuckNow);
         // dispatcher processes' CPU (they run outside containers)
         string? f = _o.DispatcherPidFile?.Replace("~", Environment.GetEnvironmentVariable("HOME") ?? "~");
         if (f != null && File.Exists(f))

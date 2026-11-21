@@ -1,0 +1,11 @@
+14:08:05 T10-1-dc-kill-leader-dc-ttl10 -> exit 1
+T10-1 fails=1 14:07:15.977 drill: dc-kill:leader killed dc2: eb-dc2a eb-dc2b eb-etcd-dc2 (leader was dc2a) 14:07:36.411 new leader dc1a 
+14:10:31 T10-2-dc-kill-leader-dc-ttl10 -> exit 1
+T10-2 fails=1 14:09:38.815 drill: dc-kill:leader killed dc1: eb-dc1a eb-dc1b eb-etcd-dc1 (leader was dc1a) 14:09:59.908 new leader dc2a 
+14:13:02 T10-3-dc-kill-leader-dc-ttl10 -> exit 1
+T10-3 fails=1 14:12:06.571 drill: dc-kill:leader killed dc2: eb-dc2a eb-dc2b eb-etcd-dc2 (leader was dc2a) 14:12:27.314 new leader dc1a 
+14:15:22 T10-4-dc-kill-leader-dc-ttl10 -> exit 1
+T10-4 fails=1 14:14:23.394 drill: dc-kill:leader killed dc1: eb-dc1a eb-dc1b eb-etcd-dc1 (leader was dc1a) 14:14:45.060 new leader dc2b 
+14:17:48 T10-5-dc-kill-leader-dc-ttl10 -> exit 1
+T10-5 fails=1 14:16:51.121 drill: dc-kill:leader killed dc2: eb-dc2a eb-dc2b eb-etcd-dc2 (leader was dc2b) 14:17:11.728 new leader dc1a 
+LOOP-DONE

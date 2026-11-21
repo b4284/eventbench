@@ -159,7 +159,15 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - **Next:** apply the same to `octopus-client` (`running: HashMap<String, Running>`), and add the invariant check
   to the dispatcher too (refuse to hand a worker more than its declared slots).
 
-### B19 — Octopus: recovery after a database failover · open
+### B19 — Octopus: recovery after a database failover · **measured** (2026-11-21, matrix-19 H, T10)
+- Leader's DC killed (2+2, HAProxy): writes stop ~2 s after the kill; a new leader 17-21 s after it; throughput back
+  above half within **2-6 s** of the new leader (HAProxy marking it up, reconnects, Octopus resuming); one outlier
+  31 s. The outage is Patroni's detection: its leader lease cannot go below 20 s (a 10 s setting is still granted
+  as 20 s by etcd). Planned switchovers (`patronictl switchover`) avoid the detection time.
+- 10-minute database freeze under load: no loss, no memory growth (dispatchers flat at 0.5-0.6 GB), producers'
+  "publish stuck" gauge raised (1,804) and cleared, drained 10 s after the database returned.
+- Left: the 31 s outlier (H10); the catch-up rate after long outages is bounded by this host's capacity.
+- Earlier text:
 - D6 (12.9k, synchronous standby): no loss, drained in 9 s, but blocking violations 289k vs 107k in the baseline
   and e2e p99 25 s vs 4 s. Find where the minutes of recovery go (publish retries backing off to 2 s; worker
   retries; ready heads dropped on the lapsed lease) and shorten them.

@@ -7,9 +7,9 @@ etcd3:
   hosts: @ETCD@
 bootstrap:
   dcs:
-    ttl: 20
-    loop_wait: 5
-    retry_timeout: 5
+    ttl: @TTL@
+    loop_wait: @LOOP@
+    retry_timeout: @RETRY@
     maximum_lag_on_failover: 0
     synchronous_mode: @SYNC_MODE@
     synchronous_mode_strict: true

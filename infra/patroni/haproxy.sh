@@ -6,7 +6,7 @@
 set -euo pipefail
 STATE=~/.cache/eventbench/patroni
 {
-  cat <<'CFG'
+  cat <<CFG
 global
     maxconn 8000
 defaults
@@ -18,7 +18,7 @@ listen primary
     bind 127.0.0.1:6440
     option httpchk GET /primary
     http-check expect status 200
-    default-server inter 1s fall 2 rise 2 on-marked-down shutdown-sessions
+    default-server inter 1s fall ${HAPROXY_FALL:-2} rise ${HAPROXY_RISE:-2} on-marked-down shutdown-sessions
 CFG
   while read -r name pg api dc; do echo "    server $name 127.0.0.1:$pg check port $api"; done < "$STATE/nodes"
 } > "$STATE/haproxy.cfg"
