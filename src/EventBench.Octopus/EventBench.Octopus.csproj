@@ -14,4 +14,8 @@
     <ProjectReference Include="..\..\..\octopus\clients\dotnet\Octopus.Client\Octopus.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MySqlConnector" Version="2.6.2" />
+  </ItemGroup>
+
 </Project>

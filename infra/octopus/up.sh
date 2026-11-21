@@ -91,7 +91,10 @@ PSQL=${EB_PSQL:-"podman exec -i eb-postgres psql -U bench -d bench -v ON_ERROR_S
 BACKEND=${OCTOPUS_BACKEND:-pg}
 MSSQL_PASSWORD=${MSSQL_SA_PASSWORD:-EventBench#2026}
 mssql() { podman exec -i "${MSSQL_CONTAINER:-eb-mssql}" /opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P "$MSSQL_PASSWORD" -I -b "$@"; }
-if [[ $BACKEND == mssql ]]; then
+mysqlc() { podman exec -i "${MYSQL_CONTAINER:-eb-mysql}" mysql -uroot -p"${MYSQL_ROOT_PASSWORD:-bench}" -N -B "$@" 2>/dev/null; }
+if [[ $BACKEND == mysql ]]; then
+  mysqlc -e "DROP DATABASE IF EXISTS octopus; CREATE DATABASE octopus"
+elif [[ $BACKEND == mssql ]]; then
   mssql -Q "IF DB_ID('octopus') IS NOT NULL BEGIN ALTER DATABASE octopus SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE octopus; END;
             CREATE DATABASE octopus
               ON (NAME = octopus_data, FILENAME = '/var/opt/mssql/data/octopus.mdf', SIZE = 2GB, FILEGROWTH = 1GB)
@@ -118,6 +121,7 @@ conn_for() {
 for i in $(seq 1 "$N"); do
   env OCTOPUS_MEMBER_ID="d$i" OCTOPUS_NS=octopus OCTOPUS_SCHEMA=octopus OCTOPUS_BACKEND="$BACKEND" \
       OCTOPUS_PG="$(conn_for "$i")" OCTOPUS_PG_POOL="${OCTOPUS_PG_POOL:-32}" \
+      OCTOPUS_MYSQL="${OCTOPUS_MYSQL_CONN:-mysql://root:${MYSQL_ROOT_PASSWORD:-bench}@127.0.0.1:3306/octopus}" \
       OCTOPUS_MSSQL="${OCTOPUS_MSSQL_CONN:-server=tcp:127.0.0.1,1433;database=octopus;user=sa;password=$MSSQL_PASSWORD;TrustServerCertificate=true}" \
       ${HOOK_ENV} RUST_LOG="${RUST_LOG:-info}" ${OCTOPUSD_ENV:-} \
       nohup ${OCTOPUSD_PREFIX:-} "$BIN" >"$STATE/d$i.log" 2>&1 &
@@ -125,7 +129,10 @@ for i in $(seq 1 "$N"); do
   [[ $i -eq 1 ]] && sleep 1   # the first one creates the schema
 done
 for _ in $(seq 1 60); do
-  if [[ $BACKEND == mssql ]]; then
+  if [[ $BACKEND == mysql ]]; then
+    n=$(mysqlc -D octopus -e "SELECT COUNT(*) FROM octopus_member WHERE heartbeat > UTC_TIMESTAMP(6) - INTERVAL 5 SECOND" | head -1)
+    n=${n:-0}
+  elif [[ $BACKEND == mssql ]]; then
     n=$(mssql -d octopus -h -1 -W -Q "SET NOCOUNT ON; IF OBJECT_ID('octopus.member') IS NULL SELECT 0 ELSE SELECT COUNT(*) FROM octopus.member WHERE heartbeat > DATEADD(SECOND, -5, SYSUTCDATETIME())" 2>/dev/null | tr -d ' \r' | head -1)
     n=${n:-0}
   else

@@ -21,7 +21,8 @@ public sealed class OctopusBrokerOptions
     public string Namespace { get; set; } = "octopus";
     /// <summary>Direct connection for setup, backlog and stats (Octopus's own tables).</summary>
     public string AdminConnectionString { get; set; } = "";
-    /// <summary>The database Octopus runs on (for the admin queries): "postgres" or "sqlserver".</summary>
+    /// <summary>The database Octopus runs on (for the admin queries): "postgres", "sqlserver" or "mysql" (tables named
+    /// &lt;Schema&gt;_grp, ... in the connection's database).</summary>
     public string AdminDatabase { get; set; } = "postgres";
     public string Schema { get; set; } = "octopus";
     /// <summary>MQTT connections shared by the producers, and by the workers.</summary>
@@ -69,11 +70,15 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
     public static string Group(int id) => $"g{id}";
 
     private bool SqlServer => _o.AdminDatabase.Equals("sqlserver", StringComparison.OrdinalIgnoreCase);
+    private bool MySql => _o.AdminDatabase.Equals("mysql", StringComparison.OrdinalIgnoreCase);
+    /// <summary>A table of Octopus's: schema.name, or on MySQL prefix_name.</summary>
+    private string T(string name) => MySql ? $"{_o.Schema}_{name}" : $"{_o.Schema}.{name}";
 
     private async Task<System.Data.Common.DbConnection> OpenAdminAsync(CancellationToken ct)
     {
         System.Data.Common.DbConnection conn = SqlServer
             ? new Microsoft.Data.SqlClient.SqlConnection(_o.AdminConnectionString)
+            : MySql ? new MySqlConnector.MySqlConnection(_o.AdminConnectionString)
             : new NpgsqlConnection(_o.AdminConnectionString);
         await conn.OpenAsync(ct);
         return conn;
@@ -92,16 +97,27 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
         {
             string live = SqlServer
                 ? $"SELECT COUNT_BIG(*) FROM {_o.Schema}.member WHERE heartbeat > DATEADD(SECOND, -10, SYSUTCDATETIME())"
+                : MySql ? $"SELECT COUNT(*) FROM {T("member")} WHERE heartbeat > UTC_TIMESTAMP(6) - INTERVAL 10 SECOND"
                 : $"SELECT count(*) FROM {_o.Schema}.member WHERE heartbeat > now() - interval '10 seconds'";
             await using (var cmd = Command(conn, live))
             {
-                long n = (long)(await cmd.ExecuteScalarAsync(ct))!;
+                long n = Convert.ToInt64(await cmd.ExecuteScalarAsync(ct));
                 if (n == 0) throw new InvalidOperationException("no live Octopus dispatcher (start them with infra/octopus/up.sh)");
                 _log($"octopus: {n} live dispatchers");
             }
             // Register every group now, so the dispatchers own them before the first event.
             var groups = _topology.Groups.Select(g => Group(g.Id)).ToArray();
-            if (SqlServer)
+            if (MySql)
+            {
+                await using var cmd = Command(conn,
+                    $"INSERT IGNORE INTO {T("grp")} (name) SELECT j.v FROM JSON_TABLE(@j, '$[*]' COLUMNS (v VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin PATH '$')) j");
+                var p = cmd.CreateParameter();
+                p.ParameterName = "@j";
+                p.Value = System.Text.Json.JsonSerializer.Serialize(groups);
+                cmd.Parameters.Add(p);
+                await cmd.ExecuteNonQueryAsync(ct);
+            }
+            else if (SqlServer)
             {
                 // (duplicates are ignored by the key: IGNORE_DUP_KEY)
                 await using var cmd = Command(conn,
@@ -167,10 +183,10 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
     public async Task<long> GetBacklogAsync(CancellationToken ct)
     {
         await using var conn = await OpenAdminAsync(ct);
-        await using var cmd = Command(conn, SqlServer
-            ? $"SELECT COUNT_BIG(*) FROM {_o.Schema}.event e JOIN {_o.Schema}.source s ON s.id = e.sid WHERE e.epoch > s.epoch OR (e.epoch = s.epoch AND e.seq > s.last_seq)"
+        await using var cmd = Command(conn, SqlServer || MySql
+            ? $"SELECT COUNT(*) FROM {T("event")} e JOIN {T("source")} s ON s.id = e.sid WHERE e.epoch > s.epoch OR (e.epoch = s.epoch AND e.seq > s.last_seq)"
             : $"SELECT count(*) FROM {_o.Schema}.event e JOIN {_o.Schema}.source s ON s.id = e.sid WHERE (e.epoch, e.seq) > (s.epoch, s.last_seq)");
-        return (long)(await cmd.ExecuteScalarAsync(ct))!;
+        return Convert.ToInt64(await cmd.ExecuteScalarAsync(ct));
     }
 
     public async Task<IReadOnlyDictionary<string, double>> SampleAsync(CancellationToken ct)
