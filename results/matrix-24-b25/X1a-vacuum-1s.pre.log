@@ -1,0 +1,18 @@
+NOTICE:  drop cascades to 16 other objects
+DETAIL:  drop cascades to table octopus.grp
+drop cascades to table octopus.source
+drop cascades to table octopus.event
+drop cascades to table octopus.epoch_end
+drop cascades to table octopus.skipped
+drop cascades to table octopus.late
+drop cascades to table octopus.member
+drop cascades to table octopus.lease
+drop cascades to function octopus.settle(bigint[])
+drop cascades to function octopus.publish(text[],text[],bigint[],bigint[],bytea[],bigint[],bigint[],bigint[],bigint[],boolean)
+drop cascades to function octopus.commit_many(text[],bigint[],bigint[],bytea[],text)
+drop cascades to function octopus.remove_next(text[],bigint[],bigint[])
+drop cascades to function octopus.advance(text[],bigint[],bigint[])
+drop cascades to function octopus.skip(text,bigint,bigint,bigint,text)
+drop cascades to function octopus.purge_applied(integer)
+drop cascades to table octopus.meta
+octopus: 3 dispatchers up (pids 1050112 1050149 1050150 )

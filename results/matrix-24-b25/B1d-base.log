@@ -1,0 +1,192 @@
+17:36:32.970 topology: 500 groups, 16,000 sources, offered load 15,939 events/s, 647 workers
+17:36:33.018 broker: Octopus dispatchers via MQTT 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook
+17:36:33.018 store:  postgres @ 127.0.0.1:6432/bench (pool max 1000), unlogged=False, fillfactor=70, group commit (max 32/tx, 16 executors)
+17:36:33.276 postgres store: schema created, 16,000 source cursors seeded
+17:36:33.301 octopus: 3 live dispatchers
+17:36:33.351 octopus: all 500 groups owned (d3=167, d2=183, d1=150); 4 producer + 2 worker MQTT connections
+17:36:33.351 setup done in 0.4s
+17:36:33.386 run: 60s (warmup 10s), 32 producers, 647 workers
+17:37:35.785 closing: 36,206 completion events emitted
+17:37:43.576 drained in 7.8s
+17:37:44.307 verifying end state against the oracle ...
+17:37:44.487 postgres store: 58,846 commit batches, 999,471 batched commits (avg 17.0/tx), 0 fallbacks, 0 preloaded contexts used
+
+# B1d-base — FAIL ❌
+
+- Broker: `Octopus dispatchers via MQTT 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook`
+- Store: `postgres @ 127.0.0.1:6432/bench (pool max 1000), unlogged=False, fillfactor=70, group commit (max 32/tx, 16 executors)`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 4
+- Topology: 500 groups, 16000 sources, 647 workers, offered 15939.397 ev/s
+- Phases: run 60.32s, closing 2.077s, drain 7.79s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 999929 | 999929 | 15956.878 | 14922.041 | 20889.8 | 0 | 0 | 0 | 458 | 5159 | 497713 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 796562 | 3380.925 | 922.111 | 10444.799 | 20758.527 | 31326.207 | 56197.119 |
+| e2e_from_send | 796562 | 3351.453 | 884.223 | 10412.031 | 20725.759 | 31309.823 | 56197.119 |
+| producer_lag | 796562 | 29.47 | 4.143 | 87.679 | 339.711 | 567.807 | 978.943 |
+| publish_call | 999929 | 69.108 | 51.679 | 140.287 | 306.687 | 472.063 | 940.031 |
+| queue_wait | 796562 | 3287.032 | 807.935 | 10362.879 | 20692.991 | 31260.671 | 56197.119 |
+| broker_dwell | 796562 | 3243.149 | 759.807 | 10313.727 | 20660.223 | 31211.519 | 56164.351 |
+| receive_call | 812581 | 37.116 | 14.647 | 94.719 | 334.079 | 475.647 | 600.575 |
+| ctx_load | 796562 | 15.982 | 11.527 | 34.079 | 70.527 | 116.479 | 199.039 |
+| process | 796562 | 10.761 | 0.003 | 0.005 | 0.074 | 2621.439 | 3108.863 |
+| ctx_commit | 796562 | 37.447 | 30.383 | 76.223 | 131.711 | 182.655 | 426.239 |
+| ack | 796529 | 0.012 | 0.004 | 0.008 | 0.055 | 1.397 | 68.415 |
+| service | 796562 | 64.421 | 47.775 | 98.879 | 171.775 | 2682.879 | 3260.415 |
+| e2e_large | 356 | 2871.115 | 2863.103 | 3954.687 | 5419.007 | 5963.775 | 5963.775 |
+| ready_wait | 796562 | 372.135 | 227.455 | 893.439 | 2031.615 | 2854.911 | 4677.631 |
+| blocked | 796562 | 303.457 | 189.183 | 743.935 | 1487.871 | 2240.511 | 3043.327 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 14922.041 | 18318 |
+| applied_total | 529289.551 | 880537 |
+| bench_cpu_cores | 5.806 | 7.086 |
+| bench_cpu_pct | 24.193 | 29.53 |
+| bench_gc_gen0 | 2.061 | 4 |
+| bench_gc_gen1 | 0.735 | 2 |
+| bench_gc_gen2 | 0.551 | 2 |
+| bench_gc_heap_mb | 1500.388 | 2028.7 |
+| bench_mem_mb | 2205.247 | 2561.1 |
+| bench_threadpool_queue | 257.286 | 1379 |
+| bench_threadpool_threads | 43.531 | 44 |
+| broker_backlog | 49022.571 | 78272 |
+| ctr_eb_mosquitto_cpu_pct | 65.421 | 69.39 |
+| ctr_eb_mosquitto_mem_mb | 8.622 | 15.6 |
+| ctr_eb_pgbouncer_2_cpu_pct | 21.252 | 22.48 |
+| ctr_eb_pgbouncer_2_mem_mb | 15.322 | 16.3 |
+| ctr_eb_pgbouncer_3_cpu_pct | 20.109 | 21.88 |
+| ctr_eb_pgbouncer_3_mem_mb | 15.233 | 15.9 |
+| ctr_eb_pgbouncer_4_cpu_pct | 21.946 | 23.99 |
+| ctr_eb_pgbouncer_4_mem_mb | 15.539 | 16.1 |
+| ctr_eb_pgbouncer_cpu_pct | 20.081 | 21.69 |
+| ctr_eb_pgbouncer_mem_mb | 15.422 | 16 |
+| ctr_eb_postgres_cpu_pct | 886.132 | 960.15 |
+| ctr_eb_postgres_mem_mb | 5762.833 | 5898.5 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 79.092 | 82.53 |
+| in_flight | 48828.49 | 80567 |
+| nacks_per_s | 0 | 0 |
+| octopus_dispatcher_cores | 1.853 | 1.94 |
+| octopus_dispatchers_alive | 3 | 3 |
+| octopus_items_sent_total | 1084406.02 | 1833226 |
+| octopus_missing_reports_total | 0 | 0 |
+| octopus_mqtt_received_total | 212097.184 | 356108 |
+| octopus_mqtt_sent_total | 279060.163 | 478182 |
+| octopus_publish_retries_total | 0 | 0 |
+| octopus_publish_stuck | 0 | 0 |
+| pg_active_acks | 0 | 0 |
+| pg_active_commits | 5.286 | 12 |
+| pg_active_loads | 7.735 | 34 |
+| pg_active_polls | 0 | 0 |
+| pg_active_sends | 0 | 0 |
+| pg_cache_hit_pct | 99.99 | 100 |
+| pg_conn_active | 16.041 | 32 |
+| pg_conn_idle | 243.204 | 255 |
+| pg_conn_idle_in_tx | 0 | 0 |
+| pg_conn_lock_wait | 0.653 | 5 |
+| pg_conn_total | 259.245 | 260 |
+| pg_db_size_mb | 3733.763 | 4320.8 |
+| pg_deadlocks | 0 | 0 |
+| pg_rollbacks_per_s | 0 | 0 |
+| pg_temp_mb_per_s | 0 | 0 |
+| pg_tps | 18189.745 | 21029.9 |
+| pg_tup_del_per_s | 42122.8 | 52701.9 |
+| pg_tup_fetch_per_s | 390818.778 | 432654.4 |
+| pg_tup_ins_per_s | 55526.492 | 72732.9 |
+| pg_tup_upd_per_s | 40537.494 | 45561.7 |
+| pg_wal_mb_per_s | 114.881 | 222.66 |
+| pgb_cl_active | 245.694 | 267 |
+| pgb_cl_waiting | 4.245 | 52 |
+| pgb_maxwait_ms | 3.007 | 36.83 |
+| pgb_sv_active | 8.735 | 48 |
+| pgb_sv_idle | 39.265 | 48 |
+| pgb_sv_used | 0 | 0 |
+| produced_per_s | 15956.878 | 19323.5 |
+| produced_total | 578118.041 | 961104 |
+| publish_mb_per_s | 51.79 | 86.36 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 138,805 records are Completed |
+| record_counts | pass | 138,805 records found, 138,805 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 458 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 999,929 events applied by workers, 999,929 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+| runtime_cross_source_blocking | **FAIL** | 497,713 events waited > 100 ms while a worker slot of their group was idle (4 slot(s)/worker; blocked p99 1488 ms, max 3042 ms) |
+
+## Cross-source blocking samples
+
+- [cross_source_blocking] source 2565 seq 22: ready 111 ms before start, 108 ms of it with an idle slot in group 77
+- [cross_source_blocking] source 8666 seq 3: ready 112 ms before start, 112 ms of it with an idle slot in group 300
+- [cross_source_blocking] source 6370 seq 11: ready 116 ms before start, 116 ms of it with an idle slot in group 218
+- [cross_source_blocking] source 12110 seq 11: ready 112 ms before start, 112 ms of it with an idle slot in group 387
+- [cross_source_blocking] source 14231 seq 27: ready 106 ms before start, 106 ms of it with an idle slot in group 456
+- [cross_source_blocking] source 15634 seq 7: ready 101 ms before start, 101 ms of it with an idle slot in group 486
+- [cross_source_blocking] source 8215 seq 9: ready 108 ms before start, 108 ms of it with an idle slot in group 277
+- [cross_source_blocking] source 14403 seq 4: ready 110 ms before start, 110 ms of it with an idle slot in group 459
+- [cross_source_blocking] source 11208 seq 7: ready 105 ms before start, 105 ms of it with an idle slot in group 365
+- [cross_source_blocking] source 461 seq 4: ready 137 ms before start, 126 ms of it with an idle slot in group 16
+- [cross_source_blocking] source 14065 seq 10: ready 181 ms before start, 179 ms of it with an idle slot in group 447
+- [cross_source_blocking] source 1813 seq 9: ready 194 ms before start, 174 ms of it with an idle slot in group 52
+- [cross_source_blocking] source 2973 seq 14: ready 111 ms before start, 111 ms of it with an idle slot in group 97
+- [cross_source_blocking] source 9732 seq 3: ready 130 ms before start, 130 ms of it with an idle slot in group 338
+- [cross_source_blocking] source 3791 seq 18: ready 106 ms before start, 106 ms of it with an idle slot in group 127
+- [cross_source_blocking] source 3220 seq 9: ready 113 ms before start, 113 ms of it with an idle slot in group 107
+- [cross_source_blocking] source 573 seq 8: ready 184 ms before start, 176 ms of it with an idle slot in group 16
+- [cross_source_blocking] source 6708 seq 11: ready 126 ms before start, 126 ms of it with an idle slot in group 228
+- [cross_source_blocking] source 2577 seq 20: ready 150 ms before start, 150 ms of it with an idle slot in group 79
+- [cross_source_blocking] source 8094 seq 14: ready 113 ms before start, 113 ms of it with an idle slot in group 273
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-465 | 66 | 2 | 87.718 | 94.646 | 667 | 0 | 5826 | 5826 | 0 | 4554.751 | 50069.503 | 56360.959 |
+| t-362 | 47 | 1 | 59.227 | 45.382 | 3235 | 0 | 2849 | 2849 | 0 | 6291.455 | 47448.063 | 54525.951 |
+| t-168 | 71 | 1 | 42.924 | 49.841 | 155 | 0 | 3192 | 3192 | 0 | 9961.471 | 34340.863 | 55574.527 |
+| t-438 | 121 | 4 | 92.608 | 193.902 | 1839 | 0 | 11843 | 11843 | 0 | 8519.679 | 32112.639 | 56360.959 |
+| t-065 | 80 | 6 | 210.386 | 277.713 | 263 | 0 | 16720 | 16720 | 0 | 6324.223 | 30277.631 | 55050.239 |
+| t-378 | 55 | 2 | 106.476 | 95.397 | 3659 | 0 | 5914 | 5914 | 0 | 8650.751 | 30015.487 | 56360.959 |
+| t-121 | 76 | 3 | 121.292 | 148.793 | 149 | 0 | 9216 | 9216 | 0 | 11010.047 | 29753.343 | 33423.359 |
+| t-450 | 63 | 2 | 94.289 | 97.643 | 165 | 0 | 5974 | 5974 | 0 | 8847.359 | 28573.695 | 56098.815 |
+| t-182 | 89 | 3 | 101.606 | 147.829 | 2406 | 0 | 9089 | 9089 | 0 | 10551.295 | 26869.759 | 33292.287 |
+| t-080 | 56 | 1 | 40.902 | 38.54 | 822 | 0 | 2430 | 2430 | 0 | 2686.975 | 26476.543 | 50855.935 |
+| t-340 | 184 | 2 | 30.383 | 93.585 | 141 | 0 | 6090 | 6090 | 0 | 8454.143 | 26083.327 | 31457.279 |
+| t-372 | 65 | 1 | 40.869 | 44.199 | 875 | 0 | 2826 | 2826 | 0 | 6717.439 | 25559.039 | 28704.767 |
+| t-416 | 57 | 1 | 48.216 | 46.188 | 3430 | 0 | 2959 | 2959 | 0 | 8454.143 | 25165.823 | 28966.911 |
+| t-496 | 81 | 5 | 180.568 | 245.466 | 278 | 0 | 15135 | 15135 | 0 | 8519.679 | 24903.679 | 30670.847 |
+| t-350 | 85 | 2 | 66.469 | 91.357 | 285 | 0 | 5627 | 5627 | 0 | 7897.087 | 24772.607 | 31719.423 |
+| t-344 | 195 | 7 | 101.58 | 334.276 | 571 | 0 | 20582 | 20582 | 0 | 8060.927 | 24248.319 | 31064.063 |
+| t-383 | 200 | 7 | 96.136 | 319.746 | 2521 | 0 | 19756 | 19756 | 0 | 7077.887 | 24117.247 | 56360.959 |
+| t-147 | 79 | 5 | 180.465 | 242.333 | 1078 | 0 | 14665 | 14665 | 0 | 9043.967 | 23855.103 | 28442.623 |
+| t-265 | 75 | 1 | 37.432 | 46.672 | 250 | 0 | 3101 | 3101 | 0 | 8126.463 | 23855.103 | 29360.127 |
+| t-106 | 24 | 2 | 220.788 | 89.77 | 824 | 0 | 5534 | 5534 | 0 | 9175.039 | 23592.959 | 25690.111 |
+| t-285 | 43 | 1 | 64.873 | 46.239 | 233 | 0 | 2908 | 2908 | 0 | 6193.151 | 23592.959 | 25952.255 |
+| t-343 | 63 | 1 | 48.018 | 48.591 | 518 | 0 | 3098 | 3098 | 0 | 7798.783 | 23330.815 | 26083.327 |
+| t-235 | 54 | 2 | 98.424 | 88.599 | 527 | 0 | 5555 | 5555 | 0 | 7176.191 | 22806.527 | 27525.119 |
+| t-022 | 63 | 1 | 37.482 | 39.487 | 162 | 0 | 2572 | 2572 | 0 | 2883.583 | 22675.455 | 52953.087 |
+| t-222 | 138 | 4 | 76.871 | 178.909 | 2846 | 0 | 11125 | 11125 | 0 | 7929.855 | 22020.095 | 28704.767 |
+
+17:37:45.229 results written to /home/b4283/benchmark/results/matrix-24-b25/B1d-base/20261121-093632_B1d-base

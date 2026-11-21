@@ -1,0 +1,29 @@
+NOTICE:  drop cascades to 16 other objects
+DETAIL:  drop cascades to table octopus.grp
+drop cascades to table octopus.source
+drop cascades to table octopus.event
+drop cascades to table octopus.epoch_end
+drop cascades to table octopus.skipped
+drop cascades to table octopus.late
+drop cascades to table octopus.member
+drop cascades to table octopus.lease
+drop cascades to function octopus.settle(bigint[])
+drop cascades to function octopus.publish(text[],text[],bigint[],bigint[],bytea[],bigint[],bigint[],bigint[],bigint[],boolean)
+drop cascades to function octopus.commit_many(text[],bigint[],bigint[],bytea[],text)
+drop cascades to function octopus.remove_next(text[],bigint[],bigint[])
+drop cascades to function octopus.advance(text[],bigint[],bigint[])
+drop cascades to function octopus.skip(text,bigint,bigint,bigint,text)
+drop cascades to function octopus.purge_applied(integer)
+drop cascades to table octopus.meta
+warning: method `want_if_stored` is never used
+   --> crates/octopusd/src/lib.rs:224:8
+    |
+159 | impl GroupState {
+    | --------------- method in this implementation
+...
+224 |     fn want_if_stored(&mut self, source: &str, pos: Pos) {
+    |        ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+octopus: 3 dispatchers up (pids 1014164 1014193 1014194 )

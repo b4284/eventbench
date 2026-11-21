@@ -239,7 +239,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - Report sources whose next event is missing too long; store a body hash and report a reused seq with a different
   body as a conflict; an end-to-end test with out-of-order and lost publishes.
 
-### B25 — Octopus: database cost of head scans and key lookups · **partly done** (2026-11-21, Octopus after d7c0832)
+### B25 — Octopus: database cost of head scans and key lookups · **done** (2026-11-21, matrix-24: Octopus 7d1de4d, bd54c5d, 257cc83; ~1.2 Postgres cores less at 16k)
 - Done: settle() skips epoch-end and marker work unless needed (partial index on markers); publish skips
   registration for known sources/groups and the "missing" lookup when it is obviously 0; key re-polling removed
   earlier. A/B at 16k (matrix-20): cursor writes out of the top statements (were 55-77 ms per call), publish 4.3 ms
@@ -250,6 +250,19 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - R0 (16k, 3 dispatchers), pg_stat_statements over 40 s: fallback head scans 56k calls / 43 s, key lookups
   2.7k calls at 8 ms each / 22 s, publish 2.6 ms per call / 96 s. Fewer fallback scans when hints and "done"
   already say what is next; cheaper key lookups.
+
+- 2026-11-21, matrix-24 (see its NOTES.md):
+  - Kept: head reads leave out sources whose "done" cursor isn't written yet (260–284k reads per run -> 25–30k;
+    Postgres 9.5 -> 8.3 cores); bodies up to 8 KB stay in the row (publish ~20% cheaper); next-event lookups only
+    when known stored.
+  - Rejected: fewer fallback reads (not the waste); a 1 s vacuum loop (slower); an 8-way partitioned event table
+    (fewer extension waits, more CPU).
+  - **Not explored yet:**
+    - `autovacuum_naptime` 1 s, which needs the lab container recreated;
+    - fillfactor 100 on the event table (inserts never update in place);
+    - rotating event tables (truncate instead of delete);
+    - `advance` at 100–140 ms per call (cursor writes plus deletes);
+    - the benchmark's own `eb_commit_many` waiting on its tables' extension lock.
 
 ### B26 — Benchmark: no replica during performance runs; repeat runs for variance · open
 - 2026-11-21 afternoon: the lab host's effective speed dropped ~25% over the day (Postgres needs ~25% more CPU time

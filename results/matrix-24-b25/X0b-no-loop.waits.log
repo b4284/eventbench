@@ -1,0 +1,14 @@
+760 | CPU | SELECT codes, missing FROM octopus.publi
+564 | CPU | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,
+502 | CPU | SELECT s.last_seq, r.version, r.hash, r.
+443 | Lock:extend | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,
+428 | Lock:extend | SELECT codes, missing FROM octopus.publi
+376 | Client:ClientRead | SELECT s.last_seq, r.version, r.hash, r.
+336 | CPU | SELECT octopus.advance($1, $2, $3)
+151 | CPU | SELECT x.grp, x.source, x.epoch, x.seq, 
+131 | LWLock:BufferContent | SELECT codes, missing FROM octopus.publi
+112 | LWLock:BufferContent | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,
+61 | LWLock:LockManager | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,
+50 | LWLock:BufferMapping | SELECT codes, missing FROM octopus.publi
+49 | IO:DataFileWrite | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,
+41 | Client:ClientRead | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,

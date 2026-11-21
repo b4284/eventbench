@@ -1,0 +1,13 @@
+ calls  | total_s | mean_ms |                                   q                                    
+--------+---------+---------+------------------------------------------------------------------------
+  24992 |   241.0 |   9.641 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+  24992 |   220.6 |   8.828 | WITH x AS ( SELECT u.*, src.id AS sid, src.grp AS sgrp, src.epoch AS c
+  33615 |   202.9 |   6.037 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+ 569240 |   111.9 |   0.197 | SELECT s.last_seq, r.version, r.hash, r.status, r.ctx FROM eb_source s
+ 388737 |    71.9 |   0.185 | UPDATE eb_record SET version = p_version, hash = p_hash, status = p_st
+    508 |    62.7 | 123.471 | SELECT octopus.advance($1, $2, $3)
+ 569427 |    41.2 |   0.072 | SELECT last_seq FROM eb_source WHERE source_id = p_source FOR UPDATE
+    508 |    37.5 |  73.855 | SELECT octopus.settle(ids)
+(8 rows)
+
+event table at 70 s: 1081 MB, live 510, dead 49062, autovacuums 7
