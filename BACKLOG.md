@@ -363,7 +363,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - Next: the broker on its own machine (lab), a broker-node kill drill, and NATS (B32). Separately, fewer
   MQTT messages per event in Octopus (batch publish replies, done reports and their replies).
 
-### B32 — NATS as Octopus's transport, to lift the ceiling · **built; local 16k on par with Mosquitto** (2026-11-22, matrix-32); the split-load ceiling run open (from the user, 2026-11-22)
+### B32 — NATS as Octopus's transport, to lift the ceiling · **measured: lifts it +4–6%, new best 25.5k ev/s applied** (2026-11-22, matrix-32; from the user, 2026-11-22)
 - NATS (Apache 2.0, multi-threaded, clustering free) as a native transport next to MQTT. NATS's MQTT gateway speaks
   only 3.1.1 and Octopus's clients speak MQTT 5, so it needs a NATS implementation of the transport layer
   (crates/octopus-fabric, ~170 lines, and the .NET client's equivalent).
@@ -379,6 +379,10 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - matrix-32 Na-pg, local 16k (as matrix-31 Lb-pg): e2e p50 6.8 ms (Mosquitto 7.1), p99 equal, host CPU 35.4% (36.7%),
   dispatchers 1.19 cores (1.33); the NATS server 0.84 cores (Mosquitto 0.53), but on several threads, where
   Mosquitto's one thread was the first part to run out at the ceiling (matrix-29).
+- matrix-32 ceiling, laptop + m4mini: applied 23.6k / 24.7k / 25.5k at 24k / 28k / 32k offered (Mosquitto 22.0k /
+  23.3k / 24.6k); the laptop shard's latency halves. The laptop's CPU (82%, Postgres 10 cores) is the limit again.
+  - **Not explored yet:** NATS clustering (3 nodes) for HA; JetStream KV for the announcements instead of the 5 s
+    re-announcement; NATS on its own machine (needs a third healthy Mac link: m1mini is at 100 Mbit, matrix-32).
 
 ### B33 — SQL Server In-Memory OLTP for the event table · open (the user: "remember to re-visit", 2026-11-22)
 - matrix-27: SQL Server runs Octopus correctly but at ~4–5x Postgres's CPU per event, unsteady at 16k; publish's
@@ -402,6 +406,13 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   endpoints, the rest learned from announcements); every client connected to every dispatcher; CurveZMQ for
   authentication. Libraries: Rust `zeromq` (MIT) or libzmq bindings (MPL-2.0); .NET NetMQ (LGPL-3.0).
 - Order: a transport interface in Octopus first (MQTT, NATS and ZeroMQ behind it), then NATS (B32), then ZeroMQ.
+- 2026-11-22 assessment after matrix-32: **technically suitable, little to gain on this lab.** The broker is ~6% of
+  the laptop's work at the ceiling (NATS 1.2 of ~20 busy cores); removing it frees at most that, and the dispatchers
+  take part of it back (a connection per client, announcement fan-out). In production the broker has its own hosts
+  and costs the database host nothing; the ceiling there is Postgres's CPU. What ZeroMQ would still bring: one hop
+  less latency, no broker to run. Libraries checked: Rust `zeromq` 0.7.0 (pure Rust, tokio, MIT, 2026-10-27),
+  .NET NetMQ 4.0.4 (LGPL-3.0). Estimate: ~1,000–1,500 lines across the fabric, octopusd discovery and the .NET client.
+  Awaiting the user's call (built only if the latency or the brokerless deployment is wanted).
 
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".

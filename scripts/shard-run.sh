@@ -16,6 +16,11 @@ BIN=src/EventBench.Cli/bin/Release/net10.0/eventbench.dll
 STATE=~/.cache/eventbench/octopus
 mkdir -p "$OUT"
 if pgrep -f "^dotnet .*eventbench.dll run" >/dev/null; then echo "another eventbench run is active; aborting" >&2; exit 3; fi
+# a Mac whose link renegotiated below 1 GbE caps its shard at ~12 MB/s and it collapses into retries (matrix-32)
+for h in "${HOSTS[@]}"; do
+  media=$(ssh -o BatchMode=yes "$h" "ifconfig en0 | grep media:" 2>/dev/null)
+  if ! grep -q 1000baseT <<<"$media"; then echo "$h: en0 is not at 1 GbE ($media); check its cable / switch port" >&2; [[ ${EB_ALLOW_SLOW_LINK:-0} == 1 ]] || exit 4; fi
+done
 pgrep -f "/target/release/octopusd$" | xargs -r kill; sleep 1
 EB_MQTT=${EB_MQTT:-mosquitto} EB_MQTT_BIND=0.0.0.0 infra/octopus/up.sh "$N" > "$OUT/$NAME.pre.log" 2>&1 || { echo "cluster did not start"; tail -3 "$OUT/$NAME.pre.log"; exit 2; }
 for h in "${HOSTS[@]}"; do rsync -a configs/ "$h:eventbench/configs/"; done
