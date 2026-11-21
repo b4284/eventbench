@@ -21,6 +21,8 @@ public sealed class OctopusBrokerOptions
     public string Namespace { get; set; } = "octopus";
     /// <summary>Direct connection for setup, backlog and stats (Octopus's own tables).</summary>
     public string AdminConnectionString { get; set; } = "";
+    /// <summary>The database Octopus runs on (for the admin queries): "postgres" or "sqlserver".</summary>
+    public string AdminDatabase { get; set; } = "postgres";
     public string Schema { get; set; } = "octopus";
     /// <summary>MQTT connections shared by the producers, and by the workers.</summary>
     public int ProducerConnections { get; set; } = 4;
@@ -66,21 +68,54 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
 
     public static string Group(int id) => $"g{id}";
 
+    private bool SqlServer => _o.AdminDatabase.Equals("sqlserver", StringComparison.OrdinalIgnoreCase);
+
+    private async Task<System.Data.Common.DbConnection> OpenAdminAsync(CancellationToken ct)
+    {
+        System.Data.Common.DbConnection conn = SqlServer
+            ? new Microsoft.Data.SqlClient.SqlConnection(_o.AdminConnectionString)
+            : new NpgsqlConnection(_o.AdminConnectionString);
+        await conn.OpenAsync(ct);
+        return conn;
+    }
+
+    private static System.Data.Common.DbCommand Command(System.Data.Common.DbConnection conn, string sql)
+    {
+        var cmd = conn.CreateCommand();
+        cmd.CommandText = sql;
+        return cmd;
+    }
+
     public async Task SetupAsync(CancellationToken ct)
     {
-        await using (var conn = new NpgsqlConnection(_o.AdminConnectionString))
+        await using (var conn = await OpenAdminAsync(ct))
         {
-            await conn.OpenAsync(ct);
-            await using (var cmd = new NpgsqlCommand($"SELECT count(*) FROM {_o.Schema}.member WHERE heartbeat > now() - interval '10 seconds'", conn))
+            string live = SqlServer
+                ? $"SELECT COUNT_BIG(*) FROM {_o.Schema}.member WHERE heartbeat > DATEADD(SECOND, -10, SYSUTCDATETIME())"
+                : $"SELECT count(*) FROM {_o.Schema}.member WHERE heartbeat > now() - interval '10 seconds'";
+            await using (var cmd = Command(conn, live))
             {
                 long n = (long)(await cmd.ExecuteScalarAsync(ct))!;
                 if (n == 0) throw new InvalidOperationException("no live Octopus dispatcher (start them with infra/octopus/up.sh)");
                 _log($"octopus: {n} live dispatchers");
             }
             // Register every group now, so the dispatchers own them before the first event.
-            await using (var cmd = new NpgsqlCommand($"INSERT INTO {_o.Schema}.grp (name) SELECT unnest($1::text[]) ON CONFLICT DO NOTHING", conn))
+            var groups = _topology.Groups.Select(g => Group(g.Id)).ToArray();
+            if (SqlServer)
             {
-                cmd.Parameters.Add(new NpgsqlParameter { Value = _topology.Groups.Select(g => Group(g.Id)).ToArray() });
+                // (duplicates are ignored by the key: IGNORE_DUP_KEY)
+                await using var cmd = Command(conn,
+                    $"INSERT INTO {_o.Schema}.grp (name) SELECT CAST(value COLLATE Latin1_General_100_BIN2_UTF8 AS varchar(256)) FROM OPENJSON(@j)");
+                var p = cmd.CreateParameter();
+                p.ParameterName = "@j";
+                p.Value = System.Text.Json.JsonSerializer.Serialize(groups);
+                cmd.Parameters.Add(p);
+                await cmd.ExecuteNonQueryAsync(ct);
+            }
+            else
+            {
+                await using var cmd = new NpgsqlCommand($"INSERT INTO {_o.Schema}.grp (name) SELECT unnest($1::text[]) ON CONFLICT DO NOTHING", (NpgsqlConnection)conn);
+                cmd.Parameters.Add(new NpgsqlParameter { Value = groups });
                 await cmd.ExecuteNonQueryAsync(ct);
             }
         }
@@ -131,10 +166,10 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
 
     public async Task<long> GetBacklogAsync(CancellationToken ct)
     {
-        await using var conn = new NpgsqlConnection(_o.AdminConnectionString);
-        await conn.OpenAsync(ct);
-        await using var cmd = new NpgsqlCommand(
-            $"SELECT count(*) FROM {_o.Schema}.event e JOIN {_o.Schema}.source s ON s.id = e.sid WHERE (e.epoch, e.seq) > (s.epoch, s.last_seq)", conn);
+        await using var conn = await OpenAdminAsync(ct);
+        await using var cmd = Command(conn, SqlServer
+            ? $"SELECT COUNT_BIG(*) FROM {_o.Schema}.event e JOIN {_o.Schema}.source s ON s.id = e.sid WHERE e.epoch > s.epoch OR (e.epoch = s.epoch AND e.seq > s.last_seq)"
+            : $"SELECT count(*) FROM {_o.Schema}.event e JOIN {_o.Schema}.source s ON s.id = e.sid WHERE (e.epoch, e.seq) > (s.epoch, s.last_seq)");
         return (long)(await cmd.ExecuteScalarAsync(ct))!;
     }
 

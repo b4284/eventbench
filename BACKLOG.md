@@ -150,7 +150,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   with batched commits is unknown.
 - **Test:** rerun pgqueue Q3 with local fsync on.
 
-### B16 — The dispatcher queue on SQL Server and MySQL · **requested to consider**
+### B16 — The dispatcher queue on SQL Server and MySQL · **SQL Server ported and measured** (2026-11-22, matrix-27: correct, ~4–5× Postgres CPU per event, not steady at 16k); MySQL open
 - **From:** user, 2026-11-20. Once the dispatcher owns the queue logic, the database only needs transactions,
   batched inserts, an index and row locks for the commit, so other SQL engines may have the same property.
 - **Test:**
@@ -159,6 +159,13 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - Same 24k runs with one-event publishes.
   - Failover drills with each engine's synchronous replication: an SQL Server availability group with
     synchronous commit; MySQL semi-sync `AFTER_SYNC` or Group Replication.
+- 2026-11-22, matrix-27: Octopus `crates/octopus-mssql` (SQL Server 2025). The 16-test backend suite passes;
+  `octopusd` selects it with `OCTOPUS_BACKEND=mssql`; the benchmark runs it (`OCTOPUS_BACKEND=mssql infra/octopus/up.sh`,
+  `--Broker:AdminDatabase=sqlserver`). At 16k it needs ~4–5× Postgres's CPU per event and swings between 11.6k and
+  16.1k ev/s applied. Fixed so far: lock waits, deadlocks, tempdb metadata, a blocking purge (see the NOTES).
+  - **Not explored yet:** memory-optimized tables (In-Memory OLTP) for the event table; cheaper batch passing than
+    JSON with base64; settle's delete cost; the application's writes on SQL Server; the availability-group failover
+    drill.
 
 ### B17 — Distributed SQL under the dispatcher · **measured: not viable for 24k** (2026-11-21, matrix-26: YugabyteDB runs Octopus unchanged but needs 25–45× Postgres's CPU per event)
 - **From:** dispatcher design §4.1. The dispatchers are active-active, but SQL is single-writer with synchronous

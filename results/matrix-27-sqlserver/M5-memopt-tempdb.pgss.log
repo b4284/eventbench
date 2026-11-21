@@ -1,0 +1,12 @@
+ calls | total_s |  mean_ms  |                                   q                                    
+-------+---------+-----------+------------------------------------------------------------------------
+     1 |    20.3 | 20304.975 | do $$ begin for i in 1..200 loop perform pg_stat_clear_snapshot(); ins
+   200 |    20.3 |   101.306 | SELECT pg_sleep($1)
+   200 |     0.0 |     0.053 | insert into w select coalesce(wait_event_type || $1 || wait_event, $2)
+     1 |     0.0 |     3.911 | create temp table w (k text, q text)
+   200 |     0.0 |     0.009 | SELECT pg_stat_clear_snapshot()
+     1 |     0.0 |     0.159 | select pg_stat_statements_reset()
+     1 |     0.0 |     0.028 | select count(*) || $1 || k || $2 || q from w group by k, q order by co
+(7 rows)
+
+event table at 70 s: 24 MB, live 0, dead 0, autovacuums 7

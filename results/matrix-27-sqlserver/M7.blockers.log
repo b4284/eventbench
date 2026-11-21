@@ -1,0 +1,10 @@
+n|waiter_proc|waiter|blocker_proc|blocker_status|blocker
+-|-----------|------|------------|--------------|-------
+72|settle|DELETE e       FROM @ids i JOIN octopus.source s WITH (FORCESEEK) ON s|purge_applied|suspended|DELETE TOP (@limit) e       FROM octopus.event e JOIN octopus.source s
+65|purge_applied|DELETE TOP (@limit) e       FROM octopus.event e JOIN octopus.source s|settle|suspended|DELETE e       FROM @ids i JOIN octopus.source s WITH (FORCESEEK) ON s
+9|purge_applied|DELETE TOP (@limit) e       FROM octopus.event e JOIN octopus.source s|purge_applied|suspended|DELETE TOP (@limit) e       FROM octopus.event e JOIN octopus.source s
+6|purge_applied|DELETE TOP (@limit) e       FROM octopus.event e JOIN octopus.source s|settle|running|DELETE e       FROM @ids i JOIN octopus.source s WITH (FORCESEEK) ON s
+4|settle|DELETE e       FROM @ids i JOIN octopus.source s WITH (FORCESEEK) ON s|purge_applied|running|DELETE TOP (@limit) e       FROM octopus.event e JOIN octopus.source s
+3|purge_applied|DELETE TOP (@limit) e       FROM octopus.event e JOIN octopus.source s|purge_applied|running|DELETE TOP (@limit) e       FROM octopus.event e JOIN octopus.source s
+2|purge_applied|DELETE TOP (@limit) e       FROM octopus.event e JOIN octopus.source s|settle|runnable|DELETE e       FROM @ids i JOIN octopus.source s WITH (FORCESEEK) ON s
+1|purge_applied|DELETE TOP (@limit) e       FROM octopus.event e JOIN octopus.source s|publish|suspended|INSERT INTO octopus.event (sid, epoch, seq, grp, body, body_hash, skip

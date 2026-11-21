@@ -62,8 +62,23 @@ fi
 # EB_PSQL: how to reach the database for setup (default: the lab primary container; for the Patroni pair, a psql
 # with a multi-host connection string that finds the leader)
 PSQL=${EB_PSQL:-"podman exec -i eb-postgres psql -U bench -d bench -v ON_ERROR_STOP=1 -q"}
-$PSQL -c "DROP SCHEMA IF EXISTS octopus CASCADE"
-$PSQL < hooks.sql
+# OCTOPUS_BACKEND=mssql: Octopus on SQL Server (infra/mssql), in a database "octopus" recreated for every run, with
+# the lab's best-effort durability (delayed durable commits, like synchronous_commit=off).
+BACKEND=${OCTOPUS_BACKEND:-pg}
+MSSQL_PASSWORD=${MSSQL_SA_PASSWORD:-EventBench#2026}
+mssql() { podman exec -i "${MSSQL_CONTAINER:-eb-mssql}" /opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P "$MSSQL_PASSWORD" -I -b "$@"; }
+if [[ $BACKEND == mssql ]]; then
+  mssql -Q "IF DB_ID('octopus') IS NOT NULL BEGIN ALTER DATABASE octopus SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE octopus; END;
+            CREATE DATABASE octopus
+              ON (NAME = octopus_data, FILENAME = '/var/opt/mssql/data/octopus.mdf', SIZE = 2GB, FILEGROWTH = 1GB)
+              LOG ON (NAME = octopus_log, FILENAME = '/var/opt/mssql/data/octopus.ldf', SIZE = 4GB, FILEGROWTH = 1GB);
+            ALTER DATABASE octopus SET RECOVERY SIMPLE;
+            ALTER DATABASE octopus SET READ_COMMITTED_SNAPSHOT ON WITH ROLLBACK IMMEDIATE;
+            ALTER DATABASE octopus SET DELAYED_DURABILITY = ${MSSQL_DELAYED_DURABILITY:-FORCED};" >/dev/null
+else
+  $PSQL -c "DROP SCHEMA IF EXISTS octopus CASCADE"
+  $PSQL < hooks.sql
+fi
 
 (cd "$OCTO" && cargo build --release -q -p octopusd)
 BIN="$OCTO/target/release/octopusd"
@@ -77,15 +92,21 @@ conn_for() {
 }
 : > "$STATE/pids"
 for i in $(seq 1 "$N"); do
-  env OCTOPUS_MEMBER_ID="d$i" OCTOPUS_NS=octopus OCTOPUS_SCHEMA=octopus \
+  env OCTOPUS_MEMBER_ID="d$i" OCTOPUS_NS=octopus OCTOPUS_SCHEMA=octopus OCTOPUS_BACKEND="$BACKEND" \
       OCTOPUS_PG="$(conn_for "$i")" OCTOPUS_PG_POOL="${OCTOPUS_PG_POOL:-32}" \
+      OCTOPUS_MSSQL="${OCTOPUS_MSSQL_CONN:-server=tcp:127.0.0.1,1433;database=octopus;user=sa;password=$MSSQL_PASSWORD;TrustServerCertificate=true}" \
       ${HOOK_ENV} RUST_LOG="${RUST_LOG:-info}" ${OCTOPUSD_ENV:-} \
       nohup ${OCTOPUSD_PREFIX:-} "$BIN" >"$STATE/d$i.log" 2>&1 &
   echo $! >> "$STATE/pids"
   [[ $i -eq 1 ]] && sleep 1   # the first one creates the schema
 done
 for _ in $(seq 1 60); do
-  n=$($PSQL -At -c "SELECT count(*) FROM octopus.member WHERE heartbeat > now() - interval '5 seconds'" 2>/dev/null || echo 0)
+  if [[ $BACKEND == mssql ]]; then
+    n=$(mssql -d octopus -h -1 -W -Q "SET NOCOUNT ON; IF OBJECT_ID('octopus.member') IS NULL SELECT 0 ELSE SELECT COUNT(*) FROM octopus.member WHERE heartbeat > DATEADD(SECOND, -5, SYSUTCDATETIME())" 2>/dev/null | tr -d ' \r' | head -1)
+    n=${n:-0}
+  else
+    n=$($PSQL -At -c "SELECT count(*) FROM octopus.member WHERE heartbeat > now() - interval '5 seconds'" 2>/dev/null || echo 0)
+  fi
   [[ "$n" -ge "$N" ]] && { echo "octopus: $n dispatchers up (pids $(tr '\n' ' ' < "$STATE/pids"))"; exit 0; }
   sleep 0.5
 done

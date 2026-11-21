@@ -56,6 +56,14 @@ ALTER DATABASE bench SET ALLOW_SNAPSHOT_ISOLATION ON;
 EXEC sp_configure 'show advanced options', 1; RECONFIGURE;
 EXEC sp_configure 'max degree of parallelism', 1; RECONFIGURE;
 " >/dev/null
+# Octopus's procedures use table variables at a high rate: tempdb's metadata pages (sysallocunits) became the hot
+# spot (matrix-27). Memory-optimized tempdb metadata removes that; it takes effect after a restart.
+if [[ "$(sql -h -1 -W -Q "SET NOCOUNT ON; SELECT CAST(SERVERPROPERTY('IsTempDbMetadataMemoryOptimized') AS int)" | head -1)" != 1 ]]; then
+  sql -Q "ALTER SERVER CONFIGURATION SET MEMORY_OPTIMIZED TEMPDB_METADATA = ON" >/dev/null
+  podman restart -t 30 "$NAME" >/dev/null
+  echo -n "restarting for memory-optimized tempdb metadata"
+  for _ in $(seq 1 90); do sql -Q "SELECT 1" >/dev/null 2>&1 && { echo " ok"; break; }; echo -n "."; sleep 1; done
+fi
 
 "$(dirname "$0")/durability.sh" "$DURABILITY"
 sql -h -1 -W -s ' ' -Q "SET NOCOUNT ON; SELECT 'sql server', CAST(SERVERPROPERTY('ProductVersion') AS nvarchar(64)), CAST(SERVERPROPERTY('Edition') AS nvarchar(128)), 'rcsi', is_read_committed_snapshot_on, 'delayed_durability', delayed_durability_desc, 'recovery', recovery_model_desc FROM sys.databases WHERE name = 'bench'"
