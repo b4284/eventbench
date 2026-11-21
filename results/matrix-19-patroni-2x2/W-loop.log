@@ -1,0 +1,6 @@
+12:06:39 W01-dc-kill-leader-dc -> exit 1
+W01 fails=1 12:05:39.421 drill: dc-kill:leader killed dc2: eb-dc2a eb-dc2b eb-etcd-dc2 (leader was dc2b) 12:05:59.574 new leader dc1 12:06:38.175 drained in 24.9s 
+12:12:27 W02-dc-kill-leader-dc -> exit 1
+W02 fails=6 12:07:55.436 drill: dc-kill:leader killed dc1: eb-dc1a eb-dc1b eb-etcd-dc1 (leader was dc1a) 12:08:17.578 new leader dc2 12:10:26.520 DRAIN TIMEOUT after 120.1s: 30,017 events not applied 
+STOP: W02 failed
+LOOP-DONE

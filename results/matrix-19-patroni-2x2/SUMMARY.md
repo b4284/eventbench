@@ -1,5 +1,25 @@
 # Matrix 19: the 2 + 2 layout (B28)
 
+## Final: through a leader-following endpoint (HAProxy), etcd 3.5.17, Octopus d8de3c4
+
+Clients (dispatchers and workers) connect to HAProxy (`infra/patroni/haproxy.sh`: health checks on Patroni's
+`/primary`, `on-marked-down shutdown-sessions`), `configs/overlay-patroni-2x2-haproxy.json`. Workers abandon (never
+cancel) a database call after 60 s.
+
+| run | failure | correctness | new leader | quorum afterwards | drained |
+|---|---|---|---|---|---|
+| X0 | none | pass | — | ANY 2 (dc1a,dc1b,dc2a) | 39 s |
+| X1 | leader node killed, not restarted | pass | 19 s | ANY 2 (dc1a,dc2a) | 22 s |
+| H01-H10 | the leader's DC killed (2 nodes + its etcd), 10 times | **10 of 10 pass** | 17-21 s | ANY 1 (same-DC survivor) | 16-42 s |
+| X3 | the other DC killed | pass | — | ANY 1 (dc1a) | 44 s |
+| X4 | the leader's DC frozen 60 s | pass | 24 s; it stays after the freeze | ANY 1, then ANY 2 as DC1 rejoins | 16 s |
+
+"Correctness" = every oracle check except cross-source blocking. Latency is not meaningful here: four Postgres
+nodes, three of them replaying WAL, share one 24-core host (baseline e2e p50 20-40 s).
+
+## Earlier runs (multi-host connection strings)
+
+
 Patroni 4.1.5 quorum mode, `synchronous_node_count: 2` (ANY 2 of the 3 standbys: every commit reaches the other
 DC), strict; etcd members in DC1, DC2 and a witness; 12.9k ev/s; 3 dispatchers; workers commit their own writes.
 

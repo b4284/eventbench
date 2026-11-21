@@ -47,6 +47,14 @@ public sealed class WorkerRunner
             foreach (var l in f()) yield return l;
     }
 
+    /// <summary>Lanes in the same phase longer than <paramref name="minAge"/>, oldest first.</summary>
+    public static IEnumerable<string> DumpLanes(TimeSpan minAge)
+    {
+        long now = Clock.NowUs();
+        return Lanes.Where(kv => now - kv.Value.SinceUs >= minAge.TotalMicroseconds).OrderBy(kv => kv.Value.SinceUs)
+                    .Select(kv => $"{kv.Key.Item1._group.Name}#{kv.Key.Item1._index} source {kv.Key.Item2}: {kv.Value.Phase} for {(now - kv.Value.SinceUs) / 1_000_000.0:F1}s");
+    }
+
     /// <summary>Events held longer than <paramref name="minAge"/>, oldest first.</summary>
     public static IEnumerable<string> DumpHeld(TimeSpan minAge)
     {
@@ -179,6 +187,7 @@ public sealed class WorkerRunner
     private async Task<bool> ProcessOneAsync(IDelivery d, CancellationToken ct)
     {
         var ev = d.Event;
+        Stage(d, "start (blocking tracker)");
         var blocking = _metrics.Blocking;
         long startUs = Clock.NowUs();
         long readyUs = Math.Min(blocking.ReadyAt(ev), startUs);
@@ -188,18 +197,23 @@ public sealed class WorkerRunner
         Outcome outcome = Outcome.Failed;
         try
         {
+            Stage(d, "core");
             outcome = await ProcessCoreAsync(d, ct);
+            Stage(d, "record blocking");
             if (outcome == Outcome.Applied) _metrics.RecordBlocking(ev, readyUs, startUs, idleUs);
             return outcome != Outcome.Failed;
         }
         finally
         {
+            Stage(d, "finish: slot free (blocking tracker)");
             blocking.SlotFree(ev.Group);
-            Held.TryRemove(d, out _);
+            Stage(d, "finish: completed (consumer)");
             (d as IDeliveryCompletion)?.Completed(outcome != Outcome.Failed);
+            Stage(d, "finish: source done (blocking tracker)");
             long now = Clock.NowUs();
             if (outcome == Outcome.Failed) blocking.SourceRetry(ev, now + (long)(_retryDelay.TotalMilliseconds * 1000));
             else blocking.SourceDone(ev, now);
+            Held.TryRemove(d, out _);
         }
     }
 
@@ -265,6 +279,7 @@ public sealed class WorkerRunner
                     {
                         try
                         {
+                            Stage(d, "ack");
                             await d.AckAsync(ct);
                         }
                         catch (Exception ex) when (ex is not OperationCanceledException)
@@ -539,9 +554,14 @@ public sealed class WorkerRunner
         }
     }
 
+    /// <summary>Diagnostics: what each running lane is doing (dumped with the held events on a drain timeout).</summary>
+    public static readonly System.Collections.Concurrent.ConcurrentDictionary<(WorkerRunner, int), (string Phase, long SinceUs)> Lanes = new();
+    private void Phase(int src, string phase) => Lanes[(this, src)] = (phase, Clock.NowUs());
+
     private async Task RunLaneAsync(int src, CancellationToken ct)
     {
         int lingers = 0;
+        Phase(src, "lane started");
         try
         {
             while (!ct.IsCancellationRequested)
@@ -549,8 +569,10 @@ public sealed class WorkerRunner
                 IDelivery d;
                 lock (_gate) d = _lanes[src].Peek();
                 bool ok;
+                Phase(src, "processing " + d.Event);
                 try { ok = await ProcessOneAsync(d, ct); }
                 catch (OperationCanceledException) { return; }
+                Phase(src, "after processing " + d.Event + (ok ? " ok" : " failed"));
 
                 lock (_gate)
                 {
@@ -621,9 +643,15 @@ public sealed class WorkerRunner
                 }
             }
         }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            Phase(src, "lane crashed: " + ex.GetType().Name + ": " + ex.Message);
+            throw;
+        }
         finally
         {
             Interlocked.Decrement(ref _running);
+            Lanes.TryRemove((this, src), out _);
         }
     }
 

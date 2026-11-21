@@ -1,0 +1,1185 @@
+[2m2026-11-21T05:03:35.651241Z[0m [32m INFO[0m [2mtokio_postgres::connection[0m[2m:[0m NOTICE: function octopus.publish(text[],text[],pg_catalog.int8[],bytea[]) does not exist, skipping
+[2m2026-11-21T05:03:35.651257Z[0m [32m INFO[0m [2mtokio_postgres::connection[0m[2m:[0m NOTICE: function octopus.publish(text[],text[],pg_catalog.int8[],bytea[],pg_catalog.int8[]) does not exist, skipping
+[2m2026-11-21T05:03:35.651693Z[0m [32m INFO[0m [2mtokio_postgres::connection[0m[2m:[0m NOTICE: function octopus.commit_many(text[],pg_catalog.int8[],bytea[],text) does not exist, skipping
+[2m2026-11-21T05:03:35.651864Z[0m [32m INFO[0m [2mtokio_postgres::connection[0m[2m:[0m NOTICE: function octopus.remove_next(text[],pg_catalog.int8[]) does not exist, skipping
+[2m2026-11-21T05:03:35.651927Z[0m [32m INFO[0m [2mtokio_postgres::connection[0m[2m:[0m NOTICE: function octopus.advance(text[],pg_catalog.int8[]) does not exist, skipping
+[2m2026-11-21T05:03:35.660120Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m dispatcher running [3mmember[0m[2m=[0md1 [3mns[0m[2m=[0moctopus
+[2m2026-11-21T05:03:35.660566Z[0m [32m INFO[0m [2moctopus_fabric[0m[2m:[0m fabric connected [3mclient[0m[2m=[0moctopusd-octopus-d1
+[2m2026-11-21T05:03:35.662994Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m membership changed [3mmembers[0m[2m=[0m["d1"]
+[2m2026-11-21T05:03:36.665060Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m membership changed [3mmembers[0m[2m=[0m["d1", "d2", "d3"]
+[2m2026-11-21T05:03:37.679234Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m claimed groups [3mn[0m[2m=[0m150 [3mtotal[0m[2m=[0m150
+[2m2026-11-21T05:03:40.660937Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m512 [3mready[0m[2m=[0m2552 [3mpublished[0m[2m=[0m13150 [3mapplied[0m[2m=[0m5558 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m1395
+[2m2026-11-21T05:03:45.833165Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m479 [3mready[0m[2m=[0m2780 [3mpublished[0m[2m=[0m32956 [3mapplied[0m[2m=[0m18226 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m3587
+[2m2026-11-21T05:03:50.834210Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m582 [3mready[0m[2m=[0m3022 [3mpublished[0m[2m=[0m53979 [3mapplied[0m[2m=[0m29088 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m5862
+[2m2026-11-21T05:03:56.049176Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m541 [3mready[0m[2m=[0m3223 [3mpublished[0m[2m=[0m75298 [3mapplied[0m[2m=[0m39635 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m9171
+[2m2026-11-21T05:04:01.050036Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m503 [3mready[0m[2m=[0m3296 [3mpublished[0m[2m=[0m96292 [3mapplied[0m[2m=[0m50051 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m12689
+[2m2026-11-21T05:04:06.849212Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m575 [3mready[0m[2m=[0m3405 [3mpublished[0m[2m=[0m124732 [3mapplied[0m[2m=[0m62555 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m16925
+[2m2026-11-21T05:04:09.969376Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:09.969721Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:09.989938Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:09.990041Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:09.994130Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:09.994693Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:09.996165Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:09.996645Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:09.997911Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.004076Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.004224Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.007770Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.007929Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.011170Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.011251Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.029225Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.029371Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.029981Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.030204Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.031040Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.031676Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.032629Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.033417Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.034181Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.039808Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.040127Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.042179Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.057768Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.057851Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:10.063531Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.063710Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.063830Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.063889Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.064006Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.064327Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.064907Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.078487Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.078584Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.078875Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.080955Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.081050Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.081104Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.092758Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.093084Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.093246Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.100414Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.100492Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.100622Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.100903Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.101040Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.101261Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.101310Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.101794Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.102518Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.104244Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.104325Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.105468Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.105531Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.108760Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.108857Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.109007Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.109044Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.114638Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T05:04:10.114682Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:10.120256Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.120863Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.121127Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.121576Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:10.121697Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T05:04:11.850341Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m574 [3mready[0m[2m=[0m3425 [3mpublished[0m[2m=[0m138463 [3mapplied[0m[2m=[0m68973 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m2 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m2 [3mfetches[0m[2m=[0m18706
+[2m2026-11-21T05:04:13.001650Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.002383Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.005301Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.007682Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.009008Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.010004Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.012631Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.013020Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.014314Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.015680Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.016385Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.018090Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.018235Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.019759Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.021935Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.022262Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.023889Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.028624Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.029323Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.030158Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.031329Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.034281Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.035344Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.036088Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.037115Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.037261Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.037349Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.038045Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.038161Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.038418Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.039022Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.040561Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.042568Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.043476Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.044671Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.044785Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.045473Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.045814Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.045848Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.046231Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.046705Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.048258Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.048311Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.050429Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.050445Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.053199Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.054406Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.055259Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.057039Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.057107Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.058139Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.058593Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.059210Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.060437Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.061006Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.061720Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.061986Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.063754Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.064110Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.065633Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.066117Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.066764Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.067901Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.068435Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.068736Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.071111Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.071330Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.072194Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.073282Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.074674Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.075349Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.076331Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.077917Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.079796Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.079929Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.081379Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.082041Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.082053Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.082738Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.083833Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.085309Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.085639Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.086124Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.086401Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.087500Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.088645Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.088666Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.089074Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.089526Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.089990Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.092061Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.092843Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.093741Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.093870Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.094175Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.094284Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.094733Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.096344Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.097836Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.097876Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.098387Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.100245Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.100361Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.101578Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.102264Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.103179Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.104448Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.104975Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.105133Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.105895Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.107089Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.107426Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.108565Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.108609Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.108886Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.109209Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.109265Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.109688Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.110937Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.112277Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.112318Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.113658Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.113739Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.114367Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.114998Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.115696Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.115846Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.115885Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.116819Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.117205Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.117557Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.118154Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.118376Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.118913Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.120314Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.120508Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.121379Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.121708Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.121713Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.122622Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.123199Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.123761Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.125102Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.125944Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.126029Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.126640Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.128098Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.128137Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.128587Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.128889Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.129432Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.129622Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.129961Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.130259Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.130405Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.131032Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.131327Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.131359Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.132297Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.133571Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.134097Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.134389Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.135153Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.135997Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.136053Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.136736Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.136883Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.137839Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.139328Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.140155Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.140488Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.141395Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.142268Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.142323Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.143275Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.143839Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.146423Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.146433Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.147184Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.147333Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.147386Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.148767Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.149742Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.150313Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.150402Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.150523Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.150739Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.151300Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.152203Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.152539Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.152682Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.154137Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.157560Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.157631Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.159014Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.160474Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.163452Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:13.167399Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.167559Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.167627Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.167675Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.167712Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.168496Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.169882Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.170007Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.170200Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.170931Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.171405Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.171451Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.171844Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.172124Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.172388Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.173014Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.173053Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.175348Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.176482Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.177406Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.178028Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.178942Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.179544Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.180595Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.181601Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.182051Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.183754Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.183974Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.185133Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.188292Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.188550Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.188657Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.188760Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.189059Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.189158Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.189449Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.193660Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.193826Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.194161Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.194514Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.195552Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.202540Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.202581Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.203061Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.203668Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.203714Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.204014Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.204197Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.204587Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.204925Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.204980Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.205290Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.205322Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.209289Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.209296Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.209331Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.209332Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.209325Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.210320Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.210577Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.210728Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.211246Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.211434Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.211703Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.212026Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.213039Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.216746Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.217548Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.217633Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.218104Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.218566Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.218583Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.220156Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.220555Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.226210Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.228066Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.228900Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.228910Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.229543Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.229643Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.230098Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.230416Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.230531Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.231719Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.232325Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.232772Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.232816Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.233277Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.235371Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.235803Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.235867Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.236873Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.238215Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.238644Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.242111Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.242220Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.242246Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.243280Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.243452Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.243678Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.245426Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.246314Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.247687Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.247781Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.247817Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.248888Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.249000Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.250155Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.250349Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.251325Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.251751Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.251849Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.252203Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.252830Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.252852Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.253223Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.254332Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.254653Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.255243Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.255652Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.255981Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.256358Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.256513Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.256681Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.256715Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.256922Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.257181Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.257241Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.257696Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.259405Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.259458Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.259896Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.260141Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.260809Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.264314Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.264691Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.264726Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.265639Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.265659Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.265846Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:13.266000Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.266486Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.267184Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.267965Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.267971Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.269243Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.271639Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.272170Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.272241Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.272511Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.273208Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.273704Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.274005Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.274222Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.275166Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.275600Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.276147Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.276526Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.277101Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.277187Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.277586Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.278148Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.278192Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.278241Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.278689Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.280547Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.281617Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.281650Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.282005Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.282452Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.282461Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.283813Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.289223Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.289458Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.290142Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.291166Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.291365Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.292486Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.293588Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.294035Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.294867Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.296389Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.296652Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.297028Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.297527Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.298283Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.300572Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.301258Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.301698Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.302099Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.302168Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.302619Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.302849Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.303068Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.303463Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.303500Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.303953Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.303982Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.304076Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.304467Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.304673Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.304724Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.305551Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.307196Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.307298Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.308079Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.308692Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.309258Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.310225Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.312576Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.312999Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.313518Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.313739Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.314198Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.315242Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.315999Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.316635Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.316649Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.317038Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.317338Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.317640Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.317685Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.318387Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.318779Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.319168Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.319514Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.319995Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.320437Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.321091Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.321821Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.322981Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.323512Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.324518Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.324771Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.325058Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.325586Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.325713Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.326204Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.326551Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.326956Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.327066Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.327863Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.327930Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.328826Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.329869Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.330603Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.330858Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.332046Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.332612Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.333358Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.333614Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.333927Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.334857Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.334904Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.334908Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.335470Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.335685Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.335926Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.336431Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.336490Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.336780Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.336948Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.336981Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.336991Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.337164Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.337373Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.337750Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.337799Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.337839Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.338831Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.340578Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.340963Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.341048Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.341274Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.342076Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.342957Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.343477Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.343593Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.344848Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.345192Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.345346Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.345976Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.346483Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.346533Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.346536Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.346562Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.346588Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.346882Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.347910Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.348639Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.349214Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.350020Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.350478Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.351183Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.351643Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.352153Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.353158Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.354052Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.354123Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.354842Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.355366Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.355432Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.355474Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.355562Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.356053Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.356326Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.356330Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.356398Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.356827Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.356831Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.357111Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.357165Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.357750Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.357791Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.357807Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.358415Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.358814Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.359257Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.359624Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.359772Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.359974Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.360040Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.360817Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.360885Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.363510Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T05:04:13.363604Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.364365Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.364446Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.364849Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.365081Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.366193Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.368930Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.369702Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.370303Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.370337Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:13.370365Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.370946Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.371110Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.371575Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.371758Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.372571Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.372869Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.372949Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.373395Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.374744Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.374759Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.375284Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.375341Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.375947Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.376200Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.376221Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.376868Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.376908Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.376906Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.377126Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.377943Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.378055Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.378974Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.379870Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.380266Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.380283Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.380760Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.381883Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.386001Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.386032Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.386669Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.395700Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.396392Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.397103Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.397408Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.397486Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.397491Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.397491Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.397638Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.397709Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.398161Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.398217Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.398251Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.398437Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.398466Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.398737Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.399077Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.399116Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.399133Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.399747Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.399933Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.399967Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.400238Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.400356Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.400556Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.401150Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.401215Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.401264Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.401510Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.401561Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.401587Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.402542Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.402571Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.403180Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.403850Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.404642Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.405398Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.405518Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.406139Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.406508Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.406744Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.406751Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.407890Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.407951Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.407953Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.408015Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.408740Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.408771Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.408780Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.408815Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.408998Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.409311Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.409486Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.409595Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.410330Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.410960Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.411162Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.412731Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.413214Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.413643Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.414200Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.414681Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.415132Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.415402Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.416057Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.416665Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.416838Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.416883Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.417442Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.417449Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.417615Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.418207Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.418696Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.419546Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.420073Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.431405Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.431470Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.431999Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.432139Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.432211Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.432644Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.432704Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.433344Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.433490Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.435893Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.436175Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.438033Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.444354Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.448600Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.450969Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.455123Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.464795Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.471360Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:13.479499Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.572992Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:13.674800Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:13.739494Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.747218Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.752742Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.756089Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.762059Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.766365Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.770979Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.775462Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.776907Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:13.779279Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.784660Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.800638Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.812153Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.812198Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.815968Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.819106Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.831160Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.835968Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.836341Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.849929Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.852022Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.852567Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.856523Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.859692Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.868452Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.879155Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:13.879266Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:13.981199Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:14.083068Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:14.184574Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:14.268312Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.286163Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:14.387853Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:14.490040Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:14.539063Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.547381Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.551913Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.556328Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.563108Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.567197Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.571789Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.576117Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.580674Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.585148Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.586174Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.591475Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:14.600286Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.604605Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.611371Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.615772Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.620592Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.626778Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.631177Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.635298Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.635547Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.640012Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.648257Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.652643Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.659138Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.665684Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.666005Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.672596Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.678850Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.693045Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:14.770462Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:14.795083Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:14.896286Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:14.997883Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:15.099288Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:15.200838Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:15.271527Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:15.302620Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:15.404025Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:15.506012Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:15.607812Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:15.709723Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:15.773409Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:15.812168Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:15.914434Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:16.015668Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:16.116632Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:16.139267Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.147664Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.152829Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.156759Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.163316Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.167633Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.172273Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.176062Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.180537Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.185099Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.187110Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.187801Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.194126Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.200894Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.207113Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.212824Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.214991Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.217495Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:16.219593Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.223767Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.228323Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.237539Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.245832Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.247594Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.251994Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.260457Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.267176Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.271408Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.275079Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.281580Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.281789Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.318745Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:16.420935Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:16.523168Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:16.624486Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:16.726148Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:16.776606Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.827652Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:16.852194Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m gap check failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:16.852216Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m138463 [3mapplied[0m[2m=[0m68973 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m574 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m266 [3mfetches[0m[2m=[0m18707
+[2m2026-11-21T05:04:16.928937Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:17.031170Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:17.132537Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:17.233435Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:17.277069Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:17.334715Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:17.436456Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:17.538003Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:17.639552Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:17.740468Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:17.777551Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:17.842277Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:17.944138Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:18.046357Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:18.141374Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.147209Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:18.147399Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.151622Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.155879Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.159962Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.164483Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.172929Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.174766Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.176568Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.180547Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.184324Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.188785Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.191772Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.196087Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.199886Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.203887Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.212057Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.212129Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.215530Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.220170Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.227935Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.232054Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.243188Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.243274Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.247846Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.248356Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:18.251438Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.259880Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.264576Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.268601Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.270955Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.278325Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.284047Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.288270Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.349894Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:18.452069Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:18.553507Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:18.654746Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:18.756895Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:18.780058Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:18.858825Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:18.960865Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:19.063248Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:19.164766Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:19.267791Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:19.280662Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:19.369872Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:19.471310Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:19.573026Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:19.674908Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:19.776915Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:19.781698Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:19.879203Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:19.980886Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:20.083092Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:20.140084Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.152398Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.156749Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.158771Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.163053Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.167237Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.171826Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.175730Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.180447Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.184775Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:20.184917Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.189999Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.192605Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.196011Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.200280Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.201477Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.206884Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.211234Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.215564Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.219818Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.228505Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.231516Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.235884Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.245706Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.247925Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.248282Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.253857Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.260649Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.265153Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.267042Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.275162Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.276623Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.283132Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.284634Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.287074Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:20.288869Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.299746Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.389173Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:20.490542Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:20.591280Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:20.692644Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:20.783792Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:20.793843Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:20.896263Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:20.997519Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:21.099342Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:21.200950Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:21.284525Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:21.302788Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:21.405452Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:21.506686Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:21.607370Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:21.709077Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:21.785784Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:21.810431Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:21.853448Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m138463 [3mapplied[0m[2m=[0m68973 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m574 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m266 [3mfetches[0m[2m=[0m18707
+[2m2026-11-21T05:04:21.911994Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:22.013402Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:22.114351Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:22.140318Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.140633Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.151884Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.155988Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.161854Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.163979Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.168218Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.172679Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.177785Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.179972Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.184115Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.188393Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.192706Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.195518Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.200317Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.200426Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.207739Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.210532Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.213329Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.215307Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:22.215510Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.219756Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.224074Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.228495Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.234729Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.243497Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.246747Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.255404Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.258758Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.263137Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.267429Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.276029Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.281597Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.287438Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.288169Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.290379Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.296490Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.315891Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.316299Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:22.336942Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.418339Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:22.520094Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:22.622481Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:22.723844Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:22.787599Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:22.826980Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:22.929325Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:23.031355Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:23.132945Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:23.235387Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:23.288484Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:23.336698Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:23.438160Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:23.540221Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:23.642083Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:23.743863Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:23.790467Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:23.845973Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:23.948167Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:24.050278Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:24.140195Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.148251Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.151936Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:24.152877Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.156901Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.164767Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.167065Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.171141Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.181263Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.181418Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.183359Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.188680Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.192220Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.195267Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.199541Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.203286Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.207629Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.211993Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.217076Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.217564Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.222913Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.225364Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.227901Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.236488Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.243053Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.247382Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.253524Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:24.255992Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.260540Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.263321Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.267708Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.277269Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.279401Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.288217Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.290724Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.293816Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.302001Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.315818Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.337183Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.354859Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:24.456247Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:24.558167Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:24.659376Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:24.760579Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:24.791948Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:24.861428Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:24.963216Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:25.064361Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:25.165583Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:25.267091Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:25.292761Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:25.368770Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:25.471317Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:25.573369Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:25.675212Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:25.776968Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:25.793942Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:25.879107Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:25.980731Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:26.082742Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:26.139550Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.139592Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.152361Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.156578Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.164989Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.167066Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.171067Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.176673Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.181289Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.183010Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.184429Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:26.187129Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.192797Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.196579Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.201203Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.202862Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.207470Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.211394Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.216126Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.220400Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.224580Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.227022Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.231439Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.240305Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.244368Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.248761Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.248790Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.254863Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.259149Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.263645Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.267883Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.269321Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.276472Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.286187Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:26.288822Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.294246Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.294362Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.302965Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.309598Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.315737Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.328215Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.352206Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.387705Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:26.490273Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:26.592392Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:26.694166Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:26.795672Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:26.795798Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.854865Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m gap check failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:26.854896Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m138463 [3mapplied[0m[2m=[0m68973 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m574 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m266 [3mfetches[0m[2m=[0m18707
+[2m2026-11-21T05:04:26.896724Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:26.999109Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:27.100572Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:27.201599Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:27.297300Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:27.302477Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:27.403591Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:27.504858Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:27.606776Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:27.708946Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:27.799570Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T05:04:27.811014Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:27.912551Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m475
+[2m2026-11-21T05:04:28.351168Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m database unreachable longer than the lease ttl: claiming no new groups for one ttl [3mgap_ms[0m[2m=[0m18519
+[2m2026-11-21T05:04:31.856431Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m520 [3mready[0m[2m=[0m213 [3mpublished[0m[2m=[0m146965 [3mapplied[0m[2m=[0m74210 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m574 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m266 [3mfetches[0m[2m=[0m19400
+[2m2026-11-21T05:04:37.464640Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m404 [3mready[0m[2m=[0m288 [3mpublished[0m[2m=[0m172025 [3mapplied[0m[2m=[0m91461 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m574 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m266 [3mfetches[0m[2m=[0m22430
+[2m2026-11-21T05:04:42.465217Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m337 [3mready[0m[2m=[0m62 [3mpublished[0m[2m=[0m183541 [3mapplied[0m[2m=[0m114949 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m574 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m266 [3mfetches[0m[2m=[0m24789
+[2m2026-11-21T05:04:47.589502Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m202 [3mready[0m[2m=[0m39 [3mpublished[0m[2m=[0m183541 [3mapplied[0m[2m=[0m139129 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m574 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m266 [3mfetches[0m[2m=[0m26864
+[2m2026-11-21T05:04:52.590875Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m49 [3mready[0m[2m=[0m5 [3mpublished[0m[2m=[0m183541 [3mapplied[0m[2m=[0m158580 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m574 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m266 [3mfetches[0m[2m=[0m29586
+[2m2026-11-21T05:04:57.606601Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m26 [3mready[0m[2m=[0m6 [3mpublished[0m[2m=[0m183541 [3mapplied[0m[2m=[0m165855 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m574 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m266 [3mfetches[0m[2m=[0m35060
+[2m2026-11-21T05:05:02.607890Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m183541 [3mapplied[0m[2m=[0m167542 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m574 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m266 [3mfetches[0m[2m=[0m37655

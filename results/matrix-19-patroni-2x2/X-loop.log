@@ -1,0 +1,10 @@
+13:14:39 X0-none-haproxy -> exit 1
+X0-none-haproxy fails=1 13:13:26.988 drill: none  13:14:37.980 drained in 38.5s  | ANY 2 (dc1a,dc1b,dc2a)
+13:16:21 X1-node-kill-leader-haproxy -> exit 1
+X1-node-kill-leader-haproxy fails=1 13:15:26.747 drill: node-kill killed leader dc2b (not restarted) 13:15:45.702 new leader dc1b  13:16:20.763 drained in 21.8s  | ANY 2 (dc1a,dc2a)
+13:19:12 X3-dc-kill-other-dc-haproxy -> exit 1
+X3-dc-kill-other-dc-haproxy fails=1 13:17:54.041 drill: dc-kill:other killed dc2: eb-dc2a eb-dc2b eb-etcd-dc2 (leader was dc1b)  13:19:10.919 drained in 44.2s  | ANY 1 (dc1a)
+13:21:51 X4-dc-freeze-leader-dc-60s-haproxy -> exit 1
+X4-dc-freeze-leader-dc-60s-haproxy fails=1 13:20:27.329 drill: dc-freeze:leader:60 froze dc1 for 60s: eb-dc1a eb-dc1b eb-etcd-dc1 (leader was dc1b) 13:20:51.180 new leader dc2a 13:21: 13:21:16.191 drained in 15.7s  | ANY 1 (dc2b)
+dc1a=replica dc1b=quorum_standby dc2a=leader dc2b=quorum_standby 
+LOOP-DONE

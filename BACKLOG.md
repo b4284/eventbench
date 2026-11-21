@@ -89,7 +89,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - **Test:** add network delay to the standby link (`tc netem`, 1/5/20 ms), and run quorum sync with two
   standbys. Measure throughput, commit latency and blocking, and repeat the failover drill.
 
-### B6 — Automated failover and fencing
+### B6 — Automated failover and fencing · **done** (Patroni 2+2, etcd 3.5.17, HAProxy endpoint: matrix-18, matrix-19)
 - **From:** matrix-13. Failover is a manual `pg_ctl promote`.
 - **Why:** production needs automatic promotion, and the old primary must be fenced so two primaries never
   accept writes.
@@ -224,7 +224,11 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   for the same cores). Performance runs must check that no standby is running. Two identical 16k runs gave
   55k and 20k blocking violations: compare configurations with 2-3 repeats, not single runs.
 
-### B27 — Octopus: failure drills not run yet · open
+### B27 — Octopus: failure drills not run yet · **mostly done** (2026-11-21)
+- Done: MQTT broker restart (found and fixed a bug), a dispatcher cut from the database, database frozen 2 min,
+  Patroni leader kill/freeze (1+1), node kill, either DC killed, DC frozen 60 s (2+2; found the etcd 3.5.9 split
+  brain and the multi-host client stall). Left: many workers dying at once; a real network partition between DCs
+  (frozen containers approximate it); a database outage of many minutes under load.
 - From the drill review, 2026-11-20. Passed so far: dispatcher kill/stop/scale-out (16k), Postgres primary
   failover with a synchronous standby (12.9k; correct, slow recovery: B19).
 - Still to drill: MQTT broker loss and restart; a dispatcher cut off from the database while alive (its leases
@@ -243,6 +247,11 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
      a second failure in that window loses those writes.
 - Related: a cancelled commit is acknowledged without replication (documented in Octopus design §5.5); the
   benchmark's 60 s command timeout on commits does exactly that.
+
+### B29 — Octopus: deadlocks on octopus.lease between dispatchers · **done** (Octopus d8de3c4: rows locked in group order)
+- Seen in the Patroni drill logs (2026-11-21): "deadlock detected while updating tuple in relation lease". Lease
+  renewal and claims update several rows without a common order; two dispatchers can deadlock. Harmless (the
+  next tick retries) but it costs a lease round and log noise: lock rows in group order.
 
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".

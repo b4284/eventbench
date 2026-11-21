@@ -146,9 +146,16 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
                 ? $"drained in {result.DrainSeconds:F1}s"
                 : $"DRAIN TIMEOUT after {result.DrainSeconds:F1}s: {Interlocked.Read(ref metrics.Total.Produced) - Interlocked.Read(ref metrics.Total.Applied):N0} events not applied");
             if (!result.Drained)
-                foreach (var line in Processing.WorkerRunner.DumpHeld(TimeSpan.FromSeconds(30)).Take(50)) log($"  held: {line}");
+            {
+                log($"  held entries: {Processing.WorkerRunner.Held.Count}, lanes tracked: {Processing.WorkerRunner.Lanes.Count}");
+                foreach (var line in Processing.WorkerRunner.DumpHeld(TimeSpan.Zero).Take(50)) log($"  held: {line}");
+            }
             if (!result.Drained)
-                foreach (var line in Processing.WorkerRunner.DumpRunners().Take(60)) log($"  state: {line}");
+                foreach (var line in Processing.WorkerRunner.DumpLanes(TimeSpan.FromSeconds(30)).Take(40)) log($"  lane: {line}");
+            if (!result.Drained)
+                foreach (var line in Processing.WorkerRunner.DumpRunners().Where(l => !l.StartsWith("runner")).Take(30)) log($"  state: {line}");
+            if (!result.Drained)
+                foreach (var line in Processing.WorkerRunner.DumpRunners().Where(l => l.StartsWith("runner")).Take(20)) log($"  state: {line}");
             if (Interlocked.Read(ref Processing.WorkerRunner.AbandonedCalls) > 0)
                 log($"worker database calls abandoned after Worker:OperationTimeoutMs: {Interlocked.Read(ref Processing.WorkerRunner.AbandonedCalls):N0}");
         }
