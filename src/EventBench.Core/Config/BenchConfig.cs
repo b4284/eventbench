@@ -233,6 +233,13 @@ public sealed class WorkerOptions
     /// </summary>
     public int MaxLocalRetries { get; set; } = 5;
     /// <summary>
+    /// A database call of the worker (load, commit) not finished after this long is abandoned, never cancelled: the
+    /// event counts as in doubt and is given back, and its redelivery re-checks the worker's own state. Cancelling a
+    /// commit that waits for a synchronous standby would make PostgreSQL acknowledge it without replication.
+    /// 0 = wait for ever.
+    /// </summary>
+    public int OperationTimeoutMs { get; set; } = 60_000;
+    /// <summary>
     /// Pipelined mode with a shared-queue broker (ISourceLinger): after finishing a source's event, fetch
     /// that source's next event straight away and keep the slot, without a poll. Skipped while other
     /// sources wait for a slot.

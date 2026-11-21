@@ -149,6 +149,8 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
                 foreach (var line in Processing.WorkerRunner.DumpHeld(TimeSpan.FromSeconds(30)).Take(50)) log($"  held: {line}");
             if (!result.Drained)
                 foreach (var line in Processing.WorkerRunner.DumpRunners().Take(60)) log($"  state: {line}");
+            if (Interlocked.Read(ref Processing.WorkerRunner.AbandonedCalls) > 0)
+                log($"worker database calls abandoned after Worker:OperationTimeoutMs: {Interlocked.Read(ref Processing.WorkerRunner.AbandonedCalls):N0}");
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested)
         {

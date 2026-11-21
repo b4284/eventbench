@@ -210,7 +210,7 @@ public sealed class WorkerRunner
         {
             long t0 = Clock.NowUs();
             Stage(d, "load");
-            var ctx = await _store.LoadAsync(ev, ct);
+            var ctx = await Abandonable(_store.LoadAsync(ev, ct).AsTask(), "load", ev, ct);
             long t1 = Clock.NowUs();
 
             if (ctx.LastSeq >= ev.Seq)
@@ -241,7 +241,7 @@ public sealed class WorkerRunner
 
             Stage(d, "commit");
             CommitStatus status;
-            try { status = await _store.CommitAsync(request, ct); }
+            try { status = await Abandonable(_store.CommitAsync(request, ct).AsTask(), "commit", ev, ct); }
             catch (Exception) when (!ct.IsCancellationRequested) { InDoubt.Add(ev.SourceId, ev.Seq); throw; }
             if (status == CommitStatus.Applied) InDoubt.Resolve(ev.SourceId, ev.Seq);
             if (status == CommitStatus.RecordConflict)
@@ -307,6 +307,26 @@ public sealed class WorkerRunner
             return Outcome.Failed;
         }
     }
+
+    /// <summary>
+    /// Waits for a database call up to Worker:OperationTimeoutMs, then gives up on it without cancelling it (see
+    /// WorkerOptions.OperationTimeoutMs): the caller treats the event as failed, and in doubt.
+    /// </summary>
+    private async Task<T> Abandonable<T>(Task<T> call, string what, EventEnvelope ev, CancellationToken ct)
+    {
+        int ms = _options.OperationTimeoutMs;
+        if (ms <= 0 || call.IsCompleted) return await call;
+        var winner = await Task.WhenAny(call, Task.Delay(ms, ct));
+        if (winner == call) return await call;
+        ct.ThrowIfCancellationRequested();
+        Interlocked.Increment(ref AbandonedCalls);
+        // observe its eventual exception so it does not surface as unobserved
+        _ = call.ContinueWith(t => _ = t.Exception, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
+        throw new TimeoutException($"{what} of {ev} not finished after {ms} ms: abandoned (not cancelled), outcome in doubt");
+    }
+
+    /// <summary>Database calls given up on (Abandonable), across all workers.</summary>
+    public static long AbandonedCalls;
 
     private async Task<CommitRequest> ComputeAsync(EventEnvelope ev, WorkContext ctx, IDelivery d, CancellationToken ct)
     {
