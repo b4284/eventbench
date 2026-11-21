@@ -368,7 +368,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - **Not explored yet:** client-side bounds without NLB cutting (libpq `tcp_user_timeout`/keepalives, Npgsql
     keepalive and command timeouts); a real cloud NLB.
 
-### B31 — MQTT broker: the first ceiling, and a single point of failure · **ceiling part answered by NATS** (matrix-32: +4–6%); the single point of failure open (2026-11-22, matrix-29)
+### B31 — MQTT broker: the first ceiling, and a single point of failure · **both answered by NATS** (2026-11-22: ceiling +4.7%, matrix-32; a 3-node cluster survives a node kill with no outage, matrix-36)
 - Mosquitto is single-threaded: 84–93% of its core at 16–24k with remote clients, 97% with more connections, when
   every shard's round trips rose 4×. The setup tops out at ~22–23.5k ev/s; Postgres is next. Mosquitto also has
   no clustering, the topology's one remaining single point of failure (docs/topology.md).
@@ -378,6 +378,11 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   trips. The ceiling is the laptop's total CPU.
 - Next: the broker on its own machine (lab), a broker-node kill drill, and NATS (B32). Separately, fewer
   MQTT messages per event in Octopus (batch publish replies, done reports and their replies).
+- 2026-11-22, matrix-36: NATS 3-node cluster (`EB_NATS_NODES=3`), node kills 30 s into a 16k run, including the
+  node every benchmark client used: all correct, no dip in throughput, reconnects in milliseconds; in-flight
+  messages come again through Octopus's retries (e2e max 30 s = the delivery timeout).
+  - **Not explored yet:** shorter delivery/publish timeouts for that tail; the cluster across the Macs (firewall
+    ports per node).
 
 ### B32 — NATS as Octopus's transport, to lift the ceiling · **measured: lifts it +4–6%, new best 25.5k ev/s applied** (2026-11-22, matrix-32; from the user, 2026-11-22)
 - NATS (Apache 2.0, multi-threaded, clustering free) as a native transport next to MQTT. NATS's MQTT gateway speaks

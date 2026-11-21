@@ -14,6 +14,8 @@
 #           | partition-dc1:<s> (bridged lab, infra/patroni-bridged: cut DC1 from the WAN for s seconds; it keeps running)
 #           | node-kill (SIGKILL the leader, not restarted) | dc-kill:leader|other (SIGKILL a DC: its database nodes and
 #             its etcd member) | dc-freeze:leader|other:<s> (freeze a DC for s seconds: a partition, tests fencing)
+#           | nats-kill:<n> (SIGKILL NATS cluster node n, EB_NATS_NODES=3; node 1 is the one the benchmark's clients
+#             were given; not restarted)
 #           | mqtt-restart (restart the MQTT broker) | dispatcher-db-cut:<i>:<s> (dispatcher i keeps running, but its
 #             database connections hang for s seconds: it goes through a proxy that is frozen)
 # env: DRILL_AT (seconds into the run, default 30); OCTOPUS_PG_CONN for the dispatchers (multi-host for pgfail)
@@ -52,6 +54,7 @@ sleep "$AT"
     kill:*) i=${ACTION#kill:}; pid=$(sed -n "${i}p" "$STATE/pids"); kill -KILL "$pid" && echo "killed d$i (pid $pid)" ;;
     term:*) i=${ACTION#term:}; pid=$(sed -n "${i}p" "$STATE/pids"); kill -TERM "$pid" && echo "stopped d$i (pid $pid)" ;;
     add) infra/octopus/add.sh ;;
+    nats-kill:*) n=${ACTION#nats-kill:}; c=eb-nats-octopus; [[ $n -gt 1 ]] && c=eb-nats-octopus-$n; podman kill "$c" >/dev/null && echo "killed NATS node $n ($c)" ;;
     pgfail) infra/pg-standby/failover.sh ;;
     patroni-kill*) r=${ACTION#patroni-kill}; r=${r#:}; r=${r:-30}; l=$(infra/patroni/leader.sh); podman kill eb-$l >/dev/null && echo "killed leader $l"
       t0=$(date +%s); wait_new_leader "$l"

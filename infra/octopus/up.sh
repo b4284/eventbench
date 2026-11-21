@@ -23,7 +23,11 @@ MQ=${EB_MQTT:-nanomq}
 CTR=eb-$MQ; [[ $MQ == nats ]] && CTR=eb-nats-octopus   # (eb-nats is the JetStream lab's, infra/nats)
 # EB_NATS_PORT: NATS's port (default 4222; the laptop's firewall lets the Macs reach only certain ports, e.g. 6440)
 NATS_PORT=${EB_NATS_PORT:-4222}
-for other in eb-mosquitto eb-nanomq eb-emqx eb-nats-octopus; do [[ $other == "$CTR" ]] || podman stop -t 5 $other >/dev/null 2>&1 || true; done
+# EB_NATS_NODES=3: a NATS cluster (eb-nats-octopus, -2, -3 on NATS_PORT, +1, +2; routes on NATS_PORT+10000..), created
+# fresh every run; the dispatchers get every node's URL, the benchmark's clients the first and learn the rest
+NATS_NODES=${EB_NATS_NODES:-1}
+NATS_URLS=$(for i in $(seq 0 $((NATS_NODES - 1))); do printf 'nats://127.0.0.1:%s,' $((NATS_PORT + i)); done | sed 's/,$//')
+for other in eb-mosquitto eb-nanomq eb-emqx eb-nats-octopus eb-nats-octopus-2 eb-nats-octopus-3; do [[ $other == "$CTR" ]] || podman stop -t 5 $other >/dev/null 2>&1 || true; done
 # a running Mosquitto listening on another address than requested is recreated (remote clients need 0.0.0.0)
 if [[ $MQ == mosquitto ]] && ! grep -qx "listener 1883 ${EB_MQTT_BIND:-127.0.0.1}" "$STATE/mosquitto.conf" 2>/dev/null; then
   podman rm -f eb-mosquitto >/dev/null 2>&1 || true
@@ -34,22 +38,32 @@ fi
 if [[ $MQ == nanomq ]] && ! grep -q "bind = \"${EB_MQTT_BIND:-127.0.0.1}:1883\"" "$STATE/nanomq.conf" 2>/dev/null; then
   podman rm -f eb-nanomq >/dev/null 2>&1 || true
 fi
-if [[ $MQ == nats ]] && ! grep -q "listen: \"${EB_MQTT_BIND:-127.0.0.1}:$NATS_PORT\"" "$STATE/nats.conf" 2>/dev/null; then
+if [[ $MQ == nats ]] && { [[ $NATS_NODES -gt 1 ]] || podman container exists eb-nats-octopus-2 || ! grep -q "listen: \"${EB_MQTT_BIND:-127.0.0.1}:$NATS_PORT\"" "$STATE/nats.conf" 2>/dev/null; }; then
+  podman rm -f eb-nats-octopus-2 eb-nats-octopus-3 >/dev/null 2>&1 || true
   podman rm -f eb-nats-octopus >/dev/null 2>&1 || true
 fi
 if [[ "$(podman inspect -f '{{.State.Running}}' "$CTR" 2>/dev/null)" != true ]]; then
   podman rm -f "$CTR" >/dev/null 2>&1 || true
   if [[ $MQ == nats ]]; then
     # events up to tens of MB travel inline (64 MB is NATS's hard limit); slow consumers get time instead of a cut
-    cat > "$STATE/nats.conf" <<CONF
-listen: "${EB_MQTT_BIND:-127.0.0.1}:$NATS_PORT"
-http: "127.0.0.1:8222"
-max_payload: 64MB
-max_pending: 1GB
-write_deadline: "30s"
-CONF
-    podman run -d --name eb-nats-octopus --network host -v "$STATE/nats.conf:/nats.conf:ro,Z" \
-      docker.io/library/nats:${NATS_VERSION:-2.15.2} -c /nats.conf >/dev/null
+    for i in $(seq 0 $((NATS_NODES - 1))); do
+      name=eb-nats-octopus; conf=$STATE/nats.conf; [[ $i -gt 0 ]] && { name=eb-nats-octopus-$((i + 1)); conf=$STATE/nats-$((i + 1)).conf; }
+      {
+        echo "server_name: n$((i + 1))"
+        echo "listen: \"${EB_MQTT_BIND:-127.0.0.1}:$((NATS_PORT + i))\""
+        echo "http: \"127.0.0.1:$((8222 + i))\""
+        echo "max_payload: 64MB"
+        echo "max_pending: 1GB"
+        echo "write_deadline: \"30s\""
+        if [[ $NATS_NODES -gt 1 ]]; then
+          echo "cluster { name: octopus, listen: \"127.0.0.1:$((NATS_PORT + 10000 + i))\", routes: ["
+          for j in $(seq 0 $((NATS_NODES - 1))); do if [[ $j -ne $i ]]; then echo "  \"nats://127.0.0.1:$((NATS_PORT + 10000 + j))\""; fi; done
+          echo "] }"
+        fi
+      } > "$conf"
+      podman run -d --name "$name" --network host -v "$conf:/nats.conf:ro,Z" \
+        docker.io/library/nats:${NATS_VERSION:-2.15.2} -c /nats.conf >/dev/null
+    done
   elif [[ $MQ == emqx ]]; then
     # Octopus has few, busy connections: big packets (events up to MBs), deep queues, no forced shutdown of busy
     # clients (EMQX's IoT-oriented defaults would kick them), anonymous access as with Mosquitto.
@@ -144,7 +158,7 @@ for i in $(seq 1 "$N"); do
       OCTOPUS_PG="$(conn_for "$i")" OCTOPUS_PG_POOL="${OCTOPUS_PG_POOL:-32}" \
       OCTOPUS_MYSQL="${OCTOPUS_MYSQL_CONN:-mysql://root:${MYSQL_ROOT_PASSWORD:-bench}@127.0.0.1:3306/octopus}" \
       OCTOPUS_MSSQL="${OCTOPUS_MSSQL_CONN:-server=tcp:127.0.0.1,1433;database=octopus;user=sa;password=$MSSQL_PASSWORD;TrustServerCertificate=true}" \
-      OCTOPUS_TRANSPORT="$([[ $MQ == nats ]] && echo nats || echo mqtt)" OCTOPUS_NATS_URL="nats://127.0.0.1:$NATS_PORT" \
+      OCTOPUS_TRANSPORT="$([[ $MQ == nats ]] && echo nats || echo mqtt)" OCTOPUS_NATS_URL="$NATS_URLS" \
       ${HOOK_ENV} RUST_LOG="${RUST_LOG:-info}" ${OCTOPUSD_ENV:-} \
       nohup ${OCTOPUSD_PREFIX:-} "$BIN" >"$STATE/d$i.log" 2>&1 &
   echo $! >> "$STATE/pids"
