@@ -188,7 +188,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   last seq of the previous epoch (if known), so the old epoch can be drained before the new one starts; if not
   known, an operator or policy decides. Proto fields, schema column, TLA+ model update.
 
-### B23 — Octopus: heal permanent gaps automatically · **mostly done** (2026-11-21)
+### B23 — Octopus: heal permanent gaps automatically · **done** (2026-11-21; high-water announcements and client repair helpers in Octopus 2026-11-21; Octopus-initiated resend requests not built: the acknowledgement report plus high-water cover the same ground)
 - **Done:** "missing below" in every publish reply; skip markers; per-group gap policy (`grp.gap_skip_ms`,
   `OCTOPUS_GAP_SKIP_MS`) skipping within an epoch or closing an epoch; skips recorded and listed on the next
   delivery; `LATE` status and late table; TLA+ model `spec/WorkerCommit.tla`.
