@@ -82,12 +82,27 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - **Test:** tune `FetchParallelism` and `MaxGroupsPerFetch`, wake on completion without the 20 ms loop tick,
   more slots per worker, and the batched-commit executor count.
 
-### B5 — Cross-data-center replication
+### B5 — Cross-data-center replication · **partly done** (2026-11-21, matrix-23: three machines, Macs since retired)
 - **From:** the user's goal of one cluster with 2–3 copies in another data center.
 - **Why:** sync `remote_write` was free on one host. Over a WAN, every commit waits a round trip. Quorum
   (`ANY 1 (dc1_standby, dc2_standby)`) changes which failures lose data.
 - **Test:** add network delay to the standby link (`tc netem`, 1/5/20 ms), and run quorum sync with two
   standbys. Measure throughput, commit latency and blocking, and repeat the failover drill.
+- 2026-11-21, matrix-23 (`infra/patroni-geo`: DC1 laptop, DC2 m4mini, witness m1mini, 0.56 ms apart on one LAN):
+  - **Bandwidth, not distance, set the cost.** WAL was 12 KiB/event with max_wal_size 4GB (a checkpoint every
+    ~15 s, page-image storms), 7.1 KiB with 12GB + zstd. At 4GB, waiting for 2 of 3 standbys was 4–6× slower,
+    capped by m4mini's 1 GbE link carrying two copies. At 12GB it cost nothing measurable.
+  - At 24k ev/s: ~1.4 Gbit/s per standby, ~2.8 Gbit/s between DCs with two DC2 standbys. Floor for any store
+    ~0.6 Gbit/s per copy (~3 KB of real data per event).
+  - **remote_write doesn't bound replay lag:** DC2's two standbys on one nearly full Mac SSD fell 15–17 min
+    behind in applying, so a failover to them would take that long.
+- **Not explored yet** (the user retired the Macs on 2026-11-21; needs other hosts, or `tc netem` on one host):
+  - `remote_apply`: what a bounded recovery time costs;
+  - a replay-lag alert and Patroni `maximum_lag_on_failover` with a non-zero limit;
+  - DC kill and partition drills on real machines (the single-host versions pass: matrix-19, matrix-22);
+  - one WAN copy (DC2b cascades from DC2a) and its quorum cost;
+  - compressing payloads at the source, or a compressing tunnel between the DCs;
+  - added latency (1/5/20 ms) on the DC link.
 
 ### B6 — Automated failover and fencing · **done** (Patroni 2+2, etcd 3.5.17, HAProxy endpoint: matrix-18, matrix-19)
 - **From:** matrix-13. Failover is a manual `pg_ctl promote`.
@@ -97,7 +112,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   measure time to a new primary, and check that the oracle passes. Also partition the old primary instead of
   killing it.
 
-### B7 — Separate machines · **partly done** (matrix-17: app on a Mac mini; the 1 GbE link saturates at 16k with inline large events; a real cluster comparison still needs 10 GbE hosts)
+### B7 — Separate machines · **partly done** (matrix-17: app on a Mac mini; the 1 GbE link saturates at 16k with inline large events; matrix-23: Postgres DC2 on a second Mac; a real cluster comparison still needs 10 GbE hosts; Macs retired 2026-11-21)
 - **From:** every cluster round. Everything shares one 24-core host, so a cluster pays its replication cost
   without any scale-out benefit.
 - **Why:** sizing, and a fair Kafka/NATS cluster comparison.
@@ -176,6 +191,8 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - D7: the same 12.9k with `remote_write` to a standby on the same host: e2e p50 164 ms (16 ms async), commit p50
   36 ms, Postgres 8.0 cores (5.8). Measure with the standby on its own cores (CPU pinning) and with an added
   network delay (tc netem) to estimate a real second DC.
+- 2026-11-21, matrix-23: across machines, the cost came from checkpoints (max_wal_size), not from waiting itself.
+  See B5. CPU pinning and netem on one host are still open.
 
 ### B21 — Peak capacity of one dispatcher · open
 - From the user, 2026-11-20. Not measured yet: in every run Postgres saturates first. Measure with one dispatcher,
