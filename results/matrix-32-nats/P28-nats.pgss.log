@@ -1,0 +1,18 @@
+14374 | 335.4 | 23.331 | 14374 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+14374 | 319.2 | 22.206 | 14374 | WITH x AS ( SELECT u.*, src.id AS sid, src.grp AS sgrp, src.epoch AS ce, src.last_seq AS cs, -- the highest po
+42451 | 283.9 | 6.687 | 42451 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+556108 | 239.1 | 0.430 | 556108 | SELECT s.last_seq, r.version, r.hash, r.status, r.ctx FROM eb_source s LEFT JOIN eb_record r ON r.record_id = 
+382819 | 77.6 | 0.203 | 382819 | UPDATE eb_record SET version = p_version, hash = p_hash, status = p_status, ctx = COALESCE(p_ctx, ctx), update
+557727 | 73.0 | 0.131 | 557727 | SELECT last_seq FROM eb_source WHERE source_id = p_source FOR UPDATE
+59265 | 54.8 | 0.925 | 59265 | INSERT INTO eb_record (record_id, source_id, status, version, hash, created_seq, updated_seq, ctx) VALUES (p_r
+354 | 44.9 | 126.880 | 354 | SELECT octopus.advance($1, $2, $3)
+354 | 27.7 | 78.183 | 354 | SELECT octopus.settle(ids)
+354 | 26.9 | 75.904 | 566180 | DELETE FROM octopus.event e USING octopus.source s WHERE s.id = ANY(p_sid) AND e.sid = s.id AND (e.epoch, e.se
+557731 | 23.2 | 0.042 | 557731 | UPDATE eb_source SET last_seq = p_seq, updated_at = now() WHERE source_id = p_source
+116 | 18.4 | 158.491 | 116 | SELECT eb_commit($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+116 | 17.2 | 147.864 | 116 | INSERT INTO eb_upload (source_id, seq, record_id, size, checksum, data) VALUES (p_source, p_seq, p_record, p_u
+9042 | 9.7 | 1.078 | 3881 | SELECT x.grp, x.source, x.epoch, x.seq, x.body, x.attempts, (extract(epoch FROM x.enqueued_at) * 1000000)::big
+351 | 9.6 | 27.252 | 407615 | UPDATE octopus.source src SET epoch = w.e, last_seq = w.q FROM (SELECT DISTINCT ON (s) s, e, q FROM unnest(p_s
+351 | 7.1 | 20.361 | 351 | SELECT array_agg(id) FROM (SELECT id FROM octopus.source WHERE source = ANY(p_source) ORDER BY source FOR UPDA
+51 | 5.7 | 112.313 | 51 | SELECT count(*) FROM octopus.event e JOIN octopus.source s ON s.id = e.sid WHERE (e.epoch, e.seq) > (s.epoch, 
+8 | 2.3 | 283.236 | 0 | SELECT s.grp, s.source, s.epoch, s.last_seq, (array_agg(e.epoch ORDER BY e.epoch, e.seq))[$4], (array_agg(e.se

@@ -46,3 +46,17 @@ The broker is ~6% of the laptop's work at the ceiling (1.2 of ~20 busy cores). R
 that much at most; the dispatchers would take on part of it (a connection per client, fan-out of announcements).
 So on this lab ZeroMQ's upper bound is a few percent of throughput, plus one hop less latency. In a production
 layout the broker runs on its own hosts and costs the database host nothing. See B34 for the decision.
+
+## Where the laptop's CPU goes at the ceiling (P28-nats, pg_stat_statements over 30 s of a 28k run)
+
+~20 of 24 logical CPUs busy: Postgres ~10 cores, the local shard (producers and workers) ~4, dispatchers ~2, NATS
+~1.2, PgBouncer 0.3, the rest system. Inside Postgres, Octopus's own work at 16k unsaturated (matrix-31 Lb-pg)
+is ~2 cores (publish ~0.85, advance ~0.55, settle ~0.3): ~3–3.5 cores at 25k. The other ~6.5 are the
+benchmark store's writes (`eb_commit_many` and its record/source updates), standing in for the application's own
+database work. At saturation every statement's time inflates (publish 23 ms per call vs 1 ms at 16k), so per-call
+times there are not costs. P28-nats itself (22.8k produced) ran below T28-nats (25.8k): at the ceiling run-to-run
+noise is ±10%.
+
+What would lift it further: hardware (Postgres or the store on a host of its own, which a production layout has), or
+less CPU per event in the store's writes (the application's, outside Octopus). Octopus's share is about a third of
+Postgres and a sixth of the laptop.
