@@ -62,11 +62,21 @@ is the only database on offer, with more headroom (cores) than Postgres needs.
 
 The binary log's commit path (two logs per commit, ordered group commit) is what made MySQL slow, not CPU: without
 it MySQL's latency comes close to Postgres's (p50 13–19 ms vs 7), at the same ~2.2× CPU. Replication needs the
-binary log, though (semi-sync and Group Replication alike), so an HA MySQL pays this; tuning its group commit
-(`binlog_group_commit_sync_delay`, `binlog_order_commits=OFF`) is the next thing to try.
+binary log, though (semi-sync and Group Replication alike), so an HA MySQL pays this.
+
+With the binary log on (both set globally for two runs each):
+
+| change | runs | e2e p50 | e2e p99 |
+|---|---|---:|---:|
+| `binlog_order_commits=OFF` | Kg, Kh | 3.2 s, 557 ms | 6.5, 4.9 s |
+| `binlog_row_image=MINIMAL` | Ki, Kj | 250 ms, 74 ms | 4.1, 5.8 s |
+
+Commit ordering is not the cost; volume is. With full row images every deleted event is logged again with its
+body; MINIMAL logs only its key and helps (p50 74–250 ms), but every body still passes through the binary log once
+(~1 GB binary log file every few minutes at 16k). Recommendation for Octopus on MySQL: `binlog_row_image=MINIMAL`.
 
 ## Not explored yet (B16)
 
-- Group commit tuning with the binary log on; semi-sync replication (`AFTER_SYNC`) or Group Replication for the
+- Semi-sync replication (`AFTER_SYNC`) or Group Replication for the
   failover drill.
 - Cheaper batch passing than JSON with base64 (`JSON_TABLE` + `FROM_BASE64` on every publish).

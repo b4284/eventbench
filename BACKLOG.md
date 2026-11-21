@@ -174,8 +174,9 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   Octopus 9003a62)**, and a registration race at startup (186eaea).
   - Binary log off (Ke, Kf): p50 13–19 ms, p99 1.7–2.8 s at the same CPU: the binary log's commit path is MySQL's
     latency, not its CPU. Replication needs it, so an HA MySQL pays it.
-  - **Not explored yet:** group commit tuning with the binary log on (`binlog_group_commit_sync_delay`,
-    `binlog_order_commits=OFF`); semi-sync `AFTER_SYNC` or Group Replication failover drill; cheaper batch passing
+  - With it on: `binlog_order_commits=OFF` does not help; `binlog_row_image=MINIMAL` does (p50 74–250 ms: deletes
+    no longer log the bodies again). Recommended for Octopus on MySQL.
+  - **Not explored yet:** semi-sync `AFTER_SYNC` or Group Replication failover drill; cheaper batch passing
     than JSON with base64.
 
 ### B17 — Distributed SQL under the dispatcher · **measured: not viable for 24k** (2026-11-21, matrix-26: YugabyteDB runs Octopus unchanged but needs 25–45× Postgres's CPU per event)
