@@ -384,13 +384,19 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - **Not explored yet:** NATS clustering (3 nodes) for HA; JetStream KV for the announcements instead of the 5 s
     re-announcement; NATS on its own machine (needs a third healthy Mac link: m1mini is at 100 Mbit, matrix-32).
 
-### B33 — SQL Server In-Memory OLTP for the event table · open (the user: "remember to re-visit", 2026-11-22)
+### B33 — SQL Server In-Memory OLTP for the event table · **measured: steady at 16k, ~3.2× Postgres CPU (was 4–5×, erratic)** (2026-11-22, matrix-33; the user: "remember to re-visit")
 - matrix-27: SQL Server runs Octopus correctly but at ~4–5x Postgres's CPU per event, unsteady at 16k; publish's
   JSON unpacking and the cursor writes' deletes dominate. In-Memory OLTP is SQL Server's design for hot queue-like
   tables: no locks, no latches, no tempdb.
 - Test: a memory-optimized event table (SCHEMA_AND_DATA durability) and memory-optimized table types instead of
   table variables; natively compiled procedures for publish/advance where the feature set allows. Needs a
   MEMORY_OPTIMIZED_DATA filegroup (a DBA step). Compare with matrix-27 at 16k, local and split.
+- 2026-11-22, matrix-33: Octopus `OCTOPUS_MSSQL_INMEMORY=1` (9251c45 + seek fix): the backend sets up the filegroup
+  and snapshot elevation itself and makes only `event` memory-optimized. 4 of 4 runs at 15.9–16.1k, p50 14 ms, p99
+  1.3 s (= Postgres), 6.6–7.1 cores; disk-based, 6 runs swung 4.7–15.9k. advance/settle ~15× cheaper. Found: a
+  duplicate check compiled on a near-empty table scanned it per publish (fixed with forced seeks).
+  - **Not explored yet:** memory-optimized table types for the table variables; natively compiled procedures (no
+    OPENJSON there); the split-load run; the source table memory-optimized (needs its UTF-8 names reworked).
 
 ### B34 — ZeroMQ as Octopus's transport (brokerless), to lift the ceiling · open (from the user, 2026-11-22)
 - No broker: every message one hop, client <-> dispatcher. Removes the broker's CPU and queueing (the first
