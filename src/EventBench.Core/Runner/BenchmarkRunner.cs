@@ -81,13 +81,17 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
         using var workersCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
         var consumers = new List<IEventConsumer>();
         var workerTasks = new List<Task>();
+        var runnersByGroup = new List<List<WorkerRunner>>();
         foreach (var g in topology.Groups)
         {
+            var groupRunners = new List<WorkerRunner>();
+            runnersByGroup.Add(groupRunners);
             for (int w = 0; w < g.Workers; w++)
             {
                 var consumer = broker.CreateConsumer(g.Id, w);
                 consumers.Add(consumer);
                 var runner = new WorkerRunner(g, w, consumer, store, cfg, metrics, txAck, log);
+                groupRunners.Add(runner);
                 workerTasks.Add(Task.Run(() => runner.RunAsync(workersCts.Token)));
             }
         }
@@ -127,6 +131,22 @@ public sealed class BenchmarkRunner(ComponentRegistry registry, Action<string> l
             _phase = "run";
             log($"run: {cfg.Workload.DurationSeconds}s (warmup {cfg.Workload.WarmupSeconds}s), {producers.Count} producers, {workerTasks.Count} workers");
             var phaseSw = Stopwatch.StartNew();
+            if (cfg.Worker.ChaosCrashAtSeconds > 0)
+            {
+                _ = Task.Run(async () =>
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(cfg.Worker.ChaosCrashAtSeconds), ct);
+                    // the same share of every group's workers, never all of them (each group keeps at least one)
+                    int crashed = 0;
+                    foreach (var rs in runnersByGroup)
+                    {
+                        int n = Math.Min(rs.Count - 1, (int)Math.Floor(rs.Count * cfg.Worker.ChaosCrashFraction));
+                        foreach (var r in rs.Take(n))
+                            if (r.Crash()) crashed++;
+                    }
+                    log($"chaos: {crashed} workers crashed ({cfg.Worker.ChaosCrashFraction:P0} of each group's, at {cfg.Worker.ChaosCrashAtSeconds}s)");
+                }, ct);
+            }
             await Task.WhenAll(producers.Select(p => Task.Run(() => p.RunAsync(startUs, endUs, ct))));
             result.RunSeconds = phaseSw.Elapsed.TotalSeconds;
 

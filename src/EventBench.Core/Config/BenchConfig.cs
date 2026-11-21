@@ -279,6 +279,13 @@ public sealed class WorkerOptions
     public double RetryDelayMs { get; set; } = 250;
     /// <summary>Probability that a worker fails an event just before commit and nacks it (tests ordered redelivery).</summary>
     public double ChaosFailProbability { get; set; }
+    /// <summary>
+    /// Seconds into the run at which a fraction (<see cref="ChaosCrashFraction"/>) of each group's workers crash, as
+    /// if their pod died: they stop and send nothing more; their in-flight events are left to the broker. 0 = off.
+    /// Needs a consumer that supports it (ICrashableConsumer).
+    /// </summary>
+    public double ChaosCrashAtSeconds { get; set; }
+    public double ChaosCrashFraction { get; set; } = 0.34;
 
     public double IdleBackoffMinMs { get; set; } = 1;
     public double IdleBackoffMaxMs { get; set; } = 50;

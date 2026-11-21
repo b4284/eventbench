@@ -93,7 +93,27 @@ public sealed class WorkerRunner
         _pipelined = _options.Mode == WorkerMode.Pipelined;
     }
 
-    public Task RunAsync(CancellationToken ct) => _pipelined ? RunPipelinedAsync(ct) : RunBatchAsync(ct);
+    private readonly CancellationTokenSource _crash = new();
+    public bool Crashed { get; private set; }
+
+    public Task RunAsync(CancellationToken ct)
+    {
+        var linked = CancellationTokenSource.CreateLinkedTokenSource(ct, _crash.Token).Token;
+        return _pipelined ? RunPipelinedAsync(linked) : RunBatchAsync(linked);
+    }
+
+    /// <summary>
+    /// Chaos: this worker's process dies now. Its consumer goes silent first (no acks, nacks or keep-alives), then
+    /// its loops stop. Database work already started may still commit: the redelivery must find it applied.
+    /// </summary>
+    public bool Crash()
+    {
+        if (_consumer is not ICrashableConsumer c) return false;
+        Crashed = true;
+        c.Crash();
+        _crash.Cancel();
+        return true;
+    }
 
     private async Task RunBatchAsync(CancellationToken ct)
     {
@@ -256,7 +276,8 @@ public sealed class WorkerRunner
             Stage(d, "commit");
             CommitStatus status;
             try { status = await Abandonable(_store.CommitAsync(request, ct).AsTask(), "commit", ev, ct); }
-            catch (Exception) when (!ct.IsCancellationRequested) { InDoubt.Add(ev.SourceId, ev.Seq); throw; }
+            // any interruption leaves the outcome unknown, a cancellation (shutdown, a crash drill) included
+            catch (Exception) { InDoubt.Add(ev.SourceId, ev.Seq); throw; }
             if (status == CommitStatus.Applied) InDoubt.Resolve(ev.SourceId, ev.Seq);
             if (status == CommitStatus.RecordConflict)
             {

@@ -212,7 +212,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
         public ValueTask DisposeAsync() => ValueTask.CompletedTask;
     }
 
-    private sealed class Consumer(OctopusBroker b, OctopusWorker w) : IEventConsumer
+    private sealed class Consumer(OctopusBroker b, OctopusWorker w) : IEventConsumer, ICrashableConsumer
     {
         public bool SharedSources => true;
 
@@ -238,6 +238,8 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
         }
 
         public ValueTask DisposeAsync() => ValueTask.CompletedTask;
+
+        public void Crash() => w.Crash();
     }
 }
 

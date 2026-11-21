@@ -249,8 +249,9 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 ### B27 — Octopus: failure drills not run yet · **mostly done** (2026-11-21)
 - Done: MQTT broker restart (found and fixed a bug), a dispatcher cut from the database, database frozen 2 min,
   Patroni leader kill/freeze (1+1), node kill, either DC killed, DC frozen 60 s (2+2; found the etcd 3.5.9 split
-  brain and the multi-host client stall). Left: many workers dying at once; a real network partition between DCs
-  (frozen containers approximate it); a database outage of many minutes under load.
+  brain and the multi-host client stall). Done since: a 10-minute database outage under load (matrix-19 L1); half of
+  every group's workers crashing at once (matrix-21: nothing lost; re-offering a forgotten worker's events took p99
+  from 30 s to 10.6 s). Left: a real network partition between DCs (frozen containers approximate it).
 - From the drill review, 2026-11-20. Passed so far: dispatcher kill/stop/scale-out (16k), Postgres primary
   failover with a synchronous standby (12.9k; correct, slow recovery: B19).
 - Still to drill: MQTT broker loss and restart; a dispatcher cut off from the database while alive (its leases

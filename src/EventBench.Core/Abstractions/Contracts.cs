@@ -51,6 +51,13 @@ public interface IEventPublisher : IAsyncDisposable
     ValueTask PublishAsync(IReadOnlyList<EventEnvelope> events, CancellationToken ct);
 }
 
+/// <summary>A consumer that can simulate its worker process dying (chaos drills).</summary>
+public interface ICrashableConsumer
+{
+    /// <summary>Send nothing more (no acks, nacks or keep-alives) and receive nothing more.</summary>
+    void Crash();
+}
+
 public interface IEventConsumer : IAsyncDisposable
 {
     /// <summary>Returns up to <paramref name="maxCount"/> messages; may return an empty list when idle.</summary>
