@@ -399,7 +399,9 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   and snapshot elevation itself and makes only `event` memory-optimized. 4 of 4 runs at 15.9–16.1k, p50 14 ms, p99
   1.3 s (= Postgres), 6.6–7.1 cores; disk-based, 6 runs swung 4.7–15.9k. advance/settle ~15× cheaper. Found: a
   duplicate check compiled on a near-empty table scanned it per publish (fixed with forced seeks).
-  - **Not explored yet:** memory-optimized table types for the table variables; natively compiled procedures (no
+  - Memory-optimized table type for publish's unpacked batch (Ij, Ik): no measurable gain, reverted; parsing JSON
+    and base64 is the cost.
+  - **Not explored yet:** natively compiled procedures (no
     OPENJSON there); the split-load run; the source table memory-optimized (needs its UTF-8 names reworked).
 
 ### B34 — ZeroMQ as Octopus's transport (brokerless), to lift the ceiling · open (from the user, 2026-11-22)

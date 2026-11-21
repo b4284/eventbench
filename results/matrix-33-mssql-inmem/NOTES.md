@@ -32,6 +32,9 @@ site that must run it, given the In-Memory OLTP filegroup (memory to hold the ba
 
 ## Where publish's CPU goes now (Ig, per call)
 
-Unpacking the JSON batch into `@u` (OPENJSON + BASE64_DECODE of the bodies): ~1.9 ms of ~3.5 ms. Next candidates:
-memory-optimized table types for the table variables (bodies are copied into tempdb today), and a cheaper batch
-format than JSON with base64 (B16 note).
+Unpacking the JSON batch into `@u` (OPENJSON + BASE64_DECODE of the bodies): ~1.9 ms of ~3.5 ms.
+
+Tried (Ij, Ik): unpacking into a memory-optimized table type instead (bodies in memory, not tempdb). A
+microbenchmark with 40 events of 3.6 KB showed 2.9 -> 1.8 ms per batch (parse + decode alone: 1.1 ms), but in the
+runs (~18 events per publish) the unpack stayed at 1.5–2.0 ms and SQL Server at 6.5–7.3 cores: no measurable gain,
+reverted. Parsing is the cost: a cheaper batch format than JSON with base64 is what is left (B16 note).
