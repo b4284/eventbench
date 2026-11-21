@@ -23,6 +23,9 @@ for other in eb-mosquitto eb-nanomq; do [[ $other == eb-$MQ ]] || podman stop -t
 if [[ $MQ == mosquitto ]] && ! grep -qx "listener 1883 ${EB_MQTT_BIND:-127.0.0.1}" "$STATE/mosquitto.conf" 2>/dev/null; then
   podman rm -f eb-mosquitto >/dev/null 2>&1 || true
 fi
+if [[ $MQ == nanomq ]] && ! grep -q "bind = \"${EB_MQTT_BIND:-127.0.0.1}:1883\"" "$STATE/nanomq.conf" 2>/dev/null; then
+  podman rm -f eb-nanomq >/dev/null 2>&1 || true
+fi
 if [[ "$(podman inspect -f '{{.State.Running}}' eb-$MQ 2>/dev/null)" != true ]]; then
   podman rm -f eb-$MQ >/dev/null 2>&1 || true
   if [[ $MQ == mosquitto ]]; then
@@ -52,13 +55,13 @@ mqtt {
     retry_interval = 10s
     keepalive_multiplier = 1.5
 }
-listeners.tcp { bind = "127.0.0.1:1883" }
+listeners.tcp { bind = "${NANOMQ_BIND}:1883" }
 log { to = [console], level = warn }
 auth { allow_anonymous = true, no_match = allow, deny_action = ignore }
 CONF
-    sed -i "s/\${NANOMQ_THREADS}/${NANOMQ_THREADS:-8}/" "$STATE/nanomq.conf"
+    sed -i "s/\${NANOMQ_THREADS}/${NANOMQ_THREADS:-8}/; s/\${NANOMQ_BIND}/${EB_MQTT_BIND:-127.0.0.1}/" "$STATE/nanomq.conf"
     podman run -d --name eb-nanomq --network host -v "$STATE/nanomq.conf:/etc/nanomq.conf:ro,Z" \
-      docker.io/emqx/nanomq:latest >/dev/null
+      docker.io/emqx/nanomq:0.25.7 >/dev/null
   fi
   sleep 1
 fi

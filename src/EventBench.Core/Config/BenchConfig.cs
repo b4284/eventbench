@@ -65,6 +65,14 @@ public sealed class WorkloadOptions
     /// </summary>
     public int PublishConcurrency { get; set; } = 1;
 
+    /// <summary>
+    /// How many of one source's publishes may be in flight at once (with PublishConcurrency above 1). 1: the next waits
+    /// for the previous one's acknowledgement, so a source cannot exceed 1 / round trip events per second. Above 1
+    /// the next waits for the one k places back: events may arrive out of order, which a broker that orders by
+    /// sequence number (Octopus) must absorb.
+    /// </summary>
+    public int SourcePipeline { get; set; } = 1;
+
     /// <summary>Max sleep between producer scheduling passes when nothing is due.</summary>
     public double ProducerTickMs { get; set; } = 5;
 
@@ -103,7 +111,27 @@ public sealed class WorkloadOptions
     /// <summary>Start producing at this Unix time (ms) instead of right after setup: a common start for shards.</summary>
     public long StartAtUnixMs { get; set; } = 0;
 
-    public bool OwnsGroup(int groupId) => ShardCount <= 1 || groupId % ShardCount == ShardIndex;
+    /// <summary>
+    /// Optional relative shares of the shards, e.g. "3,3,2": group id % (sum of weights) picks a slot, and slots are
+    /// dealt to shards by their weights (shard 0 the first 3, shard 1 the next 3, shard 2 the last 2). Empty: equal.
+    /// </summary>
+    public string ShardWeights { get; set; } = "";
+
+    public bool OwnsGroup(int groupId)
+    {
+        if (ShardCount <= 1) return true;
+        var w = string.IsNullOrWhiteSpace(ShardWeights)
+            ? null
+            : ShardWeights.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(int.Parse).ToArray();
+        if (w is null || w.Length != ShardCount || w.Any(x => x < 0) || w.Sum() == 0) return groupId % ShardCount == ShardIndex;
+        int slot = groupId % w.Sum();
+        for (int i = 0, acc = 0; i < w.Length; i++)
+        {
+            acc += w[i];
+            if (slot < acc) return i == ShardIndex;
+        }
+        return false;
+    }
 }
 
 public sealed class SlowEventOptions

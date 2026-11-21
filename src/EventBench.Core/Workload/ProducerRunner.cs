@@ -29,7 +29,8 @@ public sealed class ProducerRunner
     private readonly Action<string> _log;
     private FastRandom _rng;
     private readonly SemaphoreSlim? _slots;
-    private readonly Dictionary<int, Task> _lastBySource = new();
+    /// <summary>Per source, its last SourcePipeline publishes (oldest first).</summary>
+    private readonly Dictionary<int, Queue<Task>> _lastBySource = new();
     private readonly HashSet<Task> _inFlight = new();
 
     public string Name => _name;
@@ -62,9 +63,17 @@ public sealed class ProducerRunner
             return;
         }
         await _slots.WaitAsync(ct);
-        Task[] deps = batch.Select(e => _lastBySource.GetValueOrDefault(e.SourceId)).Where(t => t is { IsCompleted: false }).Distinct().ToArray()!;
+        int k = Math.Max(1, _plan.Options.SourcePipeline);
+        // each event waits for its source's publish k places back (k = 1: the previous one)
+        Task[] deps = batch.Select(e => _lastBySource.TryGetValue(e.SourceId, out var q) && q.Count >= k ? q.Peek() : null)
+            .Where(t => t is { IsCompleted: false }).Distinct().ToArray()!;
         var task = SendAfterAsync(deps, batch, ct);
-        foreach (var e in batch) _lastBySource[e.SourceId] = task;
+        foreach (var e in batch)
+        {
+            if (!_lastBySource.TryGetValue(e.SourceId, out var q)) _lastBySource[e.SourceId] = q = new Queue<Task>(k + 1);
+            q.Enqueue(task);
+            while (q.Count > k) q.Dequeue();
+        }
         lock (_inFlight) _inFlight.Add(task);
         _ = task.ContinueWith(t =>
         {

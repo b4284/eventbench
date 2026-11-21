@@ -344,6 +344,14 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   x5. Measure the outage and whether clients recover on TCP keepalive and operation timeouts alone. Then the same
   with session cutting on, which is the setting to require from the NLB.
 
+### B31 — MQTT broker: the first ceiling, and a single point of failure · open (2026-11-22, matrix-29)
+- Mosquitto is single-threaded: 84–93% of its core at 16–24k with remote clients, 97% with more connections, when
+  every shard's round trips rose 4×. The setup tops out at ~22–23.5k ev/s; Postgres is next. Mosquitto also has
+  no clustering, the topology's one remaining single point of failure (docs/topology.md).
+- Tried: NanoMQ 0.25.7, worse (650 ms round trips, ~3.7k ev/s applied).
+- Next: EMQX (multi-core, clustered) at 24k+ with the split load, and a broker-node kill drill. Separately, fewer
+  MQTT messages per event in Octopus (batch publish replies, done reports and their replies).
+
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
 - **Why:** one logical database with shards by group, if one primary is not enough.
