@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # One Octopus performance run on the single eb-postgres (no standby: B26), with pg_stat_statements sampled from
 # 30 s to 70 s into the run and the dispatchers' last stats line.
-# usage: scripts/perf-pgss.sh <out-dir> <name> <octopus-repo> [benchmark args...]
+# usage: [NDISP=3] scripts/perf-pgss.sh <out-dir> <name> <octopus-repo> [benchmark args...]
 set -uo pipefail
 O=$1; N=$2; R=$3; shift 3
 mkdir -p "$O"
@@ -14,7 +14,7 @@ pgrep -f "/target/release/octopusd$" | xargs -r kill; sleep 2
 # wait events of active backends, sampled every 100 ms from 35 s to 55 s into the run
 ( sleep 35; podman exec eb-postgres psql -U bench -d bench -Atq -c "create temp table w (k text, q text); do \$\$ begin for i in 1..200 loop perform pg_stat_clear_snapshot(); insert into w select coalesce(wait_event_type || ':' || wait_event, 'CPU'), left(regexp_replace(query, '\s+', ' ', 'g'), 40) from pg_stat_activity where state = 'active' and pid <> pg_backend_pid() and backend_type = 'client backend'; perform pg_sleep(0.1); end loop; end \$\$;" \
     -c "select count(*) || ' | ' || k || ' | ' || q from w group by k, q order by count(*) desc limit 14" > "$O/$N.waits.log" 2>&1 ) &
-OCTOPUS_REPO=$R scripts/octopus-drill.sh "$O" "$N" 3 none -c configs/pgmq-500groups.json -c configs/overlay-slow.json \
+OCTOPUS_REPO=$R scripts/octopus-drill.sh "$O" "$N" "${NDISP:-3}" none -c configs/pgmq-500groups.json -c configs/overlay-slow.json \
   -c configs/overlay-octopus-worker.json --Workload:RateMultiplier=1.24 --Store:BatchCommits=true --Store:BatchExecutors=16 \
   --Store:BatchMaxSize=32 "$@" > /dev/null 2>&1
 wait

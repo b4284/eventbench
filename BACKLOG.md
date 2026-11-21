@@ -194,9 +194,18 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - 2026-11-21, matrix-23: across machines, the cost came from checkpoints (max_wal_size), not from waiting itself.
   See B5. CPU pinning and netem on one host are still open.
 
-### B21 — Peak capacity of one dispatcher · open
+### B21 — Peak capacity of one dispatcher · **done** (2026-11-21, matrix-25: one dispatcher carries 24k at a 15 ms median, saturates before 32k; three carry 32k)
 - From the user, 2026-11-20. Not measured yet: in every run Postgres saturates first. Measure with one dispatcher,
   rising load, until its own CPU or its database round trips limit it.
+
+- 2026-11-21, matrix-25 (workers commit to memory, so Postgres carries Octopus alone):
+  - one dispatcher: 24k at p50 15 ms on 1.25 cores; at 32k still 31k/s but p50 1.5 s on 1.3 cores (a serial limit,
+    not CPU);
+  - three dispatchers: 32k at p50 15 ms;
+  - Octopus costs ~0.1 Postgres core per 1k ev/s, so ~80% of Postgres in the full runs is the application's writes;
+  - Mosquitto (single-threaded) at 74% of a core at 32k.
+  - **Not explored yet:** profiling what serializes one dispatcher; Mosquitto's ceiling and multi-threaded brokers;
+    2 dispatchers.
 
 ### B22 — Octopus: source epoch next to seq · **done** (2026-11-21; positions `(epoch, seq)`, integer source ids in event rows, epoch declarations, fencing)
 - **From:** user, 2026-11-20: every event source will stamp a gapless seq plus an epoch (the origin of the sequence).
