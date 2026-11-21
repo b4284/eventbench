@@ -6,7 +6,9 @@
 #   action: none | kill:<i> (SIGKILL dispatcher i) | term:<i> (SIGTERM: planned stop) | add (one more dispatcher)
 #           | pgfail (kill the Postgres primary, promote the synchronous standby; needs infra/pg-standby up + sync on)
 #           Patroni pair (infra/patroni; use EB_PSQL=infra/patroni/psql.sh and the multi-host OCTOPUS_PG_CONN):
-#           | patroni-kill (SIGKILL the leader's container; Patroni promotes the sync standby after the leader lease)
+#           | patroni-kill[:<r>] (SIGKILL the leader's container; Patroni promotes the sync standby after the leader
+#             lease; the killed node is started again r seconds later (default 30), as a crashed pod comes back. With
+#             two nodes in strict synchronous mode, no commit can complete between the failover and its return.)
 #           | patroni-freeze:<s> (freeze the leader for s seconds: a hang or partition, not a crash; tests fencing)
 #           | db-freeze:<s> (freeze both database nodes for s seconds: an outage no failover can mend)
 #           | mqtt-restart (restart the MQTT broker) | dispatcher-db-cut:<i>:<s> (dispatcher i keeps running, but its
@@ -29,7 +31,8 @@ if [[ $ACTION == dispatcher-db-cut:* ]]; then
 fi
 infra/octopus/up.sh "$N" > "$OUT/$NAME.pre.log" 2>&1 || { echo "cluster did not start"; exit 2; }
 LOG="$OUT/$NAME.log"
-dotnet "$BIN" run "$@" --Name="$NAME" --ResultsDirectory="$OUT/$NAME" --Metrics:ConsoleProgress=false > "$LOG" 2>&1 &
+# a hard limit, so a drill that blocks the database for good cannot hang for hours (DRILL_TIMEOUT seconds)
+timeout --signal=INT --kill-after=30 "${DRILL_TIMEOUT:-900}" dotnet "$BIN" run "$@" --Name="$NAME" --ResultsDirectory="$OUT/$NAME" --Metrics:ConsoleProgress=false > "$LOG" 2>&1 &
 BENCH=$!
 until grep -q " run: " "$LOG" 2>/dev/null; do kill -0 $BENCH 2>/dev/null || break; sleep 0.5; done
 sleep "$AT"
@@ -41,8 +44,11 @@ sleep "$AT"
     term:*) i=${ACTION#term:}; pid=$(sed -n "${i}p" "$STATE/pids"); kill -TERM "$pid" && echo "stopped d$i (pid $pid)" ;;
     add) infra/octopus/add.sh ;;
     pgfail) infra/pg-standby/failover.sh ;;
-    patroni-kill) l=$(infra/patroni/leader.sh); podman kill eb-$l >/dev/null && echo "killed leader $l"
-      for _ in $(seq 1 120); do n=$(infra/patroni/leader.sh) && [[ $n != "$l" ]] && { echo "$(date +%T.%3N) new leader $n"; break; }; sleep 0.5; done ;;
+    patroni-kill*) r=${ACTION#patroni-kill}; r=${r#:}; r=${r:-30}; l=$(infra/patroni/leader.sh); podman kill eb-$l >/dev/null && echo "killed leader $l"
+      t0=$(date +%s)
+      for _ in $(seq 1 120); do n=$(infra/patroni/leader.sh) && [[ $n != "$l" ]] && { echo "$(date +%T.%3N) new leader $n"; break; }; sleep 0.5; done
+      sleep $(( r - ($(date +%s) - t0) > 0 ? r - ($(date +%s) - t0) : 0 )); podman start eb-$l >/dev/null; echo "$(date +%T.%3N) restarted $l"
+      for _ in $(seq 1 240); do curl -s --max-time 1 127.0.0.1:$((8007 + ${l#pat}))/patroni | grep -q '"role": *"sync_standby"\|"role": *"replica"' && { echo "$(date +%T.%3N) $l rejoined as standby"; break; }; sleep 0.5; done ;;
     patroni-freeze:*) s=${ACTION#patroni-freeze:}; l=$(infra/patroni/leader.sh); podman pause eb-$l >/dev/null && echo "froze leader $l for ${s}s"
       for _ in $(seq 1 $((s * 2))); do n=$(curl -s --max-time 1 127.0.0.1:$((8007 + ${l#pat} % 2 + 1))/cluster | python3 -c 'import json,sys; print(next((m["name"] for m in json.load(sys.stdin)["members"] if m["role"]=="leader"), ""))' 2>/dev/null); [[ -n $n && $n != "$l" ]] && { echo "$(date +%T.%3N) new leader $n"; break; }; sleep 0.5; done
       sleep "$s"; podman unpause eb-$l >/dev/null; echo "$(date +%T.%3N) unfroze $l" ;;
@@ -54,4 +60,5 @@ sleep "$AT"
 wait $BENCH
 rc=$?
 [[ -n $PROXY ]] && kill $PROXY 2>/dev/null
+for f in "$STATE"/d*.log; do [[ -f $f ]] && cp "$f" "$OUT/$NAME.$(basename "$f")"; done
 echo "$(date +%T) $NAME -> exit $rc"

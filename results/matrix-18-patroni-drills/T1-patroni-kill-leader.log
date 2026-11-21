@@ -1,0 +1,10 @@
+02:38:17.148 topology: 500 groups, 16,000 sources, offered load 12,856 events/s, 601 workers
+02:38:17.179 broker: Octopus dispatchers via MQTT 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook
+02:38:17.179 store:  postgres @ 127.0.0.1:5441,127.0.0.1:5442:5432/bench (pool max 200), unlogged=False, fillfactor=70, group commit (max 32/tx, 16 executors)
+02:38:17.432 postgres store: schema created, 16,000 source cursors seeded
+02:38:17.454 octopus: 3 live dispatchers
+02:38:17.506 octopus: all 500 groups owned (d3=167, d2=183, d1=150); 4 producer + 2 worker MQTT connections
+02:38:17.506 setup done in 0.4s
+02:38:17.542 run: 60s (warmup 10s), 32 producers, 601 workers
+02:38:50.515 octopus backlog: Unable to connect to a suitable host. Check inner exception for more details.
+02:38:50.548 stats provider 'store' disabled: Unable to connect to a suitable host. Check inner exception for more details.

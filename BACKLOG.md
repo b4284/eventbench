@@ -231,6 +231,19 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   expire under it); network partition between DCs and loss of a DC (needs the two-DC lab, B5); a database outage
   of minutes; many workers dying at once; failover through Patroni (realistic detection time) rather than a script.
 
+### B28 — Decision: write availability after losing one of two database nodes · **needs the owner**
+- **From:** the Patroni drill T1, 2026-11-21. Two data nodes in strict synchronous mode: after a failover the new
+  primary has no synchronous standby, so no commit completes until the lost node is back.
+- **Options:**
+  1. Keep two nodes, strict: zero loss always; writes stop until the lost node (or a replacement) rejoins
+     (minutes for a pod restart; longer for a lost DC).
+  2. Three data-bearing nodes (e.g. two in DC1, one in DC2; `synchronous_node_count` / ANY 1 of 2): survives one
+     node with writes and zero loss; a whole-DC loss still leaves one copy, then option 1 or 3 applies.
+  3. Non-strict synchronous mode: after a failover, writes continue with a single copy until a standby rejoins;
+     a second failure in that window loses those writes.
+- Related: a cancelled commit is acknowledged without replication (documented in Octopus design §5.5); the
+  benchmark's 60 s command timeout on commits does exactly that.
+
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
 - **Why:** one logical database with shards by group, if one primary is not enough.
