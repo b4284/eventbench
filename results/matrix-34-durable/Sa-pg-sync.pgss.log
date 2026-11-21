@@ -1,0 +1,13 @@
+ calls | total_s |  mean_ms  |                                   q                                    
+-------+---------+-----------+------------------------------------------------------------------------
+ 33391 |    39.2 |     1.175 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+ 33391 |    32.1 |     0.961 | WITH x AS ( SELECT u.*, src.id AS sid, src.grp AS sgrp, src.epoch AS c
+   798 |    24.2 |    30.307 | SELECT octopus.advance($1, $2, $3)
+     1 |    20.3 | 20269.303 | do $$ begin for i in 1..200 loop perform pg_stat_clear_snapshot(); ins
+   200 |    20.2 |   101.093 | SELECT pg_sleep($1)
+   798 |    14.5 |    18.219 | SELECT octopus.settle(ids)
+   798 |    14.3 |    17.931 | DELETE FROM octopus.event e USING octopus.source s WHERE s.id = ANY(p_
+   798 |     6.7 |     8.404 | UPDATE octopus.source src SET epoch = w.e, last_seq = w.q FROM (SELECT
+(8 rows)
+
+event table at 70 s: 1577 MB, live 1038, dead 65265, autovacuums 6

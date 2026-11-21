@@ -144,11 +144,15 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - Also measure standby catch-up after an outage: in Q2, a standby that started 11 GB behind dragged the
     primary to 10.8k.
 
-### B12 — Local durability with a synchronous standby · open (now for Octopus: `synchronous_commit=on` locally plus the sync standby)
+### B12 — Local durability with a synchronous standby · **local part measured: ~1 ms per publish, throughput within noise** (2026-11-22, matrix-34); with the sync standby together open
 - **From:** the best-effort comparison rule (`synchronous_commit=off` locally).
 - **Why:** production would likely run `synchronous_commit=on` locally plus the sync standby. The cost at 24k
   with batched commits is unknown.
 - **Test:** rerun pgqueue Q3 with local fsync on.
+- 2026-11-22, matrix-34 (Octopus): `synchronous_commit=on` locally. Octopus alone at 16k: p50 8.5 vs 7.1 ms, p99 and
+  CPU unchanged. At the ceiling (Octopus + store, NATS, 2 shards): 23.2–23.3k applied vs 23.6–24.7k best effort, inside
+  the ±10% noise there.
+  - **Not explored yet:** local fsync and the synchronous standby together, on the Patroni pair, at the ceiling.
 
 ### B16 — The dispatcher queue on SQL Server and MySQL · **both ported and measured** (2026-11-22: SQL Server matrix-27, correct, ~4–5× Postgres CPU per event, not steady at 16k; MySQL matrix-31, correct after four fixes, ~2.2× Postgres CPU, keeps 16k with e2e p50 0.3–0.6 s); failover drills open
 - **From:** user, 2026-11-20. Once the dispatcher owns the queue logic, the database only needs transactions,
@@ -356,7 +360,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   x5. Measure the outage and whether clients recover on TCP keepalive and operation timeouts alone. Then the same
   with session cutting on, which is the setting to require from the NLB.
 
-### B31 — MQTT broker: the first ceiling, and a single point of failure · open (2026-11-22, matrix-29)
+### B31 — MQTT broker: the first ceiling, and a single point of failure · **ceiling part answered by NATS** (matrix-32: +4–6%); the single point of failure open (2026-11-22, matrix-29)
 - Mosquitto is single-threaded: 84–93% of its core at 16–24k with remote clients, 97% with more connections, when
   every shard's round trips rose 4×. The setup tops out at ~22–23.5k ev/s; Postgres is next. Mosquitto also has
   no clustering, the topology's one remaining single point of failure (docs/topology.md).

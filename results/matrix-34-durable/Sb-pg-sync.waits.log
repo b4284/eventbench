@@ -1,0 +1,14 @@
+199 | CPU | SELECT codes, missing FROM octopus.publi
+177 | CPU | SELECT octopus.advance($1, $2, $3)
+107 | LWLock:WALWrite | SELECT codes, missing FROM octopus.publi
+73 | IO:WalSync | SELECT codes, missing FROM octopus.publi
+28 | CPU | SELECT x.grp, x.source, x.epoch, x.seq, 
+13 | CPU | SELECT s.grp, s.source, s.epoch, s.last_
+13 | CPU | SELECT count(*) FROM octopus.event e JOI
+8 | Client:ClientRead | SELECT codes, missing FROM octopus.publi
+7 | CPU | SELECT x.grp, k.s, x.epoch, x.seq, x.bod
+6 | IO:WalWrite | SELECT codes, missing FROM octopus.publi
+3 | Lock:extend | SELECT codes, missing FROM octopus.publi
+3 | IO:WalSync | SELECT octopus.advance($1, $2, $3)
+3 | CPU | WITH l AS (SELECT grp FROM octopus.lease
+2 | LWLock:WALWrite | INSERT INTO octopus.member (member_id, a
