@@ -31,3 +31,8 @@ open, the default of many NLBs). Outage = the longest stretch with applied/s und
 Without cutting on the load balancer, the client side has to bound the damage: short TCP keepalives
 (`keepalives_idle`/`tcp_user_timeout` in libpq, `Keepalive` + `Tcp Keepalive Time` in Npgsql) and operation timeouts.
 That was not tried here (B30 note).
+
+Lab caveat: `podman pause` freezes the processes, while the kernel keeps acknowledging TCP (keepalives and data into
+socket buffers). Client keepalives and `tcp_user_timeout` therefore don't detect this freeze, only operation
+timeouts do; a dead or partitioned host would be detected by keepalives (seconds to minutes, as configured). The
+freeze here is closer to a hung server process than to a lost host.
