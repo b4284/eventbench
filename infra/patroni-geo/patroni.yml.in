@@ -1,0 +1,56 @@
+scope: octopus-geo
+name: @NAME@
+restapi:
+  listen: 0.0.0.0:@API@
+  connect_address: @IP@:@API@
+etcd3:
+  hosts: 192.168.0.217:2379,192.168.0.106:2379,192.168.0.95:2379
+bootstrap:
+  dcs:
+    ttl: 20
+    loop_wait: 5
+    retry_timeout: 5
+    maximum_lag_on_failover: 0
+    synchronous_mode: quorum
+    synchronous_mode_strict: true
+    synchronous_node_count: 2
+    postgresql:
+      use_pg_rewind: true
+      parameters:
+        max_connections: 300
+        shared_buffers: 1GB
+        work_mem: 16MB
+        synchronous_commit: remote_write
+        wal_level: replica
+        wal_compression: lz4
+        wal_log_hints: "on"
+        max_wal_size: 4GB
+        wal_keep_size: 2GB
+        checkpoint_timeout: 15min
+        random_page_cost: 1.1
+  initdb:
+    - encoding: UTF8
+    - locale: C
+    - data-checksums
+  post_bootstrap: @POST@
+  pg_hba:
+    - local all all trust
+    - host replication replicator 0.0.0.0/0 md5
+    - host all all 0.0.0.0/0 md5
+tags:
+  dc: @DC@
+postgresql:
+  remove_data_directory_on_rewind_failure: true
+  # a rebuilding replica must not wait for a spread checkpoint (up to ~13 min at checkpoint_timeout 15min)
+  basebackup:
+    - checkpoint: fast
+  remove_data_directory_on_diverged_timelines: true
+  listen: 0.0.0.0:@PG@
+  connect_address: @IP@:@PG@
+  data_dir: @DATA@
+  bin_dir: @BIN@
+  authentication:
+    superuser: {username: postgres, password: postgres}
+    replication: {username: replicator, password: replicator}
+  parameters:
+    unix_socket_directories: /tmp

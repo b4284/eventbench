@@ -11,6 +11,7 @@
 #             two nodes in strict synchronous mode, no commit can complete between the failover and its return.)
 #           | patroni-freeze:<s> (freeze the leader for s seconds: a hang or partition, not a crash; tests fencing)
 #           | db-freeze:<s> (freeze every database node for s seconds: an outage no failover can mend)
+#           | partition-dc1:<s> (bridged lab, infra/patroni-bridged: cut DC1 from the WAN for s seconds; it keeps running)
 #           | node-kill (SIGKILL the leader, not restarted) | dc-kill:leader|other (SIGKILL a DC: its database nodes and
 #             its etcd member) | dc-freeze:leader|other:<s> (freeze a DC for s seconds: a partition, tests fencing)
 #           | mqtt-restart (restart the MQTT broker) | dispatcher-db-cut:<i>:<s> (dispatcher i keeps running, but its
@@ -66,6 +67,11 @@ sleep "$AT"
       sleep "$s"; podman unpause $c >/dev/null; echo "$(date +%T.%3N) unfroze $dc" ;;
     db-freeze:*) s=${ACTION#db-freeze:}; c=$(awk '{printf "eb-%s ", $1}' ~/.cache/eventbench/patroni/nodes); podman pause $c >/dev/null && echo "froze every database node for ${s}s"; sleep "$s"; podman unpause $c >/dev/null; echo "$(date +%T.%3N) unfroze" ;;
     mqtt-restart) podman restart -t 1 eb-mosquitto >/dev/null; echo "$(date +%T.%3N) restarted the MQTT broker" ;;
+    partition-dc1:*) s=${ACTION#partition-dc1:}; c="eb-b-dc1a eb-b-dc1b eb-b-etcd-dc1"
+      before=$(infra/patroni-bridged/status.sh | awk '$2=="leader"{print $1}')
+      for x in $c; do podman network disconnect eb-b-wan $x; done; echo "$(date +%T.%3N) DC1 cut from the WAN for ${s}s (leader was $before)"
+      end=$((SECONDS + s)); while (( SECONDS < end )); do l=$(infra/patroni-bridged/status.sh 2>/dev/null | awk '$2=="leader"{print $1}' | tr '\n' ' '); echo "$(date +%T.%3N) leaders: ${l:-none}"; sleep 5; done | awk '!seen[$3 $4]++'
+      for x in $c; do podman network connect eb-b-wan $x; done; echo "$(date +%T.%3N) partition healed" ;;
     dispatcher-db-cut:*) s=$(cut -d: -f3 <<<"$ACTION"); kill -STOP $PROXY && echo "cut dispatcher $(cut -d: -f2 <<<"$ACTION") from the database for ${s}s"; sleep "$s"; kill -CONT $PROXY; echo "$(date +%T.%3N) reconnected" ;;
   esac
 } > "$OUT/$NAME.drill.log" 2>&1

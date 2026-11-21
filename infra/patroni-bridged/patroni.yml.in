@@ -1,0 +1,56 @@
+scope: octopus-bridged
+name: @NAME@
+restapi:
+  listen: 0.0.0.0:8008
+  connect_address: eb-b-@NAME@:8008
+etcd3:
+  hosts: eb-b-etcd-dc1:2379,eb-b-etcd-dc2:2379,eb-b-etcd-w:2379
+bootstrap:
+  dcs:
+    ttl: 20
+    loop_wait: 5
+    retry_timeout: 5
+    maximum_lag_on_failover: 0
+    synchronous_mode: quorum
+    synchronous_mode_strict: true
+    synchronous_node_count: 2
+    postgresql:
+      use_pg_rewind: true
+      parameters:
+        max_connections: 300
+        shared_buffers: 1GB
+        work_mem: 16MB
+        synchronous_commit: remote_write
+        wal_level: replica
+        wal_compression: lz4
+        wal_log_hints: "on"
+        max_wal_size: 4GB
+        wal_keep_size: 2GB
+        checkpoint_timeout: 15min
+        random_page_cost: 1.1
+        shared_preload_libraries: pg_stat_statements
+  initdb:
+    - encoding: UTF8
+    - data-checksums
+  post_bootstrap: /etc/patroni/post_bootstrap.sh
+  pg_hba:
+    - local all all trust
+    - host replication replicator 0.0.0.0/0 md5
+    - host all all 0.0.0.0/0 md5
+tags:
+  dc: @DC@
+postgresql:
+  remove_data_directory_on_rewind_failure: true
+  # a rebuilding replica must not wait for a spread checkpoint (up to ~13 min at checkpoint_timeout 15min)
+  basebackup:
+    - checkpoint: fast
+  remove_data_directory_on_diverged_timelines: true
+  listen: 0.0.0.0:5432
+  connect_address: eb-b-@NAME@:5432
+  data_dir: /var/lib/postgresql/patroni/data
+  bin_dir: /usr/lib/postgresql/18/bin
+  authentication:
+    superuser: {username: postgres, password: postgres}
+    replication: {username: replicator, password: replicator}
+  parameters:
+    unix_socket_directories: /tmp

@@ -258,6 +258,8 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   expire under it); network partition between DCs and loss of a DC (needs the two-DC lab, B5); a database outage
   of minutes; many workers dying at once; failover through Patroni (realistic detection time) rather than a script.
 
+- 2026-11-21: **real partition done** (matrix-22, `infra/patroni-bridged`): DC1 cut from the WAN while holding the leader. It demoted itself in 12 s, DC2 took over in 33 s, nothing lost, no cancelled commits. Rejoin found that replica rebuilds waited for a spread checkpoint (~14 min). Fixed with `basebackup: checkpoint: fast`.
+
 ### B28 — Decision: write availability after losing one of two database nodes · **decided: 2 + 2** (2026-11-21; two nodes per DC, Patroni quorum mode ANY 2 of 3 standbys, 3 etcd members)
 - **From:** the Patroni drill T1, 2026-11-21. Two data nodes in strict synchronous mode: after a failover the new
   primary has no synchronous standby, so no commit completes until the lost node is back.

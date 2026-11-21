@@ -49,6 +49,9 @@ tags:
   dc: @DC@
 postgresql:
   remove_data_directory_on_rewind_failure: true
+  # a rebuilding replica must not wait for a spread checkpoint (up to ~13 min at checkpoint_timeout 15min)
+  basebackup:
+    - checkpoint: fast
   remove_data_directory_on_diverged_timelines: true
   listen: 0.0.0.0:@PG@
   connect_address: 127.0.0.1:@PG@
