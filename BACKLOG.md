@@ -355,14 +355,39 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - Next: the broker on its own machine (lab), a broker-node kill drill, and NATS (B32). Separately, fewer
   MQTT messages per event in Octopus (batch publish replies, done reports and their replies).
 
-### B32 — NATS as Octopus's transport · open (from the user, 2026-11-22)
+### B32 — NATS as Octopus's transport, to lift the ceiling · open (from the user, 2026-11-22)
 - NATS (Apache 2.0, multi-threaded, clustering free) as a native transport next to MQTT. NATS's MQTT gateway speaks
   only 3.1.1 and Octopus's clients speak MQTT 5, so it needs a NATS implementation of the transport layer
   (crates/octopus-fabric, ~170 lines, and the .NET client's equivalent).
 - Gaps to cover: retained messages (Octopus re-announces every 5 s already, or a JetStream KV bucket) and last will
   (lease expiry and worker timeouts already detect a dead dispatcher). Topics map `/`->`.`, `+`->`*`, `#`->`>`.
-- Mainly for high availability (B31: Mosquitto cannot cluster, EMQX clustering is licensed). matrix-30 suggests
-  it won't raise throughput on the shared lab laptop.
+- **Goal (the user, 2026-11-22): lifting the throughput ceiling**, not high availability; HA (free clustering) is a
+  side benefit. Measure against Mosquitto with the split load (matrix-29/30 setup).
+- NATS maps closely onto the current design: subjects for topics, queue groups for the shared subscription that
+  spreads publishes over the dispatchers, inbox subjects for replies, re-announcement for retained messages.
+
+### B33 — SQL Server In-Memory OLTP for the event table · open (the user: "remember to re-visit", 2026-11-22)
+- matrix-27: SQL Server runs Octopus correctly but at ~4–5x Postgres's CPU per event, unsteady at 16k; publish's
+  JSON unpacking and the cursor writes' deletes dominate. In-Memory OLTP is SQL Server's design for hot queue-like
+  tables: no locks, no latches, no tempdb.
+- Test: a memory-optimized event table (SCHEMA_AND_DATA durability) and memory-optimized table types instead of
+  table variables; natively compiled procedures for publish/advance where the feature set allows. Needs a
+  MEMORY_OPTIMIZED_DATA filegroup (a DBA step). Compare with matrix-27 at 16k, local and split.
+
+### B34 — ZeroMQ as Octopus's transport (brokerless), to lift the ceiling · open (from the user, 2026-11-22)
+- No broker: every message one hop, client <-> dispatcher. Removes the broker's CPU and queueing (the first
+  ceiling, matrix-29) and the broker as a single point of failure.
+- Mapping:
+  - publishes to any dispatcher: a DEALER socket connected to every dispatcher (round-robin);
+  - replies and deliveries: the dispatcher's ROUTER socket, back over the client's own connection;
+  - member/owner announcements: a PUB socket per dispatcher, re-announced every 5 s (no retained messages);
+  - dispatcher-to-dispatcher hints: ROUTER-to-ROUTER connections.
+- Octopus never relies on its transport's guarantees (acknowledgements are application replies after the commit,
+  everything is retried), so ZeroMQ's drops at queue limits and on reconnects are acceptable.
+- Costs: a transport redesign (clients address dispatchers, not topics); discovery (a seed list of dispatcher
+  endpoints, the rest learned from announcements); every client connected to every dispatcher; CurveZMQ for
+  authentication. Libraries: Rust `zeromq` (MIT) or libzmq bindings (MPL-2.0); .NET NetMQ (LGPL-3.0).
+- Order: a transport interface in Octopus first (MQTT, NATS and ZeroMQ behind it), then NATS (B32), then ZeroMQ.
 
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".

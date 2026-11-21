@@ -16,6 +16,5 @@ the cores Postgres needs, and round trips get longer. The ceiling (~22–23.5k e
 (~84%; what remains are efficiency cores), shared by Postgres (~10 cores), the broker, 3 dispatchers and the local
 shard. Mosquitto's single thread is the first part to run out, but replacing it alone moves nothing here.
 
-What would move it: the broker on its own machine, or a production layout with separate hosts for database,
-broker and dispatchers. NATS (B32) is still interesting for high availability (free clustering), less for throughput
-on this lab.
+What would move it: the broker on its own machine, a production layout with separate hosts, or a lighter transport:
+NATS (B32) or no broker at all, ZeroMQ (B34). Both are aimed at lifting the ceiling (the user, 2026-11-22).
