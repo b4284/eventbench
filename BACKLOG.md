@@ -349,8 +349,20 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   every shard's round trips rose 4×. The setup tops out at ~22–23.5k ev/s; Postgres is next. Mosquitto also has
   no clustering, the topology's one remaining single point of failure (docs/topology.md).
 - Tried: NanoMQ 0.25.7, worse (650 ms round trips, ~3.7k ev/s applied).
-- Next: EMQX (multi-core, clustered) at 24k+ with the split load, and a broker-node kill drill. Separately, fewer
+- 2026-11-22, matrix-30: EMQX 6.3.2 (single node; clustering needs a commercial license from 5.9) did not lift
+  the ceiling on the shared laptop: 2.6–2.7 cores against Mosquitto's ~0.9, taken from Postgres; longer round
+  trips. The ceiling is the laptop's total CPU.
+- Next: the broker on its own machine (lab), a broker-node kill drill, and NATS (B32). Separately, fewer
   MQTT messages per event in Octopus (batch publish replies, done reports and their replies).
+
+### B32 — NATS as Octopus's transport · open (from the user, 2026-11-22)
+- NATS (Apache 2.0, multi-threaded, clustering free) as a native transport next to MQTT. NATS's MQTT gateway speaks
+  only 3.1.1 and Octopus's clients speak MQTT 5, so it needs a NATS implementation of the transport layer
+  (crates/octopus-fabric, ~170 lines, and the .NET client's equivalent).
+- Gaps to cover: retained messages (Octopus re-announces every 5 s already, or a JetStream KV bucket) and last will
+  (lease expiry and worker timeouts already detect a dead dispatcher). Topics map `/`->`.`, `+`->`*`, `#`->`>`.
+- Mainly for high availability (B31: Mosquitto cannot cluster, EMQX clustering is licensed). matrix-30 suggests
+  it won't raise throughput on the shared lab laptop.
 
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".

@@ -16,19 +16,36 @@ STATE=~/.cache/eventbench/octopus
 mkdir -p "$STATE"
 ./down.sh >/dev/null 2>&1 || true
 
-# MQTT broker: EB_MQTT=mosquitto (single-threaded) or nanomq (multi-threaded, MQTT 5)
+# MQTT broker: EB_MQTT=mosquitto (single-threaded), nanomq (multi-threaded, MQTT 5) or emqx (multi-core, MQTT 5;
+# from 5.9 free for a single node only, clustering needs a license)
 MQ=${EB_MQTT:-nanomq}
-for other in eb-mosquitto eb-nanomq; do [[ $other == eb-$MQ ]] || podman stop -t 5 $other >/dev/null 2>&1 || true; done
+for other in eb-mosquitto eb-nanomq eb-emqx; do [[ $other == eb-$MQ ]] || podman stop -t 5 $other >/dev/null 2>&1 || true; done
 # a running Mosquitto listening on another address than requested is recreated (remote clients need 0.0.0.0)
 if [[ $MQ == mosquitto ]] && ! grep -qx "listener 1883 ${EB_MQTT_BIND:-127.0.0.1}" "$STATE/mosquitto.conf" 2>/dev/null; then
   podman rm -f eb-mosquitto >/dev/null 2>&1 || true
+fi
+if [[ $MQ == emqx ]] && [[ "$(cat "$STATE/emqx.bind" 2>/dev/null)" != "${EB_MQTT_BIND:-127.0.0.1}" ]]; then
+  podman rm -f eb-emqx >/dev/null 2>&1 || true
 fi
 if [[ $MQ == nanomq ]] && ! grep -q "bind = \"${EB_MQTT_BIND:-127.0.0.1}:1883\"" "$STATE/nanomq.conf" 2>/dev/null; then
   podman rm -f eb-nanomq >/dev/null 2>&1 || true
 fi
 if [[ "$(podman inspect -f '{{.State.Running}}' eb-$MQ 2>/dev/null)" != true ]]; then
   podman rm -f eb-$MQ >/dev/null 2>&1 || true
-  if [[ $MQ == mosquitto ]]; then
+  if [[ $MQ == emqx ]]; then
+    # Octopus has few, busy connections: big packets (events up to MBs), deep queues, no forced shutdown of busy
+    # clients (EMQX's IoT-oriented defaults would kick them), anonymous access as with Mosquitto.
+    echo "${EB_MQTT_BIND:-127.0.0.1}" > "$STATE/emqx.bind"
+    podman run -d --name eb-emqx --network host \
+      -e EMQX_LISTENERS__TCP__DEFAULT__BIND="${EB_MQTT_BIND:-127.0.0.1}:1883" \
+      -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE=false -e EMQX_LISTENERS__WS__DEFAULT__ENABLE=false \
+      -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE=false -e EMQX_DASHBOARD__LISTENERS__HTTP__BIND=127.0.0.1:18083 \
+      -e EMQX_MQTT__MAX_PACKET_SIZE=64MB -e EMQX_MQTT__MAX_MQUEUE_LEN=1000000 -e EMQX_MQTT__MQUEUE_STORE_QOS0=true \
+      -e EMQX_FORCE_SHUTDOWN__ENABLE=false -e EMQX_FORCE_GC__ENABLE=false \
+      -e EMQX_LISTENERS__TCP__DEFAULT__MAX_CONNECTIONS=100000 \
+      docker.io/emqx/emqx:${EMQX_VERSION:-6.3.2} >/dev/null
+    for _ in $(seq 1 60); do (echo > /dev/tcp/127.0.0.1/1883) 2>/dev/null && break; sleep 1; done
+  elif [[ $MQ == mosquitto ]]; then
     # EB_MQTT_BIND: listen address (default loopback; 0.0.0.0 when clients run on another machine)
     cat > "$STATE/mosquitto.conf" <<CONF
 listener 1883 ${EB_MQTT_BIND:-127.0.0.1}
