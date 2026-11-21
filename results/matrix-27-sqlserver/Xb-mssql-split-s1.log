@@ -1,0 +1,150 @@
+01:52:41.756 topology: 500 groups, 16,000 sources, offered load 15,939 events/s, 647 workers
+01:52:41.758 broker: Octopus dispatchers via MQTT 192.168.0.217:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook
+01:52:41.758 store:  inmemory
+01:52:41.758 shard 1 of 2: 250 groups, 8,027 sources, 8,040 events/s
+01:52:41.904 octopus: 3 live dispatchers
+01:52:41.961 octopus: all 500 groups owned (d3=167, d2=183, d1=150); 4 producer + 2 worker MQTT connections
+01:52:41.961 setup done in 0.2s
+01:52:41.974 waiting 29441 ms for the common start
+01:52:41.974 run: 60s (warmup 10s), 32 producers, 330 workers
+01:54:13.240 closing: 18,013 completion events emitted
+01:54:25.262 drained in 12.0s
+01:54:25.790 verifying end state against the oracle ...
+
+# Xb-mssql-split-s1 — FAIL ❌
+
+- Broker: `Octopus dispatchers via MQTT 192.168.0.217:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook`
+- Store: `inmemory`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 4
+- Topology: 500 groups, 16000 sources, 647 workers, offered 15939.397 ev/s
+- Phases: run 89.915s, closing 1.351s, drain 12.022s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 503642 | 503642 | 8040.359 | 8046.655 | 15428.1 | 0 | 0 | 0 | 373 | 2688 | 915 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 401126 | 86.186 | 25.279 | 123.647 | 1505.279 | 3198.975 | 14614.527 |
+| e2e_from_send | 401126 | 73.253 | 24.319 | 104.255 | 1387.519 | 2842.623 | 9814.015 |
+| producer_lag | 401126 | 12.934 | 0.003 | 0.733 | 284.159 | 1178.623 | 14598.143 |
+| publish_call | 503642 | 57.566 | 22.559 | 120.127 | 564.223 | 2398.207 | 14884.863 |
+| queue_wait | 401126 | 62.244 | 24.191 | 100.735 | 886.271 | 2365.439 | 9814.015 |
+| broker_dwell | 401126 | 35.197 | 13.719 | 36.863 | 700.927 | 2303.999 | 3825.663 |
+| receive_call | 469524 | 38.8 | 16.311 | 98.751 | 319.231 | 469.247 | 510.719 |
+| ctx_load | 401126 | 0.001 | 0.001 | 0.001 | 0.004 | 0.021 | 0.547 |
+| process | 401126 | 11.003 | 0.001 | 0.002 | 0.008 | 2613.247 | 3000.319 |
+| ctx_commit | 401126 | 0.001 | 0.001 | 0.001 | 0.002 | 0.011 | 2.237 |
+| ack | 288233 | 0.002 | 0.001 | 0.003 | 0.007 | 0.028 | 5.851 |
+| service | 401126 | 11.009 | 0.005 | 0.014 | 0.046 | 2613.247 | 3000.319 |
+| e2e_large | 282 | 2789.494 | 2777.087 | 3637.247 | 4808.703 | 6385.663 | 6385.663 |
+| ready_wait | 401126 | 6.402 | 2.417 | 15.583 | 55.551 | 132.991 | 5103.615 |
+| blocked | 401126 | 6.384 | 2.417 | 15.583 | 55.551 | 132.735 | 5103.615 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 8046.655 | 9465.1 |
+| applied_total | 288979.776 | 481414 |
+| bench_cpu_cores | 4.436 | 4.701 |
+| bench_cpu_pct | 44.357 | 47.01 |
+| bench_gc_gen0 | 0.673 | 2 |
+| bench_gc_gen1 | 0.408 | 2 |
+| bench_gc_gen2 | 0.388 | 1 |
+| bench_gc_heap_mb | 1020.682 | 1526.2 |
+| bench_mem_mb | 1947.002 | 2207.4 |
+| bench_threadpool_queue | 0.98 | 14 |
+| bench_threadpool_threads | 16.714 | 21 |
+| broker_backlog | 99249.51 | 235156 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| in_flight | 265.735 | 565 |
+| nacks_per_s | 0 | 0 |
+| octopus_items_sent_total | 559616.306 | 944190 |
+| octopus_missing_reports_total | 1350.755 | 1378 |
+| octopus_mqtt_received_total | 191889.531 | 325344 |
+| octopus_mqtt_sent_total | 238284.694 | 415851 |
+| octopus_publish_retries_total | 16.714 | 39 |
+| octopus_publish_stuck | 0 | 0 |
+| produced_per_s | 8040.359 | 9484.1 |
+| produced_total | 289245.51 | 481667 |
+| publish_mb_per_s | 33.609 | 54.92 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 8027/8027 source cursors at the expected last sequence |
+| records_complete | pass | all 69,626 records are Completed |
+| record_counts | pass | 69,626 records found, 69,626 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 373 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 503,642 events applied by workers, 503,642 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+| runtime_cross_source_blocking | **FAIL** | 915 events waited > 100 ms while a worker slot of their group was idle (4 slot(s)/worker; blocked p99 56 ms, max 5100 ms) |
+
+## Cross-source blocking samples
+
+- [cross_source_blocking] source 5863 seq 10: ready 488 ms before start, 488 ms of it with an idle slot in group 203
+- [cross_source_blocking] source 11489 seq 16: ready 131 ms before start, 131 ms of it with an idle slot in group 373
+- [cross_source_blocking] source 11277 seq 11: ready 115 ms before start, 115 ms of it with an idle slot in group 367
+- [cross_source_blocking] source 3316 seq 20: ready 115 ms before start, 115 ms of it with an idle slot in group 111
+- [cross_source_blocking] source 15635 seq 30: ready 126 ms before start, 126 ms of it with an idle slot in group 487
+- [cross_source_blocking] source 8550 seq 14: ready 132 ms before start, 132 ms of it with an idle slot in group 293
+- [cross_source_blocking] source 704 seq 7: ready 133 ms before start, 133 ms of it with an idle slot in group 21
+- [cross_source_blocking] source 3811 seq 23: ready 134 ms before start, 134 ms of it with an idle slot in group 129
+- [cross_source_blocking] source 8976 seq 7: ready 133 ms before start, 133 ms of it with an idle slot in group 309
+- [cross_source_blocking] source 1347 seq 11: ready 132 ms before start, 132 ms of it with an idle slot in group 43
+- [cross_source_blocking] source 3807 seq 36: ready 132 ms before start, 132 ms of it with an idle slot in group 129
+- [cross_source_blocking] source 10627 seq 8: ready 131 ms before start, 131 ms of it with an idle slot in group 349
+- [cross_source_blocking] source 2579 seq 22: ready 115 ms before start, 115 ms of it with an idle slot in group 79
+- [cross_source_blocking] source 1134 seq 12: ready 377 ms before start, 377 ms of it with an idle slot in group 37
+- [cross_source_blocking] source 15639 seq 17: ready 102 ms before start, 102 ms of it with an idle slot in group 487
+- [cross_source_blocking] source 3524 seq 21: ready 101 ms before start, 101 ms of it with an idle slot in group 121
+- [cross_source_blocking] source 8954 seq 9: ready 104 ms before start, 104 ms of it with an idle slot in group 309
+- [cross_source_blocking] source 2222 seq 45: ready 100 ms before start, 100 ms of it with an idle slot in group 65
+- [cross_source_blocking] source 7357 seq 17: ready 104 ms before start, 104 ms of it with an idle slot in group 253
+- [cross_source_blocking] source 8401 seq 12: ready 440 ms before start, 440 ms of it with an idle slot in group 285
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-431 | 6 | 1 | 46.594 | 4.642 | 596 | 0 | 282 | 282 | 0 | 27.391 | 8323.071 | 9830.399 |
+| t-119L | 64 | 4 | 4.456 | 4.863 | 156 | 1 | 373 | 373 | 0 | 2375.679 | 4816.895 | 6389.759 |
+| t-319L | 29 | 2 | 4.084 | 1.953 | 1917 | 1 | 154 | 154 | 0 | 2310.143 | 4587.519 | 6062.079 |
+| t-013 | 10 | 1 | 45.517 | 6.906 | 134 | 0 | 444 | 444 | 0 | 28.543 | 3850.239 | 4915.199 |
+| t-093L | 20 | 1 | 2.903 | 0.952 | 711 | 1 | 91 | 91 | 0 | 2490.367 | 3670.015 | 4030.463 |
+| t-217 | 8 | 1 | 21.969 | 2.723 | 1936 | 0 | 180 | 180 | 0 | 21.247 | 2867.199 | 3670.015 |
+| t-021 | 19 | 1 | 20.159 | 6.705 | 3252 | 0 | 471 | 471 | 0 | 26.879 | 2686.975 | 5111.807 |
+| t-437 | 9 | 1 | 71.893 | 10.794 | 1067 | 0 | 707 | 707 | 0 | 29.055 | 2686.975 | 4390.911 |
+| t-029 | 28 | 2 | 177.66 | 82.383 | 1732 | 0 | 4983 | 4983 | 0 | 26.367 | 2637.823 | 11468.799 |
+| t-401 | 11 | 1 | 37.414 | 7.028 | 360 | 0 | 468 | 468 | 0 | 25.855 | 2572.287 | 5111.807 |
+| t-415 | 14 | 1 | 85.928 | 19.862 | 2972 | 0 | 1281 | 1281 | 0 | 26.751 | 2539.519 | 4784.127 |
+| t-019 | 38 | 2 | 109.921 | 69.438 | 208 | 0 | 4340 | 4340 | 0 | 25.215 | 2473.983 | 9830.399 |
+| t-153 | 17 | 1 | 51.807 | 14.803 | 965 | 0 | 927 | 927 | 0 | 25.727 | 2473.983 | 4784.127 |
+| t-349 | 14 | 1 | 55.11 | 12.441 | 379 | 0 | 759 | 759 | 0 | 26.111 | 2359.295 | 2899.967 |
+| t-427 | 16 | 1 | 137.834 | 36.586 | 1711 | 0 | 2274 | 2274 | 0 | 28.543 | 2310.143 | 3260.415 |
+| t-251 | 9 | 1 | 46.964 | 7.056 | 1193 | 0 | 411 | 411 | 0 | 25.087 | 2277.375 | 3162.111 |
+| t-145 | 6 | 1 | 63.772 | 6.425 | 517 | 0 | 370 | 370 | 0 | 25.215 | 2244.607 | 2818.047 |
+| t-225 | 6 | 1 | 39.542 | 3.897 | 3030 | 0 | 243 | 243 | 0 | 27.391 | 2228.223 | 4784.127 |
+| t-417 | 75 | 2 | 54.652 | 67.926 | 3449 | 0 | 4236 | 4236 | 0 | 25.727 | 2211.839 | 9830.399 |
+| t-447 | 17 | 1 | 56.174 | 15.159 | 558 | 0 | 979 | 979 | 0 | 27.519 | 2179.071 | 2981.887 |
+| t-355 | 10 | 1 | 37.479 | 6.571 | 349 | 0 | 443 | 443 | 0 | 26.239 | 2162.687 | 2949.119 |
+| t-499 | 36 | 1 | 70.369 | 41.476 | 1538 | 0 | 2574 | 2574 | 0 | 25.599 | 2113.535 | 4751.359 |
+| t-147 | 79 | 5 | 180.465 | 242.333 | 1078 | 0 | 14736 | 14736 | 0 | 26.367 | 2056.191 | 11403.263 |
+| t-459 | 25 | 1 | 20.783 | 8.48 | 2174 | 0 | 584 | 584 | 0 | 24.319 | 2047.999 | 4784.127 |
+| t-205 | 18 | 1 | 65.466 | 19.469 | 449 | 0 | 1257 | 1257 | 0 | 24.831 | 2031.615 | 3293.183 |
+
+01:54:26.349 results written to /Users/leeles/eventbench/results/Xb-mssql-split-s1/20261121-175241_Xb-mssql-split-s1

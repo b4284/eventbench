@@ -58,3 +58,23 @@ call for ~3k deleted rows). Postgres holds 16k at p50 7 ms on 2.2 cores, run aft
 - `settle`'s delete cost (~14 logical reads per deleted row).
 - The application's writes on SQL Server too (the benchmark's SqlServerStore), and the availability-group failover
   drill.
+
+## With the load split across machines (2026-11-22)
+
+Same comparison (Octopus alone, workers commit to memory, 16k ev/s, 3 dispatchers), with producers and workers
+split into two shards: the laptop and m4mini (`scripts/shard-run.sh`, see matrix-28). Interleaved.
+
+| run | backend | applied/s (total) | e2e p50 laptop / m4mini shard | DB CPU | laptop CPU |
+|---|---|---:|---:|---:|---:|
+| Xa | SQL Server | 15,614 | 29 ms / 2.6 s | 9.8 cores | 68% |
+| Xb | SQL Server | 15,923 | 33 ms / 25 ms | 11.3 cores | 76% |
+| Ya | PostgreSQL | 15,907 | 7 ms / 5 ms | 2.6 cores | 41% |
+| Yb | PostgreSQL | 15,908 | 7 ms / 5 ms | 2.3 cores | 39% |
+
+Taking the benchmark process off the laptop doesn't change SQL Server's picture: it can hold 16k (Xb), but
+inconsistently, at ~4–5x Postgres's CPU per event; `advance`/`settle` still take 560–920 ms per call. Postgres holds
+16k at p50 5–7 ms on ~2.5 cores, run after run.
+
+(The first Postgres split attempts failed on the laptop shard's admin connection to Postgres through the laptop's
+own LAN address, 192.168.0.217:5432: timeouts, while the Mac shard used the same address fine. Unresolved; the
+laptop shard uses 127.0.0.1 now, as in matrix-28.)

@@ -15,7 +15,7 @@ SHARDS=$(( ${#HOSTS[@]} + 1 ))
 BIN=src/EventBench.Cli/bin/Release/net10.0/eventbench.dll
 STATE=~/.cache/eventbench/octopus
 mkdir -p "$OUT"
-if pgrep -f "eventbench.dll run" >/dev/null; then echo "another eventbench run is active; aborting" >&2; exit 3; fi
+if pgrep -f "^dotnet .*eventbench.dll run" >/dev/null; then echo "another eventbench run is active; aborting" >&2; exit 3; fi
 pgrep -f "/target/release/octopusd$" | xargs -r kill; sleep 1
 EB_MQTT=${EB_MQTT:-mosquitto} EB_MQTT_BIND=0.0.0.0 infra/octopus/up.sh "$N" > "$OUT/$NAME.pre.log" 2>&1 || { echo "cluster did not start"; tail -3 "$OUT/$NAME.pre.log"; exit 2; }
 for h in "${HOSTS[@]}"; do rsync -a configs/ "$h:eventbench/configs/"; done

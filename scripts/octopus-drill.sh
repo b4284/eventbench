@@ -24,7 +24,7 @@ AT=${DRILL_AT:-30}
 BIN=src/EventBench.Cli/bin/Release/net10.0/eventbench.dll
 STATE=~/.cache/eventbench/octopus
 mkdir -p "$OUT"
-if pgrep -f "eventbench.dll run" >/dev/null; then echo "another eventbench run is active; aborting" >&2; exit 3; fi
+if pgrep -f "^dotnet .*eventbench.dll run" >/dev/null; then echo "another eventbench run is active; aborting" >&2; exit 3; fi
 PROXY=""
 if [[ $ACTION == dispatcher-db-cut:* ]]; then
   i=$(cut -d: -f2 <<<"$ACTION")
