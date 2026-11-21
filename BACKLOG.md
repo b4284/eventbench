@@ -172,8 +172,11 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   log's group commit. The port found four bugs (see the NOTES): connection churn, a gaps query that ran for minutes,
   **events acknowledged but never stored when their source was missing (also on SQL Server; fixed in all backends,
   Octopus 9003a62)**, and a registration race at startup (186eaea).
-  - **Not explored yet:** the binary log off (what group commit costs); semi-sync `AFTER_SYNC` or Group Replication
-    failover drill; cheaper batch passing than JSON with base64.
+  - Binary log off (Ke, Kf): p50 13–19 ms, p99 1.7–2.8 s at the same CPU: the binary log's commit path is MySQL's
+    latency, not its CPU. Replication needs it, so an HA MySQL pays it.
+  - **Not explored yet:** group commit tuning with the binary log on (`binlog_group_commit_sync_delay`,
+    `binlog_order_commits=OFF`); semi-sync `AFTER_SYNC` or Group Replication failover drill; cheaper batch passing
+    than JSON with base64.
 
 ### B17 — Distributed SQL under the dispatcher · **measured: not viable for 24k** (2026-11-21, matrix-26: YugabyteDB runs Octopus unchanged but needs 25–45× Postgres's CPU per event)
 - **From:** dispatcher design §4.1. The dispatchers are active-active, but SQL is single-writer with synchronous

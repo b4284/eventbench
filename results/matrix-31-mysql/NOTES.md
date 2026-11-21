@@ -52,8 +52,21 @@ is the only database on offer, with more headroom (cores) than Postgres needs.
 - `Kc-mysql`, `Kd-mysql`: all fixes (Kc before the retry budget went from 5 to 8 attempts).
 - `acked-loss/`, `pool-min1/`: the runs that exposed bugs 3 and 1.
 
+## The binary log's cost (Ke, Kf: `MYSQL_BINLOG=0 infra/mysql/up.sh`)
+
+| run | applied ev/s | e2e p50 | e2e p99 | MySQL CPU |
+|---|---:|---:|---:|---:|
+| Ke-mysql-nobinlog | 16.5k | 19 ms | 2.8 s | 4.9 cores |
+| Kf-mysql-nobinlog | 16.3k | 13 ms | 1.7 s | 4.6 cores |
+| Kc, Kd (binary log on) | 16.7–16.9k | 332–648 ms | 5.4–5.9 s | 4.5–4.7 cores |
+
+The binary log's commit path (two logs per commit, ordered group commit) is what made MySQL slow, not CPU: without
+it MySQL's latency comes close to Postgres's (p50 13–19 ms vs 7), at the same ~2.2× CPU. Replication needs the
+binary log, though (semi-sync and Group Replication alike), so an HA MySQL pays this; tuning its group commit
+(`binlog_group_commit_sync_delay`, `binlog_order_commits=OFF`) is the next thing to try.
+
 ## Not explored yet (B16)
 
-- The binary log off (`--disable-log-bin`) to measure what group commit costs; semi-sync replication
-  (`AFTER_SYNC`) or Group Replication for the failover drill.
+- Group commit tuning with the binary log on; semi-sync replication (`AFTER_SYNC`) or Group Replication for the
+  failover drill.
 - Cheaper batch passing than JSON with base64 (`JSON_TABLE` + `FROM_BASE64` on every publish).

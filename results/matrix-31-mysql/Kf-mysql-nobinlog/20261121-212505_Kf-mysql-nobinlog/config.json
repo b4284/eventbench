@@ -1,0 +1,112 @@
+{
+  "Broker": {
+    "AdminConnectionString": "Server=127.0.0.1;Port=3306;Database=octopus;User ID=root;Password=***",
+    "AdminDatabase": "mysql",
+    "ArchiveOnAck": "False",
+    "ConnectionString": "Host=127.0.0.1;Port=6432;Database=bench;Username=bench;Password=***;Maximum Pool Size=1000;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60",
+    "DispatcherPidFile": "~/.cache/eventbench/octopus/pids",
+    "FifoIndex": "Btree",
+    "FifoReadFunction": "read_grouped_head",
+    "MqttHost": "127.0.0.1",
+    "MqttPort": "1883",
+    "Namespace": "octopus",
+    "Ordering": "Fifo",
+    "ProducerConnections": "4",
+    "QueuePrefix": "eb",
+    "Schema": "octopus",
+    "Type": "octopus",
+    "Unlogged": "False",
+    "VisibilityTimeoutSeconds": "30",
+    "WorkerConnections": "2"
+  },
+  "Metrics": {
+    "BlockingThresholdMs": "100",
+    "ConsoleProgress": "false",
+    "ContainerStats": "True",
+    "ContainerStatsCommand": "podman stats --no-stream --format json",
+    "ContainerStatsIntervalSeconds": "3",
+    "ExternalStatsIntervalSeconds": "2",
+    "FailOnBlocking": "True",
+    "SampleIntervalSeconds": "1"
+  },
+  "MQTT": "mosquitto",
+  "Name": "Kf-mysql-nobinlog",
+  "ResultsDirectory": "results/matrix-31-mysql/Kf-mysql-nobinlog",
+  "Store": {
+    "AdminConnectionString": "Host=127.0.0.1;Port=5432;Database=bench;Username=bench;Password=***;Maximum Pool Size=10;Command Timeout=600",
+    "BatchCommits": "true",
+    "BatchExecutors": "16",
+    "BatchMaxSize": "32",
+    "ConnectionString": "Host=127.0.0.1;Port=6432;Database=bench;Username=bench;Password=***;Maximum Pool Size=1000;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60",
+    "FillFactor": "70",
+    "PgBouncerStatsCommand": "podman exec eb-postgres psql \u0022host=127.0.0.1 port=6432 dbname=pgbouncer user=bench password=***",
+    "TablePrefix": "eb",
+    "Type": "inmemory",
+    "UnloggedTables": "False"
+  },
+  "Worker": {
+    "AckMode": "AfterCommit",
+    "BatchSize": "10",
+    "EventsPerSecondPerWorker": "50",
+    "IdleBackoffMaxMs": "50",
+    "IdleBackoffMinMs": "1",
+    "MaxParallelPerWorker": "4",
+    "MaxWorkersPerGroup": "16",
+    "MinWorkersPerGroup": "1",
+    "Mode": "Pipelined",
+    "RetryDelayMs": "250",
+    "SimulatedWorkMicros": "0",
+    "UploadBytesPerSecondPerWorker": "8388608"
+  },
+  "Workload": {
+    "Arrival": "Poisson",
+    "ContextBytes": "1024",
+    "DrainTimeoutSeconds": "180",
+    "DurationSeconds": "60",
+    "GeneratedGroups": {
+      "Groups": "500",
+      "LargeEventFraction": "1.0",
+      "LargeGroupMaxRatePerMinute": "5",
+      "LargeGroupMinRatePerMinute": "1",
+      "LargeGroups": "4",
+      "LargeMaxBytes": "4194304",
+      "LargeMinBytes": "1048576",
+      "MaxRatePerMinute": "200",
+      "MaxSources": "200",
+      "MinRatePerMinute": "10",
+      "MinSources": "6",
+      "Name": "t",
+      "RateMedianPerMinute": "40",
+      "RateSigma": "0.7",
+      "SizeSigma": "1.0",
+      "SmallPayloadMaxBytes": "4096",
+      "SmallPayloadMinBytes": "128",
+      "SourceRateJitter": "0.25",
+      "TotalSources": "16000"
+    },
+    "LargePayload": {
+      "MaxCount": "0",
+      "Mode": "Inline",
+      "Probability": "0"
+    },
+    "MaxPublishBatch": "1",
+    "OpMix": {
+      "CompleteWeight": "1",
+      "CreateWeight": "1",
+      "GetWeight": "2",
+      "MaxOpenRecordsPerSource": "4",
+      "UpdateWeight": "5"
+    },
+    "Producers": "32",
+    "PublishConcurrency": "64",
+    "RateMultiplier": "1.24",
+    "Seed": "12345",
+    "SlowEvents": {
+      "Fraction": "0.005",
+      "IncludeLarge": "True",
+      "MaxMs": "3000",
+      "MinMs": "1000"
+    },
+    "WarmupSeconds": "10"
+  }
+}
