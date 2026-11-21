@@ -18,6 +18,8 @@ public sealed class OctopusBrokerOptions
 {
     public string MqttHost { get; set; } = "127.0.0.1";
     public int MqttPort { get; set; } = 1883;
+    /// <summary>"mqtt" (default) or "nats": the fabric between clients and dispatchers (MqttHost names the NATS server; port 1883 means 4222).</summary>
+    public string Transport { get; set; } = "mqtt";
     public string Namespace { get; set; } = "octopus";
     /// <summary>Direct connection for setup, backlog and stats (Octopus's own tables).</summary>
     public string AdminConnectionString { get; set; } = "";
@@ -159,7 +161,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
              $"{_o.ProducerConnections} producer + {_o.WorkerConnections} worker MQTT connections");
     }
 
-    private OctopusOptions Options(string clientId) => new() { Host = _o.MqttHost, Port = _o.MqttPort, Namespace = _o.Namespace, ClientId = clientId };
+    private OctopusOptions Options(string clientId) => new() { Host = _o.MqttHost, Port = _o.MqttPort, Namespace = _o.Namespace, ClientId = clientId, Transport = _o.Transport };
 
     public IEventPublisher CreatePublisher(int groupId)
     {
@@ -226,7 +228,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
     }
 
     public string Describe()
-        => $"Octopus dispatchers via MQTT {_o.MqttHost}:{_o.MqttPort} ns={_o.Namespace}, schema {_o.Schema}; one event per publish call " +
+        => $"Octopus dispatchers via {_o.Transport.ToUpperInvariant()} {_o.MqttHost}:{_o.MqttPort} ns={_o.Namespace}, schema {_o.Schema}; one event per publish call " +
            $"({_o.ProducerConnections} producer / {_o.WorkerConnections} worker connections), commit through the apply hook";
 
     public async ValueTask DisposeAsync()

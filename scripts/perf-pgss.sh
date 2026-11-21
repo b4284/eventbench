@@ -5,7 +5,7 @@
 set -uo pipefail
 O=$1; N=$2; R=$3; shift 3
 mkdir -p "$O"
-export EB_MQTT=mosquitto
+export EB_MQTT=${EB_MQTT:-mosquitto}
 if podman ps --format '{{.Names}}' | grep -qE 'standby|patroni|geo-|eb-b-'; then echo "a standby/cluster is running: stop it first (B26)" >&2; exit 2; fi
 pgrep -f "/target/release/octopusd$" | xargs -r kill; sleep 2
 ( sleep 30; podman exec eb-postgres psql -U bench -d bench -qc "select pg_stat_statements_reset()" >/dev/null; sleep 40

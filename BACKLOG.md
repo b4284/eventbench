@@ -150,7 +150,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   with batched commits is unknown.
 - **Test:** rerun pgqueue Q3 with local fsync on.
 
-### B16 — The dispatcher queue on SQL Server and MySQL · **SQL Server ported and measured** (2026-11-22, matrix-27: correct, ~4–5× Postgres CPU per event, not steady at 16k); MySQL open
+### B16 — The dispatcher queue on SQL Server and MySQL · **both ported and measured** (2026-11-22: SQL Server matrix-27, correct, ~4–5× Postgres CPU per event, not steady at 16k; MySQL matrix-31, correct after four fixes, ~2.2× Postgres CPU, keeps 16k with e2e p50 0.3–0.6 s); failover drills open
 - **From:** user, 2026-11-20. Once the dispatcher owns the queue logic, the database only needs transactions,
   batched inserts, an index and row locks for the commit, so other SQL engines may have the same property.
 - **Test:**
@@ -166,6 +166,14 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - **Not explored yet:** memory-optimized tables (In-Memory OLTP) for the event table; cheaper batch passing than
     JSON with base64; settle's delete cost; the application's writes on SQL Server; the availability-group failover
     drill.
+- 2026-11-22, matrix-31: Octopus `crates/octopus-mysql` (MySQL 8.4; procedures, `JSON_TABLE` + `FROM_BASE64`,
+  READ COMMITTED, `GET_LOCK` for the exclusive sections). `OCTOPUS_BACKEND=mysql`, `--Broker:AdminDatabase=mysql`.
+  At 16k: 16.7–16.9k applied, e2e p50 0.3–0.6 s, 4.5 cores against Postgres's 2.1; sessions wait mostly on the binary
+  log's group commit. The port found four bugs (see the NOTES): connection churn, a gaps query that ran for minutes,
+  **events acknowledged but never stored when their source was missing (also on SQL Server; fixed in all backends,
+  Octopus 9003a62)**, and a registration race at startup (186eaea).
+  - **Not explored yet:** the binary log off (what group commit costs); semi-sync `AFTER_SYNC` or Group Replication
+    failover drill; cheaper batch passing than JSON with base64.
 
 ### B17 — Distributed SQL under the dispatcher · **measured: not viable for 24k** (2026-11-21, matrix-26: YugabyteDB runs Octopus unchanged but needs 25–45× Postgres's CPU per event)
 - **From:** dispatcher design §4.1. The dispatchers are active-active, but SQL is single-writer with synchronous
@@ -355,7 +363,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - Next: the broker on its own machine (lab), a broker-node kill drill, and NATS (B32). Separately, fewer
   MQTT messages per event in Octopus (batch publish replies, done reports and their replies).
 
-### B32 — NATS as Octopus's transport, to lift the ceiling · open (from the user, 2026-11-22)
+### B32 — NATS as Octopus's transport, to lift the ceiling · **built; local 16k on par with Mosquitto** (2026-11-22, matrix-32); the split-load ceiling run open (from the user, 2026-11-22)
 - NATS (Apache 2.0, multi-threaded, clustering free) as a native transport next to MQTT. NATS's MQTT gateway speaks
   only 3.1.1 and Octopus's clients speak MQTT 5, so it needs a NATS implementation of the transport layer
   (crates/octopus-fabric, ~170 lines, and the .NET client's equivalent).
@@ -365,6 +373,12 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   side benefit. Measure against Mosquitto with the split load (matrix-29/30 setup).
 - NATS maps closely onto the current design: subjects for topics, queue groups for the shared subscription that
   spreads publishes over the dispatchers, inbox subjects for replies, re-announcement for retained messages.
+- 2026-11-22, built: Octopus `octopus-fabric` NATS binding (async-nats 0.52), `octopusd` `OCTOPUS_TRANSPORT=nats`
+  (`OCTOPUS_NATS_URL`), the .NET client's `OctopusOptions.Transport = "nats"` (NATS.Net 3.3.2); benchmark
+  `--Broker:Transport=nats`, `EB_MQTT=nats infra/octopus/up.sh` (container eb-nats-octopus, nats 2.15.2, 64 MB payloads).
+- matrix-32 Na-pg, local 16k (as matrix-31 Lb-pg): e2e p50 6.8 ms (Mosquitto 7.1), p99 equal, host CPU 35.4% (36.7%),
+  dispatchers 1.19 cores (1.33); the NATS server 0.84 cores (Mosquitto 0.53), but on several threads, where
+  Mosquitto's one thread was the first part to run out at the ceiling (matrix-29).
 
 ### B33 — SQL Server In-Memory OLTP for the event table · open (the user: "remember to re-visit", 2026-11-22)
 - matrix-27: SQL Server runs Octopus correctly but at ~4–5x Postgres's CPU per event, unsteady at 16k; publish's

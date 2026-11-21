@@ -1,0 +1,14 @@
+244 | CPU | SELECT codes, missing FROM octopus.publi
+183 | CPU | SELECT octopus.advance($1, $2, $3)
+41 | CPU | SELECT x.grp, x.source, x.epoch, x.seq, 
+13 | CPU | SELECT s.grp, s.source, s.epoch, s.last_
+11 | CPU | SELECT count(*) FROM octopus.event e JOI
+8 | IO:DataFileExtend | SELECT codes, missing FROM octopus.publi
+8 | Client:ClientRead | SELECT codes, missing FROM octopus.publi
+4 | CPU | WITH l AS (SELECT grp FROM octopus.lease
+3 | Client:ClientRead | SELECT x.grp, x.source, x.epoch, x.seq, 
+1 | Lock:extend | SELECT codes, missing FROM octopus.publi
+1 | Client:ClientWrite | SELECT x.grp, k.s, x.epoch, x.seq, x.bod
+1 | CPU | SELECT x.grp, k.s, x.epoch, x.seq, x.bod
+1 | IO:DataFileExtend | SELECT octopus.advance($1, $2, $3)
+1 | IPC:BgworkerShutdown | SELECT count(*) FROM octopus.event e JOI
