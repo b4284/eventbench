@@ -3,6 +3,8 @@
 # health-checks every node's Patroni REST API (/primary answers 200 only on the leader) and sends connections to
 # the leader; sessions to a node that stops being the leader are cut at once (shutdown-sessions).
 # Clients then use one host: "host=127.0.0.1 port=6440".
+# Like a cloud network load balancer (B30): HAPROXY_INTER=5s HAPROXY_FALL=2 HAPROXY_CUT=0 (checks every 5 s, and
+# established sessions to a node that stops being the leader are left open, as NLBs do by default).
 set -euo pipefail
 STATE=~/.cache/eventbench/patroni
 {
@@ -18,7 +20,7 @@ listen primary
     bind 127.0.0.1:6440
     option httpchk GET /primary
     http-check expect status 200
-    default-server inter 1s fall ${HAPROXY_FALL:-2} rise ${HAPROXY_RISE:-2} on-marked-down shutdown-sessions
+    default-server inter ${HAPROXY_INTER:-1s} fall ${HAPROXY_FALL:-2} rise ${HAPROXY_RISE:-2}$([[ ${HAPROXY_CUT:-1} == 1 ]] && echo ' on-marked-down shutdown-sessions')
 CFG
   while read -r name pg api dc; do echo "    server $name 127.0.0.1:$pg check port $api"; done < "$STATE/nodes"
 } > "$STATE/haproxy.cfg"

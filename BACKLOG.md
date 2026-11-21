@@ -349,7 +349,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   renewal and claims update several rows without a common order; two dispatchers can deadlock. Harmless (the
   next tick retries) but it costs a lease round and log noise: lock rows in group order.
 
-### B30 — A network load balancer in place of HAProxy · open (from the user, 2026-11-21: probably the default in production)
+### B30 — A network load balancer in place of HAProxy · **measured: works if it cuts sessions to an unhealthy target** (2026-11-22, matrix-35; from the user, 2026-11-21: probably the default in production)
 - Any L4 load balancer works if its health check is HTTP GET /primary on Patroni's port 8008 and traffic goes to
   TCP 5432 on all nodes. It differs from the lab's HAProxy in three ways:
   - detection: cloud health checks run every 5 s and need 2+ failures, against 1 s and 2 here;
@@ -359,6 +359,11 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - Test: HAProxy set up like an NLB (inter 5 s, fall 2, no shutdown-sessions) in the 2+2 lab; leader-DC kill drill
   x5. Measure the outage and whether clients recover on TCP keepalive and operation timeouts alone. Then the same
   with session cutting on, which is the setting to require from the NLB.
+- 2026-11-22, matrix-35 (16 drills, all correct): leader-DC kill 24–30 s outage with 5 s checks (1 s: 18–22 s), cut or
+  not; leader-DC frozen 60 s: **83–84 s without session cutting** (1.5k worker calls hung until their timeout) vs
+  27–30 s with it. docs/topology.md (Octopus 9116a28) carries the numbers.
+  - **Not explored yet:** client-side bounds without NLB cutting (libpq `tcp_user_timeout`/keepalives, Npgsql
+    keepalive and command timeouts); a real cloud NLB.
 
 ### B31 — MQTT broker: the first ceiling, and a single point of failure · **ceiling part answered by NATS** (matrix-32: +4–6%); the single point of failure open (2026-11-22, matrix-29)
 - Mosquitto is single-threaded: 84–93% of its core at 16–24k with remote clients, 97% with more connections, when

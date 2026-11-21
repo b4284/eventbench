@@ -1,0 +1,223 @@
+# F3-dc-freeze:leader:60 — FAIL ❌
+
+- Broker: `Octopus dispatchers via MQTT 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook`
+- Store: `postgres @ 127.0.0.1:6440/bench (pool max 200), unlogged=False, fillfactor=70, group commit (max 32/tx, 16 executors)`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 4
+- Topology: 500 groups, 16000 sources, 601 workers, offered 12856.021 ev/s
+- Phases: run 116.991s, closing 2.864s, drain 6.946s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 450847 | 450847 | 2586.277 | 2326.046 | 16891 | 3 | 1640 | 1640 | 270 | 2282 | 134687 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 281423 | 31498.728 | 6127.615 | 96272.383 | 102891.519 | 105250.815 | 108199.935 |
+| e2e_from_send | 281423 | 31423.745 | 6090.751 | 96272.383 | 102891.519 | 105250.815 | 108199.935 |
+| producer_lag | 282724 | 74.707 | 2.133 | 30.223 | 146.559 | 416.255 | 85000.191 |
+| publish_call | 450847 | 426.59 | 63.327 | 144.511 | 333.567 | 84869.119 | 85065.727 |
+| queue_wait | 281423 | 31338.893 | 5996.543 | 96272.383 | 102825.983 | 105185.279 | 108199.935 |
+| broker_dwell | 281423 | 30755.359 | 5795.839 | 96206.847 | 102760.447 | 105185.279 | 108134.399 |
+| receive_call | 400591 | 32.598 | 9.567 | 85.311 | 351.487 | 482.559 | 535.039 |
+| ctx_load | 281423 | 12.241 | 8.327 | 26.623 | 59.679 | 106.815 | 181.375 |
+| process | 281423 | 9.998 | 0.002 | 0.004 | 0.06 | 2582.527 | 3002.367 |
+| ctx_commit | 281423 | 62.584 | 59.423 | 112.511 | 180.863 | 332.031 | 381.439 |
+| ack | 281416 | 0.011 | 0.004 | 0.007 | 0.054 | 1.173 | 105.215 |
+| service | 281423 | 84.915 | 72.511 | 132.735 | 239.231 | 2656.255 | 3225.599 |
+| e2e_large | 169 | 9308.884 | 2830.335 | 4886.527 | 88866.815 | 90636.287 | 90636.287 |
+| ready_wait | 281423 | 2866.597 | 116.735 | 1451.007 | 89849.855 | 93126.655 | 96993.279 |
+| blocked | 281423 | 1699.039 | 79.935 | 820.223 | 70582.271 | 74776.575 | 83558.399 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 2326.046 | 13477.1 |
+| applied_total | 308547.476 | 340018 |
+| bench_cpu_cores | 1.184 | 5.308 |
+| bench_cpu_pct | 4.934 | 22.12 |
+| bench_gc_gen0 | 0.533 | 3 |
+| bench_gc_gen1 | 0.181 | 2 |
+| bench_gc_gen2 | 0.133 | 1 |
+| bench_gc_heap_mb | 1058.958 | 1527.7 |
+| bench_mem_mb | 1804.685 | 1984.9 |
+| bench_threadpool_queue | 7.581 | 137 |
+| bench_threadpool_threads | 35 | 44 |
+| broker_backlog | 83131.657 | 85985 |
+| ctr_eb_dc1a_cpu_pct | 793.508 | 828.8 |
+| ctr_eb_dc1a_mem_mb | 8090.976 | 8207.3 |
+| ctr_eb_dc1b_cpu_pct | 47.635 | 53.68 |
+| ctr_eb_dc1b_mem_mb | 2311.476 | 2324.1 |
+| ctr_eb_dc2a_cpu_pct | 12.747 | 54.57 |
+| ctr_eb_dc2a_mem_mb | 3164.843 | 3364.6 |
+| ctr_eb_dc2b_cpu_pct | 11.448 | 53.6 |
+| ctr_eb_dc2b_mem_mb | 2900.22 | 2997.4 |
+| ctr_eb_etcd_dc1_cpu_pct | 2.019 | 2.09 |
+| ctr_eb_etcd_dc1_mem_mb | 31.471 | 32 |
+| ctr_eb_etcd_dc2_cpu_pct | 0.757 | 1.96 |
+| ctr_eb_etcd_dc2_mem_mb | 26.152 | 27.3 |
+| ctr_eb_etcd_w_cpu_pct | 1.144 | 2.74 |
+| ctr_eb_etcd_w_mem_mb | 55.737 | 57.5 |
+| ctr_eb_haproxy_cpu_pct | 22.78 | 108.41 |
+| ctr_eb_haproxy_mem_mb | 26.479 | 30.1 |
+| ctr_eb_mosquitto_cpu_pct | 13.229 | 56.91 |
+| ctr_eb_mosquitto_mem_mb | 3.845 | 15.1 |
+| ctr_eb_mssql_cpu_pct | 1.584 | 5.61 |
+| ctr_eb_mssql_mem_mb | 4794.923 | 4803.7 |
+| ctr_eb_mysql_cpu_pct | 0.4 | 0.9 |
+| ctr_eb_mysql_mem_mb | 6022.526 | 6023.4 |
+| ctr_eb_pgbouncer_2_cpu_pct | 0.013 | 0.04 |
+| ctr_eb_pgbouncer_2_mem_mb | 3 | 3 |
+| ctr_eb_pgbouncer_3_cpu_pct | 0.014 | 0.05 |
+| ctr_eb_pgbouncer_3_mem_mb | 2.4 | 2.4 |
+| ctr_eb_pgbouncer_4_cpu_pct | 0.014 | 0.05 |
+| ctr_eb_pgbouncer_4_mem_mb | 3 | 3 |
+| ctr_eb_pgbouncer_cpu_pct | 0.012 | 0.02 |
+| ctr_eb_pgbouncer_mem_mb | 3.011 | 3.3 |
+| ctr_eb_postgres_cpu_pct | 0.549 | 2.7 |
+| ctr_eb_postgres_mem_mb | 1532.456 | 1535.4 |
+| duplicates_per_s | 0.029 | 3 |
+| errors_per_s | 15.623 | 790.1 |
+| host_cpu_pct | 17.39 | 81.4 |
+| in_flight | 82779.505 | 85501 |
+| nacks_per_s | 15.623 | 790.1 |
+| octopus_dispatcher_cores | 0.738 | 1.44 |
+| octopus_dispatchers_alive | 3 | 3 |
+| octopus_items_sent_total | 730431.629 | 817314 |
+| octopus_missing_reports_total | 0 | 0 |
+| octopus_mqtt_received_total | 181277.6 | 196555 |
+| octopus_mqtt_sent_total | 202598.857 | 230839 |
+| octopus_publish_retries_total | 5328.571 | 11190 |
+| octopus_publish_stuck | 888.095 | 1865 |
+| pg_active_acks | 0 | 0 |
+| pg_active_commits | 14.971 | 17 |
+| pg_active_loads | 3.238 | 19 |
+| pg_active_polls | 0 | 0 |
+| pg_active_sends | 0 | 0 |
+| pg_cache_hit_pct | 100 | 100 |
+| pg_conn_active | 75.533 | 85 |
+| pg_conn_idle | 191.143 | 252 |
+| pg_conn_idle_in_tx | 0 | 0 |
+| pg_conn_lock_wait | 0.143 | 5 |
+| pg_conn_total | 266.676 | 270 |
+| pg_db_size_mb | 1634.869 | 1737.6 |
+| pg_deadlocks | 0 | 0 |
+| pg_replica_lag_mb | 0.499 | 4.99 |
+| pg_replica_replay_lag_ms | 6.223 | 54.6 |
+| pg_replicas | 3 | 3 |
+| pg_rollbacks_per_s | 0 | 0 |
+| pg_temp_mb_per_s | 0 | 0 |
+| pg_tps | 23230.359 | 26740.6 |
+| pg_tup_del_per_s | 22373.959 | 35488.9 |
+| pg_tup_fetch_per_s | 268865.86 | 294107.2 |
+| pg_tup_ins_per_s | 34983.794 | 48278.7 |
+| pg_tup_upd_per_s | 29320.38 | 33365.9 |
+| pg_wal_mb_per_s | 81.971 | 107.28 |
+| pgb_cl_active | 0 | 0 |
+| pgb_cl_waiting | 0 | 0 |
+| pgb_maxwait_ms | 0 | 0 |
+| pgb_sv_active | 0 | 0 |
+| pgb_sv_idle | 0 | 0 |
+| pgb_sv_used | 0.867 | 1 |
+| produced_per_s | 2586.277 | 14761 |
+| produced_total | 391326.981 | 417903 |
+| publish_mb_per_s | 9.66 | 68.16 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 74,453 records are Completed |
+| record_counts | pass | 74,453 records found, 74,453 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 270 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 450,847 events applied by workers, 450,847 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+| runtime_cross_source_blocking | **FAIL** | 134,687 events waited > 100 ms while a worker slot of their group was idle (4 slot(s)/worker; blocked p99 70582 ms, max 83555 ms) |
+
+## Cross-source blocking samples
+
+- [cross_source_blocking] source 13605 seq 7: ready 119 ms before start, 119 ms of it with an idle slot in group 431
+- [cross_source_blocking] source 1337 seq 7: ready 163 ms before start, 163 ms of it with an idle slot in group 42
+- [cross_source_blocking] source 314 seq 2: ready 114 ms before start, 114 ms of it with an idle slot in group 9
+- [cross_source_blocking] source 11750 seq 10: ready 114 ms before start, 114 ms of it with an idle slot in group 381
+- [cross_source_blocking] source 12662 seq 8: ready 113 ms before start, 113 ms of it with an idle slot in group 398
+- [cross_source_blocking] source 13204 seq 13: ready 120 ms before start, 120 ms of it with an idle slot in group 420
+- [cross_source_blocking] source 9498 seq 4: ready 114 ms before start, 114 ms of it with an idle slot in group 328
+- [cross_source_blocking] source 9519 seq 14: ready 119 ms before start, 119 ms of it with an idle slot in group 330
+- [cross_source_blocking] source 12271 seq 8: ready 119 ms before start, 119 ms of it with an idle slot in group 390
+- [cross_source_blocking] source 7407 seq 4: ready 119 ms before start, 119 ms of it with an idle slot in group 256
+- [cross_source_blocking] source 5067 seq 4: ready 163 ms before start, 163 ms of it with an idle slot in group 177
+- [cross_source_blocking] source 14862 seq 5: ready 113 ms before start, 113 ms of it with an idle slot in group 466
+- [cross_source_blocking] source 14088 seq 12: ready 120 ms before start, 120 ms of it with an idle slot in group 449
+- [cross_source_blocking] source 12706 seq 10: ready 113 ms before start, 113 ms of it with an idle slot in group 400
+- [cross_source_blocking] source 13608 seq 8: ready 120 ms before start, 120 ms of it with an idle slot in group 431
+- [cross_source_blocking] source 5673 seq 17: ready 119 ms before start, 119 ms of it with an idle slot in group 195
+- [cross_source_blocking] source 871 seq 16: ready 162 ms before start, 162 ms of it with an idle slot in group 26
+- [cross_source_blocking] source 873 seq 16: ready 119 ms before start, 119 ms of it with an idle slot in group 26
+- [cross_source_blocking] source 14631 seq 5: ready 163 ms before start, 163 ms of it with an idle slot in group 463
+- [cross_source_blocking] source 9685 seq 10: ready 119 ms before start, 119 ms of it with an idle slot in group 336
+
+## Error samples
+
+- t-295#0 src=8577 seq=33 op=Create rec=36837934497799 ev=0: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-362#0 src=11075 seq=20 op=Update rec=47566762803203 ev=4: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-128#0 src=3792 seq=61 op=Update rec=16286515986440 ev=1: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-273#0 src=8092 seq=59 op=Create rec=34754875359244 ev=0: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-490#1 src=15704 seq=32 op=Update rec=67448166416392 ev=1: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-316#0 src=9203 seq=22 op=Update rec=39526584025089 ev=3: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-055#2 src=1932 seq=44 op=Get rec=8297876815881 ev=1: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-182#1 src=5325 seq=31 op=Update rec=22870700851204 ev=6: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-044#0 src=1397 seq=11 op=Update rec=6000069312513 ev=9: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-160#1 src=4546 seq=41 op=Update rec=19524921327622 ev=3: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-041#2 src=1294 seq=81 op=Get rec=5557687681027 ev=14: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-331#0 src=9532 seq=25 op=Update rec=40939628265476 ev=6: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-344#2 src=10287 seq=28 op=Update rec=44182328573956 ev=4: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-230#1 src=6761 seq=65 op=Update rec=29038273888267 ev=5: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-429#1 src=13549 seq=10 op=Create rec=58192511893509 ev=0: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-132#0 src=3989 seq=87 op=Update rec=17132624543750 ev=6: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-344#4 src=10132 seq=25 op=Update rec=43516608643075 ev=7: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-041#0 src=1298 seq=82 op=Get rec=5574867550219 ev=4: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-055#1 src=1954 seq=38 op=Complete rec=8392366096390 ev=6: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+- t-367#0 src=11282 seq=22 op=Update rec=48455821033473 ev=10: NpgsqlException: The connection pool has been exhausted, either raise 'Max Pool Size' (currently 200) or 'Timeout' (currently 15 seconds) in your connection string.
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-075 | 37 | 1 | 75.485 | 46.624 | 232 | 0 | 1578 | 1578 | 0 | 94896.127 | 106430.463 | 107479.039 |
+| t-126 | 93 | 1 | 27.815 | 43.54 | 816 | 0 | 1616 | 1616 | 0 | 92798.975 | 105906.175 | 105906.175 |
+| t-136 | 146 | 2 | 40.495 | 97.61 | 450 | 0 | 3509 | 3509 | 0 | 93323.263 | 105906.175 | 107479.039 |
+| t-237 | 74 | 1 | 36.026 | 45.137 | 2944 | 0 | 1649 | 1649 | 0 | 94371.839 | 105906.175 | 106430.463 |
+| t-245 | 43 | 1 | 71.24 | 48.932 | 2232 | 0 | 1682 | 1682 | 0 | 93847.551 | 105906.175 | 106430.463 |
+| t-397 | 200 | 1 | 12.561 | 41.495 | 426 | 0 | 1734 | 1734 | 0 | 92274.687 | 105906.175 | 106430.463 |
+| t-206 | 118 | 2 | 48.629 | 93.697 | 1969 | 0 | 3359 | 3359 | 0 | 93847.551 | 105381.887 | 107479.039 |
+| t-222 | 138 | 3 | 61.993 | 144.282 | 2846 | 0 | 4970 | 4970 | 0 | 93323.263 | 105381.887 | 106430.463 |
+| t-461 | 130 | 2 | 45.032 | 97.963 | 3025 | 0 | 3514 | 3514 | 0 | 93323.263 | 105381.887 | 106430.463 |
+| t-147 | 79 | 4 | 145.536 | 195.43 | 1078 | 0 | 6537 | 6537 | 0 | 93847.551 | 104857.599 | 106954.751 |
+| t-178 | 90 | 1 | 27.367 | 41.476 | 131 | 0 | 1514 | 1514 | 0 | 92274.687 | 104857.599 | 105381.887 |
+| t-263 | 93 | 2 | 59.766 | 94.005 | 374 | 0 | 3311 | 3311 | 0 | 92798.975 | 104857.599 | 106954.751 |
+| t-005 | 47 | 1 | 60.561 | 47.065 | 2385 | 0 | 1602 | 1602 | 0 | 92798.975 | 104333.311 | 105906.175 |
+| t-016 | 132 | 1 | 18.95 | 41.199 | 137 | 0 | 1557 | 1557 | 0 | 89653.247 | 104333.311 | 106430.463 |
+| t-052 | 62 | 1 | 44.036 | 46.205 | 1837 | 0 | 1626 | 1626 | 0 | 91226.111 | 104333.311 | 104333.311 |
+| t-065 | 80 | 5 | 169.666 | 223.962 | 263 | 0 | 7484 | 7484 | 0 | 91750.399 | 104333.311 | 108527.615 |
+| t-468 | 61 | 3 | 127.029 | 127.053 | 1645 | 0 | 4252 | 4252 | 0 | 86507.519 | 104333.311 | 107479.039 |
+| t-483 | 200 | 3 | 41.15 | 138.556 | 2470 | 0 | 4827 | 4827 | 0 | 91750.399 | 104333.311 | 107479.039 |
+| t-496 | 81 | 4 | 145.619 | 197.957 | 278 | 0 | 6696 | 6696 | 0 | 92798.975 | 104333.311 | 106954.751 |
+| t-131 | 140 | 3 | 60.845 | 143.347 | 961 | 0 | 4855 | 4855 | 0 | 91750.399 | 103809.023 | 105906.175 |
+| t-246 | 32 | 2 | 187.722 | 99.182 | 494 | 0 | 3299 | 3299 | 0 | 93847.551 | 103809.023 | 104333.311 |
+| t-264 | 46 | 1 | 60.311 | 46.436 | 3058 | 0 | 1601 | 1601 | 0 | 91226.111 | 103809.023 | 105381.887 |
+| t-325 | 98 | 1 | 26.904 | 43.432 | 3394 | 0 | 1618 | 1618 | 0 | 91750.399 | 103809.023 | 104857.599 |
+| t-348 | 125 | 3 | 63.004 | 132.054 | 1340 | 0 | 4546 | 4546 | 0 | 91226.111 | 103809.023 | 105381.887 |
+| t-103 | 50 | 1 | 48.691 | 40.41 | 1025 | 0 | 1442 | 1442 | 0 | 87556.095 | 103284.735 | 104333.311 |
