@@ -160,12 +160,21 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - Failover drills with each engine's synchronous replication: an SQL Server availability group with
     synchronous commit; MySQL semi-sync `AFTER_SYNC` or Group Replication.
 
-### B17 — Distributed SQL under the dispatcher · idea
+### B17 — Distributed SQL under the dispatcher · **measured: not viable for 24k** (2026-11-21, matrix-26: YugabyteDB runs Octopus unchanged but needs 25–45× Postgres's CPU per event)
 - **From:** dispatcher design §4.1. The dispatchers are active-active, but SQL is single-writer with synchronous
   replicas.
 - **Why:** a Raft-based, Postgres-compatible database (YugabyteDB, CockroachDB) makes storage multi-writer as
   well. The dispatcher's large batches suit its higher cost per write.
 - **Test:** the dispatcher backend on it, at 24k, with node-loss and DC-loss drills.
+
+- 2026-11-21, matrix-26 (YugabyteDB 2026.1, one node, RF 1):
+  - All 23 Octopus tests pass unchanged; only the migration retries 40001 (Octopus c3f960b).
+  - 16k offered: 2.2k ev/s on 15 cores by default; 1.7k with the cost-based optimizer off; 3.0k colocated
+    (11.6 cores). Postgres: 16k on 2.5 cores.
+  - Causes: optimizer plans from "empty" statistics, tombstones of deleted events, distributed transactions per
+    write.
+  - **Not explored yet:** RF 3 and node-loss drills (failover time), compaction tuning, pg_hint_plan, bigger
+    batches, CockroachDB.
 
 ### B18 — Octopus: the Rust client keys running deliveries by source · **done** (Octopus `4e596b1`, see matrix-16 R0–R6)
 - **From:** D4 failover drills, 2026-11-20. The .NET client aliased two deliveries of one source, so each such pair
