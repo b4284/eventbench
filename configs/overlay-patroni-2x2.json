@@ -1,11 +1,11 @@
 {
-  "_comment": "The Patroni 2+2 cluster (PATRONI_LAYOUT=2+2): direct multi-host connections that follow the leader; no PgBouncer.",
+  "_comment": "The Patroni 2+2 cluster (PATRONI_LAYOUT=2+2): direct multi-host connections that follow the leader; no PgBouncer. No command timeout: a cancelled commit waiting for the synchronous standby is acknowledged without replication.",
   "Broker": {
-    "ConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442,127.0.0.1:5443,127.0.0.1:5444;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=200;Timeout=15;Command Timeout=60;Keepalive=5",
+    "ConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442,127.0.0.1:5443,127.0.0.1:5444;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=200;Timeout=15;Command Timeout=0;Keepalive=5",
     "AdminConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442,127.0.0.1:5443,127.0.0.1:5444;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=10;Timeout=15"
   },
   "Store": {
-    "ConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442,127.0.0.1:5443,127.0.0.1:5444;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=200;Timeout=15;Command Timeout=60;Keepalive=5",
-    "AdminConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442,127.0.0.1:5443,127.0.0.1:5444;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=10;Timeout=15;Command Timeout=600"
+    "ConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442,127.0.0.1:5443,127.0.0.1:5444;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=200;Timeout=15;Command Timeout=0;Keepalive=5",
+    "AdminConnectionString": "Host=127.0.0.1:5441,127.0.0.1:5442,127.0.0.1:5443,127.0.0.1:5444;Database=bench;Username=bench;Password=bench;Target Session Attributes=read-write;Host Recheck Seconds=1;Maximum Pool Size=10;Timeout=15;Command Timeout=00"
   }
 }

@@ -26,7 +26,7 @@ HOSTS=$(for e in $ETCD; do IFS=: read -r n c p <<<"$e"; printf '127.0.0.1:%s,' "
 for e in $ETCD; do
   IFS=: read -r n c p <<<"$e"
   podman container exists eb-$n && continue
-  podman run -d --name eb-$n --network host quay.io/coreos/etcd:v3.5.9 /usr/local/bin/etcd --name $n \
+  podman run -d --name eb-$n --network host quay.io/coreos/etcd:${ETCD_IMAGE_TAG:-v3.5.17} /usr/local/bin/etcd --name $n \
     --data-dir /tmp/etcd --listen-client-urls http://127.0.0.1:$c --advertise-client-urls http://127.0.0.1:$c \
     --listen-peer-urls http://127.0.0.1:$p --initial-advertise-peer-urls http://127.0.0.1:$p \
     --initial-cluster "$CLUSTER" --initial-cluster-state new --initial-cluster-token eb-$LAYOUT >/dev/null

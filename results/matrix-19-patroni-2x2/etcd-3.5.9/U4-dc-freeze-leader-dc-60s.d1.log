@@ -1,0 +1,176 @@
+[2m2026-11-21T02:25:25.702232Z[0m [32m INFO[0m [2mtokio_postgres::connection[0m[2m:[0m NOTICE: function octopus.publish(text[],text[],pg_catalog.int8[],bytea[]) does not exist, skipping
+[2m2026-11-21T02:25:25.702268Z[0m [32m INFO[0m [2mtokio_postgres::connection[0m[2m:[0m NOTICE: function octopus.publish(text[],text[],pg_catalog.int8[],bytea[],pg_catalog.int8[]) does not exist, skipping
+[2m2026-11-21T02:25:25.703034Z[0m [32m INFO[0m [2mtokio_postgres::connection[0m[2m:[0m NOTICE: function octopus.commit_many(text[],pg_catalog.int8[],bytea[],text) does not exist, skipping
+[2m2026-11-21T02:25:25.703283Z[0m [32m INFO[0m [2mtokio_postgres::connection[0m[2m:[0m NOTICE: function octopus.remove_next(text[],pg_catalog.int8[]) does not exist, skipping
+[2m2026-11-21T02:25:25.703445Z[0m [32m INFO[0m [2mtokio_postgres::connection[0m[2m:[0m NOTICE: function octopus.advance(text[],pg_catalog.int8[]) does not exist, skipping
+[2m2026-11-21T02:25:25.716305Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m dispatcher running [3mmember[0m[2m=[0md1 [3mns[0m[2m=[0moctopus
+[2m2026-11-21T02:25:25.717037Z[0m [32m INFO[0m [2moctopus_fabric[0m[2m:[0m fabric connected [3mclient[0m[2m=[0moctopusd-octopus-d1
+[2m2026-11-21T02:25:25.720520Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m membership changed [3mmembers[0m[2m=[0m["d1"]
+[2m2026-11-21T02:25:26.731287Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m membership changed [3mmembers[0m[2m=[0m["d1", "d2", "d3"]
+[2m2026-11-21T02:25:28.246030Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m claimed groups [3mn[0m[2m=[0m150 [3mtotal[0m[2m=[0m150
+[2m2026-11-21T02:25:30.717169Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m650 [3mready[0m[2m=[0m2679 [3mpublished[0m[2m=[0m9721 [3mapplied[0m[2m=[0m2498 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m1122
+[2m2026-11-21T02:25:35.768211Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m600 [3mready[0m[2m=[0m3212 [3mpublished[0m[2m=[0m24694 [3mapplied[0m[2m=[0m9390 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m5199
+[2m2026-11-21T02:25:40.771911Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m592 [3mready[0m[2m=[0m3438 [3mpublished[0m[2m=[0m45759 [3mapplied[0m[2m=[0m18605 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m10195
+[2m2026-11-21T02:25:45.927933Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m604 [3mready[0m[2m=[0m3572 [3mpublished[0m[2m=[0m63100 [3mapplied[0m[2m=[0m25707 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m16202
+[2m2026-11-21T02:25:50.929987Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m653 [3mready[0m[2m=[0m3715 [3mpublished[0m[2m=[0m83031 [3mapplied[0m[2m=[0m32800 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m22379
+[2m2026-11-21T02:25:56.240473Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m607 [3mready[0m[2m=[0m3734 [3mpublished[0m[2m=[0m105129 [3mapplied[0m[2m=[0m40390 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m28431
+[2m2026-11-21T02:26:01.241029Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m649 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m109758 [3mapplied[0m[2m=[0m42009 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m31923
+[2m2026-11-21T02:27:26.693387Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m0 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m109758 [3mapplied[0m[2m=[0m42009 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m649 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m31924
+[2m2026-11-21T02:27:28.266728Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: ERROR: deadlock detected (40P01)
+[2m2026-11-21T02:27:28.760758Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg354
+[2m2026-11-21T02:27:28.760915Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg322
+[2m2026-11-21T02:27:28.760935Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg190
+[2m2026-11-21T02:27:28.761184Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg237
+[2m2026-11-21T02:27:28.761217Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg238
+[2m2026-11-21T02:27:28.761238Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg114
+[2m2026-11-21T02:27:28.761248Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg384
+[2m2026-11-21T02:27:28.761257Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg318
+[2m2026-11-21T02:27:28.761352Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg259
+[2m2026-11-21T02:27:28.761428Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg104
+[2m2026-11-21T02:27:28.761673Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg40
+[2m2026-11-21T02:27:28.761693Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg356
+[2m2026-11-21T02:27:28.761730Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg292
+[2m2026-11-21T02:27:28.761821Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg221
+[2m2026-11-21T02:27:28.762107Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg342
+[2m2026-11-21T02:27:28.762143Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg69
+[2m2026-11-21T02:27:28.762153Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg124
+[2m2026-11-21T02:27:28.762341Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg371
+[2m2026-11-21T02:27:28.762361Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg398
+[2m2026-11-21T02:27:28.762402Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg183
+[2m2026-11-21T02:27:28.762414Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg256
+[2m2026-11-21T02:27:28.762787Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg461
+[2m2026-11-21T02:27:28.762835Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg51
+[2m2026-11-21T02:27:28.762862Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg250
+[2m2026-11-21T02:27:28.762876Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg199
+[2m2026-11-21T02:27:28.762889Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg241
+[2m2026-11-21T02:27:28.762895Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg288
+[2m2026-11-21T02:27:28.762902Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg266
+[2m2026-11-21T02:27:28.762970Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg152
+[2m2026-11-21T02:27:28.763118Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg391
+[2m2026-11-21T02:27:28.763164Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg229
+[2m2026-11-21T02:27:28.763242Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg273
+[2m2026-11-21T02:27:28.763253Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg156
+[2m2026-11-21T02:27:28.763337Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg369
+[2m2026-11-21T02:27:28.763423Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg3
+[2m2026-11-21T02:27:28.764042Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg344
+[2m2026-11-21T02:27:28.764061Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg410
+[2m2026-11-21T02:27:28.764132Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg169
+[2m2026-11-21T02:27:28.764169Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg92
+[2m2026-11-21T02:27:28.764200Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg123
+[2m2026-11-21T02:27:28.764214Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg179
+[2m2026-11-21T02:27:28.764280Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg84
+[2m2026-11-21T02:27:28.764289Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg345
+[2m2026-11-21T02:27:28.764310Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg209
+[2m2026-11-21T02:27:28.764536Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg397
+[2m2026-11-21T02:27:28.764576Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg171
+[2m2026-11-21T02:27:28.764587Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg142
+[2m2026-11-21T02:27:28.764638Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg270
+[2m2026-11-21T02:27:28.764731Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg361
+[2m2026-11-21T02:27:28.764828Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg304
+[2m2026-11-21T02:27:28.764848Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg97
+[2m2026-11-21T02:27:28.764859Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg149
+[2m2026-11-21T02:27:28.764938Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg175
+[2m2026-11-21T02:27:28.764960Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg291
+[2m2026-11-21T02:27:28.765083Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg103
+[2m2026-11-21T02:27:28.765093Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg422
+[2m2026-11-21T02:27:28.765276Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg378
+[2m2026-11-21T02:27:28.765380Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg428
+[2m2026-11-21T02:27:28.765398Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg491
+[2m2026-11-21T02:27:28.765409Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg64
+[2m2026-11-21T02:27:28.765420Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg143
+[2m2026-11-21T02:27:28.765426Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg247
+[2m2026-11-21T02:27:28.765434Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg193
+[2m2026-11-21T02:27:28.765886Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg468
+[2m2026-11-21T02:27:28.765893Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg144
+[2m2026-11-21T02:27:28.765921Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg218
+[2m2026-11-21T02:27:28.766015Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg212
+[2m2026-11-21T02:27:28.766496Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg261
+[2m2026-11-21T02:27:28.766544Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg233
+[2m2026-11-21T02:27:28.766556Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg191
+[2m2026-11-21T02:27:28.766591Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg267
+[2m2026-11-21T02:27:28.766676Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg44
+[2m2026-11-21T02:27:28.766689Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg157
+[2m2026-11-21T02:27:28.766695Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg462
+[2m2026-11-21T02:27:28.766748Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg285
+[2m2026-11-21T02:27:28.766752Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg327
+[2m2026-11-21T02:27:28.766849Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg374
+[2m2026-11-21T02:27:28.766877Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg394
+[2m2026-11-21T02:27:28.767711Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg496
+[2m2026-11-21T02:27:28.767738Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg455
+[2m2026-11-21T02:27:28.767761Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg234
+[2m2026-11-21T02:27:28.767766Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg244
+[2m2026-11-21T02:27:28.767771Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg324
+[2m2026-11-21T02:27:28.767821Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg163
+[2m2026-11-21T02:27:28.767827Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg56
+[2m2026-11-21T02:27:28.767949Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg41
+[2m2026-11-21T02:27:28.767958Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg0
+[2m2026-11-21T02:27:28.767980Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg116
+[2m2026-11-21T02:27:28.768219Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg131
+[2m2026-11-21T02:27:28.768235Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg220
+[2m2026-11-21T02:27:28.768270Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg262
+[2m2026-11-21T02:27:28.768310Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg215
+[2m2026-11-21T02:27:28.768314Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg34
+[2m2026-11-21T02:27:28.768319Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg365
+[2m2026-11-21T02:27:28.768328Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg150
+[2m2026-11-21T02:27:28.768335Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg308
+[2m2026-11-21T02:27:28.768403Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg168
+[2m2026-11-21T02:27:28.768430Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg302
+[2m2026-11-21T02:27:28.768452Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg393
+[2m2026-11-21T02:27:28.768572Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg61
+[2m2026-11-21T02:27:28.768583Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg278
+[2m2026-11-21T02:27:28.768696Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg5
+[2m2026-11-21T02:27:28.768753Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg23
+[2m2026-11-21T02:27:28.768843Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg264
+[2m2026-11-21T02:27:28.769213Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg465
+[2m2026-11-21T02:27:28.769221Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg87
+[2m2026-11-21T02:27:28.769345Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg1
+[2m2026-11-21T02:27:28.769352Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg176
+[2m2026-11-21T02:27:28.769374Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg201
+[2m2026-11-21T02:27:28.769460Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg409
+[2m2026-11-21T02:27:28.769466Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg492
+[2m2026-11-21T02:27:28.769470Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg101
+[2m2026-11-21T02:27:28.769518Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg427
+[2m2026-11-21T02:27:28.769527Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg173
+[2m2026-11-21T02:27:28.769532Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg12
+[2m2026-11-21T02:27:28.769610Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg122
+[2m2026-11-21T02:27:28.769616Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg375
+[2m2026-11-21T02:27:28.769623Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg426
+[2m2026-11-21T02:27:28.769627Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg440
+[2m2026-11-21T02:27:28.769647Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg243
+[2m2026-11-21T02:27:28.769657Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg444
+[2m2026-11-21T02:27:28.769661Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg60
+[2m2026-11-21T02:27:28.769727Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg372
+[2m2026-11-21T02:27:28.769757Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg127
+[2m2026-11-21T02:27:28.769861Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg16
+[2m2026-11-21T02:27:28.769867Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg321
+[2m2026-11-21T02:27:28.769885Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg30
+[2m2026-11-21T02:27:28.769894Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg387
+[2m2026-11-21T02:27:28.769938Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg287
+[2m2026-11-21T02:27:28.769947Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg430
+[2m2026-11-21T02:27:28.769979Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg360
+[2m2026-11-21T02:27:28.770720Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg383
+[2m2026-11-21T02:27:28.770739Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg39
+[2m2026-11-21T02:27:28.771126Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg126
+[2m2026-11-21T02:27:28.771136Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg437
+[2m2026-11-21T02:27:28.771141Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg484
+[2m2026-11-21T02:27:28.771166Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg204
+[2m2026-11-21T02:27:28.771177Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg476
+[2m2026-11-21T02:27:28.771290Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg268
+[2m2026-11-21T02:27:28.771301Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg478
+[2m2026-11-21T02:27:28.771311Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg85
+[2m2026-11-21T02:27:28.771324Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg96
+[2m2026-11-21T02:27:28.771350Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg54
+[2m2026-11-21T02:27:28.771358Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg13
+[2m2026-11-21T02:27:28.771371Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg418
+[2m2026-11-21T02:27:28.771429Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg479
+[2m2026-11-21T02:27:28.771626Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg458
+[2m2026-11-21T02:27:28.773213Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg334
+[2m2026-11-21T02:27:28.773252Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg482
+[2m2026-11-21T02:27:28.775760Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease lost [3mgroup[0m[2m=[0mg195
+[2m2026-11-21T02:27:28.787427Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m claimed groups [3mn[0m[2m=[0m148 [3mtotal[0m[2m=[0m148
+[2m2026-11-21T02:27:29.810046Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m claimed groups [3mn[0m[2m=[0m2 [3mtotal[0m[2m=[0m150
+[2m2026-11-21T02:27:31.844934Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m251 [3mready[0m[2m=[0m320 [3mpublished[0m[2m=[0m110279 [3mapplied[0m[2m=[0m60705 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m649 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m33227
+[2m2026-11-21T02:27:36.845885Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m182 [3mready[0m[2m=[0m165 [3mpublished[0m[2m=[0m118525 [3mapplied[0m[2m=[0m91318 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m649 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m36048
+[2m2026-11-21T02:27:41.862113Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m5 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m118525 [3mapplied[0m[2m=[0m106781 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m649 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m42872
+[2m2026-11-21T02:27:46.863359Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m118525 [3mapplied[0m[2m=[0m107421 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m649 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m51257
+[2m2026-11-21T02:27:51.865946Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m150 [3mworkers[0m[2m=[0m180 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m118525 [3mapplied[0m[2m=[0m107700 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m649 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m56631

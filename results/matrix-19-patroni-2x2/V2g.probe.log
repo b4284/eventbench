@@ -1,0 +1,65 @@
+=== 11:06:02
+233 | active | IPC:SyncRep | 00:00:00.165646 | 46812 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+99 | active | IPC:SyncRep | 00:00:00.165363 | 45242 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+116 | active | IPC:SyncRep | 00:00:00.165325 | 45320 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+189 | active | IPC:SyncRep | 00:00:00.165319 | 46556 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+153 | active | IPC:SyncRep | 00:00:00.16524 | 45714 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+120 | active | IPC:SyncRep | 00:00:00.16516 | 45356 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+111 | active | IPC:SyncRep | 00:00:00.164983 | 45226 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+4283 | active | IPC:SyncRep | 00:00:00.160735 | 48558 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+4320 | active | IPC:SyncRep | 00:00:00.160713 | 44806 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+4318 | active | IPC:SyncRep | 00:00:00.159297 | 44804 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+4294 | active | IPC:SyncRep | 00:00:00.156432 | 48678 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+4281 | active | IPC:SyncRep | 00:00:00.151734 | 48534 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+4265 | active | IPC:SyncRep | 00:00:00.150186 | 45744 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+4316 | active | IPC:SyncRep | 00:00:00.134283 | 44796 | INSERT INTO octopus.member (member_id, address, heartbeat) VALUES ($1,
+4307 | active | IPC:SyncRep | 00:00:00.131879 | 44702 | INSERT INTO octopus.member (member_id, address, heartbeat) VALUES ($1,
+4319 | active | IPC:SyncRep | 00:00:00.105981 | 44826 | SELECT octopus.advance($1, $2, $3)
+4313 | active | IPC:SyncRep | 00:00:00.099764 | 44750 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+234 | active | IPC:SyncRep | 00:00:00.094897 | 46688 | SELECT eb_commit($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+4340 | active | IPC:SyncRep | 00:00:00.08758 | 44924 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+175 | active | IPC:SyncRep | 00:00:00.023085 | 46254 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+118 | active | IPC:SyncRep | 00:00:00.023081 | 45342 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+203 | active | IPC:SyncRep | 00:00:00.023065 | 46604 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+248 | active | IO:WalWrite | 00:00:00.023028 | 46040 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+276 | active | IPC:SyncRep | 00:00:00.023019 | 46456 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+265 | active | IPC:SyncRep | 00:00:00.022894 | 46536 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+--- blocked
+=== 11:06:19
+93 | active | IPC:SyncRep | -00:00:00.001386 | 45100 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+4287 | active | Client:ClientRead | -00:00:00.001392 | 48624 | SELECT x.grp, x.source, x.epoch, x.seq, x.body, x.attempts, (extract(e
+213 | active | Client:ClientRead | -00:00:00.00144 | 45924 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+4305 | active | Client:ClientRead | -00:00:00.001529 | 44678 | SELECT x.grp, x.source, x.epoch, x.seq, x.body, x.attempts, (extract(e
+4338 | active | -:- | -00:00:00.0023 | 44912 | SELECT x.grp, x.source, x.epoch, x.seq, x.body, x.attempts, (extract(e
+4282 | active | -:- | -00:00:00.002537 | 48546 | SELECT x.grp, x.source, x.epoch, x.seq, x.body, x.attempts, (extract(e
+4312 | active | -:- | -00:00:00.003026 | 44754 | SELECT x.grp, x.source, x.epoch, x.seq, x.body, x.attempts, (extract(e
+--- blocked
+=== 11:06:37
+4301 | active | -:- | -00:00:00.001493 | 44646 | SELECT x.grp, x.source, x.epoch, x.seq, x.body, x.attempts, (extract(e
+4277 | active | -:- | -00:00:00.001506 | 48514 | SELECT x.grp, x.source, x.epoch, x.seq, x.body, x.attempts, (extract(e
+4321 | active | -:- | -00:00:00.00169 | 44832 | SELECT x.grp, x.source, x.epoch, x.seq, x.body, x.attempts, (extract(e
+--- blocked
+=== 11:06:53
+--- blocked
+=== 11:07:09
+--- blocked
+=== 11:07:25
+--- blocked
+=== 11:07:41
+--- blocked
+=== 11:07:57
+--- blocked
+=== 11:08:13
+--- blocked
+=== 11:08:29
+--- blocked
+=== 11:08:45
+--- blocked
+=== 11:09:02
+--- blocked
+=== 11:09:18
+--- blocked
+=== 11:09:34
+--- blocked
+=== 11:09:50
+--- blocked

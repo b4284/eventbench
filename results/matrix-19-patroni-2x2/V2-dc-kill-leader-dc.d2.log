@@ -1,0 +1,1015 @@
+[2m2026-11-21T02:44:17.626835Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m dispatcher running [3mmember[0m[2m=[0md2 [3mns[0m[2m=[0moctopus
+[2m2026-11-21T02:44:17.628688Z[0m [32m INFO[0m [2moctopus_fabric[0m[2m:[0m fabric connected [3mclient[0m[2m=[0moctopusd-octopus-d2
+[2m2026-11-21T02:44:17.630224Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m membership changed [3mmembers[0m[2m=[0m["d1", "d2"]
+[2m2026-11-21T02:44:18.130565Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m membership changed [3mmembers[0m[2m=[0m["d1", "d2", "d3"]
+[2m2026-11-21T02:44:19.146311Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m claimed groups [3mn[0m[2m=[0m183 [3mtotal[0m[2m=[0m183
+[2m2026-11-21T02:44:22.627593Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m770 [3mready[0m[2m=[0m3043 [3mpublished[0m[2m=[0m18089 [3mapplied[0m[2m=[0m7396 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m1092
+[2m2026-11-21T02:44:27.728979Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m678 [3mready[0m[2m=[0m2710 [3mpublished[0m[2m=[0m38602 [3mapplied[0m[2m=[0m22071 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m2507
+[2m2026-11-21T02:44:32.729645Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m718 [3mready[0m[2m=[0m3031 [3mpublished[0m[2m=[0m61678 [3mapplied[0m[2m=[0m36147 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m4622
+[2m2026-11-21T02:44:38.040308Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m518 [3mready[0m[2m=[0m2942 [3mpublished[0m[2m=[0m79485 [3mapplied[0m[2m=[0m50889 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m7583
+[2m2026-11-21T02:44:43.041938Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m721 [3mready[0m[2m=[0m3208 [3mpublished[0m[2m=[0m103975 [3mapplied[0m[2m=[0m65011 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m10730
+[2m2026-11-21T02:44:48.881566Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m698 [3mready[0m[2m=[0m3239 [3mpublished[0m[2m=[0m128990 [3mapplied[0m[2m=[0m79685 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m0 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m0 [3mfetches[0m[2m=[0m14950
+[2m2026-11-21T02:44:50.422573Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.422610Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: connection closed [3mn[0m[2m=[0m410
+[2m2026-11-21T02:44:50.422733Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.423033Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.442437Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.442517Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.442542Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.443609Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.468208Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: error communicating with the server
+[2m2026-11-21T02:44:50.468275Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.468296Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.471234Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: error communicating with the server
+[2m2026-11-21T02:44:50.471310Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.471954Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.477198Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.478074Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.478863Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.479148Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: error communicating with the server
+[2m2026-11-21T02:44:50.479198Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.479223Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.490059Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.490114Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.493977Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: error communicating with the server
+[2m2026-11-21T02:44:50.496205Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.496321Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.498026Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.534589Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.534684Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.535051Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: error communicating with the server
+[2m2026-11-21T02:44:50.535072Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.535085Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.535126Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.541599Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.541894Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.543499Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.543913Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.544371Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.544651Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.559009Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.559087Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.559118Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.559140Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.564996Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.565188Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.565272Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.571720Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.574175Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.577628Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.579836Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: error communicating with the server
+[2m2026-11-21T02:44:50.579921Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.579977Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.580008Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.580059Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.580071Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.580460Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.581239Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.581869Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.582222Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.582401Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.582931Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: error communicating with the server
+[2m2026-11-21T02:44:50.582968Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.582984Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.583020Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.583889Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.584485Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.584798Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.585296Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.585583Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.587614Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.588575Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: error communicating with the server
+[2m2026-11-21T02:44:50.588600Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.588611Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.592697Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.600096Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.603511Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.606163Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection error: connection closed
+[2m2026-11-21T02:44:50.606341Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: connection closed
+[2m2026-11-21T02:44:50.614436Z[0m [33m WARN[0m [2mdeadpool.postgres[0m[2m:[0m Connection could not be recycled: Connection closed
+[2m2026-11-21T02:44:50.618288Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.618369Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.627356Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.652277Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.655233Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.657099Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:50.658360Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.660302Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.660445Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.660982Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.661052Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.662953Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.663123Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.664179Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.667151Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.669815Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.669820Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.670413Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.670810Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.671076Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.671322Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.676062Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.680473Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.682108Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.685354Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.692198Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.698041Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.714379Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.714412Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.714643Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.714726Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.715542Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.719623Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.722345Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.723178Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.725323Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.726253Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.728338Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.728684Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.728833Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.730511Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.730820Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.735261Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.736303Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.740287Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.745892Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.762566Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.769849Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.811804Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.818105Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.822333Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.824454Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.829666Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.833462Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.833877Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.834132Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.834760Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.837784Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.838846Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.842316Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.844375Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.845032Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.845528Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.846456Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.846666Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.847757Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.850437Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.854959Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.855222Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.856240Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.856658Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:50.858960Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.866777Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.869322Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.869507Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.872436Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.878556Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.881689Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.890343Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.893251Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.894422Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.895177Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.898022Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.898162Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.899661Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.899681Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.899937Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.912170Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.913947Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.914110Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.916087Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.917795Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.918341Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.924059Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.930201Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.930985Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.934100Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.938031Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.938132Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.938182Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.943898Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.944267Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.944805Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.945070Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.952311Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.956595Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.956954Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.957590Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.957630Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.958702Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.958940Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.967317Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.974722Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.975229Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.980399Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.982098Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.983426Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:50.999342Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.009784Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.013798Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.018380Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.019426Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.022400Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:51.023755Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.025038Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.027637Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.027793Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.029752Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.041078Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.041197Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.041988Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.042989Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.044607Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.053981Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.058442Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.066814Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.077058Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.077080Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.077338Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.077933Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.078048Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.078121Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.078134Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.078179Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.078210Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.078464Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.079325Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.079715Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.079940Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.080054Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error communicating with the server
+[2m2026-11-21T02:44:51.086945Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.091188Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.096135Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.097199Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.123001Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.124191Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.124282Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.130260Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.130595Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.132223Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.132712Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.134967Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.136040Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.136703Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.142724Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.147368Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.147579Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.149047Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.159877Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.168278Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:51.168609Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.169061Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.171017Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.172897Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.179009Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.179146Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.179218Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.179256Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.180768Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.181212Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.190122Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.190857Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.191052Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.191669Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.192092Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.195274Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.195418Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.195630Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.195762Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.195780Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.196812Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.199294Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.205476Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.214927Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.218631Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.228673Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.228795Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.229329Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.229611Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.229828Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.229971Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.230497Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.230536Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.231584Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.231648Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.231869Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.236881Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.238065Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.243202Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.249124Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.249852Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.249853Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.250702Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.254202Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.258127Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.262707Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.264430Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.265188Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.265270Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.266424Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.270175Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.270225Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.270729Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.270773Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.274836Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.280628Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.281560Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.282011Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.286344Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.288239Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.289271Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.289844Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.291573Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.292678Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.293040Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.293620Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:51.295321Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.295376Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.297258Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.297551Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.303604Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.305621Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.306906Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.307711Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.308214Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.312325Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.314419Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.315648Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.317076Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.317299Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.325566Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.328274Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.339977Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.342490Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.342603Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.342644Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.343780Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.343843Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.344146Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.351995Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.352123Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.376700Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.377573Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.380040Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.380245Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.380733Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.380964Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.380958Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.381154Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.381293Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.382563Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.385821Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.385963Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.386042Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.391002Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.404492Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.404544Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.409921Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.413082Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.414707Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.415533Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.419649Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.419655Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.421857Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.423671Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.424608Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.427683Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.431617Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:51.434950Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.441527Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.441581Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.442982Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.442999Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.450246Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.450523Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.450911Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.451057Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.452766Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.459274Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.464594Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.465396Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.469803Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.470592Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.474326Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.478304Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.478536Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.480993Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.483029Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.486902Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.488557Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.491630Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.505033Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.505349Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.505825Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.511120Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.516766Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.518142Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.519407Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.523201Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.523333Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.523919Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.528008Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.529006Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.529171Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.529550Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.529855Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.537654Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.541074Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.548478Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.549675Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.550253Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.552576Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.556221Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.558398Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.559714Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.560733Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:51.561995Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.568562Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.582145Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.585550Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.585556Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.585816Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.587291Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.593791Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.594017Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.595826Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.597739Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.598523Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.599647Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.602269Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.610257Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.612677Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.612807Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.613654Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.614057Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.619147Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.623851Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.628212Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.637399Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.640059Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.652115Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.652841Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.655550Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.659583Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.660185Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.661309Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.664143Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.667384Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.676218Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.679013Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.679733Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.682588Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.683756Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.689594Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.691244Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.692555Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.698859Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.699076Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.700720Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.704244Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.707618Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.709466Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.710122Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.713062Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.714188Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.714787Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:51.718613Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.719226Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.723182Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.728386Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.728388Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.730083Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.730990Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.731533Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.732053Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.733224Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.737580Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.739265Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.744855Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.749936Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.750686Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.750867Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.753585Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.754980Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.759896Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.760712Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.761270Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.761952Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.765504Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.773651Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.774484Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.781172Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.782289Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.785076Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.787235Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.790235Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.792204Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.793646Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.799849Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.801815Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.802032Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.811670Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.813073Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.813437Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.814271Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.818091Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.824269Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.825187Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.832192Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.838092Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.839665Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.841340Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.841855Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.841930Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.844672Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.845540Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.845593Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.846833Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.847280Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.850269Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:51.852520Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.857935Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.863190Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.865573Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.867857Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.869430Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.870179Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.871025Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.871443Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.874841Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.874970Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.876494Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.878014Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.882104Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.883120Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.888740Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.891620Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.891680Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.895043Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.895226Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.895368Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.895592Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.895935Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.902416Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.906642Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.907318Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.914704Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.915058Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.915278Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.915655Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.918600Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.920527Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.922125Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.923180Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.924422Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.930822Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.932071Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.933233Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.938577Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.939799Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.940710Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.940781Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.941686Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.945072Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.948030Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.954889Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.959323Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.959311Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.959426Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.959455Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.961861Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.961961Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.962622Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.963563Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.963612Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.964781Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.964942Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.966918Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.968526Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.968730Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.972118Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:51.974271Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.974570Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.977690Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.978537Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.984603Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.992419Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.996024Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:51.997541Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.004784Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.004961Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.005534Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.009771Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.011860Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.013795Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.014271Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.015234Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.016529Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.019085Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.019614Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.023209Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.025003Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.025335Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.026005Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.026741Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.027020Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.036755Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.038716Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.040983Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.042116Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.044857Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.045364Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.045411Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.045436Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.049245Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.049977Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.050293Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.051869Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.054873Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.058609Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.061690Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.062712Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.065275Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.065290Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.066118Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.066118Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.067183Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.068455Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.069843Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.072138Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.073390Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.075394Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.077987Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.078017Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.080065Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.081209Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.081814Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.082202Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.083578Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.084596Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.088951Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.089051Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.091213Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.091868Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.092388Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.097114Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:52.097664Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.098481Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.098725Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.099651Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.099936Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.100890Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.104289Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.105395Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.108397Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.111670Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.112476Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.115772Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.116009Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.116299Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.117352Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.118456Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.119752Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.120291Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.127669Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.132704Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.132838Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.136555Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.137282Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.143834Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.143987Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.145601Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.145712Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.146169Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.147011Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.147204Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.147255Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.147783Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.153226Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.153224Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.154160Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.154678Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.159363Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.165391Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.166379Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.167280Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.170049Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.173265Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.173292Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.173710Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.174356Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.176506Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.177156Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.178238Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.178392Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.179628Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.180118Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.188424Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.193472Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.195947Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.200126Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.200786Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.200952Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.207033Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.207435Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.208117Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.209006Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.209188Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.211079Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.211813Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.216510Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.216800Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.217076Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.225044Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.226750Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.233979Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.234616Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.235543Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.235985Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.236853Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:52.239876Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.240517Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.246321Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.249745Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.250355Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.253249Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.255381Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.261637Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.262284Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.269392Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.269417Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.272823Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.276999Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.279231Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.281717Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.281870Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.282014Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.285603Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.286132Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.290711Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.292014Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.294662Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.295136Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.312022Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.312083Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.313875Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.317603Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.319983Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.320708Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.321140Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.321325Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.321349Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.326593Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.326719Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.327559Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.331511Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.331757Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.337427Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.338570Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.340286Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.348117Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.349150Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m key read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.352002Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.353960Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.361023Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.364701Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.365118Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.365970Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.366121Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:52.366846Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:53.882203Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m670 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m133640 [3mapplied[0m[2m=[0m81564 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m597 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m102 [3mfetches[0m[2m=[0m16187
+[2m2026-11-21T02:44:54.368199Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.368215Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.374102Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.374194Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.374213Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.375805Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.376125Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.381521Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m head read failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.385022Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:54.385233Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.391497Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.391650Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.391659Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.391709Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.391756Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.391783Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.396142Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.428400Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.439607Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.460792Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.461978Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.467383Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.473064Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.483569Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.499869Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.499915Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.505500Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.511718Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.520373Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.533631Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.561322Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:54.665885Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.378530Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.380124Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.386218Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.387629Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.390606Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.394206Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.406760Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.407106Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.409103Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.409128Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.410413Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.410445Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.410486Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.410517Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:56.494686Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:44:58.014856Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.042823Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.050012Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.068187Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.069533Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.076958Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.083218Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.085452Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.096144Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.100328Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.105722Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.110917Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.116768Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.123029Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.127023Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.136568Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.387421Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.387428Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.392772Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.393157Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.396561Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.400148Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.416506Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.417721Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.420349Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.421351Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.421568Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.421580Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.422343Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:44:58.602755Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:45:00.021825Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.396064Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.398654Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.398699Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.402913Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.405308Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.427019Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.429342Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.430956Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.431262Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.710914Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:45:00.889616Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m gap check failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:00.889660Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m627 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m133640 [3mapplied[0m[2m=[0m81564 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m637 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m102 [3mfetches[0m[2m=[0m16187
+[2m2026-11-21T02:45:02.044918Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.053785Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.061193Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.073798Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.083770Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.086879Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.092336Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.103182Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.104369Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.107614Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.115788Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.120942Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.122178Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.124113Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.131298Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.135784Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.404372Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.405589Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.405618Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.408215Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.411403Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.433546Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.436114Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.437437Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:02.817393Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:45:04.051525Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:04.070829Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:04.412847Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:04.413986Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:04.414020Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:04.414266Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:04.417264Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:04.440010Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:04.442114Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:04.443465Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:04.924265Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:45:05.890380Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m597 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m133640 [3mapplied[0m[2m=[0m81564 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m650 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m102 [3mfetches[0m[2m=[0m16187
+[2m2026-11-21T02:45:06.047679Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.052996Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.066835Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.080427Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.085931Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.089406Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.094545Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.097832Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.109186Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.118097Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.118258Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.121206Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.125658Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.130788Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.133974Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.138126Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.422000Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.422105Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.422132Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.422163Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.424780Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.445999Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:06.449687Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:07.031849Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:45:08.054902Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:08.060423Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:08.073503Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:08.087219Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:08.430168Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:08.430182Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:08.430218Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:08.430224Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:08.431728Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:08.451826Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:08.458130Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:09.139679Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:45:10.049221Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.053486Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.072958Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.077401Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.091151Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.093718Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.101539Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.101560Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.109645Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.119179Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.121331Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.125583Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.131248Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.134388Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.134401Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.138513Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.141964Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.438288Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.439924Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.439949Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.439958Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.440012Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.457415Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:10.464281Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:11.247793Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m cursor flush failed; will retry [3merror[0m[2m=[0mdatabase error: error connecting to server [3mn[0m[2m=[0m653
+[2m2026-11-21T02:45:12.060789Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.081711Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.086384Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.100254Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.113615Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m publish batch failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.449142Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.449175Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.449144Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.449217Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m lease tick failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.450779Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.462002Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m membership changed [3mmembers[0m[2m=[0m["d2"]
+[2m2026-11-21T02:45:12.465694Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.470831Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m recording a failure failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.481071Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m claimed groups [3mn[0m[2m=[0m317 [3mtotal[0m[2m=[0m500
+[2m2026-11-21T02:45:12.898164Z[0m [33m WARN[0m [2moctopusd[0m[2m:[0m gap check failed [3merror[0m[2m=[0mdatabase error: error connecting to server
+[2m2026-11-21T02:45:12.898228Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m500 [3mworkers[0m[2m=[0m601 [3minflight[0m[2m=[0m1488 [3mready[0m[2m=[0m651 [3mpublished[0m[2m=[0m135451 [3mapplied[0m[2m=[0m83041 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m877 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m16230
+[2m2026-11-21T02:45:12.989450Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m membership changed [3mmembers[0m[2m=[0m["d1", "d2", "d3"]
+[2m2026-11-21T02:45:15.190583Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m handed over groups [3mn[0m[2m=[0m49
+[2m2026-11-21T02:45:15.507482Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m handed over groups [3mn[0m[2m=[0m212
+[2m2026-11-21T02:45:15.924616Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m handed over groups [3mn[0m[2m=[0m7
+[2m2026-11-21T02:45:16.401689Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m handed over groups [3mn[0m[2m=[0m2
+[2m2026-11-21T02:45:17.899810Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m601 [3minflight[0m[2m=[0m741 [3mready[0m[2m=[0m230 [3mpublished[0m[2m=[0m152379 [3mapplied[0m[2m=[0m96723 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m19112
+[2m2026-11-21T02:45:20.146230Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m handed over groups [3mn[0m[2m=[0m47
+[2m2026-11-21T02:45:23.462335Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m601 [3minflight[0m[2m=[0m425 [3mready[0m[2m=[0m105 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m128004 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m22934
+[2m2026-11-21T02:45:28.463176Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m279 [3minflight[0m[2m=[0m208 [3mready[0m[2m=[0m22 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m167990 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m26613
+[2m2026-11-21T02:45:33.500900Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m266 [3minflight[0m[2m=[0m34 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m179908 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m30258
+[2m2026-11-21T02:45:38.501263Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m219 [3minflight[0m[2m=[0m25 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180006 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m30451
+[2m2026-11-21T02:45:43.515703Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m25 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180006 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m30600
+[2m2026-11-21T02:45:48.516798Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180594 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m31747
+[2m2026-11-21T02:45:53.539251Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m31880
+[2m2026-11-21T02:45:58.540395Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m31993
+[2m2026-11-21T02:46:03.547229Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m32101
+[2m2026-11-21T02:46:08.548165Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m32201
+[2m2026-11-21T02:46:13.552602Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m32301
+[2m2026-11-21T02:46:18.553230Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m32396
+[2m2026-11-21T02:46:23.558427Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m32487
+[2m2026-11-21T02:46:28.560056Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m32576
+[2m2026-11-21T02:46:33.564099Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m32666
+[2m2026-11-21T02:46:38.565252Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m32755
+[2m2026-11-21T02:46:43.569152Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m32845
+[2m2026-11-21T02:46:48.570586Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m32934
+[2m2026-11-21T02:46:53.574768Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m33021
+[2m2026-11-21T02:46:58.576091Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m33105
+[2m2026-11-21T02:47:03.579384Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m33188
+[2m2026-11-21T02:47:08.580093Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m33267
+[2m2026-11-21T02:47:13.583629Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m33341
+[2m2026-11-21T02:47:18.585007Z[0m [32m INFO[0m [2moctopusd[0m[2m:[0m stats [3mgroups[0m[2m=[0m183 [3mworkers[0m[2m=[0m217 [3minflight[0m[2m=[0m0 [3mready[0m[2m=[0m0 [3mpublished[0m[2m=[0m169529 [3mapplied[0m[2m=[0m180602 [3mcompleted_by_worker[0m[2m=[0m0 [3mduplicates[0m[2m=[0m0 [3mfailures[0m[2m=[0m980 [3mtimeouts[0m[2m=[0m0 [3mstale_failures[0m[2m=[0m0 [3mgaps_open[0m[2m=[0m0 [3mpublish_conflicts[0m[2m=[0m0 [3mpublish_stale_epoch[0m[2m=[0m0 [3mpublish_late[0m[2m=[0m0 [3mskips[0m[2m=[0m0 [3mcommit_batches[0m[2m=[0m103 [3mfetches[0m[2m=[0m33415

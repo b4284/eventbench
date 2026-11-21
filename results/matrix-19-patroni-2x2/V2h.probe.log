@@ -1,0 +1,23 @@
+=== 11:11:58
+256 | active | IPC:SyncRep | 00:00:00.036332 | 44788 | SELECT eb_commit($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+190 | active | -:- | -00:00:00.003498 | 44766 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+177 | active | IO:WalSync | -00:00:00.003746 | 44636 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+151 | active | LWLock:WALWrite | -00:00:00.003848 | 48646 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+3090 | active | LWLock:WALWrite | -00:00:00.005299 | 47564 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7,
+--- blocked
+=== 11:12:24
+--- blocked
+=== 11:12:47
+--- blocked
+=== 11:13:17
+--- blocked
+=== 11:13:46
+--- blocked
+=== 11:14:15
+--- blocked
+=== 11:14:44
+--- blocked
+=== 11:15:13
+--- blocked
+=== 11:15:42
+--- blocked
