@@ -326,6 +326,17 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   renewal and claims update several rows without a common order; two dispatchers can deadlock. Harmless (the
   next tick retries) but it costs a lease round and log noise: lock rows in group order.
 
+### B30 — A network load balancer in place of HAProxy · open (from the user, 2026-11-21: probably the default in production)
+- Any L4 load balancer works if its health check is HTTP GET /primary on Patroni's port 8008 and traffic goes to
+  TCP 5432 on all nodes. It differs from the lab's HAProxy in three ways:
+  - detection: cloud health checks run every 5 s and need 2+ failures, against 1 s and 2 here;
+  - established sessions to a dead leader: HAProxy cuts them (`shutdown-sessions`), while many NLBs keep the flow
+    until an idle timeout (AWS: 350 s) unless "terminate connections on unhealthy targets" is on;
+  - targets in both DCs.
+- Test: HAProxy set up like an NLB (inter 5 s, fall 2, no shutdown-sessions) in the 2+2 lab; leader-DC kill drill
+  x5. Measure the outage and whether clients recover on TCP keepalive and operation timeouts alone. Then the same
+  with session cutting on, which is the setting to require from the NLB.
+
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
 - **Why:** one logical database with shards by group, if one primary is not enough.

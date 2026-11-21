@@ -11,7 +11,7 @@
 set -euo pipefail
 
 NAME=${MSSQL_CONTAINER:-eb-mssql}
-IMAGE=${MSSQL_IMAGE:-mcr.microsoft.com/mssql/server:2025-latest}
+IMAGE=${MSSQL_IMAGE:-mcr.microsoft.com/mssql/server:2025-CU11-ubuntu-24.04}
 PORT=${MSSQL_PORT:-1433}
 PASSWORD=${MSSQL_SA_PASSWORD:-EventBench#2026}
 MEMORY_MB=${MSSQL_MEMORY_MB:-4096}
