@@ -20,9 +20,9 @@ Sampled waits: WALWrite and WalSync behind publish, next to CPU. About 1 ms more
 | 24k | 24.5k / 23.2k | 23.6k / 23.6k (T24-nats) |
 | 28k | 26.3k / 23.3k | 25.8k / 24.7k (T28-nats); 22.8k / 21.1k (P28-nats, the same setup) |
 
-Postgres ~9.7 cores, laptop 81% either way. Durable commits cost at most a few percent at the ceiling, inside the
-run-to-run noise (±10% there). Group commit absorbs the fsyncs: many sessions commit per WAL flush.
+Postgres ~9.7 cores, laptop 81% either way. Against the best-effort repeats (matrix-32 V28: NATS 24.3k ±0.4k
+applied at 28k), durable commits cost ~4% at the ceiling (23.3k), and ~2% at 24k. Group commit absorbs the fsyncs: many sessions commit per WAL flush.
 
-**Verdict:** local durability is affordable for Octopus: ~1 ms per publish, throughput unchanged within noise. The
+**Verdict:** local durability is affordable for Octopus: ~1 ms per publish, a few percent at the ceiling. The
 remaining cost of production durability is the synchronous standby (`remote_write`, measured on the Patroni pair,
 matrix-18/19).

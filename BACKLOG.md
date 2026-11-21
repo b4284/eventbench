@@ -144,14 +144,14 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - Also measure standby catch-up after an outage: in Q2, a standby that started 11 GB behind dragged the
     primary to 10.8k.
 
-### B12 — Local durability with a synchronous standby · **local part measured: ~1 ms per publish, throughput within noise** (2026-11-22, matrix-34); with the sync standby together open
+### B12 — Local durability with a synchronous standby · **local part measured: ~1 ms per publish, ~4% at the ceiling** (2026-11-22, matrix-34); with the sync standby together open
 - **From:** the best-effort comparison rule (`synchronous_commit=off` locally).
 - **Why:** production would likely run `synchronous_commit=on` locally plus the sync standby. The cost at 24k
   with batched commits is unknown.
 - **Test:** rerun pgqueue Q3 with local fsync on.
 - 2026-11-22, matrix-34 (Octopus): `synchronous_commit=on` locally. Octopus alone at 16k: p50 8.5 vs 7.1 ms, p99 and
-  CPU unchanged. At the ceiling (Octopus + store, NATS, 2 shards): 23.2–23.3k applied vs 23.6–24.7k best effort, inside
-  the ±10% noise there.
+  CPU unchanged. At the ceiling (Octopus + store, NATS, 2 shards): 23.3k applied at 28k vs 24.3k ±0.4k best effort
+  (matrix-32 V28 repeats): ~4%.
   - **Not explored yet:** local fsync and the synchronous standby together, on the Patroni pair, at the ceiling.
 
 ### B16 — The dispatcher queue on SQL Server and MySQL · **both ported and measured** (2026-11-22: SQL Server matrix-27, correct, ~4–5× Postgres CPU per event, not steady at 16k; MySQL matrix-31, correct after four fixes, ~2.2× Postgres CPU, keeps 16k with e2e p50 0.3–0.6 s); failover drills open
@@ -393,7 +393,8 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   dispatchers 1.19 cores (1.33); the NATS server 0.84 cores (Mosquitto 0.53), but on several threads, where
   Mosquitto's one thread was the first part to run out at the ceiling (matrix-29).
 - matrix-32 ceiling, laptop + m4mini: applied 23.6k / 24.7k / 25.5k at 24k / 28k / 32k offered (Mosquitto 22.0k /
-  23.3k / 24.6k); the laptop shard's latency halves. The laptop's CPU (82%, Postgres 10 cores) is the limit again.
+  23.3k / 24.6k); the laptop shard's latency halves. Repeats at 28k (4 interleaved pairs): 24.3k ±0.4k vs 23.2k ±0.3k,
+  NATS ahead in every pair (+4.7%). The laptop's CPU (82%, Postgres 10 cores) is the limit again.
   - **Not explored yet:** NATS clustering (3 nodes) for HA; JetStream KV for the announcements instead of the 5 s
     re-announcement; NATS on its own machine (needs a third healthy Mac link: m1mini is at 100 Mbit, matrix-32).
 
