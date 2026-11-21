@@ -22,9 +22,9 @@ bootstrap:
         work_mem: 16MB
         synchronous_commit: remote_write
         wal_level: replica
-        wal_compression: lz4
+        wal_compression: zstd
         wal_log_hints: "on"
-        max_wal_size: 4GB
+        max_wal_size: 12GB  # 4GB: a checkpoint every ~15 s at 12.9k ev/s, WAL 12 KiB/event (matrix-23)
         wal_keep_size: 2GB
         checkpoint_timeout: 15min
         random_page_cost: 1.1
