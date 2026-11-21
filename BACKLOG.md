@@ -235,6 +235,13 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   already say what is next; cheaper key lookups.
 
 ### B26 — Benchmark: no replica during performance runs; repeat runs for variance · open
+- 2026-11-21 afternoon: the lab host's effective speed dropped ~25% over the day (Postgres needs ~25% more CPU time
+  per event for the same statements; this morning's exact code, Octopus b78df62 + benchmark a14add94b, now gives
+  1.4-3.2 s median at 16k instead of 36 ms). Not code, not the database (fresh tables, catalogs fine, WAL reset,
+  restart), not other load (Windows idle). 16k sits at the knee, so -25% capacity explodes latency. Likely Windows
+  power/scheduling of the WSL VM (heat soak; "Balanced" plan moving it to efficiency cores while the user is
+  away). Before comparing configurations: Windows "Best performance", plugged in, a fresh baseline in the same
+  session, and A/B runs interleaved.
 - A running async standby on the same host raised e2e p50 at 16k from ~33 ms to 150-530 ms (WAL replay competes
   for the same cores). Performance runs must check that no standby is running. Two identical 16k runs gave
   55k and 20k blocking violations: compare configurations with 2-3 repeats, not single runs.

@@ -1,0 +1,12 @@
+cpu:-|2 Client:ClientRead|1 
+cpu:-|12 LWLock:WALInsert|10 LWLock:BufferContent|7 Client:ClientRead|6 Lock:extend|4 LWLock:ProcArray|1 
+Client:ClientRead|2 cpu:-|2 
+cpu:-|11 LWLock:WALInsert|9 LWLock:BufferContent|9 LWLock:LockManager|6 Client:ClientRead|5 LWLock:BufferMapping|1 
+cpu:-|5 Client:ClientRead|2 IO:DataFileExtend|1 
+cpu:-|18 IPC:ProcarrayGroupUpdate|5 Lock:extend|4 Client:ClientRead|3 LWLock:XactSLRU|2 IO:DataFileExtend|1 
+cpu:-|5 Client:ClientRead|2 
+cpu:-|7 Client:ClientRead|3 
+cpu:-|15 LWLock:BufferContent|5 Client:ClientRead|2 
+cpu:-|18 Client:ClientRead|4 LWLock:WALInsert|1 
+cpu:-|14 Client:ClientRead|6 
+Client:ClientRead|3 cpu:-|2 
