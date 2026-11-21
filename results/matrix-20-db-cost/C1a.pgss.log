@@ -1,0 +1,14 @@
+ calls  | total_s | mean_ms |                                        q                                         
+--------+---------+---------+----------------------------------------------------------------------------------
+  28259 |   256.7 |   9.086 | SELECT codes, missing FROM octopus.publish($1, $2, $3, $4, $5, $6, $7, $8, $9, $
+  28259 |   234.1 |   8.284 | WITH x AS ( SELECT u.*, src.id AS sid, src.grp AS sgrp, src.epoch AS ce, src.las
+  34429 |   173.9 |   5.051 | SELECT eb_commit_many($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+ 602784 |   137.2 |   0.228 | SELECT s.last_seq, r.version, r.hash, r.status, r.ctx FROM eb_source s LEFT JOIN
+  57634 |    91.5 |   1.587 | SELECT x.grp, x.source, x.epoch, x.seq, x.body, x.attempts, (extract(epoch FROM 
+ 410770 |    43.1 |   0.105 | UPDATE eb_record SET version = p_version, hash = p_hash, status = p_status, ctx 
+    728 |    38.2 |  52.514 | SELECT octopus.advance($1, $2, $3)
+ 602962 |    36.0 |   0.060 | SELECT last_seq FROM eb_source WHERE source_id = p_source FOR UPDATE
+  67064 |    28.6 |   0.427 | INSERT INTO eb_record (record_id, source_id, status, version, hash, created_seq,
+    243 |    23.2 |  95.399 | SELECT eb_commit($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+(10 rows)
+

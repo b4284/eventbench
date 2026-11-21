@@ -222,7 +222,14 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - Report sources whose next event is missing too long; store a body hash and report a reused seq with a different
   body as a conflict; an end-to-end test with out-of-order and lost publishes.
 
-### B25 — Octopus: database cost of head scans and key lookups · open
+### B25 — Octopus: database cost of head scans and key lookups · **partly done** (2026-11-21, Octopus after d7c0832)
+- Done: settle() skips epoch-end and marker work unless needed (partial index on markers); publish skips
+  registration for known sources/groups and the "missing" lookup when it is obviously 0; key re-polling removed
+  earlier. A/B at 16k (matrix-20): cursor writes out of the top statements (were 55-77 ms per call), publish 4.3 ms
+  vs 4.8-12.0, Postgres 8.6 vs 8.8-9.0 cores.
+- Caveat: by the end of the day the lab host ran 3-5x slower than in the morning for the same runs (thermal?),
+  so absolute numbers need re-measuring on a cool or separate machine.
+- Left: fewer fallback head scans (1 s per credited group); the publish statement itself (CTE + insert).
 - R0 (16k, 3 dispatchers), pg_stat_statements over 40 s: fallback head scans 56k calls / 43 s, key lookups
   2.7k calls at 8 ms each / 22 s, publish 2.6 ms per call / 96 s. Fewer fallback scans when hints and "done"
   already say what is next; cheaper key lookups.
