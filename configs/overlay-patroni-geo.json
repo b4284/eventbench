@@ -1,0 +1,11 @@
+{
+  "_comment": "The three-site 2+2 cluster (infra/patroni-geo: DC1 laptop, DC2 m4mini, witness m1mini) through the laptop's HAProxy on 127.0.0.1:6440. No command timeout (a cancelled commit waiting for the synchronous standby is acknowledged without replication).",
+  "Broker": {
+    "ConnectionString": "Host=127.0.0.1;Port=6440;Database=bench;Username=bench;Password=bench;Maximum Pool Size=200;Timeout=15;Command Timeout=0;Keepalive=5",
+    "AdminConnectionString": "Host=127.0.0.1;Port=6440;Database=bench;Username=bench;Password=bench;Maximum Pool Size=10;Timeout=15"
+  },
+  "Store": {
+    "ConnectionString": "Host=127.0.0.1;Port=6440;Database=bench;Username=bench;Password=bench;Maximum Pool Size=200;Timeout=15;Command Timeout=0;Keepalive=5",
+    "AdminConnectionString": "Host=127.0.0.1;Port=6440;Database=bench;Username=bench;Password=bench;Maximum Pool Size=10;Timeout=15;Command Timeout=00"
+  }
+}

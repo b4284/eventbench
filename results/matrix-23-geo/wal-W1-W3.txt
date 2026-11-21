@@ -1,0 +1,15 @@
+W1-async-base: local max_wal_size=4GB wal_compression=lz4
+   applied 737720  steady produced/s  11569.616   applied/s  9937.161 
+   WAL 5.76 GiB = 8.2 KiB/event, full-page images 154077 = 0.21/event
+   e2e mean/p50/p99 ms  9844.135   5689.343   35520.511 
+W2-async-tuned: local max_wal_size=12GB wal_compression=zstd
+   applied 697840  steady produced/s  10562.304   applied/s  7827.19 
+   WAL 7.45 GiB = 11.2 KiB/event, full-page images 560900 = 0.80/event
+   e2e mean/p50/p99 ms  18801.866   12787.711   54558.719 
+W3-sync-tuned: remote_write max_wal_size=12GB wal_compression=zstd
+   applied 726150  steady produced/s  11160.741   applied/s  7560.427 
+   WAL 4.86 GiB = 7.0 KiB/event, full-page images 366 = 0.00/event
+   e2e mean/p50/p99 ms  17179.672   16138.239   43352.063 
+WAL-DONE
+
+[exited with code 0]

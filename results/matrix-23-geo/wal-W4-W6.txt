@@ -1,0 +1,16 @@
+W4-sync-tuned: remote_write max_wal_size=12GB wal_compression=zstd
+   applied 795391  steady produced/s  12384.238   applied/s  8535.606 
+   WAL 5.39 GiB = 7.1 KiB/event (exact, LSN); m4mini received 0.00 GiB = 0.00x the WAL, avg 0 MiB/s over 109s; laptop CPU busy 55%
+   e2e mean/p50/p99 ms  15644.165   14032.895   42303.487 
+W5-async-tuned: local max_wal_size=12GB wal_compression=zstd
+   applied 647328  steady produced/s  9563.545   applied/s  8208.441 
+   WAL 4.42 GiB = 7.2 KiB/event (exact, LSN); m4mini received 0.00 GiB = 0.00x the WAL, avg 0 MiB/s over 91s; laptop CPU busy 54%
+   e2e mean/p50/p99 ms  15931.719   12902.399   40075.263 
+2026-11-21 08:37:03,747 - ERROR - Request to server http://192.168.0.95:2379 failed: ReadTimeoutError("HTTPConnectionPool(host='192.168.0.95', port=2379): Read timed out. (read timeout=3.333256441333409)")
+W6-sync-tuned: remote_write max_wal_size=12GB wal_compression=zstd
+   applied 732732  steady produced/s  11248.467   applied/s  9366.182 
+   WAL 4.96 GiB = 7.1 KiB/event (exact, LSN); m4mini received 0.00 GiB = 0.00x the WAL, avg 0 MiB/s over 97s; laptop CPU busy 57%
+   e2e mean/p50/p99 ms  13106.692   9281.535   40206.335 
+WAL-DONE
+
+[exited with code 0]
