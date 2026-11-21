@@ -313,6 +313,9 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   power/scheduling of the WSL VM (heat soak; "Balanced" plan moving it to efficiency cores while the user is
   away). Before comparing configurations: Windows "Best performance", plugged in, a fresh baseline in the same
   session, and A/B runs interleaved.
+- 2026-11-22, measured spread at the ceiling (matrix-32 V28, 4 interleaved Mosquitto/NATS pairs at 28k, laptop +
+  m4mini): applied ±0.3–0.4k (~1.5%) within a configuration. Disk-based SQL Server is the exception: 4.7k–15.9k over
+  six runs of the same code (matrix-33). Interleaved A/B pairs are the practice since matrix-27.
 - A running async standby on the same host raised e2e p50 at 16k from ~33 ms to 150-530 ms (WAL replay competes
   for the same cores). Performance runs must check that no standby is running. Two identical 16k runs gave
   55k and 20k blocking violations: compare configurations with 2-3 repeats, not single runs.
