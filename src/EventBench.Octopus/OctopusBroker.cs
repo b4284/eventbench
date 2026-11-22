@@ -20,6 +20,9 @@ public sealed class OctopusBrokerOptions
     public int MqttPort { get; set; } = 1883;
     /// <summary>"mqtt" (default) or "nats": the fabric between clients and dispatchers (MqttHost names the NATS server; port 1883 means 4222).</summary>
     public string Transport { get; set; } = "mqtt";
+    /// <summary>ZeroMQ (Transport "zmq"): every dispatcher as id@host:port, comma-separated (infra/octopus/up.sh writes
+    /// the local list to ~/.cache/eventbench/octopus/zmq.peers).</summary>
+    public string? ZmqPeers { get; set; }
     public string Namespace { get; set; } = "octopus";
     /// <summary>Direct connection for setup, backlog and stats (Octopus's own tables).</summary>
     public string AdminConnectionString { get; set; } = "";
@@ -161,7 +164,7 @@ public sealed class OctopusBroker : IBroker, IStatsProvider
              $"{_o.ProducerConnections} producer + {_o.WorkerConnections} worker MQTT connections");
     }
 
-    private OctopusOptions Options(string clientId) => new() { Host = _o.MqttHost, Port = _o.MqttPort, Namespace = _o.Namespace, ClientId = clientId, Transport = _o.Transport };
+    private OctopusOptions Options(string clientId) => new() { Host = _o.MqttHost, Port = _o.MqttPort, Namespace = _o.Namespace, ClientId = clientId, Transport = _o.Transport, ZmqPeers = _o.ZmqPeers };
 
     public IEventPublisher CreatePublisher(int groupId)
     {

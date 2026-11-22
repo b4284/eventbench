@@ -1,0 +1,14 @@
+245 | CPU | SELECT codes, missing FROM octopus.publi
+195 | CPU | SELECT octopus.advance($1, $2, $3)
+75 | Lock:extend | SELECT codes, missing FROM octopus.publi
+37 | CPU | SELECT x.grp, x.source, x.epoch, x.seq, 
+19 | CPU | SELECT count(*) FROM octopus.event e JOI
+12 | IPC:BufferIo | SELECT codes, missing FROM octopus.publi
+9 | CPU | SELECT s.grp, s.source, s.epoch, s.last_
+8 | IO:DataFileExtend | SELECT codes, missing FROM octopus.publi
+8 | CPU | SELECT octopus.purge_applied($1)
+7 | CPU | SELECT x.grp, k.s, x.epoch, x.seq, x.bod
+5 | Client:ClientRead | SELECT codes, missing FROM octopus.publi
+2 | Lock:extend | SELECT octopus.advance($1, $2, $3)
+2 | LWLock:CheckpointerComm | SELECT codes, missing FROM octopus.publi
+2 | LWLock:CheckpointerComm | SELECT octopus.advance($1, $2, $3)

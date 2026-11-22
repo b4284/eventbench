@@ -23,6 +23,14 @@ MQ=${EB_MQTT:-nanomq}
 CTR=eb-$MQ; [[ $MQ == nats ]] && CTR=eb-nats-octopus   # (eb-nats is the JetStream lab's, infra/nats)
 # EB_NATS_PORT: NATS's port (default 4222; the laptop's firewall lets the Macs reach only certain ports, e.g. 6440)
 NATS_PORT=${EB_NATS_PORT:-4222}
+# EB_MQTT=zmq: no broker (ZeroMQ): dispatcher i binds EB_ZMQ_PORT + 2(i-1) (ROUTER) and the next port (PUB); the list is
+# written to $STATE/zmq.peers for the benchmark (--Broker:Transport=zmq --Broker:ZmqPeers=...; EB_ZMQ_HOST: the
+# address clients use, default 127.0.0.1)
+# EB_ZMQ_PORTS: explicit ROUTER ports, one per dispatcher (each also uses the next port), e.g. "2379 5441 8008": the
+# pairs the laptop's firewall lets the Macs reach
+ZMQ_PORT=${EB_ZMQ_PORT:-7101}
+read -r -a ZMQ_PORTS <<<"${EB_ZMQ_PORTS:-}"
+ZMQ_PEERS=$(for i in $(seq 1 "$N"); do printf 'd%s@%s:%s,' "$i" "${EB_ZMQ_HOST:-127.0.0.1}" "${ZMQ_PORTS[$((i - 1))]:-$((ZMQ_PORT + 2 * (i - 1)))}"; done | sed 's/,$//')
 # EB_NATS_NODES=3: a NATS cluster (eb-nats-octopus, -2, -3 on NATS_PORT, +1, +2; routes on NATS_PORT+10000..), created
 # fresh every run; the dispatchers get every node's URL, the benchmark's clients the first and learn the rest
 NATS_NODES=${EB_NATS_NODES:-1}
@@ -42,7 +50,9 @@ if [[ $MQ == nats ]] && { [[ $NATS_NODES -gt 1 ]] || podman container exists eb-
   podman rm -f eb-nats-octopus-2 eb-nats-octopus-3 >/dev/null 2>&1 || true
   podman rm -f eb-nats-octopus >/dev/null 2>&1 || true
 fi
-if [[ "$(podman inspect -f '{{.State.Running}}' "$CTR" 2>/dev/null)" != true ]]; then
+if [[ $MQ == zmq ]]; then
+  echo "$ZMQ_PEERS" > "$STATE/zmq.peers"
+elif [[ "$(podman inspect -f '{{.State.Running}}' "$CTR" 2>/dev/null)" != true ]]; then
   podman rm -f "$CTR" >/dev/null 2>&1 || true
   if [[ $MQ == nats ]]; then
     # events up to tens of MB travel inline (64 MB is NATS's hard limit); slow consumers get time instead of a cut
@@ -158,7 +168,8 @@ for i in $(seq 1 "$N"); do
       OCTOPUS_PG="$(conn_for "$i")" OCTOPUS_PG_POOL="${OCTOPUS_PG_POOL:-32}" \
       OCTOPUS_MYSQL="${OCTOPUS_MYSQL_CONN:-mysql://root:${MYSQL_ROOT_PASSWORD:-bench}@127.0.0.1:3306/octopus}" \
       OCTOPUS_MSSQL="${OCTOPUS_MSSQL_CONN:-server=tcp:127.0.0.1,1433;database=octopus;user=sa;password=$MSSQL_PASSWORD;TrustServerCertificate=true}" \
-      OCTOPUS_TRANSPORT="$([[ $MQ == nats ]] && echo nats || echo mqtt)" OCTOPUS_NATS_URL="$NATS_URLS" \
+      OCTOPUS_TRANSPORT="$(case $MQ in nats|zmq) echo "$MQ" ;; *) echo mqtt ;; esac)" OCTOPUS_NATS_URL="$NATS_URLS" \
+      OCTOPUS_ZMQ_PEERS="$ZMQ_PEERS" \
       ${HOOK_ENV} RUST_LOG="${RUST_LOG:-info}" ${OCTOPUSD_ENV:-} \
       nohup ${OCTOPUSD_PREFIX:-} "$BIN" >"$STATE/d$i.log" 2>&1 &
   echo $! >> "$STATE/pids"
