@@ -7,6 +7,7 @@ items (B*) are in ../BACKLOG.md. Newest first.
 
 | matrix | question | headline |
 |---|---|---|
+| [37](matrix-37-zmq/NOTES.md) | ZeroMQ, no broker (B34) | ceiling 23.5k vs NATS 22.0k vs Mosquitto 21.5k (3 rounds, 3 machines); first every round |
 | [36](matrix-36-nats-ha/NOTES.md) | 3-node NATS cluster, broker-node kills (B31) | node every client used killed: no outage, all correct; tail = 30 s delivery timeout |
 | [35](matrix-35-nlb/NOTES.md) | network load balancer instead of HAProxy (B30) | frozen leader: 83–84 s outage without cutting sessions, 27–30 s with; 5 s checks +~5 s per failover |
 | [34](matrix-34-durable/NOTES.md) | `synchronous_commit=on` (B12) | ~1 ms per publish at 16k; ~4% at the ceiling |
