@@ -422,7 +422,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - **Not explored yet:** natively compiled procedures (no
     OPENJSON there); the split-load run; the source table memory-optimized (needs its UTF-8 names reworked).
 
-### B34 — ZeroMQ as Octopus's transport (brokerless), to lift the ceiling · open (from the user, 2026-11-22)
+### B34 — ZeroMQ as Octopus's transport (brokerless), to lift the ceiling · **built and measured: +6.6% over NATS, +9.5% over Mosquitto at the ceiling** (2026-11-22, matrix-37; from the user, 2026-11-22)
 - No broker: every message one hop, client <-> dispatcher. Removes the broker's CPU and queueing (the first
   ceiling, matrix-29) and the broker as a single point of failure.
 - Mapping:
@@ -443,6 +443,13 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   less latency, no broker to run. Libraries checked: Rust `zeromq` 0.7.0 (pure Rust, tokio, MIT, 2026-10-27),
   .NET NetMQ 4.0.4 (LGPL-3.0). Estimate: ~1,000–1,500 lines across the fabric, octopusd discovery and the .NET client.
   Awaiting the user's call (built only if the latency or the brokerless deployment is wanted).
+- 2026-11-22, the user: "go ahead with ZeroMQ". Built (Octopus 8d0b0d6): fabric binding (zeromq 0.7.0), octopusd
+  `OCTOPUS_TRANSPORT=zmq` + `OCTOPUS_ZMQ_PEERS`, .NET `Transport = "zmq"` (NetMQ 4.0.4.5); benchmark `EB_MQTT=zmq`.
+  matrix-37: local 16k correct, p50 6.7 ms, laptop CPU 34.9% (lowest). Ceiling over three machines, 3 interleaved
+  rounds at 28k: ZeroMQ 23.5k, NATS 22.0k, Mosquitto 21.5k applied (first in every round); Mac shards' round trips
+  shortest. All correct.
+  - **Not explored yet:** dispatcher kill/add drills over ZeroMQ; dispatcher endpoints in member announcements
+    (discovery instead of a configured list).
 
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".

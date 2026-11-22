@@ -1,13 +1,13 @@
 {
-  "_comment": "Benchmark process on another machine (the Mac mini); database, PgBouncer, MQTT and dispatchers on the lab host 192.168.0.217. Container and PgBouncer stats are collected on the lab host instead.",
+  "_comment": "Benchmark process on another machine (the Mac mini); database, PgBouncer, MQTT and dispatchers on the lab host 192.168.31.128. Container and PgBouncer stats are collected on the lab host instead.",
   "Broker": {
-    "MqttHost": "192.168.0.217",
-    "AdminConnectionString": "Host=192.168.0.217;Port=5432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=4;Command Timeout=600",
-    "ConnectionString": "Host=192.168.0.217;Port=6432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=1000;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60"
+    "MqttHost": "192.168.31.128",
+    "AdminConnectionString": "Host=192.168.31.128;Port=5432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=4;Command Timeout=600",
+    "ConnectionString": "Host=192.168.31.128;Port=6432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=1000;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60"
   },
   "Store": {
-    "AdminConnectionString": "Host=192.168.0.217;Port=5432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=10;Command Timeout=600",
-    "ConnectionString": "Host=192.168.0.217;Port=6432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=1000;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60",
+    "AdminConnectionString": "Host=192.168.31.128;Port=5432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=10;Command Timeout=600",
+    "ConnectionString": "Host=192.168.31.128;Port=6432;Database=bench;Username=bench;Password=bench;Maximum Pool Size=1000;No Reset On Close=true;Max Auto Prepare=50;Timeout=30;Command Timeout=60",
     "PgBouncerStatsCommand": ""
   },
   "Metrics": {
