@@ -489,12 +489,18 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 - **Test:** Pacemaker with the mssql resource agent in containers (or ask the SQL Server team how they run AGs: WSFC
   is their home ground); kill the primary, measure until commits resume; check that the other secondaries follow.
 
-### B37 — SQL Server's CPU for Octopus, with the SQL Server team · open
+### B37 — SQL Server's CPU for Octopus, with the SQL Server team · **partly done: −27% (matrix-39)**
 - **From:** matrix-38: ~4x Postgres's CPU for Octopus alone, ~2x for the whole stack.
 - **Where it goes** (SQL Server's statistics): publish ~5 ms CPU per call (unpacking the JSON batch, base64 bodies),
   `advance` 48 ms and `settle` 17 ms per call; the store's commit procedure is cheap per statement.
 - **Ideas:** a cheaper batch format (TVPs instead of JSON/base64), natively compiled procedures, memory-optimized
   tables for the store's cursors and records, the team's own review of indexes and plans.
+- 2026-11-24, matrix-39: publish's bodies as one raw varbinary parameter (Octopus 4eac113, the default now):
+  **−27% SQL Server CPU, −26% dispatchers** (Octopus alone ~2.8x Postgres, was ~4x). The store's set-based group
+  commit with a TVP: correct, ~12% slower than one EXEC per event (kept as `Store:BatchMode=tvp`). Whole stack still
+  ~13.3k on the laptop. Only ~1/4 of SQL Server's CPU shows in `sys.dm_exec_query_stats`; the rest (In-Memory OLTP
+  background work? network? scheduling?) needs a profiler: the SQL Server team's Extended Events / WPA.
+  - **Not explored yet:** natively compiled procedures; memory-optimized store tables; profiling the 3/4.
 
 ### B38 — Gap reports on SQL Server in normal runs · open
 - **From:** matrix-38: SQL Server's publish replies report missing positions below an event (0.9–7.1k per run of

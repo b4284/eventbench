@@ -7,6 +7,7 @@ items (B*) are in ../BACKLOG.md. Newest first.
 
 | matrix | question | headline |
 |---|---|---|
+| [39](matrix-39-mssql-blob/NOTES.md) | SQL Server CPU: publish without base64, set-based store commit (B37) | blob bodies: −27% SQL Server CPU (~2.8x Postgres for Octopus); TVP store commit: no gain; ~3/4 of CPU outside statements |
 | [38](matrix-38-mssql-safety/NOTES.md) | SQL Server In-Memory: data safety and cost vs Postgres (B16, B33) | durable, kill -9 and AG forced failover: nothing lost; 3 replicas + a cluster manager needed; ~4x CPU (Octopus), ~2x (full stack) |
 | [37](matrix-37-zmq/NOTES.md) | ZeroMQ, no broker (B34) | ceiling 23.5k vs NATS 22.0k vs Mosquitto 21.5k (3 rounds, 3 machines); first every round |
 | [36](matrix-36-nats-ha/NOTES.md) | 3-node NATS cluster, broker-node kills (B31) | node every client used killed: no outage, all correct; tail = 30 s delivery timeout |
