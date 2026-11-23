@@ -7,3 +7,7 @@ Xa-full-exec | prod/s 15791.124 | appl/s 13346.257 | p50 13361.151 ms | p99 3460
 Xa-full-tvp | prod/s 15722.839 | appl/s 11788.145 | p50 18825.215 ms | p99 40501.247 ms | mssql 1093.813% | pg 0.743% | disp 1.584 | host 76.477% | fails: none
 Xb-full-exec | prod/s 15360.712 | appl/s 13228.092 | p50 14950.399 ms | p99 35127.295 ms | mssql 1047.749% | pg 0.687% | disp 1.56 | host 74.235% | fails: none
 Xb-full-tvp | prod/s 15602.318 | appl/s 11366.961 | p50 19726.335 ms | p99 40992.767 ms | mssql 1075.762% | pg 0.699% | disp 1.571 | host 74.88% | fails: none
+G1-pipe1 | prod/s 15941.151 | appl/s 15942.496 | p50 15.343 ms | p99 1311.743 ms | mssql 460.118% | pg 0.516% | disp 1.71 | host 46.017% | fails: none
+G4-pipe4 | prod/s 15923.643 | appl/s 15925.059 | p50 15.071 ms | p99 1304.575 ms | mssql 456.937% | pg 0.14% | disp 1.726 | host 46.431% | fails: none
+H1-pipe1-fix | prod/s 15941.906 | appl/s 15943.227 | p50 14.391 ms | p99 1312.767 ms | mssql 472.918% | pg 0.155% | disp 1.737 | host 47.239% | fails: none
+H4-pipe4-fix | prod/s 15941.704 | appl/s 15943.782 | p50 13.743 ms | p99 1308.671 ms | mssql 458.664% | pg 0.151% | disp 1.744 | host 46.48% | fails: none

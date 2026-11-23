@@ -111,6 +111,12 @@ case $phase in
       EXTRA="--Store:BatchMode=exec" run X$r-full-exec mssql durable none db
       EXTRA="--Store:BatchMode=tvp" run X$r-full-tvp mssql durable none db
     done ;;
+  gaps) # B38: are SQL Server's gap reports concurrent publishes of one source? (one in flight per source: expect none)
+    EXTRA="--Workload:SourcePipeline=1" run G1-pipe1 mssql durable none mem
+    run G4-pipe4 mssql durable none mem ;;
+  gapsfix) # B38 after the fix (the hint's cursor re-read in the same statement as the event table)
+    EXTRA="--Workload:SourcePipeline=1" run H1-pipe1-fix mssql durable none mem
+    run H4-pipe4-fix mssql durable none mem ;;
   agcrash) # kill -9 of the AG primary, forced failover to the secondary 2 s later, old primary back 30 s later
     run Ca-ag-mem ag durable ag-kill:30 mem; run Cb-ag-full ag durable ag-kill:30 db ;;
   fullcrash)

@@ -48,3 +48,21 @@ cores, 11 threads) carries the In-Memory OLTP module path, then scheduler thread
 writer (~0.1). Not conclusive without a profiler (no `perf` here): a question for the SQL Server team's tools
 (Extended Events, Windows Performance Analyzer) on a dedicated host. (In matrix-33, disk-based tables used more CPU in
 total, so In-Memory is not a net loss.)
+
+## The gap reports on SQL Server (B38: G, H)
+
+SQL Server's publish replies report positions missing below an event in normal runs (5–7k per ~1M events); Postgres
+never does. The hint does not affect correctness (every run correct); it would make a client's repair do extra work.
+
+| run | SourcePipeline | Octopus | gap reports |
+|---|---:|---|---:|
+| G1 | 1 (one event in flight per source) | as matrix-39 | 7,150 |
+| G4 | 4 | as matrix-39 | 7,188 |
+| H1 | 1 | hint's cursor re-read in the same statement as the event table | 5,075 |
+| H4 | 4 | same | 5,392 |
+
+- **Not concurrent publishes of one source:** with one event in flight per source (G1) the count is the same.
+- **Partly a stale cursor:** publish read the cursor (disk table, its statement's snapshot) before the event table's
+  snapshot (memory-optimized: taken at the INSERT); a cursor move and its cleanup committing in between showed a
+  deleted event below an unmoved cursor. Re-reading the cursor in the hint's own statement (Octopus, kept): −28%.
+- The rest: not found (time-boxed). Postgres computes the hint in one statement with one snapshot.

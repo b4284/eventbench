@@ -502,11 +502,14 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   background work? network? scheduling?) needs a profiler: the SQL Server team's Extended Events / WPA.
   - **Not explored yet:** natively compiled procedures; memory-optimized store tables; profiling the 3/4.
 
-### B38 — Gap reports on SQL Server in normal runs · open
+### B38 — Gap reports on SQL Server in normal runs · **partly explained (matrix-39): −28% with a fix; the rest open**
 - **From:** matrix-38: SQL Server's publish replies report missing positions below an event (0.9–7.1k per run of
   ~1M events); Postgres never does. Correctness held everywhere; likely concurrent publishes of one source's
   neighbours read at a transaction snapshot of the memory-optimized table. Confirm by reading the backend; a client's
   `RepairAsync` leaves positions in flight alone, so the harm would be extra work at most.
+- 2026-11-24, matrix-39: not concurrent publishes (same count with one event in flight per source); partly a stale
+  cursor (read before the In-Memory snapshot): re-reading it in the hint's statement cut the reports 28% (Octopus).
+  The remaining ~5k per run: cause not found.
 
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".
