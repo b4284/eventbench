@@ -4,7 +4,7 @@
 # Every run: 500 groups, 16k sources, ~16k ev/s offered (RateMultiplier 1.24), 3 dispatchers, ZeroMQ, 60 s.
 set -uo pipefail
 cd "$(dirname "$0")/.."
-O=results/matrix-38-mssql-safety
+O=${MATRIX_DIR:-results/matrix-38-mssql-safety}
 mkdir -p "$O"
 export EB_MQTT=zmq
 PW='EventBench#2026'
@@ -45,10 +45,10 @@ run() {
   pgrep -f "/target/release/octopusd$" | xargs -r kill; sleep 2
   unset MSSQL_AG
   if [[ $be == ag ]]; then
-    export OCTOPUS_BACKEND=mssql OCTOPUSD_ENV=OCTOPUS_MSSQL_INMEMORY=1 MSSQL_AG=1 MSSQL_DELAYED_DURABILITY=DISABLED
+    export OCTOPUS_BACKEND=mssql OCTOPUSD_ENV="OCTOPUS_MSSQL_INMEMORY=1 ${OCTOPUSD_EXTRA:-}" MSSQL_AG=1 MSSQL_DELAYED_DURABILITY=DISABLED
     args+=("${AGADMIN[@]}")
   elif [[ $be == mssql ]]; then
-    export OCTOPUS_BACKEND=mssql OCTOPUSD_ENV=OCTOPUS_MSSQL_INMEMORY=1
+    export OCTOPUS_BACKEND=mssql OCTOPUSD_ENV="OCTOPUS_MSSQL_INMEMORY=1 ${OCTOPUSD_EXTRA:-}"
     export MSSQL_DELAYED_DURABILITY=$([[ $dur == durable ]] && echo DISABLED || echo FORCED)
     args+=("${MSADMIN[@]}")
     mssql_db "$MSSQL_DELAYED_DURABILITY"
@@ -100,6 +100,17 @@ case $phase in
   agslots) # worker concurrency sized for the synchronous commit's latency: 4 events per worker in flight
     EXTRA="--Worker:MaxParallelPerWorker=4" run Be-ag-full-par4 ag durable none db
     EXTRA="--Worker:MaxParallelPerWorker=4" run Bf-ag-full-par4 ag durable none db ;;
+  bodies) # matrix-39 (B37): publish's bodies as base64 in the JSON vs one raw varbinary parameter; durable, single node
+    for r in a b; do
+      OCTOPUSD_EXTRA=OCTOPUS_MSSQL_BODIES=json run J$r-json mssql durable none mem
+      OCTOPUSD_EXTRA=OCTOPUS_MSSQL_BODIES=blob run J$r-blob mssql durable none mem
+    done
+    OCTOPUSD_EXTRA=OCTOPUS_MSSQL_BODIES=blob run Sa-full-blob mssql durable none db ;;
+  storetvp) # matrix-39 (B37): the store's group commit as N EXECs in one transaction vs one set-based TVP call
+    for r in a b; do
+      EXTRA="--Store:BatchMode=exec" run X$r-full-exec mssql durable none db
+      EXTRA="--Store:BatchMode=tvp" run X$r-full-tvp mssql durable none db
+    done ;;
   agcrash) # kill -9 of the AG primary, forced failover to the secondary 2 s later, old primary back 30 s later
     run Ca-ag-mem ag durable ag-kill:30 mem; run Cb-ag-full ag durable ag-kill:30 db ;;
   fullcrash)

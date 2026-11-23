@@ -5,6 +5,7 @@ using System.Threading.Channels;
 using EventBench.Core.Abstractions;
 using EventBench.Core.Model;
 using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient.Server;
 using Microsoft.Extensions.Configuration;
 
 namespace EventBench.SqlServer;
@@ -29,6 +30,12 @@ public sealed class SqlServerStoreOptions
     public bool BatchCommits { get; set; } = false;
     public int BatchMaxSize { get; set; } = 32;
     public int BatchExecutors { get; set; } = 16;
+    /// <summary>
+    /// How a group commit runs: "exec" (default) = one EXEC of the per-event procedure per event inside one
+    /// transaction; "tvp" = one set-based procedure call with the batch as a table-valued parameter (matrix-39: correct
+    /// but ~12% less throughput at the same CPU).
+    /// </summary>
+    public string BatchMode { get; set; } = "exec";
 }
 
 /// <summary>
@@ -52,6 +59,7 @@ public sealed class SqlServerStore : IStateStore
     private readonly CancellationTokenSource _cts = new();
     private readonly Dictionary<int, string> _batchSql = new();
     private long _batches, _batchedCommits, _batchFallbacks;
+    private readonly bool _tvp;
 
     public string Name => "sqlserver";
     public IStatsProvider? Stats { get; }
@@ -70,6 +78,7 @@ public sealed class SqlServerStore : IStateStore
                    $"LEFT JOIN {_rec} r ON r.record_id = @r AND r.source_id = s.source_id WHERE s.source_id = @s";
         _commitSql = $"EXEC @rc = {_proc} @source, @seq, @kind, @record, @prev_version, @version, @hash, @status, @ctx, @upload_size, @upload_checksum, @upload_data";
         Stats = new SqlServerStats(_admin, "mssql", log);
+        _tvp = string.Equals(options.BatchMode, "tvp", StringComparison.OrdinalIgnoreCase);
         if (options.BatchCommits)
         {
             _batchQueue = Channel.CreateUnbounded<(CommitRequest, TaskCompletionSource<CommitStatus>)>(new UnboundedChannelOptions { SingleReader = false });
@@ -105,9 +114,27 @@ public sealed class SqlServerStore : IStateStore
             catch (OperationCanceledException) { return; }
             while (items.Count < _o.BatchMaxSize && reader.TryRead(out var it)) items.Add(it);
             if (items.Count == 0) continue;
+            if (_tvp)
+            {
+                // at most one event per source in a set-based batch: a repeat commits on its own, after the batch
+                var seen = new HashSet<int>();
+                var extra = items.Where(x => !seen.Add(x.Req.Event.SourceId)).ToList();
+                if (extra.Count > 0)
+                {
+                    items.RemoveAll(x => extra.Contains(x));
+                    _ = Task.Run(async () =>
+                    {
+                        foreach (var (req, tcs) in extra)
+                        {
+                            try { tcs.TrySetResult(await CommitOneAsync(req, ct)); } catch (Exception ex) { tcs.TrySetException(ex); }
+                        }
+                    }, CancellationToken.None);
+                }
+            }
             try
             {
-                var codes = await CommitManyAsync(items.Select(x => x.Req).ToList(), ct);
+                var codes = _tvp ? await CommitManyTvpAsync(items.Select(x => x.Req).ToList(), ct)
+                                 : await CommitManyAsync(items.Select(x => x.Req).ToList(), ct);
                 Interlocked.Increment(ref _batches);
                 Interlocked.Add(ref _batchedCommits, items.Count);
                 for (int i = 0; i < items.Count; i++) items[i].Tcs.TrySetResult(ToStatus(codes[i]));
@@ -156,6 +183,42 @@ public sealed class SqlServerStore : IStateStore
         return codes;
     }
 
+    private static readonly SqlMetaData[] TvpMeta =
+    [
+        new("j", SqlDbType.Int), new("source_id", SqlDbType.Int), new("seq", SqlDbType.BigInt), new("kind", SqlDbType.TinyInt),
+        new("record_id", SqlDbType.BigInt), new("prev_version", SqlDbType.Int), new("version", SqlDbType.Int),
+        new("hash", SqlDbType.BigInt), new("status", SqlDbType.SmallInt), new("ctx", SqlDbType.VarBinary, SqlMetaData.Max),
+    ];
+
+    private async Task<int[]> CommitManyTvpAsync(List<CommitRequest> reqs, CancellationToken ct)
+    {
+        var order = Enumerable.Range(0, reqs.Count).OrderBy(i => reqs[i].Event.SourceId).ToArray();
+        int n = reqs.Count;
+        var rows = new List<SqlDataRecord>(n);
+        for (int j = 0; j < n; j++)
+        {
+            var r = reqs[order[j]];
+            var rec = new SqlDataRecord(TvpMeta);
+            rec.SetInt32(0, j); rec.SetInt32(1, r.Event.SourceId); rec.SetInt64(2, r.Event.Seq); rec.SetByte(3, (byte)r.Kind);
+            rec.SetInt64(4, r.Event.RecordId); rec.SetInt32(5, r.PrevVersion); rec.SetInt32(6, r.NewVersion);
+            rec.SetInt64(7, r.NewHash); rec.SetInt16(8, (short)r.NewStatus);
+            if (r.NewContext is null) rec.SetDBNull(9); else rec.SetBytes(9, 0, r.NewContext, 0, r.NewContext.Length);
+            rows.Add(rec);
+        }
+        await using var conn = new SqlConnection(_o.ConnectionString);
+        await conn.OpenAsync(ct);
+        await using var cmd = new SqlCommand($"{_proc}_many", conn) { CommandType = CommandType.StoredProcedure };
+        var p = cmd.Parameters.Add("@t", SqlDbType.Structured);
+        p.TypeName = $"{_proc}_rows";
+        p.Value = rows;
+        var codes = new int[n];
+        int got = 0;
+        await using var rd = await cmd.ExecuteReaderAsync(ct);
+        while (await rd.ReadAsync(ct)) { codes[order[rd.GetInt32(0)]] = rd.GetByte(1); got++; }
+        if (got != n) throw new InvalidOperationException($"commit batch returned {got} of {n} rows");
+        return codes;
+    }
+
     private static CommitStatus ToStatus(int rc) => rc switch
     {
         0 => CommitStatus.Applied,
@@ -196,6 +259,8 @@ public sealed class SqlServerStore : IStateStore
     {
         string ddl = $"""
             DROP PROCEDURE IF EXISTS {_proc};
+            DROP PROCEDURE IF EXISTS {_proc}_many;
+            IF TYPE_ID('{_proc}_rows') IS NOT NULL DROP TYPE {_proc}_rows;
             DROP TABLE IF EXISTS {_upl}, {_blob}, {_rec}, {_src};
             CREATE TABLE {_src} (
                 source_id  int NOT NULL CONSTRAINT pk_{_src} PRIMARY KEY,
@@ -280,6 +345,56 @@ public sealed class SqlServerStore : IStateStore
         await conn.OpenAsync(ct);
         await Exec(conn, ddl, ct);
         await Exec(conn, proc, ct);
+        await Exec(conn, $"""
+            CREATE TYPE {_proc}_rows AS TABLE (
+                j int NOT NULL PRIMARY KEY, source_id int NOT NULL, seq bigint NOT NULL, kind tinyint NOT NULL,
+                record_id bigint NOT NULL, prev_version int NOT NULL, version int NOT NULL, hash bigint NOT NULL,
+                status smallint NOT NULL, ctx varbinary(max) NULL)
+            """, ct);
+        // Set-based group commit: the same checks as the per-event procedure, for a batch with at most one event per
+        // source (the client guarantees it), in a few statements. Rows are in source order (j), so the cursors are
+        // locked in one order by everyone. Codes as the per-event procedure's: 0 applied, 1 duplicate, 2 gap,
+        // 3 record conflict.
+        await Exec(conn, $"""
+            CREATE PROCEDURE {_proc}_many @t {_proc}_rows READONLY
+            AS
+            BEGIN
+                SET NOCOUNT ON; SET XACT_ABORT ON;
+                DECLARE @r TABLE (j int PRIMARY KEY, code tinyint NOT NULL);
+                DECLARE @upd TABLE (record_id bigint PRIMARY KEY);
+                BEGIN TRAN;
+                INSERT INTO @r (j, code)
+                SELECT t.j, CASE WHEN s.source_id IS NULL THEN 9 WHEN s.last_seq >= t.seq THEN 1
+                                 WHEN s.last_seq <> t.seq - 1 THEN 2 ELSE 0 END
+                  FROM @t t LEFT JOIN {_src} s WITH (UPDLOCK, ROWLOCK, FORCESEEK) ON s.source_id = t.source_id
+                OPTION (LOOP JOIN, FORCE ORDER);
+                IF EXISTS (SELECT 1 FROM @r WHERE code = 9) BEGIN ROLLBACK; THROW 50001, 'unknown source', 1; END;
+                -- creates: a record that exists already is a conflict
+                UPDATE r SET code = 3 FROM @r r JOIN @t t ON t.j = r.j
+                 WHERE r.code = 0 AND t.kind = 1
+                   AND EXISTS (SELECT 1 FROM {_rec} x WITH (UPDLOCK, HOLDLOCK) WHERE x.record_id = t.record_id);
+                INSERT INTO {_rec} (record_id, source_id, status, version, hash, created_seq, updated_seq, ctx)
+                SELECT t.record_id, t.source_id, t.status, t.version, t.hash, t.seq, t.seq, t.ctx
+                  FROM @t t JOIN @r r ON r.j = t.j WHERE r.code = 0 AND t.kind = 1;
+                -- updates: version-guarded; a row not updated is a conflict
+                UPDATE x SET version = t.version, hash = t.hash, status = t.status, ctx = COALESCE(t.ctx, x.ctx),
+                             updated_seq = t.seq, updated_at = SYSUTCDATETIME(),
+                             completed_seq = CASE WHEN t.status = 2 THEN t.seq ELSE x.completed_seq END
+                OUTPUT inserted.record_id INTO @upd
+                  FROM @t t JOIN @r r ON r.j = t.j
+                  JOIN {_rec} x WITH (ROWLOCK, FORCESEEK) ON x.record_id = t.record_id AND x.source_id = t.source_id AND x.version = t.prev_version
+                 WHERE r.code = 0 AND t.kind = 2
+                OPTION (LOOP JOIN, FORCE ORDER);
+                UPDATE r SET code = 3 FROM @r r JOIN @t t ON t.j = r.j
+                 WHERE r.code = 0 AND t.kind = 2 AND NOT EXISTS (SELECT 1 FROM @upd u WHERE u.record_id = t.record_id);
+                UPDATE s SET last_seq = t.seq, updated_at = SYSUTCDATETIME()
+                  FROM @t t JOIN @r r ON r.j = t.j JOIN {_src} s WITH (ROWLOCK, FORCESEEK) ON s.source_id = t.source_id
+                 WHERE r.code = 0
+                OPTION (LOOP JOIN, FORCE ORDER);
+                COMMIT;
+                SELECT j, code FROM @r ORDER BY j;
+            END
+            """, ct);
         if (!string.IsNullOrWhiteSpace(_o.DelayedDurability))
             await Exec(conn, $"ALTER DATABASE CURRENT SET DELAYED_DURABILITY = {_o.DelayedDurability.ToUpperInvariant()} WITH NO_WAIT", ct);
 
@@ -426,7 +541,7 @@ public sealed class SqlServerStore : IStateStore
         var csb = new SqlConnectionStringBuilder(_o.ConnectionString);
         return $"sqlserver @ {csb.DataSource}/{csb.InitialCatalog} (pool max {csb.MaxPoolSize}), commit = proc with UPDLOCK cursor, " +
                $"delayed durability = {_o.DelayedDurability ?? "server setting"}" +
-               (_o.BatchCommits ? $", group commit (max {_o.BatchMaxSize}/tx, {_o.BatchExecutors} executors)" : "");
+               (_o.BatchCommits ? $", group commit ({_o.BatchMode}, max {_o.BatchMaxSize}/tx, {_o.BatchExecutors} executors)" : "");
     }
 
     public async ValueTask DisposeAsync()
