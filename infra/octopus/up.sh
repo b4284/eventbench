@@ -132,13 +132,21 @@ PSQL=${EB_PSQL:-"podman exec -i eb-postgres psql -U bench -d bench -v ON_ERROR_S
 # the lab's best-effort durability (delayed durable commits, like synchronous_commit=off).
 BACKEND=${OCTOPUS_BACKEND:-pg}
 MSSQL_PASSWORD=${MSSQL_SA_PASSWORD:-EventBench#2026}
-mssql() { podman exec -i "${MSSQL_CONTAINER:-eb-mssql}" /opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P "$MSSQL_PASSWORD" -I -b "$@"; }
+# MSSQL_AG=1: the availability group of infra/mssql-ag (octopus recreated inside the AG, everyone through the listener)
+if [[ ${MSSQL_AG:-0} == 1 ]]; then
+  MSSQL_SERVER=127.0.0.1,14330
+  for r in ag1 ag2; do [[ "$(podman inspect -f '{{.State.Running}}' eb-$r 2>/dev/null)" == true ]] && { MSSQL_CONTAINER=eb-$r; break; }; done
+  OCTOPUS_MSSQL_CONN=${OCTOPUS_MSSQL_CONN:-"server=tcp:127.0.0.1,14330;database=octopus;user=sa;password=$MSSQL_PASSWORD;TrustServerCertificate=true"}
+fi
+mssql() { podman exec -i "${MSSQL_CONTAINER:-eb-mssql}" /opt/mssql-tools18/bin/sqlcmd -C -S "${MSSQL_SERVER:-127.0.0.1}" -U sa -P "$MSSQL_PASSWORD" -I -b "$@"; }
 mysqlc() { podman exec -i "${MYSQL_CONTAINER:-eb-mysql}" mysql -uroot -p"${MYSQL_ROOT_PASSWORD:-bench}" -N -B "$@" 2>/dev/null; }
 if [[ $BACKEND == mysql ]]; then
   # statements a killed dispatcher left running would hold the metadata lock and stall the drop
   for id in $(mysqlc -e "SELECT id FROM information_schema.processlist WHERE db = 'octopus' AND id <> CONNECTION_ID()"); do
     mysqlc -e "KILL $id" || true; done
   mysqlc -e "DROP DATABASE IF EXISTS octopus; CREATE DATABASE octopus"
+elif [[ $BACKEND == mssql && ${MSSQL_AG:-0} == 1 ]]; then
+  ../mssql-ag/recreate-db.sh octopus
 elif [[ $BACKEND == mssql ]]; then
   mssql -Q "IF DB_ID('octopus') IS NOT NULL BEGIN ALTER DATABASE octopus SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE octopus; END;
             CREATE DATABASE octopus

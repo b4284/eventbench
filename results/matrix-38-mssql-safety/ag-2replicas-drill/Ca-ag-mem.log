@@ -1,0 +1,595 @@
+01:40:13.210 topology: 500 groups, 16,000 sources, offered load 15,939 events/s, 647 workers
+01:40:13.213 broker: Octopus dispatchers via ZMQ 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook
+01:40:13.213 store:  inmemory
+01:40:13.442 octopus: 3 live dispatchers
+01:40:17.429 octopus: all 500 groups owned (d2=183, d3=167, d1=150); 4 producer + 2 worker MQTT connections
+01:40:17.430 setup done in 4.2s
+01:40:17.473 run: 60s (warmup 10s), 32 producers, 647 workers
+01:40:53.302 octopus backlog: A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: TCP Provider, error: 0 - Success)
+01:40:55.300 octopus backlog: A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: TCP Provider, error: 0 - Success)
+01:40:57.301 octopus backlog: A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: TCP Provider, error: 0 - Success)
+01:40:59.353 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:01.353 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:03.352 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:05.351 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:07.351 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:09.395 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:11.397 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:13.397 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:15.397 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:17.396 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:19.396 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:21.396 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:23.395 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:25.396 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:27.397 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:29.395 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:35.045 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:37.047 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:39.047 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:41.047 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:43.048 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:45.047 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:47.048 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:49.047 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:51.048 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:53.048 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:55.048 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:57.048 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:41:59.047 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:01.048 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:03.047 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:05.047 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:07.048 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:09.048 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:11.048 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:13.047 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:15.094 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:17.091 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:19.091 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:21.092 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:23.092 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:25.091 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:27.091 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:29.091 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:31.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:33.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:35.096 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:37.096 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:39.096 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:41.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:43.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:45.096 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:47.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:49.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:51.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:53.096 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:55.096 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:57.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:42:59.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:01.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:03.096 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:05.096 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:07.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:09.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:11.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:13.095 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:15.143 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:17.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:19.143 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:21.143 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:23.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:25.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:27.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:29.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:31.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:33.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:35.143 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:37.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:39.143 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:41.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:43.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:45.143 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:47.143 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:49.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:51.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:53.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:55.143 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:57.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:43:59.143 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:01.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:03.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:05.144 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:07.147 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:09.149 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:11.147 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:13.148 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:15.225 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:17.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:19.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:21.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:23.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:25.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:27.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:29.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:31.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:33.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:35.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:37.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:39.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:41.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:43.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:45.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:47.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:49.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:51.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:53.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:55.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:57.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:44:59.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:01.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:03.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:05.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:07.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:09.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:11.223 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:13.224 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:15.363 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:17.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:19.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:21.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:23.363 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:25.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:27.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:29.363 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:31.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:33.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:35.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:37.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:39.363 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:41.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:43.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:45.363 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:47.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:49.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:51.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:53.363 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:55.363 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:57.363 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:45:59.363 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:01.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:03.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:05.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:07.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:09.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:11.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:13.364 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:15.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:17.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:19.543 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:21.545 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:23.543 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:25.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:27.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:29.543 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:31.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:33.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:35.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:37.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:39.543 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:41.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:43.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:45.544 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:47.543 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:49.552 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:51.552 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:53.552 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:55.551 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:57.551 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:46:59.551 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:01.551 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:03.552 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:05.552 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:07.552 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:09.551 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:11.551 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:13.552 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:15.726 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:17.723 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:19.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:21.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:23.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:25.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:27.723 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:29.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:31.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:33.723 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:35.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:37.723 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:39.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:41.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:43.723 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:45.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:47.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:49.723 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:51.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:53.725 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:55.723 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:57.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:47:59.723 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:01.723 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:03.723 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:05.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:07.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:09.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:11.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:13.724 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:15.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:17.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:19.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:21.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:23.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:25.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:27.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:29.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:31.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:33.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:35.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:37.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:39.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:41.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:43.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:45.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:47.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:49.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:51.810 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:53.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:55.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:57.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:48:59.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:01.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:03.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:05.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:07.808 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:09.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:11.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:13.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:15.807 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:18.019 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:20.019 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:22.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:24.019 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:26.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:28.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:30.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:32.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:34.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:36.019 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:38.019 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:40.019 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:42.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:44.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:46.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:48.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:50.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:52.021 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:54.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:56.019 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:49:58.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:00.019 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:02.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:04.019 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:06.020 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:08.023 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:10.024 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:12.024 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:14.024 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:16.024 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:18.194 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:20.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:22.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:24.192 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:26.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:28.192 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:30.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:32.192 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:34.192 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:36.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:38.192 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:40.192 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:42.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:44.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:46.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:48.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:50.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:52.191 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:54.188 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:56.192 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:50:58.195 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:00.195 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:02.196 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:04.195 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:06.195 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:08.192 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:10.195 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:12.196 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:14.199 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:16.196 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:18.273 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:20.268 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:22.271 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:24.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:26.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:28.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:30.271 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:32.273 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:34.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:36.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:38.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:40.271 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:42.273 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:44.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:46.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:48.273 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:50.271 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:52.271 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:54.271 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:56.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:51:58.273 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:00.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:02.273 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:04.273 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:06.273 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:08.273 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:10.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:12.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:14.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:16.272 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:18.271 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:20.384 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:22.384 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:24.384 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:26.384 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:28.383 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:30.384 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:32.385 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:34.385 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:36.383 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:38.384 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:40.385 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:42.384 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:44.387 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:46.388 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:48.388 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:50.391 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:52.392 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:54.392 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:56.393 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:52:58.393 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:00.391 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:02.393 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:04.393 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:06.394 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:08.391 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:10.392 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:12.392 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:14.392 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:16.393 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:18.393 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:20.537 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:22.537 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:24.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:26.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:28.535 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:30.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:32.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:34.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:36.537 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:38.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:40.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:42.537 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:44.537 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:46.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:48.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:50.537 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:52.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:54.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:56.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:53:58.535 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:00.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:02.535 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:04.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:06.536 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:08.539 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:10.540 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:12.541 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:14.540 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:16.540 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:18.540 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:20.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:22.635 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:24.637 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:26.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:28.637 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:30.635 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:32.635 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:34.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:36.635 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:38.637 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:40.635 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:42.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:44.635 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:46.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:48.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:50.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:52.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:54.635 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:56.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:54:58.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:55:00.635 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:55:02.637 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:55:04.635 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:55:06.637 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:55:08.635 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:55:10.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:55:12.636 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+01:55:13.066 Ctrl+C: stopping (press again to force exit)...
+01:55:13.066 Ctrl+C: stopping (press again to force exit)...
+01:55:13.092 cancelled — stopping workers and verifying partial state
+01:55:13.111 verification failed: Microsoft.Data.SqlClient.SqlException (0x80131904): Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+   at Microsoft.Data.SqlClient.ConnectionPool.WaitHandleDbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, TimeoutTimer timeout, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, SqlConnectionFactory connectionFactory, TaskCompletionSource`1 retry, Boolean forceNewConnection, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry, Boolean forceNewConnection)
+   at Microsoft.Data.SqlClient.SqlConnection.InternalOpenAsync(SqlConnectionOverrides overrides, Boolean forceNewConnection, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at EventBench.Octopus.OctopusBroker.OpenAdminAsync(CancellationToken ct) in /home/b4283/benchmark/src/EventBench.Octopus/OctopusBroker.cs:line 88
+   at EventBench.Octopus.OctopusBroker.GetBacklogAsync(CancellationToken ct) in /home/b4283/benchmark/src/EventBench.Octopus/OctopusBroker.cs:line 190
+   at EventBench.Core.Runner.BenchmarkRunner.RunAsync(BenchConfig cfg, IConfiguration raw, CancellationToken ct) in /home/b4283/benchmark/src/EventBench.Core/Runner/BenchmarkRunner.cs:line 225
+ClientConnectionId:2c4da033-f104-468e-ac53-3b33aa4ee9ec
+Error Number:988,State:1,Class:14
+
+# Ca-ag-mem — FAIL ❌
+
+**Error:** cancelled
+
+- Broker: `Octopus dispatchers via ZMQ 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook`
+- Store: `inmemory`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 4
+- Topology: 500 groups, 16000 sources, 647 workers, offered 15939.397 ev/s
+- Phases: run 0s, closing 0s, drain 0s (drained: false)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 420763 | 420722 | 305.336 | 305.866 | 19774.4 | 0 | 0 | 0 | 248 | 2268 | 16874 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 253561 | 3302.628 | 3356.671 | 5017.599 | 6672.383 | 7606.271 | 10452.991 |
+| e2e_from_send | 253561 | 165.427 | 123.519 | 295.167 | 1304.575 | 2854.911 | 5230.591 |
+| producer_lag | 253602 | 3137.443 | 3196.927 | 4825.087 | 6328.319 | 7262.207 | 7675.903 |
+| publish_call | 420763 | 133.064 | 112.255 | 248.831 | 499.711 | 1067.007 | 1456.127 |
+| queue_wait | 253561 | 154.475 | 123.007 | 292.607 | 630.271 | 2316.287 | 4780.031 |
+| broker_dwell | 253561 | 26.102 | 5.495 | 34.303 | 402.687 | 2195.455 | 4714.495 |
+| receive_call | 334726 | 53.912 | 25.679 | 140.927 | 356.863 | 484.351 | 544.255 |
+| ctx_load | 253561 | 0.003 | 0.001 | 0.003 | 0.007 | 0.07 | 33.855 |
+| process | 253561 | 10.917 | 0.001 | 0.002 | 0.016 | 2625.535 | 3000.319 |
+| ctx_commit | 253561 | 0.002 | 0.001 | 0.001 | 0.004 | 0.029 | 16.623 |
+| ack | 251971 | 0.007 | 0.003 | 0.006 | 0.023 | 0.139 | 55.615 |
+| service | 253561 | 10.952 | 0.014 | 0.042 | 0.294 | 2625.535 | 3000.319 |
+| e2e_large | 145 | 5671.103 | 5582.847 | 7610.367 | 9101.311 | 9666.559 | 9666.559 |
+| ready_wait | 253561 | 19.062 | 2.793 | 56.959 | 276.223 | 458.495 | 1137.663 |
+| blocked | 253561 | 18.996 | 2.793 | 56.831 | 275.455 | 453.119 | 553.471 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 305.866 | 18661.4 |
+| applied_total | 417858.919 | 420722 |
+| bench_cpu_cores | 0.542 | 3.511 |
+| bench_cpu_pct | 2.257 | 14.63 |
+| bench_gc_gen0 | 1.111 | 5 |
+| bench_gc_gen1 | 0.408 | 3 |
+| bench_gc_gen2 | 0.102 | 2 |
+| bench_gc_heap_mb | 286.308 | 1107.4 |
+| bench_mem_mb | 653.899 | 1624.5 |
+| bench_threadpool_queue | 1.181 | 402 |
+| bench_threadpool_threads | 20.189 | 38 |
+| broker_backlog | 6189.05 | 8449 |
+| ctr_eb_ag1_cpu_pct | 915.963 | 1082.23 |
+| ctr_eb_ag1_mem_mb | 4954.435 | 7078.2 |
+| ctr_eb_ag2_cpu_pct | 858.975 | 1072.56 |
+| ctr_eb_ag2_mem_mb | 7111.256 | 7789.6 |
+| ctr_eb_ag_haproxy_cpu_pct | 15.653 | 25.4 |
+| ctr_eb_ag_haproxy_mem_mb | 33.595 | 36.5 |
+| ctr_eb_mysql_cpu_pct | 0.457 | 0.72 |
+| ctr_eb_mysql_mem_mb | 6126.4 | 6126.4 |
+| ctr_eb_pgbouncer_2_cpu_pct | 0.011 | 0.02 |
+| ctr_eb_pgbouncer_2_mem_mb | 7.3 | 7.3 |
+| ctr_eb_pgbouncer_3_cpu_pct | 0.01 | 0.02 |
+| ctr_eb_pgbouncer_3_mem_mb | 7.8 | 7.8 |
+| ctr_eb_pgbouncer_4_cpu_pct | 0.011 | 0.06 |
+| ctr_eb_pgbouncer_4_mem_mb | 7.3 | 7.3 |
+| ctr_eb_pgbouncer_cpu_pct | 0.011 | 0.03 |
+| ctr_eb_pgbouncer_mem_mb | 10.2 | 10.2 |
+| ctr_eb_postgres_cpu_pct | 0.391 | 0.98 |
+| ctr_eb_postgres_mem_mb | 2275.858 | 2277.4 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 78.346 | 96.22 |
+| in_flight | 48.859 | 711 |
+| nacks_per_s | 0 | 0 |
+| octopus_dispatcher_cores | 0.288 | 2.49 |
+| octopus_dispatchers_alive | 3 | 3 |
+| octopus_items_sent_total | 1484606.238 | 2146931 |
+| octopus_missing_reports_total | 8281.455 | 8360 |
+| octopus_mqtt_received_total | 425682.856 | 849839 |
+| octopus_mqtt_sent_total | 568716.563 | 978776 |
+| octopus_publish_retries_total | 356507.45 | 727448 |
+| octopus_publish_stuck | 1705.412 | 1812 |
+| produced_per_s | 305.336 | 18728.4 |
+| produced_total | 417907.777 | 420763 |
+| publish_mb_per_s | 1.149 | 77.48 |
+
+## Oracle
+
+_not run_
+
+## Cross-source blocking samples
+
+- [cross_source_blocking] source 3132 seq 5: ready 138 ms before start, 138 ms of it with an idle slot in group 104
+- [cross_source_blocking] source 4586 seq 11: ready 139 ms before start, 139 ms of it with an idle slot in group 160
+- [cross_source_blocking] source 7434 seq 14: ready 139 ms before start, 139 ms of it with an idle slot in group 258
+- [cross_source_blocking] source 202 seq 14: ready 139 ms before start, 139 ms of it with an idle slot in group 4
+- [cross_source_blocking] source 6078 seq 15: ready 139 ms before start, 139 ms of it with an idle slot in group 208
+- [cross_source_blocking] source 8702 seq 29: ready 147 ms before start, 147 ms of it with an idle slot in group 302
+- [cross_source_blocking] source 8234 seq 21: ready 147 ms before start, 147 ms of it with an idle slot in group 278
+- [cross_source_blocking] source 11882 seq 16: ready 148 ms before start, 148 ms of it with an idle slot in group 383
+- [cross_source_blocking] source 14282 seq 6: ready 148 ms before start, 148 ms of it with an idle slot in group 458
+- [cross_source_blocking] source 8746 seq 15: ready 149 ms before start, 149 ms of it with an idle slot in group 304
+- [cross_source_blocking] source 10238 seq 26: ready 149 ms before start, 149 ms of it with an idle slot in group 344
+- [cross_source_blocking] source 5404 seq 12: ready 109 ms before start, 109 ms of it with an idle slot in group 184
+- [cross_source_blocking] source 6300 seq 8: ready 109 ms before start, 109 ms of it with an idle slot in group 214
+- [cross_source_blocking] source 3676 seq 12: ready 109 ms before start, 109 ms of it with an idle slot in group 125
+- [cross_source_blocking] source 15964 seq 22: ready 109 ms before start, 109 ms of it with an idle slot in group 499
+- [cross_source_blocking] source 9066 seq 17: ready 119 ms before start, 119 ms of it with an idle slot in group 313
+- [cross_source_blocking] source 2526 seq 24: ready 133 ms before start, 133 ms of it with an idle slot in group 75
+- [cross_source_blocking] source 2072 seq 6: ready 135 ms before start, 135 ms of it with an idle slot in group 61
+- [cross_source_blocking] source 6520 seq 9: ready 133 ms before start, 133 ms of it with an idle slot in group 222
+- [cross_source_blocking] source 9886 seq 3: ready 223 ms before start, 223 ms of it with an idle slot in group 340
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-319L | 29 | 2 | 4.084 | 1.953 | 1917 | 1 | 75 | 75 | 0 | 5210.111 | 9699.327 | 9699.327 |
+| t-119L | 64 | 4 | 4.456 | 4.863 | 156 | 1 | 163 | 162 | 0 | 5046.271 | 8847.359 | 9109.503 |
+| t-093L | 20 | 1 | 2.903 | 0.952 | 711 | 1 | 39 | 39 | 0 | 4980.735 | 8781.823 | 8781.823 |
+| t-079 | 6 | 1 | 119.859 | 12.324 | 1522 | 0 | 317 | 316 | 0 | 3702.783 | 8585.215 | 10354.687 |
+| t-308L | 26 | 1 | 1.861 | 0.85 | 201 | 1 | 26 | 26 | 0 | 5603.327 | 7929.855 | 7929.855 |
+| t-369 | 14 | 1 | 164.535 | 40.402 | 1313 | 0 | 961 | 961 | 0 | 3424.255 | 7831.551 | 8978.431 |
+| t-017 | 19 | 1 | 36.957 | 11.447 | 830 | 0 | 337 | 337 | 0 | 3391.487 | 7733.247 | 8191.999 |
+| t-142 | 15 | 1 | 33.381 | 8.13 | 413 | 0 | 212 | 212 | 0 | 3506.175 | 7634.943 | 7929.855 |
+| t-481 | 12 | 1 | 150.551 | 28.385 | 1993 | 0 | 770 | 769 | 0 | 3588.095 | 7602.175 | 10485.759 |
+| t-081 | 6 | 1 | 16.193 | 1.614 | 2170 | 0 | 46 | 46 | 0 | 4095.999 | 7569.407 | 7569.407 |
+| t-251 | 9 | 1 | 46.964 | 7.056 | 1193 | 0 | 165 | 165 | 0 | 3997.695 | 7536.639 | 7536.639 |
+| t-006 | 14 | 1 | 31.139 | 6.948 | 1170 | 0 | 203 | 203 | 0 | 3293.183 | 7503.871 | 7536.639 |
+| t-038 | 9 | 1 | 55.117 | 8.286 | 2056 | 0 | 195 | 195 | 0 | 3948.543 | 7438.335 | 7471.103 |
+| t-051 | 31 | 1 | 52.054 | 26.084 | 200 | 0 | 658 | 656 | 0 | 3325.951 | 7372.799 | 8519.679 |
+| t-269 | 24 | 1 | 88.126 | 37.126 | 531 | 0 | 1033 | 1033 | 0 | 3407.871 | 7372.799 | 7733.247 |
+| t-295 | 12 | 1 | 68.958 | 13.698 | 3396 | 0 | 363 | 363 | 0 | 3407.871 | 7372.799 | 8257.535 |
+| t-424 | 8 | 1 | 94.679 | 12.424 | 1700 | 0 | 323 | 322 | 0 | 3670.015 | 7372.799 | 7503.871 |
+| t-100 | 33 | 1 | 50.561 | 26.936 | 2626 | 0 | 722 | 722 | 0 | 3457.023 | 7340.031 | 7667.711 |
+| t-158 | 6 | 1 | 53.971 | 5.707 | 165 | 0 | 164 | 164 | 0 | 3424.255 | 7340.031 | 7438.335 |
+| t-134 | 21 | 1 | 24.302 | 8.325 | 3368 | 0 | 225 | 225 | 0 | 3522.559 | 7307.263 | 7471.103 |
+| t-145 | 6 | 1 | 63.772 | 6.425 | 517 | 0 | 169 | 169 | 0 | 3899.391 | 7307.263 | 7634.943 |
+| t-128 | 11 | 1 | 125.96 | 23.38 | 260 | 0 | 607 | 607 | 0 | 3670.015 | 7274.495 | 7831.551 |
+| t-358 | 22 | 1 | 33.422 | 12.024 | 310 | 0 | 320 | 320 | 0 | 3375.103 | 7274.495 | 7700.479 |
+| t-123 | 16 | 1 | 83.276 | 20.7 | 4028 | 0 | 520 | 520 | 0 | 3440.639 | 7110.655 | 7831.551 |
+| t-247 | 8 | 1 | 30.815 | 4.104 | 506 | 0 | 109 | 109 | 0 | 3309.567 | 7110.655 | 7405.567 |
+
+01:55:13.822 results written to /home/b4283/benchmark/results/matrix-38-mssql-safety/Ca-ag-mem/20261123-174013_Ca-ag-mem

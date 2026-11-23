@@ -153,8 +153,11 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   CPU unchanged. At the ceiling (Octopus + store, NATS, 2 shards): 23.3k applied at 28k vs 24.3k ±0.4k best effort
   (matrix-32 V28 repeats): ~4%.
   - **Not explored yet:** local fsync and the synchronous standby together, on the Patroni pair, at the ceiling.
+  - 2026-11-24, matrix-38 (one laptop, standby on the same host, `synchronous_commit = on` = the standby's flush):
+    Octopus alone holds 16k (p50 14–57 ms, 1.75 + 0.3 cores); the full stack does not (7.0k, 10.7k: the store's
+    commits ~94 ms instead of ~10). SQL Server's AG the same (7–8k). A one-host limit; needs separate hosts (B20).
 
-### B16 — The dispatcher queue on SQL Server and MySQL · **both ported and measured** (2026-11-22: SQL Server matrix-27, correct, ~4–5× Postgres CPU per event, not steady at 16k; MySQL matrix-31, correct after four fixes, ~2.2× Postgres CPU, keeps 16k with e2e p50 0.3–0.6 s); failover drills open
+### B16 — The dispatcher queue on SQL Server and MySQL · **both ported and measured; SQL Server's data safety and AG failover measured (matrix-38)** (2026-11-22: SQL Server matrix-27, correct, ~4–5× Postgres CPU per event, not steady at 16k; MySQL matrix-31, correct after four fixes, ~2.2× Postgres CPU, keeps 16k with e2e p50 0.3–0.6 s); failover drills open
 - **From:** user, 2026-11-20. Once the dispatcher owns the queue logic, the database only needs transactions,
   batched inserts, an index and row locks for the commit, so other SQL engines may have the same property.
 - **Test:**
@@ -182,6 +185,17 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
     no longer log the bodies again). Recommended for Octopus on MySQL.
   - **Not explored yet:** semi-sync `AFTER_SYNC` or Group Replication failover drill; cheaper batch passing
     than JSON with base64.
+- 2026-11-24, matrix-38 (the user: the organisation has a SQL Server team and no Postgres experience; "go ahead"):
+  SQL Server In-Memory OLTP against Postgres, laptop only, ZeroMQ. Durable commits: +4–6 ms p50, no CPU. kill -9 of
+  the database: nothing lost on either engine (a process kill cannot separate durable from best effort). Full stack
+  (the application's writes on SQL Server too): needs group commit (added to SqlServerStore), then ~2.1x Postgres's
+  CPU, at most ~13.5k on the laptop. Availability group (2/3 replicas, `CLUSTER_TYPE = NONE`, synchronous commit,
+  `REQUIRED_SYNCHRONIZED_SECONDARIES_TO_COMMIT = 1`): Octopus alone holds 16k at p50 ~33 ms; forced failover after
+  kill -9 of the primary lost nothing; two replicas stop writing after the failover (as Postgres 1+1 strict, B28);
+  three continue, but without a cluster manager ~75 s passed without writes (the other secondary had to be restarted
+  to follow the new primary) and the old primary came back believing it was primary. MySQL not continued (no team for
+  it either; the user: SQL Server is the alternative that matters).
+  - **Not explored yet:** B36 (AG with a cluster manager), B37 (SQL Server's CPU with the DB team), B38 (gap reports).
 
 ### B17 — Distributed SQL under the dispatcher · **measured: not viable for 24k** (2026-11-21, matrix-26: YugabyteDB runs Octopus unchanged but needs 25–45× Postgres's CPU per event)
 - **From:** dispatcher design §4.1. The dispatchers are active-active, but SQL is single-writer with synchronous
@@ -406,7 +420,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   - **Not explored yet:** NATS clustering (3 nodes) for HA; JetStream KV for the announcements instead of the 5 s
     re-announcement; NATS on its own machine (needs a third healthy Mac link: m1mini is at 100 Mbit, matrix-32).
 
-### B33 — SQL Server In-Memory OLTP for the event table · **measured: steady at 16k, ~3.2× Postgres CPU (was 4–5×, erratic)** (2026-11-22, matrix-33; the user: "remember to re-visit")
+### B33 — SQL Server In-Memory OLTP for the event table · **measured: steady at 16k, ~3.2× Postgres CPU (was 4–5×, erratic)** · **data safety measured, matrix-38: durable, crash and AG failover all correct** (2026-11-22, matrix-33; the user: "remember to re-visit")
 - matrix-27: SQL Server runs Octopus correctly but at ~4–5x Postgres's CPU per event, unsteady at 16k; publish's
   JSON unpacking and the cursor writes' deletes dominate. In-Memory OLTP is SQL Server's design for hot queue-like
   tables: no locks, no latches, no tempdb.
@@ -448,8 +462,45 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
   matrix-37: local 16k correct, p50 6.7 ms, laptop CPU 34.9% (lowest). Ceiling over three machines, 3 interleaved
   rounds at 28k: ZeroMQ 23.5k, NATS 22.0k, Mosquitto 21.5k applied (first in every round); Mac shards' round trips
   shortest. All correct.
+- 2026-11-23, the user: ZeroMQ stays as the lab transport (best headroom); its failure drills and dynamic membership
+  are **dropped** (production moves to Solace cloud, so ZeroMQ's operational gaps don't matter).
   - **Not explored yet:** dispatcher kill/add drills over ZeroMQ; dispatcher endpoints in member announcements
     (discovery instead of a configured list).
+
+### B35 — More than one cluster ("cells") plus an asynchronous warehouse · idea
+- **From:** the user, 2026-11-23, revisiting the one-platform rule ([target-24k]): if one cluster cannot hold
+  everything, run 2+ clusters and feed an asynchronous data warehouse for queries and analysis. Concern: 2-3x the
+  work of one monolith.
+- **Why it may not be needed:** Octopus alone costs ~0.13 Postgres cores per 1k ev/s (~3 cores at 24k); the rest
+  of the ceiling is the application's writes. The lab ceiling (~23.5-25.5k) is one laptop shared by everything, not
+  a production primary.
+- **Why it may come anyway:** heavy analytics should not run on the primary, so a replica or a CDC-fed warehouse
+  may be wanted even with one cluster; several cells also shrink the blast radius and allow canary upgrades.
+- **Keep the option open (cheap now):** groups never span a transaction; group -> cluster routing as a lookup
+  (clients already learn group owners); source ids unique across clusters; analytics fed by CDC from day one.
+- **Test:** what one 2+2 cluster holds on production-class hardware with synchronous replication (B12); split only
+  if that is not well above the target.
+
+### B36 — SQL Server AG with a cluster manager: failover time and the secondaries following · open
+- **From:** matrix-38. With `CLUSTER_TYPE = NONE` the failover is manual, a returning old primary still believes it
+  is primary, and the remaining secondary did not follow the new primary until it was restarted (~75 s without
+  writes with three replicas). Production would run WSFC (Windows) or Pacemaker (`CLUSTER_TYPE = EXTERNAL`).
+- **Why:** the outage after losing the primary decides whether SQL Server matches Patroni's 19–24 s (matrix-19).
+- **Test:** Pacemaker with the mssql resource agent in containers (or ask the SQL Server team how they run AGs: WSFC
+  is their home ground); kill the primary, measure until commits resume; check that the other secondaries follow.
+
+### B37 — SQL Server's CPU for Octopus, with the SQL Server team · open
+- **From:** matrix-38: ~4x Postgres's CPU for Octopus alone, ~2x for the whole stack.
+- **Where it goes** (SQL Server's statistics): publish ~5 ms CPU per call (unpacking the JSON batch, base64 bodies),
+  `advance` 48 ms and `settle` 17 ms per call; the store's commit procedure is cheap per statement.
+- **Ideas:** a cheaper batch format (TVPs instead of JSON/base64), natively compiled procedures, memory-optimized
+  tables for the store's cursors and records, the team's own review of indexes and plans.
+
+### B38 — Gap reports on SQL Server in normal runs · open
+- **From:** matrix-38: SQL Server's publish replies report missing positions below an event (0.9–7.1k per run of
+  ~1M events); Postgres never does. Correctness held everywhere; likely concurrent publishes of one source's
+  neighbours read at a transaction snapshot of the memory-optimized table. Confirm by reading the backend; a client's
+  `RepairAsync` leaves positions in flight alone, so the harm would be extra work at most.
 
 ### B13 — Citus (distributed Postgres) · idea
 - **From:** "some tools are stronger when clustered", together with "one platform, not 20 Postgres instances".

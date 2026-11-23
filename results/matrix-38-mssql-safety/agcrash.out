@@ -1,0 +1,19 @@
+Ca-ag-mem | prod/s 2499.106 | appl/s 2503.899 | p50 9510.911 ms | p99 86245.375 ms | mssql % | pg 0.1% | disp 0.505 | host 34.781% | ag1 547.573% ag2 458.629% | fails: none
+    02:34:19.054 drill: ag-kill:30
+    killed the AG primary ag1 (SIGKILL)
+    02:34:24.765 ag2 is primary (was ag1, forced: ag1 unreachable)
+    02:35:10.830 ag3 still follows the old primary: restarting it
+    02:35:40.735 remaining secondaries SYNCHRONIZED
+    02:36:10.974 started ag1
+    02:36:14.448 ag1 is back (believes: PRIMARY); rebuilding it as a secondary of ag2
+    02:37:01.251 ag1 rejoined as SECONDARY, databases seeded and SYNCHRONIZED
+Cb-ag-full | prod/s 1708.541 | appl/s 1016.922 | p50 113311.743 ms | p99 121700.351 ms | mssql % | pg 0.077% | disp 0.452 | host 38.526% | ag1 467.16% ag2 752.859% | fails: none
+    02:38:30.990 drill: ag-kill:30
+    killed the AG primary ag2 (SIGKILL)
+    02:38:37.042 ag1 is primary (was ag2, forced: ag2 unreachable)
+    02:39:24.527 ag3 still follows the old primary: restarting it
+    02:39:53.141 remaining secondaries SYNCHRONIZED
+    02:40:23.431 started ag2
+    02:40:26.903 ag2 is back (believes: PRIMARY); rebuilding it as a secondary of ag1
+    02:41:17.247 ag2 rejoined as SECONDARY, databases seeded and SYNCHRONIZED
+agcrash done

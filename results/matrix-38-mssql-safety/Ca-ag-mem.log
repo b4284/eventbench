@@ -1,0 +1,207 @@
+02:33:44.723 topology: 500 groups, 16,000 sources, offered load 15,939 events/s, 647 workers
+02:33:44.726 broker: Octopus dispatchers via ZMQ 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook
+02:33:44.726 store:  inmemory
+02:33:44.948 octopus: 3 live dispatchers
+02:33:48.727 octopus: all 500 groups owned (d3=167, d2=183, d1=150); 4 producer + 2 worker MQTT connections
+02:33:48.728 setup done in 4.0s
+02:33:48.770 run: 60s (warmup 10s), 32 producers, 647 workers
+02:34:24.364 octopus backlog: A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: TCP Provider, error: 0 - Success)
+02:34:26.364 octopus backlog: A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: TCP Provider, error: 0 - Success)
+02:34:28.365 octopus backlog: A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: TCP Provider, error: 0 - Success)
+02:34:30.413 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:32.412 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:34.413 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:36.412 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:38.411 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:40.458 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:42.455 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:44.456 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:46.455 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:48.456 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:50.456 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:52.456 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:54.456 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:56.456 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:34:58.457 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:00.509 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:02.509 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:04.507 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:06.508 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:08.507 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:10.509 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:12.511 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:14.513 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:16.513 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:18.512 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:20.512 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:22.512 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:24.512 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:26.513 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:28.512 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:30.511 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:32.512 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:34.511 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:36.512 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:38.512 octopus backlog: Unable to access database 'octopus' because it lacks a quorum of nodes for high availability. Try the operation again later.
+02:35:40.770 closing: 30,345 completion events emitted
+02:35:42.025 drained in 1.3s
+02:35:42.029 verifying end state against the oracle ...
+
+# Ca-ag-mem — FAIL ❌
+
+- Broker: `Octopus dispatchers via ZMQ 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook`
+- Store: `inmemory`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 4
+- Topology: 500 groups, 16000 sources, 647 workers, offered 15939.397 ev/s
+- Phases: run 109.831s, closing 2.168s, drain 1.256s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 384134 | 384134 | 2499.106 | 2503.899 | 18073.8 | 0 | 0 | 0 | 217 | 1922 | 13904 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 186628 | 10237.052 | 9510.911 | 11042.815 | 86245.375 | 88145.919 | 91750.399 |
+| e2e_from_send | 186628 | 965.831 | 127.807 | 323.327 | 75890.687 | 77398.015 | 80084.991 |
+| producer_lag | 186628 | 9271.253 | 9338.879 | 10862.591 | 11616.255 | 86900.735 | 88932.351 |
+| publish_call | 384134 | 516.227 | 128.831 | 311.039 | 701.439 | 76939.263 | 77791.231 |
+| queue_wait | 186628 | 954.664 | 127.423 | 316.671 | 75890.687 | 77398.015 | 77922.303 |
+| broker_dwell | 186628 | 135.818 | 8.287 | 37.343 | 388.863 | 75956.223 | 77856.767 |
+| receive_call | 289024 | 65.138 | 29.871 | 174.079 | 421.119 | 491.263 | 548.863 |
+| ctx_load | 186628 | 0.003 | 0.001 | 0.003 | 0.009 | 0.072 | 33.439 |
+| process | 186628 | 11.126 | 0.001 | 0.002 | 0.019 | 2625.535 | 2998.271 |
+| ctx_commit | 186628 | 0.003 | 0.001 | 0.001 | 0.005 | 0.036 | 16.751 |
+| ack | 185009 | 0.005 | 0.003 | 0.006 | 0.026 | 0.16 | 40.063 |
+| service | 186628 | 11.167 | 0.015 | 0.049 | 0.571 | 2625.535 | 2998.271 |
+| e2e_large | 115 | 17639.673 | 11796.479 | 14131.199 | 91553.791 | 91750.399 | 91750.399 |
+| ready_wait | 186628 | 111.978 | 3.747 | 73.279 | 216.191 | 74973.183 | 77070.335 |
+| blocked | 186628 | 111.887 | 3.747 | 73.279 | 214.527 | 74973.183 | 77070.335 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 2503.899 | 18073.8 |
+| applied_total | 324022.367 | 352891 |
+| bench_cpu_cores | 0.793 | 3.135 |
+| bench_cpu_pct | 3.304 | 13.06 |
+| bench_gc_gen0 | 1.02 | 5 |
+| bench_gc_gen1 | 0.48 | 3 |
+| bench_gc_gen2 | 0.337 | 2 |
+| bench_gc_heap_mb | 628.377 | 1238.9 |
+| bench_mem_mb | 1311.258 | 1725 |
+| bench_threadpool_queue | 13.653 | 902 |
+| bench_threadpool_threads | 25.592 | 44 |
+| broker_backlog | 3720.755 | 4930 |
+| ctr_eb_ag1_cpu_pct | 547.573 | 607.02 |
+| ctr_eb_ag1_mem_mb | 3559.995 | 3792.8 |
+| ctr_eb_ag2_cpu_pct | 458.629 | 998.36 |
+| ctr_eb_ag2_mem_mb | 2370.436 | 2509.1 |
+| ctr_eb_ag3_cpu_pct | 57.85 | 219.7 |
+| ctr_eb_ag3_mem_mb | 2171.161 | 3296.9 |
+| ctr_eb_ag_haproxy_cpu_pct | 10.962 | 20.22 |
+| ctr_eb_ag_haproxy_mem_mb | 20.995 | 23.3 |
+| ctr_eb_pgbouncer_2_cpu_pct | 0.011 | 0.02 |
+| ctr_eb_pgbouncer_2_mem_mb | 7.3 | 7.3 |
+| ctr_eb_pgbouncer_3_cpu_pct | 0.01 | 0.01 |
+| ctr_eb_pgbouncer_3_mem_mb | 7.3 | 7.3 |
+| ctr_eb_pgbouncer_4_cpu_pct | 0.011 | 0.02 |
+| ctr_eb_pgbouncer_4_mem_mb | 7.8 | 7.8 |
+| ctr_eb_pgbouncer_cpu_pct | 0.012 | 0.02 |
+| ctr_eb_pgbouncer_mem_mb | 7.8 | 7.8 |
+| ctr_eb_postgres_cpu_pct | 0.1 | 0.67 |
+| ctr_eb_postgres_mem_mb | 2277.4 | 2277.4 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 0 | 0 |
+| host_cpu_pct | 34.781 | 76.94 |
+| in_flight | 175.133 | 1109 |
+| nacks_per_s | 0 | 0 |
+| octopus_dispatcher_cores | 0.505 | 1.91 |
+| octopus_dispatchers_alive | 3 | 3 |
+| octopus_items_sent_total | 707858.908 | 841298 |
+| octopus_missing_reports_total | 8438.571 | 9364 |
+| octopus_mqtt_received_total | 79979.163 | 117136 |
+| octopus_mqtt_sent_total | 190250.878 | 236174 |
+| octopus_publish_retries_total | 27931.694 | 68245 |
+| octopus_publish_stuck | 842.531 | 1795 |
+| produced_per_s | 2499.106 | 17696.8 |
+| produced_total | 324197.5 | 352821 |
+| publish_mb_per_s | 9.604 | 64.25 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 66,038 records are Completed |
+| record_counts | pass | 66,038 records found, 66,038 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 217 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 384,134 events applied by workers, 384,134 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+| runtime_cross_source_blocking | **FAIL** | 13,904 events waited > 100 ms while a worker slot of their group was idle (4 slot(s)/worker; blocked p99 215 ms, max 77060 ms) |
+
+## Cross-source blocking samples
+
+- [cross_source_blocking] source 13372 seq 12: ready 180 ms before start, 180 ms of it with an idle slot in group 428
+- [cross_source_blocking] source 14364 seq 3: ready 180 ms before start, 180 ms of it with an idle slot in group 458
+- [cross_source_blocking] source 12668 seq 7: ready 219 ms before start, 219 ms of it with an idle slot in group 399
+- [cross_source_blocking] source 1628 seq 10: ready 205 ms before start, 205 ms of it with an idle slot in group 49
+- [cross_source_blocking] source 2236 seq 53: ready 101 ms before start, 101 ms of it with an idle slot in group 65
+- [cross_source_blocking] source 5532 seq 15: ready 207 ms before start, 207 ms of it with an idle slot in group 189
+- [cross_source_blocking] source 5596 seq 19: ready 207 ms before start, 207 ms of it with an idle slot in group 194
+- [cross_source_blocking] source 3260 seq 9: ready 207 ms before start, 207 ms of it with an idle slot in group 109
+- [cross_source_blocking] source 5692 seq 16: ready 123 ms before start, 123 ms of it with an idle slot in group 196
+- [cross_source_blocking] source 2588 seq 13: ready 207 ms before start, 207 ms of it with an idle slot in group 80
+- [cross_source_blocking] source 6044 seq 6: ready 207 ms before start, 207 ms of it with an idle slot in group 207
+- [cross_source_blocking] source 7580 seq 25: ready 207 ms before start, 207 ms of it with an idle slot in group 260
+- [cross_source_blocking] source 9116 seq 12: ready 207 ms before start, 207 ms of it with an idle slot in group 315
+- [cross_source_blocking] source 1948 seq 23: ready 123 ms before start, 123 ms of it with an idle slot in group 55
+- [cross_source_blocking] source 7740 seq 11: ready 207 ms before start, 207 ms of it with an idle slot in group 263
+- [cross_source_blocking] source 7708 seq 13: ready 207 ms before start, 207 ms of it with an idle slot in group 263
+- [cross_source_blocking] source 15260 seq 11: ready 208 ms before start, 208 ms of it with an idle slot in group 477
+- [cross_source_blocking] source 13724 seq 11: ready 208 ms before start, 208 ms of it with an idle slot in group 436
+- [cross_source_blocking] source 11676 seq 14: ready 207 ms before start, 207 ms of it with an idle slot in group 379
+- [cross_source_blocking] source 13852 seq 18: ready 208 ms before start, 208 ms of it with an idle slot in group 438
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-319L | 29 | 2 | 4.084 | 1.953 | 1917 | 1 | 102 | 102 | 0 | 11599.871 | 91750.399 | 91750.399 |
+| t-093L | 20 | 1 | 2.903 | 0.952 | 711 | 1 | 52 | 52 | 0 | 11927.551 | 89653.247 | 89653.247 |
+| t-308L | 26 | 1 | 1.861 | 0.85 | 201 | 1 | 37 | 37 | 0 | 11796.479 | 89653.247 | 89653.247 |
+| t-119L | 64 | 4 | 4.456 | 4.863 | 156 | 1 | 200 | 200 | 0 | 11206.655 | 89128.959 | 91750.399 |
+| t-079 | 6 | 1 | 119.859 | 12.324 | 1522 | 0 | 255 | 255 | 0 | 9764.863 | 88604.671 | 88604.671 |
+| t-294 | 7 | 1 | 133.744 | 15.435 | 667 | 0 | 365 | 365 | 0 | 9961.471 | 88604.671 | 89128.959 |
+| t-355 | 10 | 1 | 37.479 | 6.571 | 349 | 0 | 156 | 156 | 0 | 9830.399 | 88604.671 | 89128.959 |
+| t-412 | 6 | 1 | 35.26 | 3.264 | 468 | 0 | 70 | 70 | 0 | 10747.903 | 88604.671 | 88604.671 |
+| t-430 | 6 | 1 | 29.555 | 3.204 | 1163 | 0 | 89 | 89 | 0 | 9437.183 | 88604.671 | 88604.671 |
+| t-019 | 38 | 2 | 109.921 | 69.438 | 208 | 0 | 1618 | 1618 | 0 | 9371.647 | 88080.383 | 89128.959 |
+| t-062 | 18 | 1 | 38.881 | 11.922 | 2061 | 0 | 296 | 296 | 0 | 9371.647 | 88080.383 | 88604.671 |
+| t-086 | 6 | 1 | 53.883 | 5.925 | 464 | 0 | 160 | 160 | 0 | 9437.183 | 88080.383 | 88080.383 |
+| t-112 | 6 | 1 | 57.527 | 5.908 | 774 | 0 | 146 | 146 | 0 | 9830.399 | 88080.383 | 88604.671 |
+| t-149 | 13 | 1 | 42.874 | 8.748 | 3034 | 0 | 198 | 198 | 0 | 9502.719 | 88080.383 | 88080.383 |
+| t-190 | 6 | 1 | 85.928 | 8.971 | 241 | 0 | 204 | 204 | 0 | 9830.399 | 88080.383 | 88080.383 |
+| t-192 | 6 | 1 | 24.06 | 2.143 | 194 | 0 | 58 | 58 | 0 | 8978.431 | 88080.383 | 88080.383 |
+| t-216 | 19 | 1 | 75.625 | 24.458 | 3889 | 0 | 605 | 605 | 0 | 9502.719 | 88080.383 | 89128.959 |
+| t-226 | 6 | 1 | 109.061 | 11.534 | 623 | 0 | 272 | 272 | 0 | 9699.327 | 88080.383 | 88080.383 |
+| t-232 | 6 | 1 | 70.326 | 7.149 | 805 | 0 | 172 | 172 | 0 | 8781.823 | 88080.383 | 88080.383 |
+| t-280 | 12 | 1 | 50.839 | 9.951 | 2814 | 0 | 255 | 255 | 0 | 9240.575 | 88080.383 | 88604.671 |
+| t-338 | 6 | 1 | 26.945 | 2.753 | 156 | 0 | 74 | 74 | 0 | 10223.615 | 88080.383 | 88080.383 |
+| t-386 | 56 | 1 | 15.231 | 14.027 | 3094 | 0 | 430 | 430 | 0 | 9502.719 | 88080.383 | 88080.383 |
+| t-431 | 6 | 1 | 46.594 | 4.642 | 596 | 0 | 131 | 131 | 0 | 9633.791 | 88080.383 | 88080.383 |
+| t-492 | 6 | 1 | 32.276 | 2.941 | 3046 | 0 | 73 | 73 | 0 | 9306.111 | 88080.383 | 88080.383 |
+| t-005 | 47 | 2 | 75.095 | 58.36 | 2385 | 0 | 1398 | 1398 | 0 | 9437.183 | 87556.095 | 88080.383 |
+
+02:35:42.660 results written to /home/b4283/benchmark/results/matrix-38-mssql-safety/Ca-ag-mem/20261123-183344_Ca-ag-mem

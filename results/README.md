@@ -3,10 +3,11 @@
 One folder per experiment; each has a NOTES.md (or SUMMARY.md) with the setup, the runs and the verdict. Backlog
 items (B*) are in ../BACKLOG.md. Newest first.
 
-## Octopus: limits, engines and production questions (2026-11-22)
+## Octopus: limits, engines and production questions (2026-11-22..24)
 
 | matrix | question | headline |
 |---|---|---|
+| [38](matrix-38-mssql-safety/NOTES.md) | SQL Server In-Memory: data safety and cost vs Postgres (B16, B33) | durable, kill -9 and AG forced failover: nothing lost; 3 replicas + a cluster manager needed; ~4x CPU (Octopus), ~2x (full stack) |
 | [37](matrix-37-zmq/NOTES.md) | ZeroMQ, no broker (B34) | ceiling 23.5k vs NATS 22.0k vs Mosquitto 21.5k (3 rounds, 3 machines); first every round |
 | [36](matrix-36-nats-ha/NOTES.md) | 3-node NATS cluster, broker-node kills (B31) | node every client used killed: no outage, all correct; tail = 30 s delivery timeout |
 | [35](matrix-35-nlb/NOTES.md) | network load balancer instead of HAProxy (B30) | frozen leader: 83–84 s outage without cutting sessions, 27–30 s with; 5 s checks +~5 s per failover |

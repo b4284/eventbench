@@ -1,0 +1,78 @@
+Fa-mssql | prod/s 17467.549 | appl/s 17461.214 | p50 18.367 ms | p99 6180.863 ms | mssql 733.345% | pg 0.351% | disp 2.561 | host 62.437% | fails: none
+Da-mssql | prod/s 15367.396 | appl/s 15376.231 | p50 15.679 ms | p99 1315.839 ms | mssql 630.924% | pg 0.328% | disp 2.396 | host 56.795% | fails: none
+Pa-pg | prod/s 15942.004 | appl/s 15943.584 | p50 6.359 ms | p99 1288.191 ms | mssql 32.69% | pg 150.237% | disp 1.273 | host 29.235% | fails: none
+Qa-pg | prod/s 15934.461 | appl/s 15936.935 | p50 7.447 ms | p99 1290.239 ms | mssql 1.798% | pg 151.097% | disp 1.258 | host 36.086% | fails: none
+Fb-mssql | prod/s 15944.612 | appl/s 15946.665 | p50 11.735 ms | p99 1303.551 ms | mssql 579.75% | pg 0.56% | disp 2.426 | host 55.925% | fails: none
+Db-mssql | prod/s 15929.757 | appl/s 15923.3 | p50 17.919 ms | p99 1315.839 ms | mssql 611.406% | pg 0.328% | disp 2.338 | host 56.658% | fails: none
+Pb-pg | prod/s 15941.48 | appl/s 15943.067 | p50 6.219 ms | p99 1285.119 ms | mssql 24.014% | pg 136.632% | disp 1.235 | host 27.351% | fails: none
+Qb-pg | prod/s 15945.622 | appl/s 15949.91 | p50 7.219 ms | p99 1288.191 ms | mssql 1.729% | pg 142.851% | disp 1.226 | host 36.179% | fails: none
+Ka-mssql-durable | prod/s 9470.386 | appl/s 9460.184 | p50 23.679 ms | p99 23625.727 ms | mssql 521.128% | pg 0.323% | disp 1.609 | host 37.258% | fails: none
+    00:45:28.240 drill: mssql-kill:5
+    killed eb-mssql (SIGKILL)
+    00:45:34.784 started eb-mssql
+    00:45:46.246 eb-mssql accepts queries
+Kb-pg-durable | prod/s 15944.173 | appl/s 15915.837 | p50 2508.799 ms | p99 19152.895 ms | mssql 21.512% | pg 200.272% | disp 0.999 | host 31.083% | fails: none
+    00:46:47.236 drill: pg-kill:5
+    killed eb-postgres (SIGKILL)
+    00:46:53.257 started eb-postgres
+    00:47:07.208 eb-postgres accepts queries
+Kc-mssql-forced | prod/s 13042.418 | appl/s 13025.147 | p50 7569.407 ms | p99 16416.767 ms | mssql 546.993% | pg 0.066% | disp 1.904 | host 42.173% | fails: none
+    00:48:09.472 drill: mssql-kill:5
+    killed eb-mssql (SIGKILL)
+    00:48:15.680 started eb-mssql
+    00:48:26.164 eb-mssql accepts queries
+Kd-pg-forced | prod/s 15957.62 | appl/s 15950.498 | p50 1748.991 ms | p99 18743.295 ms | mssql 25.474% | pg 194.589% | disp 0.986 | host 26.907% | fails: none
+    00:49:29.747 drill: pg-kill:5
+    killed eb-postgres (SIGKILL)
+    00:49:35.692 started eb-postgres
+    00:49:48.516 eb-postgres accepts queries
+Ke-mssql-durable | prod/s 13059.282 | appl/s 13051.894 | p50 7045.119 ms | p99 16367.615 ms | mssql 537.623% | pg 0.074% | disp 1.804 | host 39.492% | fails: none
+    00:50:54.312 drill: mssql-kill:5
+    killed eb-mssql (SIGKILL)
+    00:51:00.505 started eb-mssql
+    00:51:11.182 eb-mssql accepts queries
+Ta-pg | prod/s 15904.839 | appl/s 15938.18 | p50 34.943 ms | p99 1421.311 ms | mssql 2.901% | pg 656.549% | disp 1.57 | host 70.321% | fails: none
+Tb-pg | prod/s 15943.231 | appl/s 15943.906 | p50 34.175 ms | p99 1389.567 ms | mssql 2.886% | pg 658.525% | disp 1.561 | host 69.866% | fails: none
+Sa-mssql | prod/s 12039.296 | appl/s 7775.302 | p50 36405.247 ms | p99 55115.775 ms | mssql 1225.029% | pg 0.758% | disp 1.778 | host 78.556% | fails: none
+Sb-mssql | prod/s 11587.851 | appl/s 7255.796 | p50 36372.479 ms | p99 66387.967 ms | mssql 1089.824% | pg 0.644% | disp 1.733 | host 72.175% | fails: none
+Sc-mssql-batch | prod/s 12662.845 | appl/s 13891.051 | p50 12230.655 ms | p99 25853.951 ms | mssql 1190.059% | pg 0.162% | disp 1.859 | host 78.717% | fails: none
+Sd-mssql-batch | prod/s 13448.663 | appl/s 13221.635 | p50 15482.879 ms | p99 33406.975 ms | mssql 1182.744% | pg 0.174% | disp 1.955 | host 78.949% | fails: none
+Ua-pg-nobatch | prod/s 15926.292 | appl/s 10146.039 | p50 23150.591 ms | p99 45449.215 ms | mssql 30.066% | pg 779.755% | disp 1.448 | host 71.571% | fails: none
+Aa-ag-mem | prod/s 16084.618 | appl/s 16087.637 | p50 32.223 ms | p99 1651.711 ms | mssql % | pg 0.105% | disp 2.338 | host 69.64% | ag1 741.648% ag2 170.738% | fails: none
+Ba-ag-full | prod/s 10074.059 | appl/s 7177.169 | p50 37879.807 ms | p99 59146.239 ms | mssql % | pg 0.11% | disp 1.585 | host 72.581% | ag1 886.551% ag2 207.679% | fails: none
+Ab-ag-mem | prod/s 15968.171 | appl/s 15967.527 | p50 33.567 ms | p99 1345.535 ms | mssql % | pg 0.096% | disp 2.323 | host 70.22% | ag1 740.647% ag2 166.268% | fails: none
+Bb-ag-full | prod/s 9877.908 | appl/s 8099.231 | p50 31064.063 ms | p99 51380.223 ms | mssql % | pg 0.119% | disp 1.65 | host 79.441% | ag1 1020.403% ag2 221.866% | fails: none
+Bc-ag-full-x64 | prod/s 10190.447 | appl/s 7180.353 | p50 35454.975 ms | p99 53477.375 ms | mssql % | pg 0.114% | disp 1.605 | host 76.72% | ag1 1014.44% ag2 218.4% | fails: none
+Bd-ag-full-x64-pool64 | prod/s 9937.735 | appl/s 7135.047 | p50 37158.911 ms | p99 53641.215 ms | mssql % | pg 0.12% | disp 1.564 | host 76.622% | ag1 986.48% ag2 214.061% | fails: none
+Be-ag-full-par4 | prod/s 10516.659 | appl/s 6785.884 | p50 37552.127 ms | p99 54132.735 ms | mssql % | pg 0.133% | disp 1.648 | host 74.88% | ag1 949.595% ag2 215.041% | fails: none
+Bf-ag-full-par4 | prod/s 10387.09 | appl/s 6959.235 | p50 38600.703 ms | p99 57081.855 ms | mssql % | pg 0.505% | disp 1.632 | host 77.349% | ag1 968.493% ag2 225.823% | fails: none
+Ca-ag-mem | prod/s 305.336 | appl/s 305.866 | p50 3356.671 ms | p99 6672.383 ms | mssql % | pg 0.391% | disp 0.288 | host 78.346% | ag1 915.963% ag2 858.975% | fails: none
+    01:40:47.584 drill: ag-kill:30
+    killed the AG primary ag1 (SIGKILL)
+    01:40:53.016 ag2 is primary (was unreachable)
+    01:41:23.326 started ag1
+    ag1 still thinks it is primary: demoting
+    01:41:35.137 ag1 rejoined as PRIMARY
+Cb-ag-full: no result
+Ca-ag-mem | prod/s 2499.106 | appl/s 2503.899 | p50 9510.911 ms | p99 86245.375 ms | mssql % | pg 0.1% | disp 0.505 | host 34.781% | ag1 547.573% ag2 458.629% | fails: none
+    02:34:19.054 drill: ag-kill:30
+    killed the AG primary ag1 (SIGKILL)
+    02:34:24.765 ag2 is primary (was ag1, forced: ag1 unreachable)
+    02:35:10.830 ag3 still follows the old primary: restarting it
+    02:35:40.735 remaining secondaries SYNCHRONIZED
+    02:36:10.974 started ag1
+    02:36:14.448 ag1 is back (believes: PRIMARY); rebuilding it as a secondary of ag2
+    02:37:01.251 ag1 rejoined as SECONDARY, databases seeded and SYNCHRONIZED
+Cb-ag-full | prod/s 1708.541 | appl/s 1016.922 | p50 113311.743 ms | p99 121700.351 ms | mssql % | pg 0.077% | disp 0.452 | host 38.526% | ag1 467.16% ag2 752.859% | fails: none
+    02:38:30.990 drill: ag-kill:30
+    killed the AG primary ag2 (SIGKILL)
+    02:38:37.042 ag1 is primary (was ag2, forced: ag2 unreachable)
+    02:39:24.527 ag3 still follows the old primary: restarting it
+    02:39:53.141 remaining secondaries SYNCHRONIZED
+    02:40:23.431 started ag2
+    02:40:26.903 ag2 is back (believes: PRIMARY); rebuilding it as a secondary of ag1
+    02:41:17.247 ag2 rejoined as SECONDARY, databases seeded and SYNCHRONIZED
+Ra-pgsync-mem | prod/s 15947 | appl/s 15948.422 | p50 14.447 ms | p99 1312.767 ms | mssql % | pg 176.847% | disp 1.258 | host 31.065% | standby 30.555% | fails: none
+Wa-pgsync-full | prod/s 11938.524 | appl/s 6953.884 | p50 28311.551 ms | p99 56360.959 ms | mssql % | pg 439.346% | disp 0.903 | host 41.164% | standby 68.882% | fails: none
+Rb-pgsync-mem | prod/s 15938.663 | appl/s 15939.994 | p50 56.607 ms | p99 1627.135 ms | mssql % | pg 174.623% | disp 1.047 | host 26.571% | standby 31.268% | fails: none
+Wb-pgsync-full | prod/s 15780.155 | appl/s 10659.343 | p50 9469.951 ms | p99 46694.399 ms | mssql % | pg 509.531% | disp 1.141 | host 51.336% | standby 55.607% | fails: none

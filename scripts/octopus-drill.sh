@@ -16,6 +16,11 @@
 #             its etcd member) | dc-freeze:leader|other:<s> (freeze a DC for s seconds: a partition, tests fencing)
 #           | nats-kill:<n> (SIGKILL NATS cluster node n, EB_NATS_NODES=3; node 1 is the one the benchmark's clients
 #             were given; not restarted)
+#           | mssql-kill[:<r>] / pg-kill[:<r>] (SIGKILL the single SQL Server / Postgres container, start it again r
+#             seconds later, default 5: a database crash with its disk intact)
+#           | ag-kill[:<r>] (infra/mssql-ag: SIGKILL the AG primary, force the failover to the synchronous secondary after
+#             AG_DETECT s (default 2: an operator or Pacemaker), restart the old primary r s later and rejoin it as secondary)
+#           | ag-switch (planned AG failover, both replicas up)
 #           | mqtt-restart (restart the MQTT broker) | dispatcher-db-cut:<i>:<s> (dispatcher i keeps running, but its
 #             database connections hang for s seconds: it goes through a proxy that is frozen)
 # env: DRILL_AT (seconds into the run, default 30); OCTOPUS_PG_CONN for the dispatchers (multi-host for pgfail)
@@ -70,6 +75,17 @@ sleep "$AT"
       sleep "$s"; podman unpause $c >/dev/null; echo "$(date +%T.%3N) unfroze $dc" ;;
     db-freeze:*) s=${ACTION#db-freeze:}; c=$(awk '{printf "eb-%s ", $1}' ~/.cache/eventbench/patroni/nodes); podman pause $c >/dev/null && echo "froze every database node for ${s}s"; sleep "$s"; podman unpause $c >/dev/null; echo "$(date +%T.%3N) unfroze" ;;
     mqtt-restart) podman restart -t 1 eb-mosquitto >/dev/null; echo "$(date +%T.%3N) restarted the MQTT broker" ;;
+    ag-kill*) r=${ACTION#ag-kill}; r=${r#:}; r=${r:-30}; old=$(cd infra/mssql-ag && source ./env.sh && primary)
+      podman kill -s KILL "eb-$old" >/dev/null && echo "killed the AG primary $old (SIGKILL)"
+      sleep "${AG_DETECT:-2}"; infra/mssql-ag/failover.sh 2>&1
+      sleep "$r"; podman start "eb-$old" >/dev/null; echo "$(date +%T.%3N) started $old"; infra/mssql-ag/rejoin.sh "$old" 2>&1 ;;
+    ag-switch) infra/mssql-ag/failover.sh 2>&1 ;;
+    mssql-kill*|pg-kill*) r=${ACTION#*-kill}; r=${r#:}; r=${r:-5}
+      if [[ $ACTION == mssql-* ]]; then c=${MSSQL_CONTAINER:-eb-mssql}
+        ready() { podman exec "$c" /opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P "${MSSQL_SA_PASSWORD:-EventBench#2026}" -b -h -1 -Q "SET NOCOUNT ON; SELECT state_desc FROM sys.databases WHERE name = 'octopus'" 2>/dev/null | grep -q ONLINE; }
+      else c=eb-postgres; ready() { podman exec "$c" pg_isready -q -U bench -d bench 2>/dev/null; }; fi
+      podman kill -s KILL "$c" >/dev/null && echo "killed $c (SIGKILL)"; sleep "$r"; podman start "$c" >/dev/null; echo "$(date +%T.%3N) started $c"
+      for _ in $(seq 1 600); do ready && { echo "$(date +%T.%3N) $c accepts queries"; break; }; sleep 0.2; done ;;
     partition-dc1:*) s=${ACTION#partition-dc1:}; c="eb-b-dc1a eb-b-dc1b eb-b-etcd-dc1"
       before=$(infra/patroni-bridged/status.sh | awk '$2=="leader"{print $1}')
       for x in $c; do podman network disconnect eb-b-wan $x; done; echo "$(date +%T.%3N) DC1 cut from the WAN for ${s}s (leader was $before)"

@@ -1,0 +1,26 @@
+Ka-mssql-durable | prod/s 9470.386 | appl/s 9460.184 | p50 23.679 ms | p99 23625.727 ms | mssql 521.128% | pg 0.323% | disp 1.609 | host 37.258% | fails: none
+    00:45:28.240 drill: mssql-kill:5
+    killed eb-mssql (SIGKILL)
+    00:45:34.784 started eb-mssql
+    00:45:46.246 eb-mssql accepts queries
+Kb-pg-durable | prod/s 15944.173 | appl/s 15915.837 | p50 2508.799 ms | p99 19152.895 ms | mssql 21.512% | pg 200.272% | disp 0.999 | host 31.083% | fails: none
+    00:46:47.236 drill: pg-kill:5
+    killed eb-postgres (SIGKILL)
+    00:46:53.257 started eb-postgres
+    00:47:07.208 eb-postgres accepts queries
+Kc-mssql-forced | prod/s 13042.418 | appl/s 13025.147 | p50 7569.407 ms | p99 16416.767 ms | mssql 546.993% | pg 0.066% | disp 1.904 | host 42.173% | fails: none
+    00:48:09.472 drill: mssql-kill:5
+    killed eb-mssql (SIGKILL)
+    00:48:15.680 started eb-mssql
+    00:48:26.164 eb-mssql accepts queries
+Kd-pg-forced | prod/s 15957.62 | appl/s 15950.498 | p50 1748.991 ms | p99 18743.295 ms | mssql 25.474% | pg 194.589% | disp 0.986 | host 26.907% | fails: none
+    00:49:29.747 drill: pg-kill:5
+    killed eb-postgres (SIGKILL)
+    00:49:35.692 started eb-postgres
+    00:49:48.516 eb-postgres accepts queries
+Ke-mssql-durable | prod/s 13059.282 | appl/s 13051.894 | p50 7045.119 ms | p99 16367.615 ms | mssql 537.623% | pg 0.074% | disp 1.804 | host 39.492% | fails: none
+    00:50:54.312 drill: mssql-kill:5
+    killed eb-mssql (SIGKILL)
+    00:51:00.505 started eb-mssql
+    00:51:11.182 eb-mssql accepts queries
+crash done

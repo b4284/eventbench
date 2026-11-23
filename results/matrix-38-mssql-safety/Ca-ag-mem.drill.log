@@ -1,0 +1,8 @@
+02:34:19.054 drill: ag-kill:30
+killed the AG primary ag1 (SIGKILL)
+02:34:24.765 ag2 is primary (was ag1, forced: ag1 unreachable)
+02:35:10.830 ag3 still follows the old primary: restarting it
+02:35:40.735 remaining secondaries SYNCHRONIZED
+02:36:10.974 started ag1
+02:36:14.448 ag1 is back (believes: PRIMARY); rebuilding it as a secondary of ag2
+02:37:01.251 ag1 rejoined as SECONDARY, databases seeded and SYNCHRONIZED

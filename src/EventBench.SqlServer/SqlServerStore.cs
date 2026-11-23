@@ -1,5 +1,7 @@
 using System.Data;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Channels;
 using EventBench.Core.Abstractions;
 using EventBench.Core.Model;
 using Microsoft.Data.SqlClient;
@@ -19,6 +21,14 @@ public sealed class SqlServerStoreOptions
     /// (infra/mssql/durability.sh), "Forced" = delayed durable (best effort), "Disabled" = fully durable.
     /// </summary>
     public string? DelayedDurability { get; set; }
+    /// <summary>
+    /// Group commit, as the Postgres store's: commits (without an upload or a transactional ack) queue up and up to
+    /// BatchMaxSize of them run in one transaction (one EXEC of the commit procedure each, sources in order, one log
+    /// flush), on BatchExecutors connections.
+    /// </summary>
+    public bool BatchCommits { get; set; } = false;
+    public int BatchMaxSize { get; set; } = 32;
+    public int BatchExecutors { get; set; } = 16;
 }
 
 /// <summary>
@@ -37,6 +47,12 @@ public sealed class SqlServerStore : IStateStore
     private readonly Dictionary<string, string> _ackCommitSql = new();
     private readonly string _admin;
 
+    private readonly Channel<(CommitRequest Req, TaskCompletionSource<CommitStatus> Tcs)>? _batchQueue;
+    private readonly List<Task> _executors = new();
+    private readonly CancellationTokenSource _cts = new();
+    private readonly Dictionary<int, string> _batchSql = new();
+    private long _batches, _batchedCommits, _batchFallbacks;
+
     public string Name => "sqlserver";
     public IStatsProvider? Stats { get; }
 
@@ -54,7 +70,99 @@ public sealed class SqlServerStore : IStateStore
                    $"LEFT JOIN {_rec} r ON r.record_id = @r AND r.source_id = s.source_id WHERE s.source_id = @s";
         _commitSql = $"EXEC @rc = {_proc} @source, @seq, @kind, @record, @prev_version, @version, @hash, @status, @ctx, @upload_size, @upload_checksum, @upload_data";
         Stats = new SqlServerStats(_admin, "mssql", log);
+        if (options.BatchCommits)
+        {
+            _batchQueue = Channel.CreateUnbounded<(CommitRequest, TaskCompletionSource<CommitStatus>)>(new UnboundedChannelOptions { SingleReader = false });
+            for (int i = 0; i < Math.Max(1, options.BatchExecutors); i++) _executors.Add(Task.Run(() => BatchLoopAsync(_cts.Token)));
+        }
     }
+
+    private string BatchSql(int n)
+    {
+        lock (_batchSql)
+        {
+            if (_batchSql.TryGetValue(n, out var sql)) return sql;
+            var b = new StringBuilder("SET XACT_ABORT ON; BEGIN TRAN; DECLARE ");
+            for (int j = 0; j < n; j++) b.Append(j == 0 ? "" : ", ").Append("@rc").Append(j).Append(" int");
+            b.Append("; ");
+            for (int j = 0; j < n; j++)
+                b.Append($"EXEC @rc{j} = {_proc} @s{j}, @q{j}, @k{j}, @r{j}, @pv{j}, @v{j}, @h{j}, @st{j}, @c{j}, NULL, NULL, NULL; ");
+            b.Append("COMMIT; SELECT ");
+            for (int j = 0; j < n; j++) b.Append(j == 0 ? "" : ", ").Append("@rc").Append(j);
+            b.Append(';');
+            return _batchSql[n] = b.ToString();
+        }
+    }
+
+    private async Task BatchLoopAsync(CancellationToken ct)
+    {
+        var reader = _batchQueue!.Reader;
+        var items = new List<(CommitRequest Req, TaskCompletionSource<CommitStatus> Tcs)>(_o.BatchMaxSize);
+        while (!ct.IsCancellationRequested)
+        {
+            items.Clear();
+            try { if (!await reader.WaitToReadAsync(ct)) return; }
+            catch (OperationCanceledException) { return; }
+            while (items.Count < _o.BatchMaxSize && reader.TryRead(out var it)) items.Add(it);
+            if (items.Count == 0) continue;
+            try
+            {
+                var codes = await CommitManyAsync(items.Select(x => x.Req).ToList(), ct);
+                Interlocked.Increment(ref _batches);
+                Interlocked.Add(ref _batchedCommits, items.Count);
+                for (int i = 0; i < items.Count; i++) items[i].Tcs.TrySetResult(ToStatus(codes[i]));
+            }
+            catch (Exception e) when (e is not OperationCanceledException || !ct.IsCancellationRequested)
+            {
+                // Isolate: one bad event must not fail its batchmates; the batch may have committed before the error
+                // reached us, so its events are in doubt (the commit procedure is idempotent: a replay is a duplicate)
+                Interlocked.Increment(ref _batchFallbacks);
+                foreach (var (req, _) in items) EventBench.Core.Processing.InDoubt.Add(req.Event.SourceId, req.Event.Seq);
+                foreach (var (req, tcs) in items)
+                {
+                    try { tcs.TrySetResult(await CommitOneAsync(req, ct)); }
+                    catch (Exception ex) { tcs.TrySetException(ex); }
+                }
+            }
+        }
+    }
+
+    private async Task<int[]> CommitManyAsync(List<CommitRequest> reqs, CancellationToken ct)
+    {
+        // rows locked in source order (no deadlocks between concurrent batches); results mapped back
+        var order = Enumerable.Range(0, reqs.Count).OrderBy(i => reqs[i].Event.SourceId).ThenBy(i => reqs[i].Event.Seq).ToArray();
+        int n = reqs.Count;
+        await using var conn = new SqlConnection(_o.ConnectionString);
+        await conn.OpenAsync(ct);
+        await using var cmd = new SqlCommand(BatchSql(n), conn);
+        var ps = cmd.Parameters;
+        for (int j = 0; j < n; j++)
+        {
+            var r = reqs[order[j]];
+            ps.Add($"@s{j}", SqlDbType.Int).Value = r.Event.SourceId;
+            ps.Add($"@q{j}", SqlDbType.BigInt).Value = r.Event.Seq;
+            ps.Add($"@k{j}", SqlDbType.TinyInt).Value = (byte)r.Kind;
+            ps.Add($"@r{j}", SqlDbType.BigInt).Value = r.Event.RecordId;
+            ps.Add($"@pv{j}", SqlDbType.Int).Value = r.PrevVersion;
+            ps.Add($"@v{j}", SqlDbType.Int).Value = r.NewVersion;
+            ps.Add($"@h{j}", SqlDbType.BigInt).Value = r.NewHash;
+            ps.Add($"@st{j}", SqlDbType.SmallInt).Value = (short)r.NewStatus;
+            ps.Add($"@c{j}", SqlDbType.VarBinary, -1).Value = (object?)r.NewContext ?? DBNull.Value;
+        }
+        var codes = new int[n];
+        await using var rd = await cmd.ExecuteReaderAsync(ct);
+        if (!await rd.ReadAsync(ct)) throw new InvalidOperationException("commit batch returned no row");
+        for (int j = 0; j < n; j++) codes[order[j]] = rd.GetInt32(j);
+        return codes;
+    }
+
+    private static CommitStatus ToStatus(int rc) => rc switch
+    {
+        0 => CommitStatus.Applied,
+        1 => CommitStatus.Duplicate,
+        2 => CommitStatus.Gap,
+        _ => CommitStatus.RecordConflict,
+    };
 
     private string AckCommitSql(string queueTable)
     {
@@ -228,6 +336,17 @@ public sealed class SqlServerStore : IStateStore
 
     public async ValueTask<CommitStatus> CommitAsync(CommitRequest req, CancellationToken ct)
     {
+        if (_batchQueue != null && req.Upload is null && req.TransactionalAck is null)
+        {
+            var tcs = new TaskCompletionSource<CommitStatus>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _batchQueue.Writer.TryWrite((req, tcs));
+            return await tcs.Task.WaitAsync(ct);
+        }
+        return await CommitOneAsync(req, ct);
+    }
+
+    private async Task<CommitStatus> CommitOneAsync(CommitRequest req, CancellationToken ct)
+    {
         var ev = req.Event;
         var ack = req.TransactionalAck as ISqlQueueDelivery;
         if (req.TransactionalAck != null && ack is null)
@@ -257,13 +376,7 @@ public sealed class SqlServerStore : IStateStore
         var rc = ps.Add("@rc", SqlDbType.Int);
         rc.Direction = ParameterDirection.Output;
         await cmd.ExecuteNonQueryAsync(ct);
-        return (int)rc.Value switch
-        {
-            0 => CommitStatus.Applied,
-            1 => CommitStatus.Duplicate,
-            2 => CommitStatus.Gap,
-            _ => CommitStatus.RecordConflict,
-        };
+        return ToStatus((int)rc.Value);
     }
 
     public async ValueTask PutBlobAsync(long blobId, int sourceId, ReadOnlyMemory<byte> data, CancellationToken ct)
@@ -312,13 +425,21 @@ public sealed class SqlServerStore : IStateStore
     {
         var csb = new SqlConnectionStringBuilder(_o.ConnectionString);
         return $"sqlserver @ {csb.DataSource}/{csb.InitialCatalog} (pool max {csb.MaxPoolSize}), commit = proc with UPDLOCK cursor, " +
-               $"delayed durability = {_o.DelayedDurability ?? "server setting"}";
+               $"delayed durability = {_o.DelayedDurability ?? "server setting"}" +
+               (_o.BatchCommits ? $", group commit (max {_o.BatchMaxSize}/tx, {_o.BatchExecutors} executors)" : "");
     }
 
-    public ValueTask DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
+        _cts.Cancel();
+        _batchQueue?.Writer.TryComplete();
+        try { await Task.WhenAll(_executors); } catch { /* shutting down */ }
+        if (_o.BatchCommits)
+        {
+            long b = Interlocked.Read(ref _batches), c = Interlocked.Read(ref _batchedCommits);
+            _log($"sqlserver store: {b:N0} commit batches, {c:N0} batched commits (avg {(b > 0 ? (double)c / b : 0):F1}/tx), {_batchFallbacks} fallbacks");
+        }
         SqlConnection.ClearAllPools();
-        return ValueTask.CompletedTask;
     }
 }
 

@@ -1,0 +1,203 @@
+# Cb-ag-full — FAIL ❌
+
+- Broker: `Octopus dispatchers via ZMQ 127.0.0.1:1883 ns=octopus, schema octopus; one event per publish call (4 producer / 2 worker connections), commit through the apply hook`
+- Store: `sqlserver @ 127.0.0.1,14330/bench (pool max 400), commit = proc with UPDLOCK cursor, delayed durability = server setting, group commit (max 32/tx, 16 executors)`
+- Ack mode: `AfterCommit`, batch 10, parallel/worker 4
+- Topology: 500 groups, 16000 sources, 647 workers, offered 15939.397 ev/s
+- Phases: run 108.787s, closing 2.733s, drain 25.442s (drained: true)
+
+## Throughput
+
+| produced | applied | steady produced/s | steady applied/s | peak applied/s | duplicates | errors | nacks | large events | slow events | blocking violations |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 290442 | 290442 | 1708.541 | 1016.922 | 14120.8 | 0 | 50777 | 50777 | 170 | 1452 | 14734 |
+
+## Latency (ms, after warmup, excluding closing events)
+
+| metric | count | mean | p50 | p90 | p99 | p99.9 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| e2e | 94895 | 98660.797 | 113311.743 | 118947.839 | 121700.351 | 123076.607 | 126025.727 |
+| e2e_from_send | 94895 | 85302.481 | 99942.399 | 106954.751 | 110886.911 | 112721.919 | 115998.719 |
+| producer_lag | 95056 | 13361.516 | 12984.319 | 16072.703 | 17891.327 | 91750.399 | 94502.911 |
+| publish_call | 290442 | 685.222 | 167.423 | 412.415 | 1197.055 | 75563.007 | 76414.975 |
+| queue_wait | 94895 | 85151.194 | 99811.327 | 106823.679 | 110886.911 | 112721.919 | 115998.719 |
+| broker_dwell | 94895 | 83492.98 | 99549.183 | 106692.607 | 110690.303 | 112459.775 | 115802.111 |
+| receive_call | 307997 | 32.558 | 5.987 | 94.975 | 409.343 | 491.519 | 538.111 |
+| ctx_load | 94895 | 73.429 | 4.395 | 62.527 | 1356.799 | 3223.551 | 3504.127 |
+| process | 94895 | 11.998 | 0.002 | 0.005 | 0.042 | 2641.919 | 2998.271 |
+| ctx_commit | 94895 | 65.81 | 22.287 | 167.423 | 612.351 | 1006.079 | 3112.959 |
+| ack | 94895 | 0.01 | 0.005 | 0.011 | 0.045 | 0.507 | 84.479 |
+| service | 94895 | 151.291 | 28.927 | 429.311 | 1608.703 | 3577.855 | 6098.943 |
+| e2e_large | 68 | 32659.878 | 15589.375 | 105775.103 | 107741.183 | 107937.791 | 107937.791 |
+| ready_wait | 94895 | 2665.685 | 15.663 | 798.719 | 98828.287 | 104792.063 | 110231.551 |
+| blocked | 94895 | 2209.559 | 10.159 | 169.727 | 86441.983 | 89718.783 | 90963.967 |
+
+## Resources (steady state mean / max)
+
+| metric | mean | max |
+|---|---:|---:|
+| applied_per_s | 1016.922 | 8192.2 |
+| applied_total | 118684.701 | 129625 |
+| bench_cpu_cores | 0.923 | 3.389 |
+| bench_cpu_pct | 3.844 | 14.12 |
+| bench_gc_gen0 | 0.794 | 3 |
+| bench_gc_gen1 | 0.371 | 2 |
+| bench_gc_gen2 | 0.196 | 1 |
+| bench_gc_heap_mb | 738.136 | 1363.4 |
+| bench_mem_mb | 1517.878 | 1884.4 |
+| bench_threadpool_queue | 10.598 | 247 |
+| bench_threadpool_threads | 33.32 | 44 |
+| broker_backlog | 120966.144 | 127167 |
+| ctr_eb_ag1_cpu_pct | 467.16 | 1356.63 |
+| ctr_eb_ag1_mem_mb | 4667.966 | 4734 |
+| ctr_eb_ag2_cpu_pct | 752.859 | 827.23 |
+| ctr_eb_ag2_mem_mb | 3795.767 | 4281 |
+| ctr_eb_ag3_cpu_pct | 80.795 | 271.23 |
+| ctr_eb_ag3_mem_mb | 3380.677 | 3809 |
+| ctr_eb_ag_haproxy_cpu_pct | 18.316 | 54.55 |
+| ctr_eb_ag_haproxy_mem_mb | 24.913 | 26.8 |
+| ctr_eb_pgbouncer_2_cpu_pct | 0.011 | 0.02 |
+| ctr_eb_pgbouncer_2_mem_mb | 7.3 | 7.3 |
+| ctr_eb_pgbouncer_3_cpu_pct | 0.01 | 0.02 |
+| ctr_eb_pgbouncer_3_mem_mb | 7.3 | 7.3 |
+| ctr_eb_pgbouncer_4_cpu_pct | 0.011 | 0.02 |
+| ctr_eb_pgbouncer_4_mem_mb | 7.8 | 7.8 |
+| ctr_eb_pgbouncer_cpu_pct | 0.013 | 0.02 |
+| ctr_eb_pgbouncer_mem_mb | 7.8 | 7.8 |
+| ctr_eb_postgres_cpu_pct | 0.077 | 0.43 |
+| ctr_eb_postgres_mem_mb | 2277.478 | 2279.3 |
+| duplicates_per_s | 0 | 0 |
+| errors_per_s | 67.493 | 3747.1 |
+| host_cpu_pct | 38.526 | 82.38 |
+| in_flight | 124056.175 | 131776 |
+| mssql_batch_requests_per_s | 4768.658 | 6443.5 |
+| mssql_deadlocks_per_s | 0 | 0 |
+| mssql_lock_timeouts_per_s | 42.726 | 59.3 |
+| mssql_lock_waits_per_s | 4.123 | 10.5 |
+| mssql_log_bytes_flushed_per_s | 27654017.809 | 32576564.4 |
+| mssql_log_flush_waits_per_s | 67.754 | 111.1 |
+| mssql_log_flushes_per_s | 462.755 | 553.8 |
+| mssql_processes_blocked | 1.711 | 2 |
+| mssql_sql_compilations_per_s | 4.653 | 12.3 |
+| mssql_transactions_per_s | 167.438 | 253.7 |
+| mssql_user_connections | 336.01 | 353 |
+| mssql_wait_async_network_io_ms_per_s | 159.782 | 179.4 |
+| mssql_wait_cxpacket_ms_per_s | 0 | 0 |
+| mssql_wait_hadr_sync_commit_ms_per_s | 9940.853 | 12272.6 |
+| mssql_wait_lck_m_s_ms_per_s | 0.806 | 34.4 |
+| mssql_wait_lck_m_u_ms_per_s | 269.623 | 452.1 |
+| mssql_wait_lck_m_x_ms_per_s | 0.718 | 33.9 |
+| mssql_wait_logbuffer_ms_per_s | 65.537 | 311 |
+| mssql_wait_pageiolatch_sh_ms_per_s | 3676.538 | 4518.8 |
+| mssql_wait_pagelatch_ex_ms_per_s | 177.541 | 563.6 |
+| mssql_wait_pagelatch_sh_ms_per_s | 3225.19 | 5038.7 |
+| mssql_wait_sos_scheduler_yield_ms_per_s | 3181.235 | 4353.4 |
+| mssql_wait_threadpool_ms_per_s | 18.42 | 43.7 |
+| mssql_wait_writelog_ms_per_s | 1570.121 | 1657.1 |
+| nacks_per_s | 67.493 | 3747.1 |
+| octopus_dispatcher_cores | 0.452 | 1.69 |
+| octopus_dispatchers_alive | 3 | 3 |
+| octopus_items_sent_total | 429408.639 | 547025 |
+| octopus_missing_reports_total | 305.577 | 335 |
+| octopus_mqtt_received_total | 181088.763 | 229149 |
+| octopus_mqtt_sent_total | 112601.557 | 153008 |
+| octopus_publish_retries_total | 27388.423 | 67897 |
+| octopus_publish_stuck | 811.887 | 1834 |
+| produced_per_s | 1708.541 | 10116 |
+| produced_total | 242740.876 | 261401 |
+| publish_mb_per_s | 7.091 | 48.59 |
+
+## Oracle
+
+| check | result | detail |
+|---|---|---|
+| cursors | pass | 16000/16000 source cursors at the expected last sequence |
+| records_complete | pass | all 53,989 records are Completed |
+| record_counts | pass | 53,989 records found, 53,989 expected; 0 sources with count mismatch |
+| record_content | pass | 0 sources with record content hash mismatch |
+| uploads | pass | 170 uploads verified, 0 sources mismatched |
+| applied_equals_generated | pass | 290,442 events applied by workers, 290,442 generated |
+| broker_drained | pass | 0 messages left in the broker |
+| runtime_ordering_gap | pass | none observed |
+| runtime_pre_state | pass | none observed |
+| runtime_record_conflict | pass | none observed |
+| runtime_payload_corrupt | pass | none observed |
+| runtime_context_corrupt | pass | none observed |
+| runtime_blob_missing | pass | none observed |
+| runtime_cross_source_blocking | **FAIL** | 14,734 events waited > 100 ms while a worker slot of their group was idle (4 slot(s)/worker; blocked p99 86442 ms, max 90904 ms) |
+
+## Cross-source blocking samples
+
+- [cross_source_blocking] source 14634 seq 4: ready 576 ms before start, 576 ms of it with an idle slot in group 463
+- [cross_source_blocking] source 4746 seq 21: ready 621 ms before start, 180 ms of it with an idle slot in group 164
+- [cross_source_blocking] source 4243 seq 8: ready 195 ms before start, 195 ms of it with an idle slot in group 142
+- [cross_source_blocking] source 4275 seq 11: ready 193 ms before start, 129 ms of it with an idle slot in group 145
+- [cross_source_blocking] source 5555 seq 14: ready 193 ms before start, 193 ms of it with an idle slot in group 190
+- [cross_source_blocking] source 7315 seq 7: ready 193 ms before start, 193 ms of it with an idle slot in group 251
+- [cross_source_blocking] source 13183 seq 5: ready 192 ms before start, 192 ms of it with an idle slot in group 419
+- [cross_source_blocking] source 3293 seq 7: ready 196 ms before start, 196 ms of it with an idle slot in group 110
+- [cross_source_blocking] source 12797 seq 5: ready 241 ms before start, 241 ms of it with an idle slot in group 404
+- [cross_source_blocking] source 2845 seq 6: ready 241 ms before start, 241 ms of it with an idle slot in group 89
+- [cross_source_blocking] source 15754 seq 5: ready 452 ms before start, 452 ms of it with an idle slot in group 492
+- [cross_source_blocking] source 5853 seq 4: ready 636 ms before start, 100 ms of it with an idle slot in group 201
+- [cross_source_blocking] source 3050 seq 6: ready 2278 ms before start, 139 ms of it with an idle slot in group 102
+- [cross_source_blocking] source 8479 seq 11: ready 202 ms before start, 202 ms of it with an idle slot in group 289
+- [cross_source_blocking] source 6058 seq 10: ready 213 ms before start, 213 ms of it with an idle slot in group 207
+- [cross_source_blocking] source 4275 seq 12: ready 461 ms before start, 461 ms of it with an idle slot in group 145
+- [cross_source_blocking] source 8669 seq 4: ready 341 ms before start, 183 ms of it with an idle slot in group 300
+- [cross_source_blocking] source 10623 seq 9: ready 340 ms before start, 191 ms of it with an idle slot in group 349
+- [cross_source_blocking] source 14205 seq 13: ready 414 ms before start, 104 ms of it with an idle slot in group 454
+- [cross_source_blocking] source 12265 seq 7: ready 192 ms before start, 112 ms of it with an idle slot in group 390
+
+## Error samples
+
+- t-348#0 src=10558 seq=8 op=Update rec=45346264711169 ev=4: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-096#0 src=2959 seq=20 op=Get rec=12708808228867 ev=10: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-041#0 src=1304 seq=25 op=Update rec=5600637353987 ev=5: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-041#2 src=1316 seq=24 op=Update rec=5652176961541 ev=2: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-235#0 src=6910 seq=10 op=Update rec=29678224015361 ev=6: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-204#0 src=5891 seq=6 op=Update rec=25301652340738 ev=2: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-223#0 src=6641 seq=15 op=Update rec=28522877812739 ev=2: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-383#0 src=11931 seq=10 op=Get rec=51243254808577 ev=7: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-040#0 src=1201 seq=4 op=Create rec=5158255722499 ev=0: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-438#1 src=13754 seq=9 op=Update rec=59072980189185 ev=7: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-231#0 src=6789 seq=6 op=Update rec=29158532972546 ev=1: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-347#2 src=10440 seq=9 op=Get rec=44839458570241 ev=5: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-071#0 src=2433 seq=8 op=Get rec=10449655431170 ev=1: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-454#0 src=14204 seq=37 op=Update rec=61005715472390 ev=1: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-418#0 src=13173 seq=48 op=Update rec=56577604190216 ev=3: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-121#0 src=3589 seq=11 op=Create rec=15414637625349 ev=0: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-381#0 src=11757 seq=9 op=Update rec=50495930499073 ev=8: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-045#0 src=1513 seq=11 op=Create rec=6498285518852 ev=0: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-041#2 src=1293 seq=21 op=Get rec=5553392713729 ev=5: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+- t-029#0 src=988 seq=20 op=Create rec=4243427688450 ev=0: SqlException: A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 2 - Connection was terminated)
+
+## Groups (500; worst 25 by e2e p99 — all groups in summary.json)
+
+| group | sources | workers | base ev/min/src | offered/s | payload B | large frac | produced | applied | dup | e2e p50 | e2e p99 | e2e max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| t-282 | 23 | 1 | 104.692 | 40.289 | 956 | 0 | 713 | 713 | 0 | 116916.223 | 124256.255 | 124780.543 |
+| t-341 | 96 | 1 | 25.054 | 40.263 | 2651 | 0 | 783 | 783 | 0 | 118489.087 | 124256.255 | 124256.255 |
+| t-168 | 71 | 1 | 42.924 | 49.841 | 155 | 0 | 920 | 920 | 0 | 118489.087 | 123731.967 | 125829.119 |
+| t-214 | 52 | 1 | 46.851 | 41.987 | 688 | 0 | 836 | 836 | 0 | 117964.799 | 123731.967 | 123731.967 |
+| t-235 | 54 | 2 | 98.424 | 88.599 | 527 | 0 | 1540 | 1540 | 0 | 117440.511 | 123731.967 | 126353.407 |
+| t-121 | 76 | 3 | 121.292 | 148.793 | 149 | 0 | 2660 | 2660 | 0 | 117964.799 | 123207.679 | 124256.255 |
+| t-283 | 74 | 1 | 33.797 | 40.793 | 240 | 0 | 779 | 779 | 0 | 117440.511 | 123207.679 | 123731.967 |
+| t-450 | 63 | 2 | 94.289 | 97.643 | 165 | 0 | 1715 | 1715 | 0 | 116916.223 | 123207.679 | 124780.543 |
+| t-483 | 200 | 4 | 51.026 | 171.809 | 2470 | 0 | 3170 | 3170 | 0 | 117440.511 | 123207.679 | 124256.255 |
+| t-022 | 63 | 1 | 37.482 | 39.487 | 162 | 0 | 781 | 781 | 0 | 117440.511 | 122683.391 | 123207.679 |
+| t-049 | 53 | 1 | 45.862 | 40.95 | 350 | 0 | 830 | 830 | 0 | 117440.511 | 122683.391 | 123207.679 |
+| t-080 | 56 | 1 | 40.902 | 38.54 | 822 | 0 | 773 | 773 | 0 | 117440.511 | 122683.391 | 124256.255 |
+| t-182 | 89 | 3 | 101.606 | 147.829 | 2406 | 0 | 2608 | 2608 | 0 | 116916.223 | 122683.391 | 123207.679 |
+| t-222 | 138 | 4 | 76.871 | 178.909 | 2846 | 0 | 3202 | 3202 | 0 | 117440.511 | 122683.391 | 124256.255 |
+| t-274 | 29 | 1 | 69.982 | 33.783 | 1181 | 0 | 621 | 621 | 0 | 115867.647 | 122683.391 | 122683.391 |
+| t-306 | 134 | 5 | 93.183 | 208.376 | 2978 | 0 | 3692 | 3692 | 0 | 116916.223 | 122683.391 | 125829.119 |
+| t-340 | 184 | 2 | 30.383 | 93.585 | 141 | 0 | 1824 | 1824 | 0 | 116391.935 | 122683.391 | 124256.255 |
+| t-378 | 55 | 2 | 106.476 | 95.397 | 3659 | 0 | 1671 | 1671 | 0 | 116391.935 | 122683.391 | 123731.967 |
+| t-434 | 39 | 1 | 55.28 | 35.706 | 630 | 0 | 720 | 720 | 0 | 116391.935 | 122683.391 | 122683.391 |
+| t-045 | 47 | 2 | 102.442 | 79.828 | 1398 | 0 | 1432 | 1432 | 0 | 115867.647 | 122159.103 | 122159.103 |
+| t-047 | 52 | 1 | 42.703 | 38.205 | 343 | 0 | 696 | 696 | 0 | 116916.223 | 122159.103 | 122683.391 |
+| t-055 | 65 | 3 | 125.803 | 130.203 | 359 | 0 | 2214 | 2214 | 0 | 116916.223 | 122159.103 | 122683.391 |
+| t-136 | 146 | 3 | 50.214 | 121.036 | 450 | 0 | 2232 | 2232 | 0 | 116391.935 | 122159.103 | 123731.967 |
+| t-147 | 79 | 5 | 180.465 | 242.333 | 1078 | 0 | 4056 | 4056 | 0 | 116391.935 | 122159.103 | 123207.679 |
+| t-165 | 36 | 1 | 68.253 | 40.726 | 373 | 0 | 734 | 734 | 0 | 117440.511 | 122159.103 | 122683.391 |
