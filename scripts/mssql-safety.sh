@@ -117,6 +117,15 @@ case $phase in
   gapsfix) # B38 after the fix (the hint's cursor re-read in the same statement as the event table)
     EXTRA="--Workload:SourcePipeline=1" run H1-pipe1-fix mssql durable none mem
     run H4-pipe4-fix mssql durable none mem ;;
+  ramp) # matrix-40: latency while the laptop keeps up; no deliberately slow events; durable (B, local part)
+    for m in 0.31:4k 0.62:8k 0.93:12k 1.24:16k 1.55:20k; do
+      x=${m%%:*}; l=${m##*:}; E="--Workload:SlowEvents:Fraction=0 --Workload:RateMultiplier=$x"
+      EXTRA="$E" run pg-mem-$l pg durable none mem
+      EXTRA="$E" run ms-mem-$l mssql durable none mem
+      [[ $l == 20k ]] && continue
+      EXTRA="$E" run pg-full-$l pg durable none db
+      EXTRA="$E" run ms-full-$l mssql durable none db
+    done ;;
   agcrash) # kill -9 of the AG primary, forced failover to the secondary 2 s later, old primary back 30 s later
     run Ca-ag-mem ag durable ag-kill:30 mem; run Cb-ag-full ag durable ag-kill:30 db ;;
   fullcrash)

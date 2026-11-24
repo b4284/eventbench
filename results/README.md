@@ -7,6 +7,7 @@ items (B*) are in ../BACKLOG.md. Newest first.
 
 | matrix | question | headline |
 |---|---|---|
+| [40](matrix-40-latency/NOTES.md) | p99 while the laptop keeps up, durable, no deliberately slow events | Octopus alone: both to 20k, p99 PG ~60–90 ms, SQL Server ~80–200 ms; whole stack: PG to 16k, SQL Server to ~8k |
 | [39](matrix-39-mssql-blob/NOTES.md) | SQL Server CPU: publish without base64, set-based store commit (B37) | blob bodies: −27% SQL Server CPU (~2.8x Postgres for Octopus); TVP store commit: no gain; ~3/4 of CPU outside statements |
 | [38](matrix-38-mssql-safety/NOTES.md) | SQL Server In-Memory: data safety and cost vs Postgres (B16, B33) | durable, kill -9 and AG forced failover: nothing lost; 3 replicas + a cluster manager needed; ~4x CPU (Octopus), ~2x (full stack) |
 | [37](matrix-37-zmq/NOTES.md) | ZeroMQ, no broker (B34) | ceiling 23.5k vs NATS 22.0k vs Mosquitto 21.5k (3 rounds, 3 machines); first every round |
