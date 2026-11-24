@@ -157,6 +157,38 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
     Octopus alone holds 16k (p50 14–57 ms, 1.75 + 0.3 cores); the full stack does not (7.0k, 10.7k: the store's
     commits ~94 ms instead of ~10). SQL Server's AG the same (7–8k). A one-host limit; needs separate hosts (B20).
 
+#### B12 note: the two durability choices (the user, 2026-11-24)
+
+| | **A. safety through replay** | **B. almost no replay** |
+|---|---|---|
+| Postgres | `synchronous_commit = off` | `synchronous_commit = remote_write` (or `on`) with synchronous standbys (B28: ANY 2, strict) |
+| SQL Server | `DELAYED_DURABILITY = FORCED` | `DISABLED` with synchronous-commit replicas, `REQUIRED_SYNCHRONIZED_SECONDARIES_TO_COMMIT` >= 1 |
+| a commit is confirmed | before the primary's disk and **before any replica** (off also skips the standby wait; delayed durability ships log only when flushed) | after the primary's disk and the quorum's standbys |
+| crash or failover | the last confirmed events are lost almost every time under load: producers must **replay** them | nothing confirmed lost unless more fails than the quorum covers (both DCs, a forced "allow data loss", a cancelled commit) |
+| requirements | every producer keeps an outbox longer than the worst loss window and answers gap reports (`RepairAsync`); the gap policy (`gap_skip_ms`) stays off | three or more data replicas (two stop writing after a failover); no client commit timeouts |
+| in both | producers retry unacknowledged publishes and workers get in-flight deliveries again after any failover: automatic, cheap |
+
+`remote_write` vs `on` differs only for a simultaneous crash of the primary and its quorum standbys (memory vs disk on
+the standby). The lab compares at A (best effort); production would run B.
+
+Numbers so far (laptop unless noted):
+
+| comparison | A | B | source |
+|---|---|---|---|
+| Postgres, local flush only (no standby), Octopus alone, 16k | p50 7.1 ms | 8.5 ms; CPU same | matrix-34 (Mosquitto) |
+| same, ZeroMQ | 6.2–6.4 ms | 7.2–7.4 ms; 1.4–1.5 cores both | matrix-38 P vs Q |
+| Postgres, local flush only, ceiling (2 machines) | 24.3k applied at 28k | 23.3k (−4%; −2% at 24k) | matrix-34 |
+| SQL Server In-Memory, local only, Octopus alone, 16k | p50 11.7–18.4 ms, 5.8–7.3 cores | 15.7–17.9 ms, 6.1–6.3 cores | matrix-38 F vs D |
+| Postgres + synchronous standby (`on`, same host), Octopus alone, 16k | 6.2–6.4 ms (no standby) | 14–57 ms; 1.75 + 0.3 standby cores | matrix-38 P vs R |
+| same, whole stack (application's writes too), 16k | (local flush: 15.9k, p50 34 ms) | 7.0k, 10.7k applied: store commits ~10 -> ~94 ms | matrix-38 T vs W |
+| SQL Server AG (sync, same host), Octopus alone / whole stack | — | 16k at p50 32–34 ms / 7–8k | matrix-38 A, B |
+| Postgres + standby `remote_write`, same host, 12.9k (pgqueue, old) | p50 16 ms, 5.8 cores | 164 ms, 8.0 cores | B20 D7 |
+| Postgres, 2 of 3 standbys `remote_write` on other machines (0.56 ms LAN) | 8.2k | 8.5–9.4k (no cost once checkpoints were spaced; 4–6x slower before, link-bound) | matrix-23 |
+
+**Missing:** B with replicas on their own hosts at 16k and at the ceiling (the same-host numbers overstate B's cost:
+every copy shares one disk and one CPU; B20); added inter-DC latency, 1/5/20 ms (B5); `remote_write` vs `on`; the
+whole stack under B on separate hosts; A's actual loss window under a power loss (cannot be done on the laptop).
+
 ### B16 — The dispatcher queue on SQL Server and MySQL · **both ported and measured; SQL Server's data safety and AG failover measured (matrix-38)** (2026-11-22: SQL Server matrix-27, correct, ~4–5× Postgres CPU per event, not steady at 16k; MySQL matrix-31, correct after four fixes, ~2.2× Postgres CPU, keeps 16k with e2e p50 0.3–0.6 s); failover drills open
 - **From:** user, 2026-11-20. Once the dispatcher owns the queue logic, the database only needs transactions,
   batched inserts, an index and row locks for the commit, so other SQL engines may have the same property.
