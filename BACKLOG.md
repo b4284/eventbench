@@ -157,7 +157,7 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
     Octopus alone holds 16k (p50 14–57 ms, 1.75 + 0.3 cores); the full stack does not (7.0k, 10.7k: the store's
     commits ~94 ms instead of ~10). SQL Server's AG the same (7–8k). A one-host limit; needs separate hosts (B20).
 
-#### B12 note: the two durability choices (the user, 2026-11-24)
+#### B12 note: the two durability choices (the user, 2026-11-24) · **decided 2026-11-25: B is the production default**
 
 | | **A. safety through replay** | **B. almost no replay** |
 |---|---|---|
@@ -169,7 +169,9 @@ Ordering: correctness under failure first, then the 24k target on one platform, 
 | in both | producers retry unacknowledged publishes and workers get in-flight deliveries again after any failover: automatic, cheap |
 
 `remote_write` vs `on` differs only for a simultaneous crash of the primary and its quorum standbys (memory vs disk on
-the standby). The lab compares at A (best effort); production would run B.
+the standby). **Decision (the user, 2026-11-25): B is the default** (Postgres `remote_write`/`on` with the ANY 2 strict
+quorum; SQL Server `DISABLED` with synchronous replicas, In-Memory tables `SCHEMA_AND_DATA` only). The lab keeps A as its
+comparison setting; durability-sensitive results are measured under B.
 
 Numbers so far (laptop unless noted):
 
